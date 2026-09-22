@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moved</title>
+<!--
+  2026-09-21 ~00:28-02:07 slibbinas.github.io turejo CNAME tinyowllabs.com, ir GitHub
+  301 peradresavo slibbinas.github.io/<projektas>/... i tinyowllabs.com/<projektas>/....
+  Narsykles 301 isimena - todel nerastas adresas cia grazinamas atgal i
+  slibbinas.github.io su tuo paciu keliu (pvz. /TinyMakerWifi/landing/).
+-->
+<script>
+(function () {
+  var kelias = location.pathname;
+  if (kelias !== "/" && kelias.indexOf("/tinystatus") !== 0 && kelias.indexOf("/wristcontrol") !== 0) {
+    location.replace("https://slibbinas.github.io" + kelias + location.search + location.hash);
+  }
+})();
+</script>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+<h1>Page not found</h1>
+<p><a href="/">TinyOwl</a></p>
+</main>
+</body>
+</html>
