@@ -1,7 +1,80 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<title>Wrist Control - Privacy</title>
-<link rel="canonical" href="https://slibbinas.github.io/wristcontrol/privacy/">
-<meta http-equiv="refresh" content="0; url=https://slibbinas.github.io/wristcontrol/privacy/">
-<script>location.replace('https://slibbinas.github.io/wristcontrol/privacy/'+location.search+location.hash);</script>
-</head><body><p>Moved to <a href="https://slibbinas.github.io/wristcontrol/privacy/">https://slibbinas.github.io/wristcontrol/privacy/</a>.</p></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy - Wrist Control for Vallox</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main>
+<p class="brand"><a href="../"><img src="../icon.png" alt=""> Wrist Control <span>for Vallox</span></a></p>
+<h1>Privacy Policy</h1>
+<p class="muted">Last updated: 15 September 2026</p>
+
+<p>Wrist Control for Vallox ("the app") is a Wear OS app that shows the readings of a Vallox
+ventilation unit on your watch, switches its modes and helps tune its settings. It is developed
+by TinyOwl, the developer name of Viktoras Šidlauskas, an individual developer. The app is <b>not made, endorsed or supported by
+Vallox Oy</b>. "Vallox" and "MyVallox" are trademarks of Vallox Oy and are used only to say which
+units the app works with.</p>
+
+<p><b>In short:</b> the app has no server of its own, no analytics, no advertising and no tracking.
+Everything stays on your watch, except what has to go to your own ventilation unit, the Vallox
+cloud or Google Play to do what you asked.</p>
+
+<h2>What the app handles</h2>
+<div class="table">
+<table>
+<tr><th>Data</th><th>Why</th><th>Where it is kept</th><th>Where it is sent</th></tr>
+<tr><td>Vallox cloud e-mail and password (optional)</td><td>To read and control your unit when you are away from home</td><td>On the watch only. The password is encrypted with a key held in the Android Keystore</td><td>Only to the Vallox cloud (cloud.vallox.com) over HTTPS, to sign in</td></tr>
+<tr><td>Local IP address of your unit</td><td>To read the unit directly on your home network</td><td>On the watch only</td><td>Only to your unit, on your own network</td></tr>
+<tr><td>Unit readings and settings (temperatures, humidity, CO2, fan speeds, filter dates, mode)</td><td>To show them in the app and on the watch face</td><td>Cached on the watch only</td><td>Not sent anywhere</td></tr>
+<tr><td>Unit history (recent days of CO2, humidity, temperatures and fan speed)</td><td>For Optimize and Statistics</td><td>Processed on the watch; only the results are kept</td><td>Not sent anywhere. It is read from your unit or, when away, from your Vallox cloud account</td></tr>
+<tr><td>Settings you change (mode, fan speeds and CO2 limit set by smart modes or Optimize, "filters changed")</td><td>To do what you tapped</td><td>Your previous values are kept on the watch so Undo can restore them</td><td>Written to your unit, directly or through the Vallox cloud</td></tr>
+<tr><td>Pro purchase status and trial start date</td><td>To unlock Pro features</td><td>On the watch</td><td>The purchase itself is made with Google Play (see below)</td></tr>
+<tr><td>App settings (connection path, refresh interval, alerts, page order, language)</td><td>To remember your choices</td><td>On the watch only</td><td>Not sent anywhere</td></tr>
+</table>
+</div>
+
+<p>If you sign in from the phone app, your e-mail and password travel from the phone to the watch over the encrypted Wear OS connection between your own devices. The phone does not keep them; the watch checks them with the Vallox cloud and stores them as described above.</p>
+
+<h2>Purchases</h2>
+<p>Pro is a one-time in-app purchase made through <b>Google Play</b>. Payment details are handled by
+Google and never reach the app or the developer. The app only asks Google Play whether Pro has been
+purchased. To do this the app includes the Google Play Billing Library, which communicates with
+Google Play under <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</p>
+
+<h2>What the app does not do</h2>
+<ul>
+<li>It does not collect or share personal data with the developer or any third party.</li>
+<li>It does not use analytics, crash reporting, advertising or tracking SDKs.</li>
+<li>It does not access your location, contacts, health data, microphone or camera.</li>
+<li>It does not sell data. There is no data to sell.</li>
+</ul>
+
+<h2>Permissions</h2>
+<ul>
+<li><b>Internet, network state, change network state:</b> to reach your unit on the home network or the Vallox cloud, and to ask for Wi-Fi only when needed.</li>
+<li><b>Run at startup:</b> so the background refresh continues after the watch restarts.</li>
+<li><b>Notifications:</b> for alerts about indoor air and when it is time to change the filters. Each alert can be turned off in the app.</li>
+<li><b>Google Play billing:</b> to buy Pro.</li>
+</ul>
+
+<h2>Your control over the data</h2>
+<ul>
+<li>Uninstalling the app, or clearing its storage in the watch settings, removes everything it stored on the watch, including the e-mail and the encrypted password.</li>
+<li>Entering a different account in the app replaces the stored one.</li>
+<li>Your Vallox cloud account is managed by Vallox Oy under their own privacy policy. Your Google Play purchases are managed by Google.</li>
+</ul>
+
+<h2>Children</h2>
+<p>The app is not directed at children and does not knowingly handle data from children.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes, the new version will be published at this address with a new date.</p>
+
+<h2>Contact</h2>
+<p>Questions about this policy: <a href="mailto:hello@tinyowllabs.com">hello@tinyowllabs.com</a></p>
+</main>
+</body>
+</html>

@@ -1,7 +1,694 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8">
-<title>Wrist Control - User guide</title>
-<link rel="canonical" href="https://slibbinas.github.io/wristcontrol/guide/">
-<meta http-equiv="refresh" content="0; url=https://slibbinas.github.io/wristcontrol/guide/">
-<script>location.replace('https://slibbinas.github.io/wristcontrol/guide/'+location.search+location.hash);</script>
-</head><body><p>Moved to <a href="https://slibbinas.github.io/wristcontrol/guide/">https://slibbinas.github.io/wristcontrol/guide/</a>.</p></body></html>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>User guide - Wrist Control for Vallox</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; font-family: Inter, "Segoe UI", Arial, sans-serif; color: #1B2233; font-size: 10.2pt; line-height: 1.45; }
+.page { width: 210mm; height: 297mm; padding: 16mm 17mm 14mm; position: relative; overflow: hidden; page-break-after: always; background: #fff; }
+.run { display: flex; justify-content: space-between; font-size: 7.5pt; color: #8A93A6; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 9mm; }
+.run .rl { display: flex; align-items: center; gap: 2mm; }
+.run img { width: 4.5mm; height: 4.5mm; border-radius: 1.2mm; }
+.kicker { color: #2F6FE4; font-weight: 700; font-size: 8.5pt; letter-spacing: .14em; text-transform: uppercase; }
+h1, h2, h3, h4 { margin: 0; letter-spacing: -.01em; }
+h2 { font-size: 22pt; line-height: 1.12; font-weight: 800; margin: 2mm 0 5mm; max-width: 165mm; }
+h3 { font-size: 11.5pt; font-weight: 700; margin: 6mm 0 3mm; }
+h4 { font-size: 10.5pt; font-weight: 700; margin-bottom: 1mm; }
+p { margin: 0 0 2mm; }
+.intro { font-size: 11pt; color: #3A4458; max-width: 165mm; margin-bottom: 6mm; }
+.fine { font-size: 7.8pt; color: #7A8397; margin-top: 4mm; }
+img.w { display: block; }
+
+/* virselis */
+.cover { background: radial-gradient(120% 80% at 80% 10%, #1E3A6E 0%, #0B1426 55%, #070C17 100%); color: #EAF0FA; padding: 22mm 20mm; }
+.brand { display: flex; align-items: center; gap: 4mm; font-weight: 800; letter-spacing: .18em; font-size: 10pt; color: #5B9BF3; }
+.brand img { width: 13mm; height: 13mm; border-radius: 3mm; box-shadow: 0 0 0 1px rgba(91,155,243,.35); }
+.brand span { color: #9FB2D3; font-weight: 500; letter-spacing: .05em; text-transform: none; }
+.cover h1 { font-size: 38pt; line-height: 1.04; font-weight: 800; margin: 14mm 0 6mm; }
+.cover .lead { font-size: 12.5pt; color: #B9C6DD; max-width: 150mm; }
+.hero { display: flex; justify-content: space-between; align-items: center; height: 100mm; margin: 12mm 0 10mm; }
+.hero img { filter: drop-shadow(0 12px 22px rgba(0,0,0,.55)); }
+.hero .h1, .hero .h3 { width: 52mm; margin-top: 18mm; }
+.hero .h2 { width: 66mm; }
+.benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+.benefits div { border-top: 2px solid #5B9BF3; padding-top: 3mm; }
+.benefits b { font-size: 11.5pt; color: #fff; }
+.benefits p { color: #AEBBD2; font-size: 9.5pt; margin-top: 1.5mm; }
+.cover .foot { position: absolute; bottom: 12mm; left: 20mm; font-size: 7.5pt; color: #6F7E99; }
+
+/* palyginimas */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; color: #3A4458; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; vertical-align: middle; margin: 0 1px; }
+.dot.g { background: #3FAE5A; } .dot.y { background: #E0A526; } .dot.r { background: #D9534F; }
+.cmp { border: 1px solid #E3E8F1; border-radius: 4mm; padding: 2mm 5mm; }
+.cmp .row { display: grid; grid-template-columns: 50mm 1fr 25mm 25mm; align-items: center; gap: 4mm; padding: 1.8mm 0; border-bottom: 1px solid #EEF1F6; }
+.cmp .row:last-child { border-bottom: 0; }
+.cmp .head { font-size: 8pt; font-weight: 700; color: #5C667A; }
+.cmp .head span, .cmp .lbl span { display: block; font-weight: 400; color: #8A93A6; font-size: 7.5pt; }
+.cmp .lbl { font-weight: 600; }
+.cmp .opt .lbl { color: #2F6FE4; }
+.cmp .bar { position: relative; height: 6mm; background: #F2F4F8; border-radius: 1.5mm; }
+.cmp .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: #B8C2D3; border-radius: 1.5mm; }
+.cmp .opt .bar i { background: linear-gradient(90deg, #5B9BF3, #2F6FE4); }
+.cmp .bar b { position: absolute; left: 2mm; top: 50%; transform: translateY(-50%); font-size: 8.5pt; color: #1B2233; }
+.cmp .ppm { font-weight: 700; font-size: 11pt; text-align: center; }
+.vs { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 9pt; margin-bottom: 2mm; }
+.vs th { text-align: left; font-size: 8pt; padding: 2.5mm 4mm; color: #5C667A; }
+.vs th:last-child { color: #fff; background: #2F6FE4; border-radius: 3mm 3mm 0 0; }
+.vs td { padding: 2.6mm 4mm; border-bottom: 1px solid #EEF1F6; vertical-align: top; color: #5C667A; }
+.vs td:first-child { font-weight: 700; color: #1B2233; width: 22mm; padding-left: 0; }
+.vs td:last-child { background: #F3F7FE; color: #1B2233; font-weight: 600; }
+.vs tr:last-child td:last-child { border-radius: 0 0 3mm 3mm; }
+.sub { font-size: 8.8pt; color: #5C667A; margin: -1mm 0 3mm; }
+.takeaways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin-top: 6mm; }
+.takeaways div { background: #F3F7FE; border-radius: 3mm; padding: 4mm; }
+.takeaways b { font-size: 14pt; color: #2F6FE4; display: block; line-height: 1.15; margin-bottom: 1.5mm; }
+.takeaways p { font-size: 9pt; color: #3A4458; margin: 0; }
+
+/* ekranai */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm 8mm; }
+.card { display: grid; grid-template-columns: 36mm 1fr; gap: 4mm; align-items: center; }
+.card .w.sm { width: 36mm; }
+.card p { font-size: 9pt; color: #3A4458; margin: 0; }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; margin-top: 7mm; }
+.facts h4 { font-size: 9.2pt; }
+.facts p { font-size: 8.4pt !important; }
+.closing { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5mm; margin-top: 10mm; }
+.facts div { border-top: 2px solid #2F6FE4; padding-top: 3mm; }
+.facts p, .closing p { font-size: 9pt; color: #3A4458; }
+
+/* rezimai */
+table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
+.modes th { text-align: left; font-size: 8pt; color: #5C667A; font-weight: 700; padding: 2mm 3mm; border-bottom: 2px solid #1B2233; }
+.modes td { padding: 2mm 3mm; border-bottom: 1px solid #E8ECF3; vertical-align: top; }
+.modes td span { color: #7A8397; font-size: 8.3pt; }
+.modes tr.hl td { background: #F3F7FE; }
+.split { display: grid; grid-template-columns: 1fr 88mm; gap: 8mm; margin-top: 4mm; align-items: start; }
+.split p { color: #3A4458; }
+.tap { background: #0B1426; color: #C9D4E8; border-radius: 4mm; padding: 3mm 5mm 1mm; margin: 0 0 5mm; font-size: 9pt; }
+.tap-h, .tap-r { display: grid; grid-template-columns: 34mm 1fr 1fr; gap: 5mm; }
+.tap-h { font-size: 7.8pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #7F90B0; padding: 1.5mm 0 2mm; }
+.tap-h div:last-child { color: #5B9BF3; }
+.tap-r { padding: 3mm 0; border-top: 1px solid #1F2B44; }
+.tap-r b { color: #fff; }
+.tap-r span { display: block; color: #7F90B0; font-size: 8.3pt; }
+.tap-r .ok { color: #fff; font-weight: 600; border-left: 3px solid #5B9BF3; padding-left: 3mm; }
+.callout { margin-top: 4mm; border-left: 3px solid #E0A526; background: #FFF8E8; padding: 3mm 4mm; font-size: 9.2pt; }
+.fig { margin-top: 6mm; }
+.chart { width: 100%; }
+.chart .line { fill: none; stroke: #2F6FE4; stroke-width: 3; stroke-linejoin: round; }
+.chart .grid { stroke: #E8ECF3; stroke-dasharray: 3 3; }
+.chart .lim { stroke: #8A93A6; stroke-dasharray: 4 3; }
+.chart .ax { font-size: 9px; fill: #8A93A6; }
+.chart .note { font-size: 9.5px; fill: #3A4458; font-weight: 600; }
+.cap { font-size: 7.8pt; color: #7A8397; margin-top: 1mm; }
+/* rezimu puslapis - pilniausias: lentele ir juosta glaudziau, kad tilptu ir LT */
+.tankus h2 { margin-bottom: 3mm; }
+.tankus .intro { margin-bottom: 4mm; }
+.tankus .tap { margin-bottom: 3mm; }
+.tankus .tap-r { padding: 2mm 0; }
+.tankus table.modes { font-size: 8.8pt; }
+.tankus .modes td { padding: 1.4mm 3mm; }
+.tankus .split { margin-top: 2mm; }
+.tankus .split h3 { margin-top: 3mm; }
+.tankus .fig { margin-top: 2mm; }
+
+/* optimize / statistika */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5mm; text-align: center; }
+.steps.three { grid-template-columns: repeat(3, 1fr); gap: 8mm; }
+.steps .w.st { width: 38mm; margin: 0 auto 2.5mm; }
+.steps.three .w.st { width: 42mm; }
+.steps b { font-size: 10pt; display: block; margin-bottom: 1mm; }
+.steps p { font-size: 8.8pt; color: #3A4458; }
+.how { background: #F4F6FA; border-radius: 3mm; padding: 4.5mm 6mm; margin-top: 5mm; }
+.how h4 { font-size: 8.5pt; letter-spacing: .12em; text-transform: uppercase; color: #5C667A; margin-bottom: 2mm; }
+.how ul { margin: 0; padding-left: 4.5mm; }
+.how li { font-size: 9pt; color: #3A4458; margin-bottom: 1.4mm; }
+.reasons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin-top: 4mm; }
+.reasons div { background: #F3F7FE; border-radius: 3mm; padding: 3.5mm 4mm; }
+.reasons b { color: #2F6FE4; }
+.reasons p { font-size: 9pt; color: #3A4458; margin: 1mm 0 0; }
+
+/* priedas */
+.gestai { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3mm; margin: 2mm 0 6mm; }
+.gestai div { background: #F3F7FE; border-radius: 3mm; padding: 3mm; text-align: center; }
+.gestai b { display: block; font-size: 16pt; color: #2F6FE4; line-height: 1.1; }
+.gestai span { font-size: 8pt; color: #3A4458; }
+.zemelapis { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4mm 6mm; }
+.pora { display: grid; grid-template-columns: 6mm 26mm 10mm 26mm minmax(0, 1fr); align-items: center; gap: 1.5mm; }
+.pora .nr { width: 6mm; height: 6mm; border-radius: 50%; background: #2F6FE4; color: #fff; font-size: 7.5pt; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.pora .w.mz { width: 26mm; }
+.pora .tuscias { height: 26mm; border-radius: 50%; border: 1.5px dashed #C9D2E3; display: flex; align-items: center; justify-content: center; font-size: 18pt; color: #8A93A6; }
+.pora .rod { text-align: center; color: #2F6FE4; font-size: 14pt; line-height: 1; }
+.pora .rod span { display: block; font-size: 7pt; color: #8A93A6; }
+.pora .pv { font-size: 8.5pt; font-weight: 600; color: #1B2233; padding-left: 1mm; }
+.laikyk { display: grid; grid-template-columns: 34mm 1fr; gap: 5mm; align-items: center; margin-top: 6mm; background: #F4F6FA; border-radius: 3mm; padding: 3mm 5mm; }
+.laikyk .w.mz { width: 34mm; }
+.laikyk p { font-size: 9pt; color: #3A4458; margin: 1mm 0 0; }
+.piliule { display: flex; justify-content: center; align-items: flex-start; gap: 5mm; margin: 2mm 0 6mm; }
+.piliule img { width: 38mm; }   /* kapsules forma jau paveiksle (piliule.py) - be CSS apvado, kitaip dvigubas remelis */
+.pr-h { font-size: 12pt; margin: 6mm 0 1mm; }
+.kompl { display: block; width: 100%; border-radius: 3mm; margin: 2mm 0 2mm; }
+.pr-pastaba { font-size: 8.8pt; color: #3A4458; margin: 1mm 0 0; }
+.pranesimai { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; margin: 2mm 0 3mm; }
+.pranesimai div { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.pranesimai .w.mz { width: 41mm; margin-bottom: 2mm; }
+.pranesimai b { font-size: 9.5pt; }
+.pranesimai span { font-size: 8.3pt; color: #3A4458; }
+.nust-pastabos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm 5mm; }
+.nust-pastabos div { border-top: 2px solid #2F6FE4; padding-top: 2mm; }
+.nust-pastabos b { font-size: 9pt; }
+.nust-pastabos p { font-size: 8.5pt; color: #3A4458; margin: 1mm 0 0; }
+
+.kontaktai { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin-top: 5mm;
+  background: #F3F7FE; border-radius: 3mm; padding: 3mm 5mm; }
+.kontaktai b { display: block; font-size: 8pt; color: #3A4458; font-weight: 600; }
+.kontaktai span { font-size: 9.5pt; color: #2F6FE4; font-weight: 700; }
+.closing { margin-top: 6mm; padding-top: 4mm; border-top: 1px solid #E3E8F1; }
+.closing h4 { font-size: 9pt; }
+.closing p { font-size: 8.3pt; }
+
+@media screen {
+  html { background: #E9EDF4; }
+  body { overflow-x: clip; }
+  .page { scroll-margin-top: 48px; }
+  .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; padding: 10px 16px; background: rgba(11,20,38,.94); font-size: 14px; }
+  .webbar a { color: #5B9BF3; font-weight: 600; text-decoration: none; }
+  .webbar .pdf { background: #2F6FE4; color: #fff; padding: 7px 14px; border-radius: 18px; white-space: nowrap; }
+  .page { width: auto; max-width: 210mm; height: auto; margin: 16px auto; border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(20,30,60,.08); overflow: visible; }
+  .cover .foot { position: static; margin-top: 10mm; }
+  img { max-width: 100%; height: auto; }
+}
+@media screen and (max-width: 760px) {
+  body { font-size: 15px; }
+  .page { margin: 0; border-radius: 0; padding: 28px 16px; box-shadow: none; border-bottom: 8px solid #E9EDF4; }
+  .cover { padding: 32px 16px; }
+  .run { margin-bottom: 18px; }
+  h2 { font-size: 26px; }
+  .cover h1 { font-size: 36px; margin: 28px 0 14px; }
+  .hero { height: auto; gap: 8px; margin: 20px 0; }
+  .hero .h1, .hero .h3 { width: 28%; margin-top: 10%; }
+  .hero .h2 { width: 36%; }
+  .benefits, .two, .grid, .facts, .closing, .takeaways, .steps, .steps.three, .reasons,
+  .split, .zemelapis, .nust-pastabos, .kontaktai { grid-template-columns: 1fr; }
+  .pranesimai { grid-template-columns: 1fr 1fr; }
+  .gestai { grid-template-columns: repeat(3, 1fr); }
+  .steps .w.st, .steps.three .w.st { width: 55%; }
+  .pranesimai .w.mz { width: 90%; }
+  .cmp { padding: 2px 10px; }
+  .cmp .row { grid-template-columns: 1fr 1fr; }
+  .cmp .row .bar { grid-column: 1 / -1; }
+  .tap-h, .tap-r { grid-template-columns: 1fr 1fr; }
+  .tap-h div:first-child, .tap-r div:first-child { grid-column: 1 / -1; }
+  table.modes, .vs { display: block; overflow-x: auto; }
+  .piliule { flex-wrap: wrap; }
+  .piliule img { width: 30%; }
+}
+</style></head><body><div class="webbar"><a href="../">Wrist Control for Vallox</a><a class="pdf" href="wrist-control-guide.pdf" download>Download PDF</a></div>
+
+<section class="page cover">
+  <div class="brand"><img src="img/ikona.png" alt=""><div>WRIST CONTROL <span>for Vallox</span></div></div>
+  <h1>Fresh air at home,<br>right on your wrist.</h1>
+  <p class="lead">A Wear OS app for Vallox heat recovery ventilation. See how fresh the air is,
+  switch modes in two taps, and let the app tune the unit to the way your home breathes.</p>
+  <div class="hero">
+    <img class="w h1" src="img/sensors.png" alt="sensors"><img class="w h2" src="img/optimize_page.png" alt="optimize_page"><img class="w h3" src="img/stats_page.png" alt="stats_page">
+  </div>
+  <div class="benefits">
+    <div><b>See your air</b><p>CO2, humidity and temperatures at a glance, coloured green, yellow or red.</p></div>
+    <div><b>Smart modes</b><p>Every mode you pick on the watch sets its own fan speed and CO2 limit, and Optimize tunes Automatic to your home.</p></div>
+    <div><b>Know the cost</b><p>A weekly summary of air quality and fan electricity, and why it changed.</p></div>
+  </div>
+  <div class="foot">Independent app. Not made or endorsed by Vallox Oy.</div>
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>2</span></header>
+  
+  <div class="kicker">Why it pays off</div>
+  <h2>The same fresh air, with less fan.</h2>
+  <table class="vs">
+    <tr><th></th><th>Vallox unit on its own</th><th>With Wrist Control</th></tr>
+    <tr><td>Modes</td><td>Away and Automatic share one fan speed, so one of them is always a compromise.</td>
+      <td>Each mode sets its own fan speed and CO2 limit the moment you switch.</td></tr>
+    <tr><td>Tuning</td><td>Set by hand once, the same for every home and every season.</td>
+      <td>Optimize fits Automatic to your home's last 7 days, shows a forecast and can undo.</td></tr>
+    <tr><td>Your week</td><td>Current values and charts to read yourself.</td>
+      <td>Fresh-air share, fan electricity and why it changed, in one glance.</td></tr>
+  </table>
+  <h3>One home, one week, six ways to run the unit</h3>
+  <p class="sub"><b>CO2</b> shows how stale the air is: fresh up to 800&nbsp;ppm <i class="dot g"></i>, stuffy to 1200
+  <i class="dot y"></i>, poor above <i class="dot r"></i>. Fan power grows roughly with the cube of speed,
+  so 70&nbsp;% uses about 60&nbsp;% more electricity than 60&nbsp;%.</p>
+  
+    <div class="cmp">
+      <div class="row head"><div></div><div>Fan electricity <span>60&nbsp;% all day = 100</span></div>
+        <div>Morning CO2<span>typical,&nbsp;ppm</span></div><div>Busy hours<span>CO2,&nbsp;ppm</span></div></div>
+      
+        <div class="row">
+          <div class="lbl">Fan at 70&nbsp;% all day</div>
+          <div class="bar"><i style="width:71.0%"></i><b>159</b></div>
+          <div class="ppm" style="color:#3FAE5A">648</div>
+          <div class="ppm" style="color:#3FAE5A">785</div>
+        </div>
+        <div class="row">
+          <div class="lbl">Fan at 60&nbsp;% all day<span>how this home ran</span></div>
+          <div class="bar"><i style="width:44.7%"></i><b>100</b></div>
+          <div class="ppm" style="color:#3FAE5A">686</div>
+          <div class="ppm" style="color:#E0A526">846</div>
+        </div>
+        <div class="row opt">
+          <div class="lbl">Optimize: Clean air</div>
+          <div class="bar"><i style="width:100.0%"></i><b>224</b></div>
+          <div class="ppm" style="color:#3FAE5A">616</div>
+          <div class="ppm" style="color:#3FAE5A">721</div>
+        </div>
+        <div class="row opt">
+          <div class="lbl">Optimize: Balance</div>
+          <div class="bar"><i style="width:42.5%"></i><b>95</b></div>
+          <div class="ppm" style="color:#3FAE5A">676</div>
+          <div class="ppm" style="color:#3FAE5A">773</div>
+        </div>
+        <div class="row opt">
+          <div class="lbl">Optimize: Quiet</div>
+          <div class="bar"><i style="width:10.7%"></i><b>24</b></div>
+          <div class="ppm" style="color:#E0A526">810</div>
+          <div class="ppm" style="color:#E0A526">916</div>
+        </div>
+        <div class="row">
+          <div class="lbl">Automatic, basic settings<span>Away 30&nbsp;%, limit 800</span></div>
+          <div class="bar"><i style="width:7.8%"></i><b>18</b></div>
+          <div class="ppm" style="color:#E0A526">862</div>
+          <div class="ppm" style="color:#E0A526">967</div>
+        </div>
+    </div>
+  <div class="takeaways">
+    <div><b>40&nbsp;% less</b><p>fan electricity than running at 70&nbsp;% all day, with about the same air.
+    That is Optimize Balance.</p></div>
+    <div><b>Fresher busy hours</b><p>than 60&nbsp;% all day: 773 instead of 846&nbsp;ppm,
+    while using 5&nbsp;% less electricity.</p></div>
+    <div><b>76&nbsp;% less</b><p>fan electricity with Quiet, and a quieter home.
+    Mornings rise to about 810&nbsp;ppm.</p></div>
+  </div>
+  <p class="fine">Estimates from one home's 7-day history, made with the same model Optimize uses.
+  Fan electricity only, relative to running at 60&nbsp;% all day. Heating energy is not included:
+  less air also means less heat to recover in winter. "Busy hours" are the stuffiest 10&nbsp;% of the time.</p>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>3</span></header>
+  
+  <div class="kicker">The app</div>
+  <h2>Everything about your air, one swipe apart.</h2>
+  <p class="intro">Swipe left and right between pages. Tap a page to act on it.</p>
+  <div class="grid">
+    
+    <div class="card">
+      <img class="w sm" src="img/sensors.png" alt="sensors">
+      <div><h4>Sensors</h4><p>How the air in your home is right now: fan speed, temperature, humidity and CO2, coloured by comfort. Tap to see the comfort scales.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/temperatures.png" alt="temperatures">
+      <div><h4>Temperatures</h4><p>The four air streams: extract air from the rooms, supply air to them, outdoor air coming in and exhaust air going out.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/unit.png" alt="unit">
+      <div><h4>Unit</h4><p>Your unit's name, the speed of both fans, whether the heat exchanger is recovering heat or bypassed to cool, and the unit's own clock.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/filters_window.png" alt="filters_window">
+      <div><h4>Filters</h4><p>When the filters were changed and when the next change is due. After fitting new ones, tap Changed twice: the date is saved in the unit.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/ventilation.png" alt="ventilation">
+      <div><h4>Ventilation</h4><p>The mode the unit runs now and the fan speed of each mode. Tap to switch modes.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/setmode.png" alt="setmode">
+      <div><h4>Mode</h4><p>Pick a mode here, not on the unit's panel: the watch also sets the values that belong to it. The running mode spins.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/settings.png" alt="settings">
+      <div><h4>Settings</h4><p>Where the numbers come from, how often they refresh, which alerts are on and which pages are shown.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/ciferblatas.png" alt="ciferblatas">
+      <div><h4>On your watch face</h4><p>Indoor, outdoor or supply air temperature, CO2, humidity, fan speed or days to the filter change on your watch face, updated without opening the app.</p></div>
+    </div>
+  </div>
+  <div class="facts">
+    <div><h4>Home and away</h4><p>At home the watch talks to the unit over Wi-Fi. Away, it uses the Vallox cloud and your MyVallox account.</p></div>
+    <div><h4>Alerts that don't nag</h4><p>One notice when indoor air leaves the comfort range, with the same scale as in the app. One when filters are due. No repeats.</p></div>
+    <div><h4>Your pages</h4><p>Hold a page to reorder or hide pages. Keep only what you look at. Ventilation and Settings always stay.</p></div>
+    <div><h4>Sign in from the phone</h4><p>No typing on the watch: the phone app sends your MyVallox login to the watch. English, Suomi, Lietuvių, Polski.</p></div>
+  </div>
+
+</section>
+<section class="page tankus">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>4</span></header>
+  
+  <div class="kicker">Smart modes · the heart of the app</div>
+  <h2>Switch modes on the watch, and every mode runs the way it should.</h2>
+  <p class="intro">Your Vallox keeps <b>one fan speed for both Away and Automatic</b>, and one CO2 limit
+  (the point where it starts adding air) for every mode. The unit's panel switches only the mode, so the unit
+  keeps whatever values were set last. The watch switches the mode <b>and</b> sets that mode's own values, in the same tap.</p>
+  <div class="tap">
+    <div class="tap-h"><div>Same tap</div><div>On the unit's panel</div><div>On the watch</div></div>
+    <div class="tap-r"><div><b>You leave home</b><span>tap Away</span></div>
+      <div>Away keeps the speed tuned for Automatic, 45&nbsp;%: <b>about 3.4 times the fan electricity</b> for an empty house.</div>
+      <div class="ok">Away runs at 30&nbsp;%, the right speed for an empty house.</div></div>
+    <div class="tap-r"><div><b>You come back</b><span>tap Automatic / Optimized</span></div>
+      <div>Automatic starts from the Away speed of 30&nbsp;%: <b>mornings reach about 862&nbsp;ppm</b>, stuffy.</div>
+      <div class="ok">Optimized returns to your Optimize settings: mornings about 676&nbsp;ppm.</div></div>
+  </div>
+  <table class="modes">
+    <tr><th>Mode</th><th>Use it when</th><th>The watch also sets</th><th>Lasts</th></tr>
+    <tr><td><b>At home</b></td><td>People are home and you want a steady fan</td><td>CO2 limit 800&nbsp;ppm</td><td>Until you switch</td></tr>
+    <tr><td><b>Away</b></td><td>The house is empty</td><td>Fan 30&nbsp;%, CO2 limit 800&nbsp;ppm</td><td>Until you switch</td></tr>
+    <tr class="hl"><td><b>Optimized</b><br><span>first in the list</span></td><td>You want the fan to follow the air</td><td>Your Optimize settings<br><span>(fan at rest 45&nbsp;%, limit 600&nbsp;ppm before you optimize). Slows to 30&nbsp;% when nobody is home, to 35&nbsp;% when winter air is dry; offers a Boost when humidity jumps</span></td><td>Until you switch</td></tr>
+    <tr><td><b>Boost</b></td><td>Cooking, sauna, guests</td><td>Nothing</td><td>60 min, then back to the previous mode</td></tr>
+    <tr><td><b>Custom</b></td><td>Fireplace or special use</td><td>Nothing</td><td>Its timer, then back</td></tr>
+    <tr><td><b>Auto</b><br><span>last in the list</span></td><td>You want the Vallox factory behaviour</td><td>Factory values: fan 30&nbsp;%, CO2 limit 800&nbsp;ppm</td><td>Until you switch</td></tr>
+  </table>
+  <div class="split">
+    <div>
+      <h3>How Automatic decides</h3>
+      <p>Two settings decide it. The <b>Away speed</b> is the lowest speed the fan runs at.
+      The <b>CO2 limit</b> is the point where the unit starts adding air: above it, about 1&nbsp;% of fan
+      speed for every 10&nbsp;ppm, up to the Boost speed.</p>
+      <p>A lower limit or a higher Away speed means fresher air and more fan. Finding the right pair for your
+      home is what Optimize does.</p>
+    </div>
+    <div class="fig">
+    <svg viewBox="0 0 360 190" class="chart">
+      <line x1="40" x2="350" y1="93.4" y2="93.4" class="grid"/><line x1="40" x2="350" y1="34.2" y2="34.2" class="grid"/><rect x="40.0" y="160" width="177.1" height="5" fill="#3FAE5A"/><rect x="217.1" y="160" width="132.9" height="5" fill="#E0A526"/><text x="40.0" y="178" class="ax" text-anchor="middle">400</text><text x="128.6" y="178" class="ax" text-anchor="middle">600</text><text x="217.1" y="178" class="ax" text-anchor="middle">800</text><text x="305.7" y="178" class="ax" text-anchor="middle">1000</text><text x="34" y="164.0" class="ax" text-anchor="end">0%</text><text x="34" y="97.4" class="ax" text-anchor="end">45%</text><text x="34" y="38.2" class="ax" text-anchor="end">85%</text>
+      <line x1="84.3" x2="84.3" y1="14" y2="160" class="lim"/>
+      <text x="89.3" y="24" class="note">CO2 limit</text>
+      <polyline points="40.0,93.4 44.4,93.4 48.9,93.4 53.3,93.4 57.7,93.4 62.1,93.4 66.6,93.4 71.0,93.4 75.4,93.4 79.9,93.4 84.3,93.4 88.7,91.9 93.1,90.4 97.6,89.0 102.0,87.5 106.4,86.0 110.9,84.5 115.3,83.0 119.7,81.6 124.1,80.1 128.6,78.6 133.0,77.1 137.4,75.6 141.9,74.2 146.3,72.7 150.7,71.2 155.1,69.7 159.6,68.2 164.0,66.8 168.4,65.3 172.9,63.8 177.3,62.3 181.7,60.8 186.1,59.4 190.6,57.9 195.0,56.4 199.4,54.9 203.9,53.4 208.3,52.0 212.7,50.5 217.1,49.0 221.6,47.5 226.0,46.0 230.4,44.6 234.9,43.1 239.3,41.6 243.7,40.1 248.1,38.6 252.6,37.2 257.0,35.7 261.4,34.2 265.9,34.2 270.3,34.2 274.7,34.2 279.1,34.2 283.6,34.2 288.0,34.2 292.4,34.2 296.9,34.2 301.3,34.2 305.7,34.2 310.1,34.2 314.6,34.2 319.0,34.2 323.4,34.2 327.9,34.2 332.3,34.2 336.7,34.2 341.1,34.2 345.6,34.2 350.0,34.2" class="line"/>
+      <text x="44.4" y="85.4" class="note">Away speed</text>
+      <text x="345.6" y="26.2" class="note" text-anchor="end">Boost speed</text>
+      <text x="350" y="188" class="ax" text-anchor="end">CO2,&nbsp;ppm</text>
+    </svg><div class="cap">Example: Away speed 45&nbsp;%, CO2 limit 500&nbsp;ppm, Boost 85&nbsp;%.</div></div>
+  </div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>5</span></header>
+  
+  <div class="kicker">Optimized · automation</div>
+  <h2>Optimized adjusts itself while you live.</h2>
+  <p class="intro">While <b>Optimized</b> is on, the app checks three rules after every reading. It never drives
+  the fans directly: two rules only change the <b>fan at rest</b> (the Away speed Automatic starts from), and the
+  unit's own CO2 control keeps working between readings. The third rule only offers a Boost. The numbers were
+  checked against a year of real history (2025-09-15 - 2026-09-14, 47,789 records every 10 min).</p>
+  <table class="modes">
+    <tr><th>Rule</th><th>When</th><th>What happens</th><th>Ends when</th><th>In a year of history</th></tr>
+    <tr><td><b>Nobody home</b></td><td>CO2 at most 460&nbsp;ppm for 90 min without a break, no humidity jumps</td>
+      <td>Fan at rest 45 → <b>30&nbsp;%</b></td><td>CO2 rises 80&nbsp;ppm above its lowest value, or humidity jumps</td>
+      <td>89 times, about 1.7 a week, median 1.7 h</td></tr>
+    <tr><td><b>Dry air</b></td><td>Below +5 °C outdoors, indoor humidity under 38&nbsp;% in two readings in a row, CO2 at least 100&nbsp;ppm under the limit</td>
+      <td>Fan at rest → <b>35&nbsp;%</b></td><td>Humidity rises above 43&nbsp;%</td>
+      <td>6 times in a winter, about 67 h in total</td></tr>
+    <tr><td><b>Boost offer</b></td><td>Humidity up 8&nbsp;% within about 30 min</td>
+      <td>Notification "Shower?" or "Cooking?" - tap to Boost</td><td>At most once an hour</td>
+      <td>About 220 a year, 4 a week</td></tr>
+  </table>
+  <div class="split">
+    <div>
+      <h3>Why the fan at rest, not the mode</h3>
+      <p>"Nobody home" does not switch to Away. It only lowers the speed Automatic starts from. When people come
+      back, nobody has to wait for the watch: the unit sees CO2 rising and adds air by itself, and at the next
+      reading the app restores the Optimized value. The same holds for "Dry air".</p>
+      <h3>Shower or cooking</h3>
+      <p>Told apart roughly: if the extract air gets at least 1 °C warmer together with the humidity, it says
+      "Cooking?", otherwise "Shower?". Hence the question mark.</p>
+    </div>
+    <div>
+      <h3>Boost and Custom</h3>
+      <p>While a temporary mode runs, the automation changes nothing and waits until the unit is back in Optimized.</p>
+      <h3>Week schedule</h3>
+      <p>If the unit's week schedule is on, it would switch the mode at set times and quietly end Optimized. The
+      first time you pick Optimized, the app asks once: pause the schedule while Optimized is on? With Pause the
+      schedule is switched off - its events are kept - and switched back on when you choose another lasting mode.
+      The app restores only what it paused itself. Under Optimized a line says "Schedule paused" or "Schedule on".</p>
+    </div>
+  </div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>6</span></header>
+  
+  <div class="kicker">Optimized · how often, and what never changes</div>
+  <h2>The watch looks when something happens.</h2>
+  <table class="modes">
+    <tr><th>Data refresh: Auto</th><th>Reading</th></tr>
+    <tr><td>Hours when your home is usually busy</td><td>every 20 min</td></tr>
+    <tr><td>Ordinary hours</td><td>every 30 min</td></tr>
+    <tr><td>Night, 1-5 h</td><td>every 60 min</td></tr>
+    <tr><td>A change was just seen (humidity +3&nbsp;% or CO2 +100&nbsp;ppm since the last reading)</td><td>every 15 min for an hour</td></tr>
+  </table>
+  <p class="intro" style="margin-top:4mm">The busy hours are learned for each unit from its own history (when Optimize or Statistics
+  downloads it) and from the changes the watch sees. Until there is enough data: 6-8 and 19-22 h. The default is a
+  fixed 1 h; Auto, 20 min, 30 min or Only in app can be chosen in Settings → Data refresh. Auto drains the
+  battery faster. With Only in app nothing runs in the
+  background: no notifications and no automation. At night Android may group the readings.</p>
+  <div class="split">
+    <div>
+      <h3>What the app changes</h3>
+      <p>On its own only four things: the <b>mode</b>, the <b>Away speed</b>, the <b>CO2 limit</b> and the
+      <b>week schedule switch</b>. When you ask, it also writes the filter change date and corrects the unit's clock.</p>
+      <h3>What it never changes</h3>
+      <p>The Home and Boost speeds, humidity control, the heater, bypass and Custom settings. Optimize stays within
+      a safe range (fan at rest 20-70&nbsp;%, CO2 limit 500-1000&nbsp;ppm), and Undo restores the previous values.</p>
+      <h3>Without a connection</h3>
+      <p>The app changes nothing, and the unit keeps running with the last settings.</p>
+    </div>
+    <div>
+      <h3>Planned</h3>
+      <p><b>Per-unit thresholds:</b> the "empty home" CO2 level and the humidity jump worked out for each unit from its
+      own history - today they are one apartment's numbers. <b>Summer cooling:</b> more air when the night is cooler
+      outside than inside, less on a hot day. <b>Weather forecast</b> - once there is summer experience.</p>
+      <h3>The full paper</h3>
+      <p>The same logic with the Vallox control curve, the mode recipes and Optimize step by step - for installers:</p>
+      <p><a href="https://tinyowllabs.com/wristcontrol/guide/wrist-control-automation.pdf">How the automation works (PDF, English)</a><br>
+      <a href="https://tinyowllabs.com/wristcontrol/guide/wrist-control-automatika.pdf">Kaip veikia automatika (PDF, lietuviškai)</a></p>
+    </div>
+  </div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>7</span></header>
+  
+  <div class="kicker">Optimize</div>
+  <h2>Settings made for your home, not for an average one.</h2>
+  <p class="intro">Every home produces CO2 differently: how many people, how big the rooms, when you sleep and
+  cook. Optimize reads your unit's last 7 days, learns how much fresh air your home needs at each time of day,
+  and picks the Away speed and CO2 limit for Automatic.</p>
+  <div class="steps">
+    <div><img class="w st" src="img/opt_start.png" alt="opt_start"><b>1 · Analyse</b><p>Tap Analyse. The watch reads the unit's 7-day history: from the unit at home, from the Vallox cloud when away.</p></div>
+    <div><img class="w st" src="img/opt_goal.png" alt="opt_goal"><b>2 · Choose a goal</b><p>Clean air (about 600&nbsp;ppm), Balance (about 700) or Quiet: less air, less fan.</p></div>
+    <div><img class="w st" src="img/opt_forecast.png" alt="opt_forecast"><b>3 · See the forecast</b><p>Morning and daytime CO2 and fan speed, now › after. Nothing changes until you tap Apply.</p></div>
+    <div><img class="w st" src="img/opt_check.png" alt="opt_check"><b>4 · Check after a day</b><p>The watch compares the forecast with the real morning. Undo brings back your old values.</p></div>
+  </div>
+  <div class="how">
+    <h4>How it works</h4>
+    <ul>
+      <li><b>Learns your home.</b> For the morning (6-10), day (10-18), evening (18-24) and night, it measures how fast your home adds CO2, from CO2 and fan speed in the history.</li>
+      <li><b>Tries every option.</b> It simulates each Away speed from 20 to 70&nbsp;% and CO2 limit from 500 to 1000&nbsp;ppm and predicts where CO2 settles.</li>
+      <li><b>Picks the cheapest that works.</b> Of the options that meet the goal at every time of day, in typical and in busy hours, it takes the one with the least fan electricity. If none does, it shows the closest.</li>
+      <li><b>Goals</b>, typical / busy hours: Clean 620 / 720&nbsp;ppm · Balance 700 / 800 · Quiet 850 / 1000.</li>
+      <li><b>Stays safe.</b> It never writes values outside those ranges, and keeps your previous values for Undo.</li>
+    </ul>
+  </div>
+  <p class="fine">Example home: Balance chose Away speed 45&nbsp;% and CO2 limit 500&nbsp;ppm.</p>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>8</span></header>
+  
+  <div class="kicker">Statistics</div>
+  <h2>Your week: was the air good, and what did it cost?</h2>
+  <p class="intro">Statistics reads the same 7-day history and answers three questions: how fresh the air was,
+  how much the fans used compared with last week, and why that changed.</p>
+  <div class="steps three">
+    <div><img class="w st" src="img/stats_page.png" alt="stats_page"><b>Fresh air share</b><p>How much of the week CO2 stayed up to 800&nbsp;ppm, with average CO2 and fan speed.</p></div>
+    <div><img class="w st" src="img/stats_top.png" alt="stats_top"><b>The week in detail</b><p>Time in fresh, stuffy and poor air, and average CO2, humidity and fan next to last week.</p></div>
+    <div><img class="w st" src="img/stats_energy.png" alt="stats_energy"><b>Electricity and why</b><p>Fan electricity against last week, split into three reasons.</p></div>
+  </div>
+  <div class="reasons">
+    <div><b>Settings</b><p>You changed a mode's speed or ran a different mode.</p></div>
+    <div><b>People</b><p>The unit added air because CO2 rose: more people at home, guests.</p></div>
+    <div><b>Weather and other</b><p>Humidity boosts, summer cooling, manual boosts.</p></div>
+  </div>
+  <div class="how">
+    <h4>How it works</h4>
+    <ul>
+      <li><b>Electricity from fan speed.</b> Fan power grows roughly with the cube of speed, so the change is shown in percent, not kWh.</li>
+      <li><b>Reads the settings from the history.</b> For every hour it finds the mode's base speed and the CO2 limit that was in use, so changes made on the panel or in another app are counted correctly.</li>
+      <li><b>Splits the change.</b> Base speed counts as Settings, the extra added for CO2 as People, everything else as Weather and other.</li>
+      <li><b>Heating season.</b> When it is cold outside, it also shows heat loss per degree of cold, which takes the weather out of the comparison.</li>
+    </ul>
+  </div>
+  <div class="closing">
+    <div><h4>Requirements</h4><p>Wear OS 4 or newer. A Vallox unit with MyVallox: cloud account or access on your home network.</p></div>
+    <div><h4>Privacy</h4><p>No ads, no analytics, no tracking. Your account stays on the watch, password encrypted, sent only to the Vallox cloud.</p></div>
+    <div><h4>Price</h4><p>Free to download. Pro (smart modes, Optimize, Statistics) is a one-time purchase with 14 days free to try.</p></div>
+    <div><h4>Independent</h4><p>Wrist Control for Vallox is not made, endorsed or supported by Vallox Oy. Vallox and MyVallox are trademarks of Vallox Oy.</p></div>
+  </div>
+  <div class="kontaktai">
+    <div><b>Questions, feedback, a photo of something wrong</b>
+      <span>hello@tinyowllabs.com</span></div>
+    <div><b>App and privacy policy</b>
+      <span>tinyowllabs.com/wristcontrol</span></div>
+    <div><b>Independent developer</b>
+      <span>TinyOwl</span></div>
+  </div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>9</span></header>
+  
+  <div class="kicker">Appendix</div>
+  <h2>Getting around</h2>
+  <div class="gestai">
+    <div><b>‹ ›</b><span>Swipe sideways<br>next page</span></div>
+    <div><b>●</b><span>Tap a page<br>open its window</span></div>
+    <div><b>‹</b><span>Swipe sideways in a window<br>back</span></div>
+    <div><b>↑</b><span>Swipe up<br>close the app</span></div>
+    <div><b>◎</b><span>Turn the bezel<br>scroll or flip pages</span></div>
+  </div>
+  <div class="zemelapis">
+    
+        <div class="pora">
+          <div class="nr">1</div>
+          <img class="w mz" src="img/sensors.png" alt="sensors">
+          <div class="rod"><span>tap</span>→</div>
+          <img class="w mz" src="img/comfort_top.png" alt="comfort_top">
+          <div class="pv">Comfort scales</div>
+        </div>
+    
+        <div class="pora">
+          <div class="nr">2</div>
+          <img class="w mz" src="img/temperatures.png" alt="temperatures">
+          <div class="rod"><span>tap</span>→</div>
+          <img class="w mz" src="img/setmode.png" alt="setmode">
+          <div class="pv">Mode</div>
+        </div>
+    
+        <div class="pora">
+          <div class="nr">3</div>
+          <img class="w mz" src="img/unit.png" alt="unit">
+          <div class="rod"><span>tap</span>→</div>
+          <div class="w mz tuscias">↻</div>
+          <div class="pv">Refresh</div>
+        </div>
+    
+        <div class="pora">
+          <div class="nr">4</div>
+          <img class="w mz" src="img/filters.png" alt="filters">
+          <div class="rod"><span>tap</span>→</div>
+          <img class="w mz" src="img/filters_window.png" alt="filters_window">
+          <div class="pv">Filters changed</div>
+        </div>
+    
+        <div class="pora">
+          <div class="nr">5</div>
+          <img class="w mz" src="img/settings.png" alt="settings">
+          <div class="rod"><span>tap</span>→</div>
+          <img class="w mz" src="img/settings_top.png" alt="settings_top">
+          <div class="pv">Settings</div>
+        </div>
+    
+        <div class="pora">
+          <div class="nr">6</div>
+          <img class="w mz" src="img/ventilation.png" alt="ventilation">
+          <div class="rod"><span>tap</span>→</div>
+          <img class="w mz" src="img/setmode.png" alt="setmode">
+          <div class="pv">Mode</div>
+        </div>
+    
+        <div class="pora">
+          <div class="nr">7</div>
+          <img class="w mz" src="img/optimize_page.png" alt="optimize_page">
+          <div class="rod"><span>tap</span>→</div>
+          <img class="w mz" src="img/opt_goal.png" alt="opt_goal">
+          <div class="pv">Optimize</div>
+        </div>
+    
+        <div class="pora">
+          <div class="nr">8</div>
+          <img class="w mz" src="img/stats_page.png" alt="stats_page">
+          <div class="rod"><span>tap</span>→</div>
+          <img class="w mz" src="img/stats_top.png" alt="stats_top">
+          <div class="pv">Statistics</div>
+        </div>
+  </div>
+  <div class="laikyk">
+    <img class="w mz" src="img/reorder.png" alt="reorder">
+    <div><b>Hold any page</b><p>Pages turn into round cards. Drag to change the order, tap to finish.
+    Hide pages in Settings.</p></div>
+  </div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>10</span></header>
+  
+  <div class="kicker">Appendix</div>
+  <h2>Settings</h2>
+  <p class="intro">Tap the SETTINGS page. The window scrolls; turn the bezel or swipe up.</p>
+  <div class="piliule">
+    <img src="img/nust_0.png" alt=""><img src="img/nust_1.png" alt=""><img src="img/nust_2.png" alt=""><img src="img/nust_3.png" alt="">
+  </div>
+  <div class="nust-pastabos">
+    <div><b>Cloud · My account</b><p>Sign in here or from the phone app. Under the button: the account, and a warning if Vallox rejects it</p></div>
+    <div><b>Unit · Connection</b><p>Which unit, and the path: Auto, home Wi-Fi only or cloud only. Without the cloud, Find units searches your network</p></div>
+    <div><b>Data refresh</b><p>1 h (default), 20 or 30 min, only in the app, or Auto: every 20-60 min, every 15 after a change</p></div>
+    <div><b>Unit clock</b><p>The unit keeps its own time. Ask to fix, fix automatically, or don't check</p></div>
+    <div><b>Alerts</b><p>Notifications for temperature, humidity, CO2 and filters</p></div>
+    <div><b>Pages</b><p>Show or hide each page. Ventilation and Settings always stay</p></div>
+    <div><b>How it works · Language</b><p>Short help on every feature. English, Suomi, Lietuvių, Polski</p></div>
+    <div><b>Send test alerts</b><p>Five sample notifications, to see how they look on your watch</p></div>
+  </div>
+  <div class="kontaktai">
+    <div><b>Questions, feedback, a photo of something wrong</b>
+      <span>hello@tinyowllabs.com</span></div>
+    <div><b>App and privacy policy</b>
+      <span>tinyowllabs.com/wristcontrol</span></div>
+    <div><b>Independent developer</b>
+      <span>TinyOwl</span></div>
+  </div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png" alt="">Wrist Control for Vallox</span><span>11</span></header>
+  
+  <div class="kicker">Appendix</div>
+  <h2>On your wrist without opening the app</h2>
+  <h3 class="pr-h">Complications</h3>
+  <p class="intro">Touch and hold the watch face, tap Customize, pick a slot and choose Wrist Control. Tap a complication to open the app.</p>
+  <img class="kompl" src="img/komplikacijos.png" alt="">
+  <p class="pr-pastaba">The diamond is the unit's heat exchanger, drawn like on the unit itself. The white dot shows where the temperature is measured.
+  Filter change shows days left, with a minus when overdue.</p>
+  <h3 class="pr-h">Notifications</h3>
+  <div class="pranesimai">
+    <div><img class="w mz" src="img/pranesimas_karstis.png" alt="pranesimas_karstis"><b>Temperature</b><span>below 18 or above 27 °C</span></div>
+    <div><img class="w mz" src="img/pranesimas_dregme.png" alt="pranesimas_dregme"><b>Humidity</b><span>below 25 or above 60&nbsp;%</span></div>
+    <div><img class="w mz" src="img/pranesimas_co2.png" alt="pranesimas_co2"><b>CO2</b><span>from 800&nbsp;ppm, again from 1200</span></div>
+    <div><img class="w mz" src="img/pranesimas_laikrodis.png" alt="pranesimas_laikrodis"><b>Unit clock</b><span>more than 5 min off; tap to fix</span></div>
+  </div>
+  <p class="pr-pastaba">One notice when a value leaves its range, no repeats; it disappears when the value is back.
+  The scale is the same as in the app, so you see how far out you are. Filters get a notice when a change is due.
+  Temperature, humidity, CO2 and filter notices can be turned off in Settings → Alerts. The clock notice cannot:
+  a wrong unit clock spoils the history that Optimize and Statistics rely on. Choose Don't check to silence it.
+  A notice that suggests a mode - high CO2 or humidity, or "Shower?" with Tap to Boost - opens the Ventilation page,
+  so you see the mode change.</p>
+
+</section>
+</body></html>
