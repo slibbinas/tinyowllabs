@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy - TinyStatus</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" href="/style.css">
+<script>try{var m=localStorage.getItem("tema");if(m==="light"||m==="dark")document.documentElement.dataset.theme=m;}catch(e){}</script>
+</head>
+<body>
+<main>
+<header class="top"><a class="brand" href="/tinystatus/"><img src="/tinystatus.png" alt=""><div><b>TinyStatus</b><span class="motto">by TinyOwl</span></div></a></header>
+
+<h1>Privacy Policy</h1>
+<p class="muted">Last updated: 22 September 2026</p>
+
+<p>TinyStatus ("the app") is a Wear OS app, with a small phone companion, that shows the status of
+your 3D printers on your watch: TinyMaker resin printers and Bambu Lab printers. It is developed by
+TinyOwl, the developer name of Viktoras Šidlauskas, an individual developer. The app is <b>not made,
+endorsed or supported by TinyMaker or Bambu Lab</b>. "TinyMaker" and "Bambu Lab" are trademarks of
+their respective owners and are used only to say which printers the app works with.</p>
+
+<p><b>In short:</b> the app has no server of its own, no analytics, no advertising and no tracking.
+It only reads the status of your printers. Everything stays on your watch, except what has to go to
+your own printer or to your Bambu Lab account to read that status.</p>
+
+<h2>What the app handles</h2>
+<div class="table">
+<table>
+<tr><th>Data</th><th>Why</th><th>Where it is kept</th><th>Where it is sent</th></tr>
+<tr><td>TinyMaker printer name or local IP address</td><td>To read the printer on your home network</td><td>On the watch only</td><td>Only to your printer, on your own network</td></tr>
+<tr><td>Bambu Lab account e-mail</td><td>To show which account is signed in</td><td>On the watch only</td><td>Only to Bambu Lab (api.bambulab.com) over HTTPS, when you sign in</td></tr>
+<tr><td>Bambu Lab password and e-mail code</td><td>To sign in once</td><td><b>Not stored</b>. Used only during sign-in</td><td>Only to Bambu Lab over HTTPS</td></tr>
+<tr><td>Bambu Lab sign-in token, your printers' names, models, serial numbers and access codes</td><td>To read your printers without asking you to sign in again</td><td>On the watch only. The token and access codes are encrypted with a key held in the Android Keystore</td><td>Only to Bambu Lab's servers (MQTT over TLS) or to your printer on your own network</td></tr>
+<tr><td>Printer status (state, progress, time left, layers, resin or filament information, errors)</td><td>To show it in the app, the tile, on the watch face and in notifications</td><td>Cached on the watch only</td><td>Not sent anywhere</td></tr>
+<tr><td>App settings (printers shown, background interval, alerts, language)</td><td>To remember your choices</td><td>On the watch only</td><td>Not sent anywhere</td></tr>
+</table>
+</div>
+
+<p>The phone app only checks which version of TinyStatus is on your watch and helps install or open it.
+It talks to the watch over the encrypted Wear OS connection between your own devices and does not
+handle any printer or account data.</p>
+
+<h2>What the app does not do</h2>
+<ul>
+<li>It does not control your printers. It only reads their status.</li>
+<li>It does not collect or share personal data with the developer or any third party.</li>
+<li>It does not use analytics, crash reporting, advertising or tracking SDKs.</li>
+<li>It does not access your location, contacts, health data, microphone or camera.</li>
+<li>It does not sell data. There is no data to sell.</li>
+</ul>
+
+<h2>Permissions</h2>
+<ul>
+<li><b>Internet, network state, change network state:</b> to reach your printers on the home network or Bambu Lab's servers, and to ask for Wi-Fi only when needed.</li>
+<li><b>Notifications:</b> to tell you when a print finishes, pauses or stops with an error. Alerts can be turned off in the app.</li>
+<li><b>Foreground service, wake lock, alarms:</b> to keep checking a running print in the background, briefly waking the watch at the interval you choose. It stops by itself after the print ends.</li>
+<li><b>Run at startup:</b> so a background check that was running continues after the watch restarts.</li>
+</ul>
+
+<h2>Your control over the data</h2>
+<ul>
+<li>Signing out of Bambu Lab in the app deletes the token and the stored printer access codes.</li>
+<li>Uninstalling the app, or clearing its storage in the watch settings, removes everything it stored on the watch.</li>
+<li>Your Bambu Lab account is managed by Bambu Lab under their own privacy policy.</li>
+</ul>
+
+<h2>Children</h2>
+<p>The app is not directed at children and does not knowingly handle data from children.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes, the new version will be published at this address with a new date.</p>
+
+<h2>Contact</h2>
+<p>Questions about this policy: <a href="mailto:hello@tinyowllabs.com">hello@tinyowllabs.com</a></p>
+</main>
+</body>
+</html>
