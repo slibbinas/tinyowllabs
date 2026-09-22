@@ -20,6 +20,12 @@
       return;
     }
     var q = location.search ? location.search + "&from=tinyowl" : "?from=tinyowl";
+    // tinymakerwifi.com Worker (landing-proxy) tą naktį perdavė github 301, ir narsykles
+    // isiminė, kad pats tinymakerwifi.com perkeltas cia. Tokius - atgal i tinymakerwifi.com.
+    if (kelias.indexOf("/TinyMakerWifi/landing") === 0) {
+      location.replace("https://tinymakerwifi.com/" + q + location.hash);
+      return;
+    }
     location.replace("https://slibbinas.github.io" + kelias + q + location.hash);
   }
 })();
