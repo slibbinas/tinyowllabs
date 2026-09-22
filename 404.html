@@ -7,26 +7,28 @@
 <!--
   2026-09-21 ~00:28-02:07 slibbinas.github.io turejo CNAME tinyowllabs.com, ir GitHub
   301 peradresavo slibbinas.github.io/<projektas>/... i tinyowllabs.com/<projektas>/....
-  Narsykles 301 isimena - todel nerastas adresas cia grazinamas atgal i
-  slibbinas.github.io su tuo paciu keliu (pvz. /TinyMakerWifi/landing/).
+  tinymakerwifi.com Worker (landing-proxy) ta 301 perdave narsyklems, ir jos isimine.
+  Todel nerastas adresas cia grazinamas atgal:
+    /TinyMakerWifi/landing...  -> https://www.tinymakerwifi.com/
+    kiti                        -> https://slibbinas.github.io<tas pats kelias>
+  Tik VIENA karta per 30 s: jei narsykle isiminusi ir ta adresa, ji vel atsidurtu cia -
+  tada rodom nuoroda, o ne sukam rata.
 -->
 <script>
 (function () {
   var kelias = location.pathname;
-  if (kelias !== "/" && kelias.indexOf("/tinystatus") !== 0 && kelias.indexOf("/wristcontrol") !== 0) {
-    // Priedas "from=tinyowl" butinas: narsykle isiminusi 301 butent be jo, tad be priedo
-    // grizimas atgal i slibbinas.github.io vel nukeltu cia - ratas.
-    if (location.search.indexOf("from=tinyowl") >= 0) {
-      return;
-    }
-    var q = location.search ? location.search + "&from=tinyowl" : "?from=tinyowl";
-    // tinymakerwifi.com Worker (landing-proxy) tą naktį perdavė github 301, ir narsykles
-    // isiminė, kad pats tinymakerwifi.com perkeltas cia. Tokius - atgal i tinymakerwifi.com.
-    if (kelias.indexOf("/TinyMakerWifi/landing") === 0) {
-      location.replace("https://tinymakerwifi.com/index.html" + location.hash);   // ne "/" - ji narsykle isiminusi
-      return;
-    }
-    location.replace("https://slibbinas.github.io" + kelias + q + location.hash);
+  if (kelias === "/" || kelias.indexOf("/tinystatus") === 0 || kelias.indexOf("/wristcontrol") === 0) {
+    return;
+  }
+  var tikslas = kelias.indexOf("/TinyMakerWifi/landing") === 0
+      ? "https://www.tinymakerwifi.com/"
+      : "https://slibbinas.github.io" + kelias + location.search + location.hash;
+  window.tikslas = tikslas;
+  var dabar = Date.now(), buvo = 0;
+  try { buvo = parseInt(localStorage.getItem("grazinta") || "0", 10); } catch (e) {}
+  if (dabar - buvo > 30000) {
+    try { localStorage.setItem("grazinta", String(dabar)); } catch (e) {}
+    location.replace(tikslas);
   }
 })();
 </script>
@@ -34,8 +36,14 @@
 </head>
 <body>
 <main>
-<h1>Page not found</h1>
-<p><a href="/">TinyOwl</a></p>
+<h1>This page has moved</h1>
+<p id="kur"><a href="/">TinyOwl</a></p>
+<p class="muted">If you keep landing here, your browser remembers an old redirect. Clear the browser cache (cached images and files) and open the address again.</p>
 </main>
+<script>
+if (window.tikslas) {
+  document.getElementById("kur").innerHTML = 'Open <a href="' + window.tikslas + '">' + window.tikslas.replace(/^https:\/\//, "") + '</a>';
+}
+</script>
 </body>
 </html>
