@@ -14,7 +14,13 @@
 (function () {
   var kelias = location.pathname;
   if (kelias !== "/" && kelias.indexOf("/tinystatus") !== 0 && kelias.indexOf("/wristcontrol") !== 0) {
-    location.replace("https://slibbinas.github.io" + kelias + location.search + location.hash);
+    // Priedas "from=tinyowl" butinas: narsykle isiminusi 301 butent be jo, tad be priedo
+    // grizimas atgal i slibbinas.github.io vel nukeltu cia - ratas.
+    if (location.search.indexOf("from=tinyowl") >= 0) {
+      return;
+    }
+    var q = location.search ? location.search + "&from=tinyowl" : "?from=tinyowl";
+    location.replace("https://slibbinas.github.io" + kelias + q + location.hash);
   }
 })();
 </script>
