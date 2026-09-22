@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>User guide - TinyStatus</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; font-family: Inter, "Segoe UI", Arial, sans-serif; color: #1B2233; font-size: 10.2pt; line-height: 1.45; }
+.page { width: 210mm; height: 297mm; padding: 16mm 17mm 14mm; position: relative; overflow: hidden; page-break-after: always; background: #fff; }
+.run { display: flex; justify-content: space-between; font-size: 7.5pt; color: #8A93A6; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 9mm; }
+.run .rl { display: flex; align-items: center; gap: 2mm; }
+.run img { width: 4.5mm; height: 4.5mm; border-radius: 1.2mm; }
+.kicker { color: #E8720C; font-weight: 700; font-size: 8.5pt; letter-spacing: .14em; text-transform: uppercase; }
+h1, h2, h3, h4 { margin: 0; letter-spacing: -.01em; }
+h2 { font-size: 22pt; line-height: 1.12; font-weight: 800; margin: 2mm 0 5mm; max-width: 165mm; }
+h3 { font-size: 11.5pt; font-weight: 700; margin: 6mm 0 3mm; }
+h4 { font-size: 10.5pt; font-weight: 700; margin-bottom: 1mm; }
+p { margin: 0 0 2mm; }
+.intro { font-size: 11pt; color: #3A4458; max-width: 165mm; margin-bottom: 6mm; }
+.fine { font-size: 8pt; color: #7A8397; margin-top: 5mm; }
+img.w { display: block; }
+.cover { background: radial-gradient(120% 80% at 80% 10%, #24304A 0%, #12161E 55%, #0B0E14 100%); color: #EAF0FA; padding: 22mm 20mm; }
+.brand { display: flex; align-items: center; gap: 4mm; font-weight: 800; letter-spacing: .18em; font-size: 10pt; color: #E8720C; }
+.brand img { width: 13mm; height: 13mm; border-radius: 3mm; }
+.brand span { color: #9FB2D3; font-weight: 500; letter-spacing: .05em; text-transform: none; }
+.cover h1 { font-size: 38pt; line-height: 1.04; font-weight: 800; margin: 14mm 0 6mm; }
+.cover .lead { font-size: 12.5pt; color: #B9C6DD; max-width: 150mm; }
+.hero { display: flex; justify-content: space-between; align-items: center; height: 100mm; margin: 12mm 0 10mm; }
+.hero img { filter: drop-shadow(0 12px 22px rgba(0,0,0,.55)); }
+.hero .h1, .hero .h3 { width: 52mm; margin-top: 18mm; }
+.hero .h2 { width: 66mm; }
+.benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+.benefits div { border-top: 2px solid #E8720C; padding-top: 3mm; }
+.benefits b { font-size: 11.5pt; color: #fff; }
+.benefits p { color: #AEBBD2; font-size: 9.5pt; margin-top: 1.5mm; }
+.cover .foot { position: absolute; bottom: 12mm; left: 20mm; font-size: 7.5pt; color: #6F7E99; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm 8mm; }
+.card { display: grid; grid-template-columns: 34mm 1fr; gap: 4mm; align-items: center; }
+.card .w.sm { width: 34mm; }
+.card p { font-size: 9pt; color: #3A4458; margin: 0; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; color: #3A4458; }
+.two .w.mid { width: 52mm; margin: 0 auto 5mm; }
+.kontaktai { position: absolute; left: 17mm; right: 17mm; bottom: 14mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; border-top: 1px solid #E3E8F1; padding-top: 4mm; }
+.kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
+.kontaktai span { font-size: 9.5pt; color: #1B2233; }
+
+@media screen {
+  body { background: #F3F5F9; }
+  .page { width: auto; height: auto; max-width: 800px; margin: 0 auto 14px; padding: 26px 22px 30px; }
+  .webbar { max-width: 800px; margin: 0 auto; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; }
+  .webbar a { color: #E8720C; text-decoration: none; font-weight: 600; }
+  .cover { border-radius: 0 0 14px 14px; }
+  .hero { height: auto; flex-wrap: wrap; gap: 10px; }
+  .hero img { width: 30%; margin: 0 !important; }
+  .kontaktai { position: static; margin-top: 18px; }
+  .grid, .two { grid-template-columns: 1fr; }
+  .card { grid-template-columns: 30mm 1fr; }
+}
+</style></head><body><div class="webbar"><a href="/tinystatus/">TinyStatus</a><a href="tinystatus-guide.pdf" download>Download PDF</a></div>
+<section class="page cover">
+  <div class="brand"><img src="ikona.png" alt=""><div>TINYSTATUS <span>by TinyOwl</span></div></div>
+  <h1>3D printers<br>on your wrist.</h1>
+  <p class="lead">A Wear OS app for TinyMaker resin printers and Bambu Lab printers. See how the print
+  is going without walking to the printer or opening your phone.</p>
+  <div class="hero"><img class="w h1" src="img/nustatymai_santrauka.png" alt="nustatymai_santrauka"><img class="w h2" src="img/bambu_spausdina.png" alt="bambu_spausdina"><img class="w h3" src="img/ciferblatas.png" alt="ciferblatas"></div>
+  <div class="benefits">
+    <div><b>Progress and time left</b><p>Every printer on its own page, with a ring that fills as the print goes.</p></div>
+    <div><b>Alerts</b><p>When a print finishes, pauses or stops with an error.</p></div>
+    <div><b>Watch face and tile</b><p>Complications and a tile with up to two printers, printing ones first.</p></div>
+  </div>
+  <div class="foot">Independent app. Not made, endorsed or supported by TinyMaker or Bambu Lab.</div>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinyStatus</span><span>2</span></header>
+  
+  <div class="kicker">What you see</div>
+  <h2>One page per printer.</h2>
+  <p class="intro">Turn the bezel or swipe sideways to move between printers; the settings page is last.
+  Bambu Lab printers come first, TinyMaker after them. Opening the app shows the printer that is printing.</p>
+  <div class="grid">
+    
+    <div class="card">
+      <img class="w sm" src="img/bambu_spausdina.png" alt="bambu_spausdina">
+      <div><h4>While printing</h4><p>Time left in big letters, then the state, the layer and the filament or resin. The ring around the screen fills as the print goes.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/tinymaker_idle.png" alt="tinymaker_idle">
+      <div><h4>Idle</h4><p>The printer is on and answering, nothing is printing. For a TinyMaker the app also shows how much resin is left in the vat.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/tinymaker_sustojo.png" alt="tinymaker_sustojo">
+      <div><h4>Finished or stopped</h4><p>After a print the page keeps the result for a while: how it ended and when, the layers and the material used.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/nustatymai_santrauka.png" alt="nustatymai_santrauka">
+      <div><h4>Settings page</h4><p>The last page is a summary: printers shown, Bambu Lab account, how TinyMaker is found, background checking, alerts and the version. Tap it to open the settings.</p></div>
+    </div>
+  </div>
+  <p class="fine">The line under the numbers says how the reading arrived and how old it is: <b>local</b> - straight
+  from the printer on your Wi-Fi, <b>cloud</b> - through your Bambu Lab account, and <b>bg 5min</b> - how often the
+  watch checks while a print runs.</p>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinyStatus</span><span>3</span></header>
+  
+  <div class="kicker">Setting up</div>
+  <h2>Add your printers once.</h2>
+  <div class="grid">
+    
+    <div class="card">
+      <img class="w sm" src="img/nustatymai_spausdintuvai.png" alt="nustatymai_spausdintuvai">
+      <div><h4>Printers</h4><p>Every printer with a switch: on means it gets its own page, the tile and the complications. Off keeps it in the list but out of the way.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/nustatymai_bambu.png" alt="nustatymai_bambu">
+      <div><h4>Bambu Lab account</h4><p>Sign in, refresh the printer list or sign out. Signing out deletes the token and the printer access codes from the watch.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/nustatymai_tinymaker.png" alt="nustatymai_tinymaker">
+      <div><h4>TinyMaker</h4><p>By name shows what was found, for example tinymaker.lan and its address. Below it is the list of printers added by IP.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/nustatymai_rado.png" alt="nustatymai_rado">
+      <div><h4>Find on Wi-Fi</h4><p>The watch checks its own network and adds the printers it finds. Up to four TinyMaker printers, plus the Bambu Lab printers from your account.</p></div>
+    </div>
+  </div>
+  <h3>TinyMaker</h3>
+  <p>A TinyMaker printer with TinyMakerWifi firmware on the same Wi-Fi as the watch. <b>By name</b> finds a single
+  printer by itself. For a second printer, or if the name does not work on your router, use <b>Find on Wi-Fi</b>:
+  the watch looks through your home network and adds every TinyMaker it answers to. You can also type an IP address
+  by hand.</p>
+  <h3>Bambu Lab</h3>
+  <p>Sign in with your Bambu Lab account. Bambu Lab sends a code to your e-mail, and the watch asks for it once;
+  the sign-in then lasts about a year. The password is never stored. On the same Wi-Fi the watch reads the printer
+  directly, otherwise through Bambu Lab's servers.</p>
+  <h3>From the phone</h3>
+  <p>TinyStatus on the phone is a helper, not a second app: it installs, updates and opens the watch app, and it
+  can set up both printers for you, where typing is easier. <b>Bambu Lab account:</b> e-mail and password, then the
+  code from the e-mail. <b>TinyMaker:</b> by name or by IP address; after saving, the watch asks the printer right
+  away and tells you whether it answered. Everything goes straight to the watch; the phone keeps nothing.</p>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinyStatus</span><span>4</span></header>
+  
+  <div class="kicker">While you are not looking</div>
+  <h2>The watch keeps an eye on the print.</h2>
+  <div class="two">
+    <div>
+      <h3>Background checking</h3>
+      <p>Settings &rarr; <b>Refresh</b> sets how often the watch reads the printers <b>while a print is running</b>:
+      off, every 30 s, 2, 5 or 10 minutes. It starts when you leave the app during a print and stops by itself
+      about 20 minutes after the print ends, so it does not sit in the background for nothing. While it runs, the
+      watch shows an ongoing notification with the progress; tapping it opens the app.</p>
+      <p><b>Battery:</b> each check wakes Wi-Fi for a few seconds. Every 30 s is meant for the end of a print, not
+      for a whole night; 5 or 10 minutes is enough for long prints.</p>
+      <h3>Alerts</h3>
+      <p>Notifications for a finished print, a pause, an error, and for a TinyMaker also for resin running low.
+      Each one can be turned off. With background checking off there are no alerts at all - nobody is watching.</p>
+    </div>
+    <div>
+      <img class="w mid" src="img/nustatymai_refresh.png" alt="nustatymai_refresh">
+      <img class="w mid" src="img/ciferblatas.png" alt="ciferblatas">
+    </div>
+  </div>
+  <h3>Watch face and tile</h3>
+  <p>Complications show progress, time left or a ring on your watch face; the <b>Printers</b> tile shows up to two
+  printers side by side, the printing ones first. Add them the usual way: long-press the watch face for
+  complications, swipe left from it and use + for the tile.</p>
+  <h3>Privacy</h3>
+  <p>No ads, no analytics, no tracking, and no server of ours. The app only reads printer status; it never controls
+  the printer. Everything stays on the watch, except what has to go to your own printer or to your Bambu Lab
+  account. TinyStatus is free, and TinyMaker support stays free.
+  The full policy: <b>tinyowllabs.com/tinystatus/privacy</b></p>
+  <div class="kontaktai">
+    <div><b>Questions, ideas, a photo of something wrong</b>
+      <span>hello@tinyowllabs.com</span></div>
+    <div><b>App and privacy policy</b>
+      <span>tinyowllabs.com/tinystatus</span></div>
+    <div><b>Independent developer</b>
+      <span>TinyOwl</span></div>
+  </div>
+</section></body></html>
