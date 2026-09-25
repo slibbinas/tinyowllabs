@@ -45,10 +45,12 @@ img.w { display: block; }
 
 @media screen {
   body { background: #F3F5F9; }
-  .page { width: auto; height: auto; max-width: 800px; margin: 0 auto 14px; padding: 26px 22px 30px; }
-  .webbar { max-width: 800px; margin: 0 auto; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; }
-  .webbar a { color: #E8720C; text-decoration: none; font-weight: 600; }
-  .cover { border-radius: 0 0 14px 14px; }
+  .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
+  /* Juosta ir grizimo eilute - kaip Wrist Control vadove; eilute visada smulkesne uz vadovo teksta. */
+  .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; padding: 10px 16px; background: rgba(14,26,51,.95); font-size: 10px; color: #9FB0CC; }
+  .webbar a { color: #F08A2C; text-decoration: none; }
+  .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   .hero { height: auto; flex-wrap: wrap; gap: 10px; }
   .hero img { width: 30%; margin: 0 !important; }
   .kontaktai { position: static; margin-top: 18px; }
@@ -57,7 +59,7 @@ img.w { display: block; }
   .grid, .two { grid-template-columns: 1fr; }
   .card { grid-template-columns: 30mm 1fr; }
 }
-</style></head><body><div class="webbar"><a href="/tinystatus/">TinyStatus</a><a href="tinystatus-guide.pdf" download>Download PDF</a></div>
+</style></head><body><div class="webbar"><span><a href="/">TinyOwl</a> &rsaquo; <a href="/tinystatus/">TinyStatus</a> &rsaquo; Guide</span><a class="pdf" href="tinystatus-guide.pdf" download>Download PDF</a></div>
 <section class="page cover">
   <div class="brand"><img src="ikona.png" alt=""><div>TINYSTATUS <span>by TinyOwl</span></div></div>
   <h1>3D printers<br>on your wrist.</h1>

@@ -171,10 +171,11 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   html { background: #E9EDF4; }
   body { overflow-x: clip; }
   .page { scroll-margin-top: 48px; }
+  /* Juosta ir grizimo eilute - kaip TinyStatus vadove; eilute visada smulkesne uz vadovo teksta. */
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; padding: 10px 16px; background: rgba(11,20,38,.94); font-size: 14px; }
-  .webbar a { color: #5B9BF3; font-weight: 600; text-decoration: none; }
-  .webbar .pdf { background: #2F6FE4; color: #fff; padding: 7px 14px; border-radius: 18px; white-space: nowrap; }
+    gap: 12px; padding: 10px 16px; background: rgba(14,26,51,.95); font-size: 10px; color: #9FB0CC; }
+  .webbar a { color: #5B9BF3; text-decoration: none; }
+  .webbar .pdf { background: #2F6FE4; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   .page { width: auto; max-width: 210mm; height: auto; margin: 16px auto; border-radius: 10px;
     box-shadow: 0 2px 10px rgba(20,30,60,.08); overflow: visible; }
   .cover .foot { position: static; margin-top: 10mm; }
@@ -205,7 +206,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   .piliule { flex-wrap: wrap; }
   .piliule img { width: 30%; }
 }
-</style></head><body><div class="webbar"><a href="../">Wrist Control for Vallox</a><a class="pdf" href="wrist-control-guide.pdf" download>Download PDF</a></div>
+</style></head><body><div class="webbar"><span><a href="/">TinyOwl</a> &rsaquo; <a href="../">Wrist Control for Vallox</a> &rsaquo; Guide</span><a class="pdf" href="wrist-control-guide.pdf" download>Download PDF</a></div>
 
 <section class="page cover">
   <div class="brand"><img src="img/ikona.png?v=20260926" alt=""><div>WRIST CONTROL <span>for Vallox</span></div></div>

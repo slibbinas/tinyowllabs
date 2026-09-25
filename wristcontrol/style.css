@@ -26,3 +26,6 @@ th { color: var(--muted); font-size: 13px; }
 .ekranai { display: flex; justify-content: center; align-items: center; gap: 2%; margin: 28px 0 8px; }
 .ekranai img { width: 30%; max-width: 210px; height: auto; display: block; }
 .ekranai img.vidurys { width: 36%; max-width: 250px; }
+/* Grizimo eilute: visada smulkesne uz teksta ir antrastes. */
+.crumb { margin: 0 0 16px; font-size: 12px; color: var(--muted); }
+.crumb a { text-decoration: none; }
