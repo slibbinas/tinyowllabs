@@ -45,3 +45,6 @@ footer p { margin: 0 0 6px; }
 /* Grizimo eilute: visada smulkesne uz teksta ir antrastes. */
 .crumb { margin: 0 0 16px; font-size: 12px; color: var(--muted); }
 .crumb a { text-decoration: none; }
+/* Virsutine eilute vidiniuose puslapiuose: grizimo eilute kaireje, temos jungiklis desineje. */
+.virsus { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 16px; }
+.virsus .crumb { margin: 0; }

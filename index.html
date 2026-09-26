@@ -58,24 +58,6 @@
 <p class="muted">TinyOwl apps are independent. Vallox and MyVallox are trademarks of Vallox Oy. TinyMaker and Bambu Lab are trademarks of their respective owners.</p>
 </footer>
 </main>
-<script>
-(function () {
-  var mygtukai = document.querySelectorAll(".theme button");
-  function rodyk(m) {
-    if (m === "light" || m === "dark") document.documentElement.dataset.theme = m;
-    else delete document.documentElement.dataset.theme;
-    mygtukai.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === m); });
-  }
-  var dabar = "system";
-  try { dabar = localStorage.getItem("tema") || "system"; } catch (e) {}
-  rodyk(dabar);
-  mygtukai.forEach(function (b) {
-    b.addEventListener("click", function () {
-      try { localStorage.setItem("tema", b.dataset.mode); } catch (e) {}
-      rodyk(b.dataset.mode);
-    });
-  });
-})();
-</script>
+<script src="/tema.js?v=1"></script>
 </body>
 </html>

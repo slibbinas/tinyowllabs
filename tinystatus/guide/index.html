@@ -51,13 +51,18 @@ img.w { display: block; }
     gap: 12px; padding: 10px 16px; background: rgba(14,26,51,.95); font-size: 10px; color: #9FB0CC; }
   .webbar a { color: #F08A2C; text-decoration: none; }
   .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
-  .hero { height: auto; flex-wrap: wrap; gap: 10px; }
-  .hero img { width: 30%; margin: 0 !important; }
+  /* Trys laikrodziai vienoje eileje kaip Wrist Control vadove: A4 plociai (mm) ekrane pakeiciami procentais. */
+  .hero { height: auto; gap: 8px; margin: 20px 0; }
+  .hero .h1, .hero .h3 { width: 28%; margin-top: 10%; }
+  .hero .h2 { width: 36%; }
   .kontaktai { position: static; margin-top: 18px; }
   /* PDF'ui eilute prispausta prie A4 apacios; ekrane lapas be fiksuoto aukscio - kitaip uzlipa ant teksto. */
   .cover .foot { position: static; margin-top: 18px; }
   .grid, .two { grid-template-columns: 1fr; }
   .card { grid-template-columns: 30mm 1fr; }
+}
+@media screen and (max-width: 760px) {
+  .benefits, .kontaktai { grid-template-columns: 1fr; }
 }
 </style></head><body><div class="webbar"><span><a href="/">TinyOwl</a> &rsaquo; <a href="/tinystatus/">TinyStatus</a> &rsaquo; Guide</span><a class="pdf" href="tinystatus-guide.pdf" download>Download PDF</a></div>
 <section class="page cover">

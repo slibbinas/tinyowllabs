@@ -1,7 +1,8 @@
 :root { --bg: #fff; --fg: #1b2233; --muted: #5c667a; --accent: #2f6fe4; --line: #e3e8f1; --soft: #f3f7fe; }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #0b1426; --fg: #e8eef8; --muted: #9fb2d3; --accent: #5b9bf3; --line: #1f2b44; --soft: #111d33; }
+  :root:not([data-theme="light"]) { --bg: #0b1426; --fg: #e8eef8; --muted: #9fb2d3; --accent: #5b9bf3; --line: #1f2b44; --soft: #111d33; }
 }
+:root[data-theme="dark"] { --bg: #0b1426; --fg: #e8eef8; --muted: #9fb2d3; --accent: #5b9bf3; --line: #1f2b44; --soft: #111d33; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 main { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
@@ -29,3 +30,11 @@ th { color: var(--muted); font-size: 13px; }
 /* Grizimo eilute: visada smulkesne uz teksta ir antrastes. */
 .crumb { margin: 0 0 16px; font-size: 12px; color: var(--muted); }
 .crumb a { text-decoration: none; }
+/* Temos jungiklis - kaip tinyowllabs.com landinge (/tema.js). */
+.theme { display: flex; border: 1px solid var(--line); border-radius: 99px; padding: 3px; gap: 2px; flex: none; }
+.theme button { width: 32px; height: 28px; border: 0; border-radius: 99px; background: none; color: var(--muted); cursor: pointer; display: grid; place-items: center; padding: 0; }
+.theme button[aria-pressed="true"] { background: var(--soft); color: var(--fg); }
+.theme svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* Virsutine eilute vidiniuose puslapiuose: grizimo eilute kaireje, temos jungiklis desineje. */
+.virsus { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 16px; }
+.virsus .crumb { margin: 0; }
