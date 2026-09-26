@@ -48,3 +48,9 @@ footer p { margin: 0 0 6px; }
 /* Virsutine eilute vidiniuose puslapiuose: grizimo eilute kaireje, temos jungiklis desineje. */
 .virsus { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 0 0 16px; }
 .virsus .crumb { margin: 0; }
+/* Kvietimas testuoti produkto puslapyje. */
+.testas { background: var(--soft); border-radius: 14px; padding: 16px 18px; margin: 28px 0; }
+.testas h2 { font-size: 18px; margin: 0 0 6px; }
+.testas p { margin: 0 0 12px; }
+.testas p:last-child { margin: 0; }
+.btn { display: inline-block; background: var(--accent); color: #fff; font-weight: 600; text-decoration: none; padding: 8px 16px; border-radius: 99px; }
