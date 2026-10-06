@@ -233,7 +233,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     <tr><td>Modes</td><td>Away and Automatic share one fan speed, so one of them is always a compromise.</td>
       <td>Each mode sets its own fan speed and CO2 limit the moment you switch.</td></tr>
     <tr><td>Tuning</td><td>Set by hand once, the same for every home and every season.</td>
-      <td>Optimize fits Automatic to your home's last 7 days, shows a forecast and can undo.</td></tr>
+      <td>Optimize fits Automatic to your home's last 7 days, shows a forecast and can restore your old values.</td></tr>
     <tr><td>Your week</td><td>Current values and charts to read yourself.</td>
       <td>Fresh-air share, fan electricity and why it changed, in one glance.</td></tr>
   </table>
@@ -248,48 +248,48 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
       
         <div class="row">
           <div class="lbl">Fan at 70&nbsp;% all day</div>
-          <div class="bar"><i style="width:71.0%"></i><b>159</b></div>
-          <div class="ppm" style="color:#3FAE5A">648</div>
-          <div class="ppm" style="color:#3FAE5A">785</div>
+          <div class="bar"><i style="width:100.0%"></i><b>159</b></div>
+          <div class="ppm" style="color:#3FAE5A">649</div>
+          <div class="ppm" style="color:#3FAE5A">748</div>
         </div>
         <div class="row">
           <div class="lbl">Fan at 60&nbsp;% all day<span>how this home ran</span></div>
-          <div class="bar"><i style="width:44.7%"></i><b>100</b></div>
-          <div class="ppm" style="color:#3FAE5A">686</div>
-          <div class="ppm" style="color:#E0A526">846</div>
+          <div class="bar"><i style="width:63.0%"></i><b>100</b></div>
+          <div class="ppm" style="color:#3FAE5A">687</div>
+          <div class="ppm" style="color:#E0A526">803</div>
         </div>
         <div class="row opt">
           <div class="lbl">Optimize: Clean air</div>
-          <div class="bar"><i style="width:100.0%"></i><b>224</b></div>
-          <div class="ppm" style="color:#3FAE5A">616</div>
-          <div class="ppm" style="color:#3FAE5A">721</div>
+          <div class="bar"><i style="width:83.6%"></i><b>133</b></div>
+          <div class="ppm" style="color:#3FAE5A">649</div>
+          <div class="ppm" style="color:#3FAE5A">719</div>
         </div>
         <div class="row opt">
           <div class="lbl">Optimize: Balance</div>
-          <div class="bar"><i style="width:42.5%"></i><b>95</b></div>
-          <div class="ppm" style="color:#3FAE5A">676</div>
-          <div class="ppm" style="color:#3FAE5A">773</div>
+          <div class="bar"><i style="width:48.2%"></i><b>76</b></div>
+          <div class="ppm" style="color:#3FAE5A">691</div>
+          <div class="ppm" style="color:#3FAE5A">765</div>
         </div>
         <div class="row opt">
           <div class="lbl">Optimize: Quiet</div>
-          <div class="bar"><i style="width:10.7%"></i><b>24</b></div>
-          <div class="ppm" style="color:#E0A526">810</div>
-          <div class="ppm" style="color:#E0A526">916</div>
+          <div class="bar"><i style="width:11.8%"></i><b>19</b></div>
+          <div class="ppm" style="color:#E0A526">836</div>
+          <div class="ppm" style="color:#E0A526">915</div>
         </div>
         <div class="row">
           <div class="lbl">Automatic, basic settings<span>Away 30&nbsp;%, limit 800</span></div>
-          <div class="bar"><i style="width:7.8%"></i><b>18</b></div>
+          <div class="bar"><i style="width:11.0%"></i><b>18</b></div>
           <div class="ppm" style="color:#E0A526">862</div>
-          <div class="ppm" style="color:#E0A526">967</div>
+          <div class="ppm" style="color:#E0A526">941</div>
         </div>
     </div>
   <div class="takeaways">
-    <div><b>40&nbsp;% less</b><p>fan electricity than running at 70&nbsp;% all day, with about the same air.
+    <div><b>52&nbsp;% less</b><p>fan electricity than running at 70&nbsp;% all day, with about the same air.
     That is Optimize Balance.</p></div>
-    <div><b>Fresher busy hours</b><p>than 60&nbsp;% all day: 773 instead of 846&nbsp;ppm,
-    while using 5&nbsp;% less electricity.</p></div>
-    <div><b>76&nbsp;% less</b><p>fan electricity with Quiet, and a quieter home.
-    Mornings rise to about 810&nbsp;ppm.</p></div>
+    <div><b>Fresher busy hours</b><p>than 60&nbsp;% all day: 765 instead of 803&nbsp;ppm,
+    while using 24&nbsp;% less electricity.</p></div>
+    <div><b>81&nbsp;% less</b><p>fan electricity with Quiet, and a quieter home.
+    Mornings rise to about 836&nbsp;ppm.</p></div>
   </div>
   <p class="fine">Estimates from one home's 7-day history, made with the same model Optimize uses.
   Fan electricity only, relative to running at 60&nbsp;% all day. Heating energy is not included:
@@ -336,7 +336,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     
     <div class="card">
       <img class="w sm" src="img/settings.png?v=20260926" alt="settings">
-      <div><h4>Settings</h4><p>Where the numbers come from, how often they refresh, which alerts are on and which pages are shown.</p></div>
+      <div><h4>Settings</h4><p>Where the numbers come from, how often they refresh, which alerts are on, the temperature range and which pages are shown.</p></div>
     </div>
     
     <div class="card">
@@ -363,11 +363,11 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   <div class="tap">
     <div class="tap-h"><div>Same tap</div><div>On the unit's panel</div><div>On the watch</div></div>
     <div class="tap-r"><div><b>You leave home</b><span>tap Away</span></div>
-      <div>Away keeps the speed tuned for Automatic, 45&nbsp;%: <b>about 3.4 times the fan electricity</b> for an empty house.</div>
+      <div>Away keeps the speed tuned for Automatic, 40&nbsp;%: <b>about 2.4 times the fan electricity</b> for an empty house.</div>
       <div class="ok">Away runs at 30&nbsp;%, the right speed for an empty house.</div></div>
     <div class="tap-r"><div><b>You come back</b><span>tap Automatic / Optimized</span></div>
       <div>Automatic starts from the Away speed of 30&nbsp;%: <b>mornings reach about 862&nbsp;ppm</b>, stuffy.</div>
-      <div class="ok">Optimized returns to your Optimize settings: mornings about 676&nbsp;ppm.</div></div>
+      <div class="ok">Optimized returns to your Optimize settings: mornings about 691&nbsp;ppm.</div></div>
   </div>
   <table class="modes">
     <tr><th>Mode</th><th>Use it when</th><th>The watch also sets</th><th>Lasts</th></tr>
@@ -405,10 +405,11 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   
   <div class="kicker">Optimized · automation</div>
   <h2>Optimized adjusts itself while you live.</h2>
-  <p class="intro">While <b>Optimized</b> is on, the app checks three rules after every reading. It never drives
+  <p class="intro">While <b>Optimized</b> is on, the app checks four rules after every reading. It never drives
   the fans directly: two rules only change the <b>fan at rest</b> (the Away speed Automatic starts from), and the
-  unit's own CO2 control keeps working between readings. The third rule only offers a Boost. The numbers were
-  checked against a year of real history (2025-09-15 - 2026-09-14, 47,789 records every 10 min).</p>
+  unit's own CO2 control keeps working between readings. The third rule only offers a Boost, the fourth opens or
+  closes the bypass. The numbers were checked against a year of real history (2025-09-15 - 2026-09-14, 47,789
+  records every 10 min).</p>
   <table class="modes">
     <tr><th>Rule</th><th>When</th><th>What happens</th><th>Ends when</th><th>In a year of history</th></tr>
     <tr><td><b>Nobody home</b></td><td>CO2 at most 460&nbsp;ppm for 90 min without a break, no humidity jumps</td>
@@ -418,8 +419,11 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
       <td>Fan at rest → <b>35&nbsp;%</b></td><td>Humidity rises above 43&nbsp;%</td>
       <td>6 times in a winter, about 67 h in total</td></tr>
     <tr><td><b>Boost offer</b></td><td>Humidity up 8&nbsp;% within about 30 min</td>
-      <td>Notification "Shower?" or "Cooking?" - tap to Boost</td><td>At most once an hour</td>
+      <td>Notification "Cooking or shower?" - tap to Boost</td><td>At most once an hour</td>
       <td>About 220 a year, 4 a week</td></tr>
+    <tr><td><b>Temperature</b></td><td>Indoors outside the range in Settings</td>
+      <td><b>Closes</b> the bypass below it, <b>opens</b> it above</td>
+      <td>Each state at least 1 h</td><td>New, 2026-10</td></tr>
   </table>
   <div class="split">
     <div>
@@ -427,9 +431,6 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
       <p>"Nobody home" does not switch to Away. It only lowers the speed Automatic starts from. When people come
       back, nobody has to wait for the watch: the unit sees CO2 rising and adds air by itself, and at the next
       reading the app restores the Optimized value. The same holds for "Dry air".</p>
-      <h3>Shower or cooking</h3>
-      <p>Told apart roughly: if the extract air gets at least 1 °C warmer together with the humidity, it says
-      "Cooking?", otherwise "Shower?". Hence the question mark.</p>
     </div>
     <div>
       <h3>Boost and Custom</h3>
@@ -463,18 +464,25 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   <div class="split">
     <div>
       <h3>What the app changes</h3>
-      <p>On its own only four things: the <b>mode</b>, the <b>Away speed</b>, the <b>CO2 limit</b> and the
-      <b>week schedule switch</b>. When you ask, it also writes the filter change date and corrects the unit's clock.</p>
+      <p>On its own only these: the <b>mode</b>, the <b>Away speed</b>, the <b>CO2 limit</b>, the
+      <b>week schedule switch</b>, and while Optimized runs, the <b>bypass lock</b> and the <b>supply air target</b>
+      of Automatic. When you ask, it also writes the filter change date and corrects the unit's clock.</p>
       <h3>What it never changes</h3>
-      <p>The Home and Boost speeds, humidity control, the heater, bypass and Custom settings. Optimize stays within
-      a safe range (fan at rest 20-70&nbsp;%, CO2 limit 500-1000&nbsp;ppm), and Undo restores the previous values.</p>
+      <p>The Home and Boost speeds, humidity control, the heater and Custom settings. Optimize stays within
+      a safe range (fan at rest 20-70&nbsp;%, CO2 limit 500-1000&nbsp;ppm), and Restore brings back the previous values.
+      Leaving Optimized hands the bypass and the supply air target back as they were.</p>
       <h3>Without a connection</h3>
       <p>The app changes nothing, and the unit keeps running with the last settings.</p>
     </div>
     <div>
+      <h3>Temperature range</h3>
+      <p>Settings → Temperature sets the range, by default 22.5-23 °C. Below it the bypass is closed and the heat
+      exchanger keeps the heat; above it, with outdoors at least 2 °C cooler, outdoor air cools the home. The
+      electric heater is not used. Each state lasts at least an hour, so small swings do not move the damper.
+      Let Vallox decide in the Optimize window turns it off.</p>
       <h3>Planned</h3>
       <p><b>Per-unit thresholds:</b> the "empty home" CO2 level and the humidity jump worked out for each unit from its
-      own history - today they are one apartment's numbers. <b>Summer cooling:</b> more air when the night is cooler
+      own history - today they are one apartment's numbers. <b>Summer cooling with the fan:</b> more air when the night is cooler
       outside than inside, less on a hot day. <b>Weather forecast</b> - once there is summer experience.</p>
       <h3>The full paper</h3>
       <p>The same logic with the Vallox control curve, the mode recipes and Optimize step by step - for installers:</p>
@@ -496,7 +504,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     <div><img class="w st" src="img/opt_start.png?v=20260926" alt="opt_start"><b>1 · Analyse</b><p>Tap Analyse. The watch reads the unit's 7-day history: from the unit at home, from the Vallox cloud when away.</p></div>
     <div><img class="w st" src="img/opt_goal.png?v=20260926" alt="opt_goal"><b>2 · Choose a goal</b><p>Clean air (about 600&nbsp;ppm), Balance (about 700) or Quiet: less air, less fan.</p></div>
     <div><img class="w st" src="img/opt_forecast.png?v=20260926" alt="opt_forecast"><b>3 · See the forecast</b><p>Morning and daytime CO2 and fan speed, now › after. Nothing changes until you tap Apply.</p></div>
-    <div><img class="w st" src="img/opt_check.png?v=20260926" alt="opt_check"><b>4 · Check after a day</b><p>The watch compares the forecast with the real morning. Undo brings back your old values.</p></div>
+    <div><img class="w st" src="img/opt_check.png?v=20260926" alt="opt_check"><b>4 · Check after a day</b><p>The watch compares the forecast with the real morning. Restore brings back your old values.</p></div>
   </div>
   <div class="how">
     <h4>How it works</h4>
@@ -505,10 +513,10 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
       <li><b>Tries every option.</b> It simulates each Away speed from 20 to 70&nbsp;% and CO2 limit from 500 to 1000&nbsp;ppm and predicts where CO2 settles.</li>
       <li><b>Picks the cheapest that works.</b> Of the options that meet the goal at every time of day, in typical and in busy hours, it takes the one with the least fan electricity. If none does, it shows the closest.</li>
       <li><b>Goals</b>, typical / busy hours: Clean 620 / 720&nbsp;ppm · Balance 700 / 800 · Quiet 850 / 1000.</li>
-      <li><b>Stays safe.</b> It never writes values outside those ranges, and keeps your previous values for Undo.</li>
+      <li><b>Stays safe.</b> It never writes values outside those ranges, and keeps your previous values for Restore.</li>
     </ul>
   </div>
-  <p class="fine">Example home: Balance chose Away speed 45&nbsp;% and CO2 limit 500&nbsp;ppm.</p>
+  <p class="fine">Example home: Balance chose Away speed 40&nbsp;% and CO2 limit 500&nbsp;ppm.</p>
 
 </section>
 <section class="page ">
@@ -688,7 +696,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   The scale is the same as in the app, so you see how far out you are. Filters get a notice when a change is due.
   Temperature, humidity, CO2 and filter notices can be turned off in Settings → Alerts. The clock notice cannot:
   a wrong unit clock spoils the history that Optimize and Statistics rely on. Choose Don't check to silence it.
-  A notice that suggests a mode - high CO2 or humidity, or "Shower?" with Tap to Boost - opens the Ventilation page,
+  A notice that suggests a mode - high CO2 or humidity, or "Cooking or shower?" with Tap to Boost - opens the Ventilation page,
   so you see the mode change.</p>
 
 </section>
