@@ -498,10 +498,10 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   <div class="kicker">Optimize</div>
   <h2>Settings made for your home, not for an average one.</h2>
   <p class="intro">Every home produces CO2 differently: how many people, how big the rooms, when you sleep and
-  cook. Optimize reads your unit's last 7 days, learns how much fresh air your home needs at each time of day,
+  cook. Optimize reads your unit's last 14 days, learns how much fresh air your home needs at each time of day,
   and picks the Away speed and CO2 limit for Automatic.</p>
   <div class="steps">
-    <div><img class="w st" src="img/opt_start.png?v=20260926" alt="opt_start"><b>1 · Analyse</b><p>Tap Analyse. The watch reads the unit's 7-day history: from the unit at home, from the Vallox cloud when away.</p></div>
+    <div><img class="w st" src="img/opt_start.png?v=20260926" alt="opt_start"><b>1 · Analyse</b><p>Tap Analyse. The watch reads the unit's 14-day history: from the unit at home, from the Vallox cloud when away.</p></div>
     <div><img class="w st" src="img/opt_goal.png?v=20260926" alt="opt_goal"><b>2 · Choose a goal</b><p>Clean air (about 600&nbsp;ppm), Balance (about 700) or Quiet: less air, less fan.</p></div>
     <div><img class="w st" src="img/opt_forecast.png?v=20260926" alt="opt_forecast"><b>3 · See the forecast</b><p>Morning and daytime CO2 and fan speed, now › after. Nothing changes until you tap Apply.</p></div>
     <div><img class="w st" src="img/opt_check.png?v=20260926" alt="opt_check"><b>4 · Check after a day</b><p>The watch compares the forecast with the real morning. Restore brings back your old values.</p></div>
@@ -509,11 +509,13 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   <div class="how">
     <h4>How it works</h4>
     <ul>
-      <li><b>Learns your home.</b> For the morning (6-10), day (10-18), evening (18-24) and night, it measures how fast your home adds CO2, from CO2 and fan speed in the history.</li>
+      <li><b>Learns your home.</b> For the morning (6-10), day (10-18), evening (18-24) and night, it measures how fast your home adds CO2, from CO2 and fan speed in the history. It takes the middle of the daily values, so one unusual day - guests, windows shut - does not move the plan.</li>
       <li><b>Tries every option.</b> It simulates each Away speed from 20 to 70&nbsp;% and CO2 limit from 500 to 1000&nbsp;ppm and predicts where CO2 settles.</li>
-      <li><b>Picks the cheapest that works.</b> Of the options that meet the goal at every time of day, in typical and in busy hours, it takes the one with the least fan electricity. If none does, it shows the closest.</li>
+      <li><b>Picks the lowest total cost.</b> Fan electricity (it grows with the cube of speed), heat carried out with the air in the heating season (the heat exchanger returns most of it; how much is measured from your unit's temperatures) and a penalty for every&nbsp;ppm above the goal. So a plan may let CO2 rise a little above the goal at peaks when that saves a lot of energy.</li>
+      <li><b>Shows the cost.</b> The forecast has an Energy line against your current settings, and warns when a plan would use more than 1.5 times the energy: a lighter goal then uses less.</li>
       <li><b>Goals</b>, typical / busy hours: Clean 620 / 720&nbsp;ppm · Balance 700 / 800 · Quiet 850 / 1000.</li>
       <li><b>Stays safe.</b> It never writes values outside those ranges, and keeps your previous values for Restore.</li>
+      <li><b>After Apply</b> the window starts with Optimized and the goal, the values it wrote, plan and actual, then Restore and New plan. Below it is the temperature range of the Optimized automation.</li>
     </ul>
   </div>
   <p class="fine">Example home: Balance chose Away speed 40&nbsp;% and CO2 limit 500&nbsp;ppm.</p>
@@ -524,7 +526,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   
   <div class="kicker">Statistics</div>
   <h2>Your week: was the air good, and what did it cost?</h2>
-  <p class="intro">Statistics reads the same 7-day history and answers three questions: how fresh the air was,
+  <p class="intro">Statistics reads the unit's history and answers three questions: how fresh the air was,
   how much the fans used compared with last week, and why that changed.</p>
   <div class="steps three">
     <div><img class="w st" src="img/stats_page.png?v=20260926" alt="stats_page"><b>Fresh air share</b><p>How much of the week CO2 stayed up to 800&nbsp;ppm, with average CO2 and fan speed.</p></div>
@@ -563,6 +565,34 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
 </section>
 <section class="page ">
   <header class="run"><span class="rl"><img src="img/ikona.png?v=20260926" alt="">Wrist Control for Vallox</span><span>9</span></header>
+  
+  <div class="kicker">Statistics · last year</div>
+  <h2>Better or worse than a year ago, with the weather taken out.</h2>
+  <p class="intro">The Vallox cloud keeps a year of your unit's history. Statistics downloads it once, keeps a
+  short summary of every week on the watch, and compares your week with the same week last year.</p>
+  <div class="reasons">
+    <div><b>On the Statistics page</b><p>"Energy vs last year": the change in percent, and the fresh-air share
+    now and a year ago, for example "fresh air 76&nbsp;% vs 74&nbsp;%".</p></div>
+    <div><b>In the window</b><p>The LAST YEAR section: the same number, the total change and the weather part,
+    and last year's CO2, fan speed and outdoor temperature.</p></div>
+    <div><b>Needs the cloud</b><p>The year of history comes only from the Vallox cloud. Without a cloud account
+    the section says so, and the week-to-week comparison still works.</p></div>
+  </div>
+  <div class="how">
+    <h4>How it works</h4>
+    <ul>
+      <li><b>The same week.</b> The week that ended on the same weekday 52 weeks ago, within a day. If it is
+      missing, the week 51 weeks back.</li>
+      <li><b>Weather taken out.</b> The change in fan electricity is split as on the previous page; the weather
+      part is removed, so the number shows what your settings and your home changed.</li>
+      <li><b>Kept on the watch.</b> The cloud keeps exactly 365 days. The weekly summaries stay on the watch, so
+      the comparison keeps working when old days drop out of the cloud.</li>
+    </ul>
+  </div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20260926" alt="">Wrist Control for Vallox</span><span>10</span></header>
   
   <div class="kicker">Appendix</div>
   <h2>Getting around</h2>
@@ -647,7 +677,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
 
 </section>
 <section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20260926" alt="">Wrist Control for Vallox</span><span>10</span></header>
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20260926" alt="">Wrist Control for Vallox</span><span>11</span></header>
   
   <div class="kicker">Appendix</div>
   <h2>Settings</h2>
