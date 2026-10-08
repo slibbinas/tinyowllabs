@@ -6,8 +6,14 @@
     else delete document.documentElement.dataset.theme;
     mygtukai.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === m); });
   }
+  // ?theme=light|dark - is kito domeno atejusi tema (tinymakerwifi.com landingas,
+  // V 2026-10-08): localStorage per domenus nepersiduoda, tad tema ateina adresu.
   var dabar = "system";
-  try { dabar = localStorage.getItem("tema") || "system"; } catch (e) {}
+  try {
+    var q = new URLSearchParams(location.search).get("theme");
+    if (q === "light" || q === "dark") localStorage.setItem("tema", q);
+    dabar = localStorage.getItem("tema") || "system";
+  } catch (e) {}
   rodyk(dabar);
   mygtukai.forEach(function (b) {
     b.addEventListener("click", function () {

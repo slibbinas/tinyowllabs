@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wrist Control for Vallox</title>
 <link rel="stylesheet" href="style.css?v=20260926d">
-<script>try{var m=localStorage.getItem("tema");if(m==="light"||m==="dark")document.documentElement.dataset.theme=m;}catch(e){}</script>
+<script>try{var q=new URLSearchParams(location.search).get("theme");if(q==="light"||q==="dark")localStorage.setItem("tema",q);var m=localStorage.getItem("tema");if(m==="light"||m==="dark")document.documentElement.dataset.theme=m;}catch(e){}</script>
 </head>
 <body>
 <main>
@@ -44,6 +44,6 @@ supported by Vallox Oy. Vallox and MyVallox are trademarks of Vallox Oy.</p>
 
 <p><a href="guide/">User guide</a> · <a href="privacy/">Privacy Policy</a> · <a href="mailto:hello@tinyowllabs.com">Contact</a></p>
 </main>
-<script src="/tema.js?v=1"></script>
+<script src="/tema.js?v=2"></script>
 </body>
 </html>
