@@ -20,7 +20,7 @@
 </div>
 <header class="top"><div class="brand"><img src="/tinyspools.png" alt=""><div><b>TinySpools</b><span class="motto">by TinyOwl</span></div></div></header>
 <h1>Privacy Policy</h1>
-<p class="muted">Last updated: 20 October 2026</p>
+<p class="muted">Last updated: 21 October 2026</p>
 
 <p>TinySpools ("the app") is an Android app for keeping track of your 3D printer filament: which
 brands, materials and colors you have, how much is left on each spool and on which shelf it is.
@@ -36,7 +36,10 @@ you choose to save to a folder of your choice.</p>
 <tr><th>Data</th><th>Why</th><th>Where it is kept</th><th>Where it is sent</th></tr>
 <tr><td>Your filaments, spools, remaining weight and shelves</td><td>This is what the app is for</td><td>On the phone only</td><td>Not sent anywhere</td></tr>
 <tr><td>Backup files (optional)</td><td>To restore your data, for example on a new phone</td><td>In the folder you pick in the Android file picker, for example on your device or in Google Drive</td><td>Only to that folder, through Android. The developer never receives them</td></tr>
-<tr><td>App settings (backup folder, auto backup, palette style)</td><td>To remember your choices</td><td>On the phone only</td><td>Not sent anywhere</td></tr>
+<tr><td>App settings (theme, palette style, filter layout, auto backup, backup folder)</td><td>To remember your choices</td><td>On the phone only; included in your backup files except the folder</td><td>Not sent anywhere</td></tr>
+<tr><td>Barcodes you link to a filament</td><td>So scanning the same box again finds the filament</td><td>On the phone only; included in your backup files</td><td>Not sent anywhere</td></tr>
+<tr><td>Camera image while scanning</td><td>To read a barcode or QR code</td><td>Not stored: each frame is checked on the phone and discarded</td><td>Not sent anywhere</td></tr>
+<tr><td>NFC sticker contents</td><td>To open a spool when you touch its sticker</td><td>Only a link to the spool number (tinyspools://spool/N) is written to your sticker</td><td>Not sent anywhere</td></tr>
 </table>
 </div>
 
@@ -47,13 +50,17 @@ service under its own privacy policy.</p>
 <ul>
 <li>It does not collect or share personal data with the developer or any third party.</li>
 <li>It does not use analytics, crash reporting, advertising or tracking SDKs.</li>
-<li>It does not request internet access, location, contacts, camera or microphone.</li>
+<li>It does not request internet access, location, contacts or microphone.</li>
 <li>It does not sell data. There is no data to sell.</li>
 </ul>
 
 <h2>Permissions</h2>
-<p>The app requests no special permissions. Access to a backup folder is granted by you in the
-Android file picker and can be removed by choosing another folder or uninstalling the app.</p>
+<ul>
+<li><b>Camera</b> (asked when you first scan): only to read barcodes and QR codes. Images are processed on the phone and never saved or sent.</li>
+<li><b>NFC</b>: to write a spool link to your own NFC sticker and to open that spool when you touch it.</li>
+</ul>
+<p>Access to a backup folder is granted by you in the Android file picker and can be removed by
+choosing another folder or uninstalling the app.</p>
 
 <h2>Your control over the data</h2>
 <ul>
@@ -62,7 +69,7 @@ Android file picker and can be removed by choosing another folder or uninstallin
 </ul>
 
 <h2>Third-party content</h2>
-<p>The built-in filament catalog comes from SpoolmanDB (MIT License). Brand names and logos are
+<p>The built-in filament catalog comes from SpoolmanDB (MIT License). Codes are read with ZXing (Apache License 2.0). Brand names and logos are
 trademarks of their respective owners and are shown only to identify a filament's manufacturer.
 TinySpools is not affiliated with or endorsed by any filament manufacturer.</p>
 
