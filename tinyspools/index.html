@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TinySpools - your filament, sorted</title>
+<meta name="description" content="TinySpools keeps track of the 3D printer filament you own: brands, colors, grams left and shelves. Scan box barcodes, print QR labels, use NFC stickers. Android, no account.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" href="/style.css?v=20261021">
+<script>try{var q=new URLSearchParams(location.search).get("theme");if(q==="light"||q==="dark")localStorage.setItem("tema",q);var m=localStorage.getItem("tema");if(m==="light"||m==="dark")document.documentElement.dataset.theme=m;}catch(e){}</script>
+</head>
+<body>
+<main>
+<div class="virsus">
+  <p class="crumb"><a href="/">TinyOwl</a> &rsaquo; TinySpools</p>
+  <div class="theme" role="group" aria-label="Theme">
+    <button type="button" data-mode="system" title="System theme" aria-label="System theme"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button>
+    <button type="button" data-mode="light" title="Light theme" aria-label="Light theme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <button type="button" data-mode="dark" title="Dark theme" aria-label="Dark theme"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+  </div>
+</div>
+<header class="top"><a class="brand" href="/"><img src="/tinyspools.png?v=2" alt=""><div><b>TinySpools</b><span class="motto">by TinyOwl</span></div></a></header>
+
+<h1>Your filament, sorted.</h1>
+<p class="lead">Know what filament you have, how much is left on each spool and which shelf it is on, without opening every box.</p>
+
+<div class="ekranai"><img src="img/palete.png" alt="Palette: every PLA color you own, drawn as spools with the number of spools" loading="lazy"><img class="vidurys" src="img/sarasas.png" alt="Spools list with brand logos, colors and shelves" loading="lazy"><img src="img/rite.png" alt="Spool: grams left with a slider, shelf, QR label and NFC tag" loading="lazy"></div>
+
+<ul class="products">
+<li><div><h2>Find any spool fast</h2><p>Search brand, material, type, color, color code and shelf at once. Filters show how many spools match.</p></div></li>
+<li><div><h2>Palette</h2><p>Every color you own, grouped by material. Tap a color to see its spools from every brand.</p></div></li>
+<li><div><h2>Grams left and shelves</h2><p>Set what is left with a slider and move a spool to another shelf in one tap.</p></div></li>
+<li><div><h2>Scan, label, tap</h2><p>Scan the barcode on a filament box: 5,600+ barcodes from 41 brands are recognized right away. Print a QR label or write an NFC sticker, and scanning or touching it opens that spool.</p></div></li>
+<li><div><h2>Built-in catalog</h2><p>Pick from 4,700+ colors from 67 brands, and the color, RGB value and spool weight fill in for you.</p></div></li>
+<li><div><h2>Your data stays yours</h2><p>No account. Backups go to a folder you choose, for example Google Drive, and you can restore any earlier point. The app goes online only when you ask it to update the barcode database.</p></div></li>
+</ul>
+
+<p class="lead" style="margin-top:28px">Free, no ads, no tracking. Android 10 or newer. Coming to Google Play.</p>
+
+<section class="testas">
+<h2>Try it before release</h2>
+<p>TinySpools is in closed testing on Google Play. Send the Google account email you use on your phone, and you will be added to the tester list. All we ask: keep the app installed for at least 14 days and tell us what does not work.</p>
+<p><a class="btn" href="mailto:hello@tinyowllabs.com?subject=TinySpools%20tester&amp;body=Google%20account%20email%20on%20my%20phone%3A%20%0APhone%20model%3A%20%0A">Apply to test</a></p>
+</section>
+
+<footer>
+<p><a href="/tinyspools/privacy/">Privacy Policy</a> · <a href="mailto:hello@tinyowllabs.com">hello@tinyowllabs.com</a></p>
+<p class="muted">TinySpools is an independent app by TinyOwl. It is not made, endorsed or supported by any filament manufacturer; brand names and logos are trademarks of their respective owners. Filament catalog: SpoolmanDB (MIT License). Barcodes: Open Filament Database (MIT License).</p>
+</footer>
+</main>
+<script src="/tema.js?v=2"></script>
+</body>
+</html>
