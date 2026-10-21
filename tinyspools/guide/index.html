@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>User guide - TinySpools</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; font-family: Inter, "Segoe UI", Arial, sans-serif; color: #1B2233; font-size: 10.2pt; line-height: 1.45; }
+.page { width: 210mm; height: 297mm; padding: 16mm 17mm 14mm; position: relative; overflow: hidden; page-break-after: always; background: #fff; }
+.run { display: flex; justify-content: space-between; font-size: 7.5pt; color: #8A93A6; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 9mm; }
+.run .rl { display: flex; align-items: center; gap: 2mm; }
+.run img { width: 4.5mm; height: 4.5mm; border-radius: 1.2mm; }
+.kicker { color: #E8720C; font-weight: 700; font-size: 8.5pt; letter-spacing: .14em; text-transform: uppercase; }
+h1, h2, h3, h4 { margin: 0; letter-spacing: -.01em; }
+h2 { font-size: 22pt; line-height: 1.12; font-weight: 800; margin: 2mm 0 5mm; max-width: 165mm; }
+h3 { font-size: 11.5pt; font-weight: 700; margin: 6mm 0 3mm; }
+h4 { font-size: 10.5pt; font-weight: 700; margin-bottom: 1mm; }
+p { margin: 0 0 2mm; }
+.intro { font-size: 11pt; color: #3A4458; max-width: 165mm; margin-bottom: 6mm; }
+.fine { font-size: 8pt; color: #7A8397; margin-top: 5mm; }
+/* Telefono ekranai - stati nuotrauka su apvaliais kampais (laikrodžio vadove - apvalūs). */
+img.w { display: block; border-radius: 3mm; }
+.cover { background: radial-gradient(120% 80% at 80% 10%, #24304A 0%, #12161E 55%, #0B0E14 100%); color: #EAF0FA; padding: 22mm 20mm; }
+.brand { display: flex; align-items: center; gap: 4mm; font-weight: 800; letter-spacing: .18em; font-size: 10pt; color: #E8720C; }
+.brand img { width: 13mm; height: 13mm; border-radius: 3mm; }
+.brand span { color: #9FB2D3; font-weight: 500; letter-spacing: .05em; text-transform: none; }
+.cover h1 { font-size: 38pt; line-height: 1.04; font-weight: 800; margin: 14mm 0 6mm; }
+.cover .lead { font-size: 12.5pt; color: #B9C6DD; max-width: 150mm; }
+.hero { display: flex; justify-content: center; align-items: center; gap: 7mm; height: 112mm; margin: 10mm 0 10mm; }
+.hero img { filter: drop-shadow(0 12px 22px rgba(0,0,0,.55)); }
+.hero .h1, .hero .h3 { width: 44mm; }
+.hero .h2 { width: 50mm; }
+.benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+.benefits div { border-top: 2px solid #E8720C; padding-top: 3mm; }
+.benefits b { font-size: 11.5pt; color: #fff; }
+.benefits p { color: #AEBBD2; font-size: 9.5pt; margin-top: 1.5mm; }
+.cover .foot { position: absolute; bottom: 12mm; left: 20mm; font-size: 7.5pt; color: #6F7E99; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm 8mm; }
+.card { display: grid; grid-template-columns: 30mm 1fr; gap: 4mm; align-items: center; }
+.card .w.sm { width: 30mm; }
+.card p { font-size: 9pt; color: #3A4458; margin: 0; }
+.kontaktai { position: absolute; left: 17mm; right: 17mm; bottom: 14mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; border-top: 1px solid #E3E8F1; padding-top: 4mm; }
+.kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
+.kontaktai span { font-size: 9.5pt; color: #1B2233; }
+
+@media screen {
+  body { background: #F3F5F9; }
+  .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
+  .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; padding: 10px 16px; background: rgba(14,26,51,.95); font-size: 10px; color: #9FB0CC; }
+  .webbar a { color: #F08A2C; text-decoration: none; }
+  .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .hero { height: auto; gap: 3%; margin: 20px 0; }
+  .hero .h1, .hero .h3 { width: 28%; }
+  .hero .h2 { width: 32%; }
+  .kontaktai { position: static; margin-top: 18px; }
+  .cover .foot { position: static; margin-top: 18px; }
+  .grid { grid-template-columns: 1fr; }
+  .card { grid-template-columns: 30mm 1fr; }
+}
+@media print { .webbar { display: none; } }
+@media screen and (max-width: 760px) {
+  .benefits, .kontaktai { grid-template-columns: 1fr; }
+}
+</style></head><body><div class="webbar"><span><a href="/">TinyOwl</a> &rsaquo; <a href="/tinyspools/">TinySpools</a> &rsaquo; Guide</span><a class="pdf" href="tinyspools-guide.pdf" download>Download PDF</a></div>
+<section class="page cover">
+  <div class="brand"><img src="ikona.png" alt=""><div>TINYSPOOLS <span>by TinyOwl</span></div></div>
+  <h1>Your filament,<br>sorted.</h1>
+  <p class="lead">An Android app for the 3D printer filament you own. Know what you have, how much is left on
+  each spool and which shelf it is on, without opening every box.</p>
+  <div class="hero"><img class="w h1" src="img/palete.png" alt="Palette"><img class="w h2" src="img/sarasas.png" alt="Spools list"><img class="w h3" src="img/rite.png" alt="Spool"></div>
+  <div class="benefits">
+    <div><b>Find any spool</b><p>Search and filters across brand, material, type, color and shelf.</p></div>
+    <div><b>Grams and shelves</b><p>What is left on every spool, and where it is.</p></div>
+    <div><b>Scan, label, tap</b><p>Box barcodes, QR labels and NFC stickers open the right filament or spool.</p></div>
+  </div>
+  <div class="foot">Independent app. Not made, endorsed or supported by any filament manufacturer.</div>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinySpools</span><span>2</span></header>
+  <div class="kicker">What you see</div>
+  <h2>Three tabs: Spools, Palette, Locations.</h2>
+  <p class="intro">A <b>filament</b> is a brand, material, type and color, for example Bambu Lab PETG HF Blue.
+  A <b>spool</b> is one physical spool of it, with its own grams left and shelf. One filament can have many spools.</p>
+  <div class="grid">
+    <div class="card">
+      <img class="w sm" src="img/sarasas.png" alt="Spools tab">
+      <div><h4>Spools</h4><p>Every filament with its logo, color and code, how many spools you have (&times;2) and on which shelves. Search looks at everything at once; Brand, Material, Type and Color filters show how many spools match each choice.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/palete.png" alt="Palette tab">
+      <div><h4>Palette</h4><p>Every color you own, grouped by material and drawn as spools (or squares, in Settings). The number is how many spools of that color. Tap a color to see all its spools from every brand.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/lentyna.png" alt="Spools on one shelf">
+      <div><h4>Locations</h4><p>Your shelves, dryers or boxes with the number of spools on each. Tap one to see only its spools; long-press to rename or delete. <b>+ New location</b> adds one.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/rite.png" alt="Spool dialog">
+      <div><h4>A spool</h4><p>Tap a spool to set the grams left with the slider or the -50 / -10 / +10 / +50 buttons; the app shows how much is used. Pick the shelf from the list. Here you also make its QR label or NFC sticker.</p></div>
+    </div>
+  </div>
+  <p class="fine">The theme (System, Dark, Light), the palette style and the filter layout (one row or two rows) are in
+  the menu &rarr; <b>Settings</b>.</p>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinySpools</span><span>3</span></header>
+  <div class="kicker">Adding filament</div>
+  <h2>Pick it, scan it or type it.</h2>
+  <div class="grid">
+    <div class="card">
+      <img class="w sm" src="img/naujas.png" alt="New filament">
+      <div><h4>New filament</h4><p><b>+ New spool</b> first offers the filaments you already have. For a new one, tap <b>+ New filament</b>, then <b>Pick from catalog</b> or fill in the fields. Save, and the first spool opens right away.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/skeneris.png" alt="Scan code">
+      <div><h4>Scan a box</h4><p><b>Scan</b> reads the barcode on a filament box. A known barcode finds the filament at once; a new one asks which filament it is, and the app remembers it.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/dublikatas.png" alt="Already in your spools">
+      <div><h4>Already there?</h4><p>If the same brand, material, type and color already exist, the app says so and offers <b>Add spool</b> to it instead of a second copy.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/kodai.png" alt="Barcodes in Settings">
+      <div><h4>Barcode database</h4><p>5,600+ barcodes from 41 brands come with the app. Settings &rarr; <b>Update barcode database</b> downloads the newest; the app also offers it when a scanned barcode is not found.</p></div>
+    </div>
+  </div>
+  <h3>The catalog</h3>
+  <p>The built-in catalog has 4,700+ colors from 67 brands (SpoolmanDB). Picking one fills in the brand, material,
+  type, color, RGB value and full spool weight. Everything can be changed before you save, and filaments that are not in
+  the catalog are simply typed in. Box barcodes come from the Open Filament Database.</p>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinySpools</span><span>4</span></header>
+  <div class="kicker">Labels and backups</div>
+  <h2>A label on the spool, a copy in the cloud.</h2>
+  <div class="grid">
+    <div class="card">
+      <img class="w sm" src="img/qr.png" alt="QR label">
+      <div><h4>QR label</h4><p>In a spool, <b>QR label</b> makes a label with the code, brand, material and color. It is saved to Pictures/TinySpools; <b>Share</b> sends it to your label printer's app. Scanning it with <b>Scan</b> opens that spool.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/nfc.png" alt="NFC tag">
+      <div><h4>NFC sticker</h4><p><b>NFC tag</b> writes the spool to an empty NFC sticker (NTAG213, 215 or 216). Touching the sticker with the phone opens that spool, even when the app is closed.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/kopija.png" alt="Backup in Settings">
+      <div><h4>Backups</h4><p>Settings &rarr; <b>Choose folder</b>, for example on Google Drive, then <b>Back up now</b>, or turn on <b>Auto backup</b> after changes. Each backup is a new file with the date; <b>Restore</b> brings back any of them.</p></div>
+    </div>
+  </div>
+  <h3>A new phone</h3>
+  <p>On the old phone make a backup to Google Drive. On the new one install TinySpools, choose the same folder and tap
+  <b>Restore</b>: spools, shelves, your barcodes and settings come back.</p>
+  <h3>Privacy</h3>
+  <p>No account, no ads, no analytics, no tracking, and no server of ours. Everything stays on the phone, except the
+  backup files you save to a folder of your choice. The app goes online only when you ask it to update the barcode
+  database. The full policy: <b>tinyowllabs.com/tinyspools/privacy</b></p>
+  <div class="kontaktai">
+    <div><b>Questions, ideas, a photo of something wrong</b>
+      <span>hello@tinyowllabs.com</span></div>
+    <div><b>App and privacy policy</b>
+      <span>tinyowllabs.com/tinyspools</span></div>
+    <div><b>Independent developer</b>
+      <span>TinyOwl</span></div>
+  </div>
+</section></body></html>
