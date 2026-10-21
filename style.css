@@ -54,3 +54,8 @@ footer p { margin: 0 0 6px; }
 .testas p { margin: 0 0 12px; }
 .testas p:last-child { margin: 0; }
 .btn { display: inline-block; background: var(--accent); color: #fff; font-weight: 600; text-decoration: none; padding: 8px 16px; border-radius: 99px; }
+/* Kortelės nuorodų eilutė: kairėje puslapiai, dešinėje „Coming to Google Play“ + „Apply to test“. */
+.products li > div { flex: 1; }
+.products .eil { display: flex; justify-content: space-between; align-items: center; gap: 6px 12px; flex-wrap: wrap; }
+.testui { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
+.testui a { font-weight: 600; text-decoration: none; border: 1px solid var(--accent); border-radius: 99px; padding: 1px 10px; }
