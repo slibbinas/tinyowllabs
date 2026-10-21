@@ -54,3 +54,11 @@ footer p { margin: 0 0 6px; }
 .testas p { margin: 0 0 12px; }
 .testas p:last-child { margin: 0; }
 .btn { display: inline-block; background: var(--accent); color: #fff; font-weight: 600; text-decoration: none; padding: 8px 16px; border-radius: 99px; }
+/* Ikona su šviesiu ir tamsiu variantu: rodomas tas, kuris tinka temai (mygtukas arba telefono nustatymas). */
+img.tamsi { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) img.sviesi { display: none; }
+  :root:not([data-theme="light"]) img.tamsi { display: inline; }
+}
+:root[data-theme="dark"] img.sviesi { display: none; }
+:root[data-theme="dark"] img.tamsi { display: inline; }
