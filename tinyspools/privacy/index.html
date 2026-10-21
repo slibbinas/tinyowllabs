@@ -26,9 +26,10 @@
 brands, materials and colors you have, how much is left on each spool and on which shelf it is.
 It is developed by TinyOwl, the developer name of Viktoras Šidlauskas, an individual developer.</p>
 
-<p><b>In short:</b> the app has no server of its own, no internet access, no analytics, no
-advertising and no tracking. Everything you enter stays on your phone, except backup files that
-you choose to save to a folder of your choice.</p>
+<p><b>In short:</b> the app has no server of its own, no analytics, no advertising and no tracking.
+Everything you enter stays on your phone, except backup files that you choose to save to a folder
+of your choice. The app goes online only when you ask it to update its barcode database, and then
+only downloads a public file; nothing about you is sent.</p>
 
 <h2>What the app handles</h2>
 <div class="table">
@@ -40,6 +41,7 @@ you choose to save to a folder of your choice.</p>
 <tr><td>Barcodes you link to a filament</td><td>So scanning the same box again finds the filament</td><td>On the phone only; included in your backup files</td><td>Not sent anywhere</td></tr>
 <tr><td>Camera image while scanning</td><td>To read a barcode or QR code</td><td>Not stored: each frame is checked on the phone and discarded</td><td>Not sent anywhere</td></tr>
 <tr><td>NFC sticker contents</td><td>To open a spool when you touch its sticker</td><td>Only a link to the spool number (tinyspools://spool/N) is written to your sticker</td><td>Not sent anywhere</td></tr>
+<tr><td>Barcode database update (optional)</td><td>To recognize filament boxes by their barcode</td><td>The public Open Filament Database file is downloaded from api.openfilamentdatabase.org and stored on the phone; included in your backup files</td><td>Nothing is sent except the download request itself. It happens only when you tap “Update barcode database” in Settings or confirm the update after scanning an unknown barcode</td></tr>
 </table>
 </div>
 
@@ -50,7 +52,7 @@ service under its own privacy policy.</p>
 <ul>
 <li>It does not collect or share personal data with the developer or any third party.</li>
 <li>It does not use analytics, crash reporting, advertising or tracking SDKs.</li>
-<li>It does not request internet access, location, contacts or microphone.</li>
+<li>It does not go online in the background, and it does not request location, contacts or microphone.</li>
 <li>It does not sell data. There is no data to sell.</li>
 </ul>
 
@@ -58,6 +60,8 @@ service under its own privacy policy.</p>
 <ul>
 <li><b>Camera</b> (asked when you first scan): only to read barcodes and QR codes. Images are processed on the phone and never saved or sent.</li>
 <li><b>NFC</b>: to write a spool link to your own NFC sticker and to open that spool when you touch it.</li>
+<li><b>Internet</b>: only to download the Open Filament Database barcode file from api.openfilamentdatabase.org, and only when you ask for it.
+That server, like any web server, sees the download request (your IP address) under its own policy; the app sends no other data.</li>
 </ul>
 <p>Access to a backup folder is granted by you in the Android file picker and can be removed by
 choosing another folder or uninstalling the app.</p>
@@ -69,7 +73,7 @@ choosing another folder or uninstalling the app.</p>
 </ul>
 
 <h2>Third-party content</h2>
-<p>The built-in filament catalog comes from SpoolmanDB (MIT License). Codes are read with ZXing (Apache License 2.0). Brand names and logos are
+<p>The built-in filament catalog comes from SpoolmanDB (MIT License). Box barcodes come from the Open Filament Database (MIT License). Codes are read with ZXing (Apache License 2.0). Brand names and logos are
 trademarks of their respective owners and are shown only to identify a filament's manufacturer.
 TinySpools is not affiliated with or endorsed by any filament manufacturer.</p>
 
