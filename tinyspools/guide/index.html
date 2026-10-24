@@ -67,9 +67,9 @@ img.w { display: block; border-radius: 3mm; }
   <h1>Your filament,<br>sorted.</h1>
   <p class="lead">For people who just want to know what filament they have, where it is and how much is left.
   Adding a spool takes seconds, and the palette shows every color you own at a glance.</p>
-  <div class="hero"><img class="w h1" src="img/palete.png" alt="Palette"><img class="w h2" src="img/sarasas.png" alt="Spools list"><img class="w h3" src="img/rite.png" alt="Spool"></div>
+  <div class="hero"><img class="w h1" src="img/palete.png" alt="Palette"><img class="w h2" src="img/sarasas.png?v=2" alt="Spools list"><img class="w h3" src="img/rite.png?v=2" alt="Spool"></div>
   <div class="benefits">
-    <div><b>Add in seconds</b><p>Scan the box barcode or pick the color from the catalog.</p></div>
+    <div><b>Add in seconds</b><p>Scan the box barcode, touch a Bambu Lab spool or pick the color from the catalog.</p></div>
     <div><b>Pick from the palette</b><p>Every color you own, with the grams left.</p></div>
     <div><b>Know where</b><p>Grams left on every spool and shelf, and where it is.</p></div>
   </div>
@@ -83,8 +83,8 @@ img.w { display: block; border-radius: 3mm; }
   A <b>spool</b> is one physical spool of it, with its own grams left and shelf. One filament can have many spools.</p>
   <div class="grid">
     <div class="card">
-      <img class="w sm" src="img/sarasas.png" alt="Spools tab">
-      <div><h4>Spools</h4><p>Every filament with its logo, color and code, how many spools you have (&times;2) and on which shelves. Search looks at everything at once; Brand, Material, Type and Color filters show how many spools match each choice (colors with a dot), and <b>Show</b> tells how many will be left. The list can be ordered by brand, material or color in Settings.</p></div>
+      <img class="w sm" src="img/sarasas.png?v=2" alt="Spools tab">
+      <div><h4>Spools</h4><p>Every filament with its logo, color and code, how many spools you have (&times;2) and on which shelves; the bar shows each spool's grams left (up to 10, or the total in Settings). Search looks at everything at once; Brand, Material, Type and Color filters show how many spools match each choice, and <b>Show</b> tells how many will be left. Type also filters <b>Spool</b> or <b>Refill</b>.</p></div>
     </div>
     <div class="card">
       <img class="w sm" src="img/palete.png" alt="Palette tab">
@@ -95,8 +95,8 @@ img.w { display: block; border-radius: 3mm; }
       <div><h4>Locations</h4><p>Your shelves, dryers or boxes, each with its number of spools, the grams left on it and its colors. Tap one to see only its spools; long-press to rename or delete. <b>+ New location</b> adds one.</p></div>
     </div>
     <div class="card">
-      <img class="w sm" src="img/rite.png" alt="Spool dialog">
-      <div><h4>A spool</h4><p>Tap a spool card. The big number is the grams left: tap it to type, or use the slider and -50 / -10 / +10 / +50 / <b>Empty</b>. Tap a shelf to move the spool there. Here you also make its QR label or NFC sticker.</p></div>
+      <img class="w sm" src="img/rite.png?v=2" alt="Spool dialog">
+      <div><h4>A spool</h4><p>Tap a spool card. The big number is the grams left: tap it to type, or use the slider and -50 / -10 / +10 / +50 / <b>Empty</b>. Mark it <b>Spool</b> or <b>Refill</b>, tap a shelf to move it there, and make its QR label or NFC sticker.</p></div>
     </div>
   </div>
   <p class="fine">The theme (System, Dark, Light), the palette style and block order, the Spools list order and the filter
@@ -108,12 +108,12 @@ img.w { display: block; border-radius: 3mm; }
   <h2>Pick it, scan it or type it.</h2>
   <div class="grid">
     <div class="card">
-      <img class="w sm" src="img/naujas.png" alt="New filament">
-      <div><h4>New filament</h4><p><b>+ New spool</b> first offers the filaments you already have. For a new one, tap <b>+ New filament</b>, then <b>Pick from catalog</b> or fill in the fields. Save, and the first spool opens right away.</p></div>
+      <img class="w sm" src="img/naujas.png?v=2" alt="New filament">
+      <div><h4>New filament</h4><p><b>+ New spool</b> first offers the filaments you already have. For a new one, tap <b>+ New filament</b>, then <b>Pick from catalog</b> or fill in the fields: no RGB code? Tap a color and fine-tune it with <b>Hue</b> and <b>Lightness</b>. Save, and the first spool opens right away.</p></div>
     </div>
     <div class="card">
       <img class="w sm" src="img/skeneris.png" alt="Scan code">
-      <div><h4>Scan a box</h4><p><b>Scan</b> reads the barcode on a filament box. A known barcode finds the filament at once; a new one asks which filament it is, and the app remembers it.</p></div>
+      <div><h4>Scan a box</h4><p><b>Scan</b> reads the barcode on a filament box. A known barcode finds the filament at once; a new one asks which filament it is, and the app remembers it. In <b>+ New spool</b>, touching a Bambu Lab spool to the phone reads its tag and fills in the filament.</p></div>
     </div>
     <div class="card">
       <img class="w sm" src="img/dublikatas.png" alt="Already in your spools">
@@ -140,11 +140,11 @@ img.w { display: block; border-radius: 3mm; }
     </div>
     <div class="card">
       <img class="w sm" src="img/nfc.png" alt="NFC tag">
-      <div><h4>NFC sticker</h4><p><b>NFC tag</b> writes the spool to an empty NFC sticker (NTAG213, 215 or 216). Touching the sticker with the phone opens that spool, even when the app is closed.</p></div>
+      <div><h4>NFC sticker</h4><p><b>NFC tag</b> writes the spool to an empty NFC sticker (NTAG213, 215 or 216). Touching the sticker with the phone opens that spool, even when the app is closed. The phone vibrates and shows what it read.</p></div>
     </div>
     <div class="card">
-      <img class="w sm" src="img/patikra.png" alt="Check spools">
-      <div><h4>Check spools</h4><p>Menu &rarr; <b>Check spools</b> lists every spool with its shelf and grams. Mark each one <b>Found</b> (&check;) or <b>Not found</b> (&times;); filter by shelf to go one shelf at a time. Not found ones move to <b>Unassigned</b>: when they turn up, tick them and tap <b>To the shelf</b>. <b>New check</b> starts a fresh round.</p></div>
+      <img class="w sm" src="img/patikra.png?v=2" alt="Check spools">
+      <div><h4>Check spools</h4><p>Menu &rarr; <b>Check spools</b> &rarr; <b>Start check</b>. Mark each spool <b>Found</b> (&check;) or <b>Not found</b> (&times;), shelf by shelf, or touch its sticker. <b>Finish check</b> can move the not found ones to <b>Unassigned</b>: when they turn up, tick them and tap <b>To the shelf</b>.</p></div>
     </div>
     <div class="card">
       <img class="w sm" src="img/kopija.png" alt="Backup in Settings">
