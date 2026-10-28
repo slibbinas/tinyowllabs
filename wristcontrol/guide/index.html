@@ -169,18 +169,18 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
 .closing h4 { font-size: 9pt; }
 .closing p { font-size: 8.3pt; }
 
-/* Aplinka aplink lapus - pagal TinyOwl tema (/tema.js): tamsioje juoda kaip visas tinyowllabs.com,
+/* Aplinka aplink lapus ir kelio juosta - pagal TinyOwl tema (/tema.js): tamsioje juoda kaip visas tinyowllabs.com,
    lapai lieka balti, kaip PDF perziuroje (V 2026-10-29). */
-:root { --aplink: #F3F5F9; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --aplink: #141416; } }
-:root[data-theme="dark"] { --aplink: #141416; }
+:root { --aplink: #F3F5F9; --juosta: rgba(255,255,255,.95); --juostos-tekstas: #5C667A; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --aplink: #141416; --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; } }
+:root[data-theme="dark"] { --aplink: #141416; --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; }
 @media screen {
   html { background: var(--aplink); }
   body { overflow-x: clip; }
   .page { scroll-margin-top: 48px; }
   /* Juosta ir grizimo eilute - kaip TinyStatus vadove; eilute visada smulkesne uz vadovo teksta. */
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; padding: 10px 16px; background: rgba(14,26,51,.95); font-size: 10px; color: #9FB0CC; }
+    gap: 12px; padding: 10px 16px; background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
   .webbar a { color: #5B9BF3; text-decoration: none; }
   .webbar .pdf { background: #2F6FE4; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   .page { width: auto; max-width: 210mm; height: auto; margin: 16px auto; border-radius: 10px;
