@@ -10,16 +10,16 @@
 <style>
 /* Spalvos - is programeles: telefonas Stilius.java (tamsi ir sviesi tema), laikrodis MainActivity / VlxPiliule. */
 :root{
-  --bg:#fff; --page:#1b2233; --muted:#5c667a; --line:#e3e8f1; --soft:#f3f7fe;
+  --bg:#fff; --page:#1b2233; --muted:#5c667a; --line:#e3e8f1; --soft:#f3f7fe; --owl:#e8720c;
   --wpill:#33363c; --wblue:#2b3f9e; --whi:#e8ecf5; --wlo:#8c96b2; --wblue2:#5b9bf3;
   --wgreen:#6fbf73; --wyellow:#f5c542; --wred:#e5615b;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --soft:#26262b}}
-:root[data-theme="dark"]{--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --soft:#26262b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --soft:#26262b; --owl:#f08a2c}}
+:root[data-theme="dark"]{--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --soft:#26262b; --owl:#f08a2c}
 /* Virsutine eilute kaip kituose puslapiuose: kelias kaireje, temos jungiklis desineje (/tema.js). */
 .virsus{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px}
 .crumb{margin:0;font-size:12px;color:var(--muted)}
-.crumb a{text-decoration:none;color:#5b9bf3}
+.crumb a{text-decoration:none;color:var(--owl)}
 .theme{display:flex;border:1px solid var(--line);border-radius:99px;padding:3px;gap:2px;flex:none}
 .theme button{width:32px;height:28px;border:0;border-radius:99px;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center;padding:0}
 .theme button[aria-pressed="true"]{background:var(--soft);color:var(--page)}
