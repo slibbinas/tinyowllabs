@@ -30,14 +30,15 @@
   --green:#2e8b3e; --yellow:#a86f00; --orange:#c2611a; --red:#c8443e; --track:#d5dae4; --onbtn:#ffffff}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--page);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:1020px;margin:0 auto;padding:20px 16px 48px}
+/* Turinio plotis = telefonas (360) + tarpas + laikrodzio stulpelis: tekstas ir blokai sutampa su prototipu (V 2026-10-29). */
+main{max-width:792px;margin:0 auto;padding:20px 16px 48px}
 header.top{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 header.top img{width:44px;height:44px;border-radius:10px}
 header.top b{font-size:20px;display:block}
 header.top span{color:var(--muted);font-size:13px}
 p.lead{color:var(--muted);margin:0 0 22px}
 p.lead a{color:#5b9bf3}
-.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0 0 10px}
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:0 0 10px}
 .scen button{font:inherit;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
 .scen button b{display:block;font-size:15px}
 .scen button span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
@@ -62,7 +63,7 @@ p.try{color:var(--muted);margin:0 0 10px;font-size:14px}
 .tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:center}
 .tools button{font:inherit;font-size:14px;padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
 .tools span{color:var(--muted);font-size:13px}
-.stage{display:flex;gap:40px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.stage{display:flex;gap:40px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
 .dev{display:flex;flex-direction:column;align-items:center;gap:10px}
 /* Laikrodzio stulpelis - telefono remo aukscio: prasideda ir baigiasi kartu su telefonu (V 2026-10-28). */
 .dev.lk{height:740px;justify-content:space-between;gap:6px}
@@ -239,7 +240,7 @@ canvas{width:100%;display:block}
 .warr{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .warr button{font:inherit;font-size:13px;background:transparent;border:1px solid var(--line);color:var(--page);border-radius:16px;padding:4px 12px;cursor:pointer}
 .wgs{zoom:1;width:270px;display:flex;flex-direction:column;gap:8px}
-@media (max-width:760px){.stage{gap:26px}}
+@media (max-width:760px){.stage{gap:26px;justify-content:center}}
 </style>
 </head>
 <body>
