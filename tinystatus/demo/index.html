@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TinyStatus - live demo</title>
+<meta name="description" content="Try TinyStatus in the browser: a TinyMaker and a Bambu Lab printer print on a simulated Wear OS watch, with the phone app beside it.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<style>
+/* Spalvos - is programeles: laikrodis res/values/colors.xml, telefonas Pagrindinis.java. */
+:root{
+  --bg:#f2f4f8; --page:#14161c; --muted:#5a6378; --line:#d5dae4; --link:#2f6fd0;
+  --orange:#e8720c; --blue:#4da3ff; --bluel:#84bcf8; --btn:#2e2e33; --text:#eeeeee; --mut:#8a8a92;
+  --latte:#cbbfae; --faint:#55555c; --ok:#2fbf4f; --warn:#ffb15f; --danger:#ff6b5a; --track:#26262a;
+  --f:#0e1016; --card:#1c1f2a; --field:#262a37; --hi:#e8ecf5; --lo:#8c96b2; --green:#66bb6a;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0d12; --page:#e6e9ef; --muted:#9aa3b4; --line:#2a313d; --link:#84bcf8}}
+:root[data-theme="dark"]{--bg:#0b0d12; --page:#e6e9ef; --muted:#9aa3b4; --line:#2a313d; --link:#84bcf8}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--page);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:20px 16px 48px}
+header.top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+header.top img{width:44px;height:44px;border-radius:10px}
+header.top b{font-size:20px;display:block}
+header.top span{color:var(--muted);font-size:13px}
+p.lead{color:var(--muted);margin:6px 0 18px;max-width:720px}
+p.lead a{color:var(--link)}
+.stage{display:flex;gap:40px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.dev{display:flex;flex-direction:column;align-items:center;gap:10px}
+.cap{color:var(--muted);font-size:13px;text-align:center;max-width:340px}
+.tools{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.tools button,.warr button{font:inherit;font-size:14px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
+.warr{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.warr button{font-size:13px;border-radius:16px;padding:4px 12px}
+.warr button.on{background:var(--page);color:var(--bg);border-color:var(--page)}
+.note{color:var(--muted);font-size:12.5px;text-align:center;margin-top:14px}
+.buzz{animation:buzz .35s}
+@keyframes buzz{0%,100%{transform:translate(0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-2px,0)}80%{transform:translate(2px,1px)}}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ---- Telefonas ---- */
+.phone{width:360px;height:740px;border-radius:38px;background:#000;padding:10px;box-shadow:0 10px 40px rgba(0,0,0,.35);position:relative}
+.ps{width:100%;height:100%;border-radius:30px;background:var(--f);overflow:hidden;position:relative;color:var(--hi)}
+.sbar{height:28px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:12px}
+.scr{position:absolute;top:28px;left:0;right:0;bottom:24px;overflow-y:auto;padding:8px 14px 20px;scrollbar-width:none}
+.scr::-webkit-scrollbar{display:none}
+.navb{position:absolute;bottom:9px;left:50%;width:90px;height:4px;margin-left:-45px;border-radius:2px;background:#5a6070}
+.ph{display:flex;align-items:center;gap:10px;margin:6px 4px 12px}
+.ph img{width:38px;height:38px;border-radius:9px}
+.ph b{font-size:20px;display:block;line-height:1.1}
+.ph span{color:var(--lo);font-size:13px}
+.k{background:var(--card);border-radius:14px;padding:14px 16px;margin-top:10px}
+.kt{color:var(--lo);font-size:12px;letter-spacing:.04em;font-weight:700}
+.kh{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:17px;font-weight:700}
+.badge{width:22px;height:22px;border-radius:50%;background:var(--green);color:var(--f);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.tx{color:var(--lo);font-size:14px;margin:6px 0}
+.tx.hi{color:var(--hi)}
+.lbl{color:var(--lo);font-size:12.5px;margin:8px 0 4px}
+.in{background:var(--field);border-radius:10px;padding:11px 12px;font-size:15px;color:var(--hi);display:flex;justify-content:space-between}
+.in .sh{color:var(--blue);font-weight:600;font-size:13px}
+.pb{display:block;text-align:center;border-radius:24px;padding:11px;margin-top:12px;font-weight:700;font-size:15px;background:var(--btn);cursor:pointer;user-select:none}
+.pb.blue{background:var(--blue);color:#10161d}
+.pb.wait{opacity:.6;cursor:default}
+.lnk{color:var(--blue);font-size:13.5px;margin-top:10px}
+.msg{font-size:13.5px;margin-top:10px;color:var(--lo)}
+.msg.ok{color:var(--green)}
+.seg{display:flex;gap:8px;margin-top:8px}
+.seg div{flex:1;text-align:center;padding:9px 6px;border-radius:10px;background:var(--field);cursor:pointer;font-size:14px}
+.seg div.on{background:#2e3c96}
+ol.st{margin:8px 0 0;padding-left:20px;font-size:14px;color:var(--hi)}
+ol.st li{margin:5px 0}
+.foot{color:var(--lo);font-size:12.5px;text-align:center;margin-top:14px}
+.toast{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);background:#3a3f4d;color:#fff;padding:8px 14px;border-radius:18px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1}
+
+/* ---- Laikrodis ---- */
+.watch{width:330px;height:330px;border-radius:50%;background:#1a1b1f;padding:15px;box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 0 0 3px #2a2c31}
+.ws{width:300px;height:300px;border-radius:50%;background:#000;overflow:hidden;position:relative;color:var(--text);user-select:none;touch-action:pan-y;font-family:Roboto,system-ui,sans-serif}
+/* Masteliai kaip Wrist Control demo: 1 sp = 1,75 px, 1 dp = 1,46 px (tikras ekranas 438 px). */
+.ring{position:absolute;inset:0}
+.col{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-bottom:4px}
+.col div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.42}
+.wn{font-size:14.5px;color:var(--bluel);max-width:180px}
+.wn i{font-style:normal;font-weight:700;color:#000;font-size:10.5px;border-radius:7px;padding:0 4px;margin-left:4px;vertical-align:1px}
+.wmo{font-size:16px;color:var(--bluel);max-width:200px}
+.wbig{font-size:33px;font-weight:700;max-width:225px;line-height:1.3!important;margin:2px 0}
+.wst{font-size:18px;font-weight:700;color:var(--latte);max-width:230px}
+.wl{font-size:16px;color:var(--latte);max-width:225px}
+.wh{font-size:12px;color:var(--faint);max-width:185px;margin-top:1px}
+.wref{width:17px;height:17px;margin-top:4px;cursor:pointer}
+.wref.on{animation:sp .65s linear infinite}
+.wdots{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:#c9cfdd;font-size:12px;letter-spacing:2px}
+.wset{font-size:22px;font-weight:700;color:var(--bluel);margin-bottom:6px}
+.wrow{display:grid;grid-template-columns:1fr 1fr;column-gap:6px;font-size:17px;width:240px;line-height:1.3}
+.wrow span:nth-child(odd){color:var(--mut);text-align:right}
+.wrow span:nth-child(even){font-weight:700;text-align:left}
+.wtap{color:var(--latte);font-size:14.5px;margin-top:8px}
+.win{position:absolute;inset:0;background:#000;overflow-y:auto;padding:34px 46px 80px;display:none;scrollbar-width:none;text-align:center}
+.win::-webkit-scrollbar{display:none}
+.win.on{display:block}
+.win h4{margin:18px 0 8px;font-size:19px;color:var(--bluel)}
+.win h4:first-child{margin-top:4px}
+.tg{display:flex;align-items:center;justify-content:space-between;font-size:17px;padding:7px 4px;cursor:pointer;text-align:left}
+.tg span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}
+.sw{width:44px;height:24px;border-radius:12px;background:#3a3b40;position:relative;flex:none}
+.sw:after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#7a7b80;transition:left .15s}
+.sw.on{background:#4b5076}
+.sw.on:after{left:22px;background:#8a9ae0}
+.wbtn{border-radius:26px;background:var(--btn);padding:9px;margin-top:7px;font-size:17px;cursor:pointer}
+.wbtn.on{background:var(--blue);color:#10161d;font-weight:700}
+.wsm{color:var(--mut);font-size:13.5px;margin-top:4px}
+.tile{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tile b{color:#9aa0a6;font-size:17px;letter-spacing:.04em;margin-bottom:16px}
+.tr{display:flex;gap:22px}
+.tr div{display:flex;flex-direction:column;align-items:center;cursor:pointer;width:104px}
+.tr svg{width:88px;height:88px}
+.tr .n{font-size:17px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:104px}
+.tr .s{font-size:14px;color:#9aa0a6}
+.tbtn{margin-top:16px;border-radius:20px;background:#2e2e33;padding:6px 22px;font-size:16px;cursor:pointer}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.fc{display:flex;align-items:center;gap:6px;font-size:22px;font-weight:700;cursor:pointer}
+.fc svg{width:22px;height:22px}
+.fd{color:#f0d36a;font-size:20px;font-weight:700;margin-top:8px}
+.ft{color:#4f9df5;font-size:84px;font-weight:700;line-height:1;margin:2px 0 8px;letter-spacing:-1px}
+.fr{position:relative;width:62px;height:62px;cursor:pointer}
+.fr svg{position:absolute;inset:0;width:62px;height:62px}
+.fr span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.ntf{position:absolute;left:0;right:0;bottom:0;height:300px;background:rgba(0,0,0,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 40px;text-align:center;transform:translateY(100%);transition:transform .3s;cursor:pointer}
+.ntf.on{transform:translateY(0)}
+.ntf .ap{display:flex;align-items:center;gap:6px;color:#9aa0a6;font-size:15px}
+.ntf .ap img{width:22px;height:22px;border-radius:50%}
+.ntf b{font-size:19px;margin-top:10px;line-height:1.2}
+.ntf p{margin:6px 0 0;color:#c4c7c5;font-size:15px;line-height:1.25}
+.ntf .x{margin-top:14px;border-radius:20px;background:#2e2e33;padding:6px 22px;font-size:16px}
+@media (max-width:760px){.stage{gap:26px}}
+@media (max-width:380px){.phone{transform:scale(.9);transform-origin:top center;margin-bottom:-74px}}
+</style>
+</head>
+<body>
+<main>
+<header class="top"><img src="/tinystatus.png" alt=""><div><b>TinyStatus</b><span>Live demo · two simulated printers, nothing leaves this page</span></div></header>
+<p class="lead">The Wear OS watch app and its phone helper, side by side. A TinyMaker resin printer and a Bambu Lab printer are printing; follow them on the watch, the tile and the watch face, and get the alerts when they finish. Demo time runs 60 times faster: one print minute lasts a second. <a href="/tinystatus/">About the app</a> · <a href="/tinystatus/guide/">User guide</a></p>
+
+<div class="stage">
+  <div class="dev">
+    <div class="phone"><div class="ps" id="ps">
+      <div class="sbar"><span id="clk">12:00</span><span>▾ ◢ 87%</span></div>
+      <div class="scr" id="scr"></div>
+      <div class="navb"></div>
+      <div class="toast" id="toast"></div>
+    </div></div>
+    <div class="cap">Phone. Sign in to Bambu Lab or set up the TinyMaker printer for the watch.</div>
+  </div>
+  <div class="dev">
+    <div class="watch"><div class="ws" id="ws"></div></div>
+    <div class="warr" id="views"><button data-v="app" class="on">App</button><button data-v="tile">Tile</button><button data-v="face">Watch face</button></div>
+    <div class="warr"><button id="wl">‹ Page</button><button id="wr">Page ›</button></div>
+    <div class="cap">Watch. Swipe sideways or use the page buttons. Tap the arrow to refresh, tap SETTINGS to open it.</div>
+  </div>
+</div>
+<div class="tools"><button id="skip">Skip 15 min</button><button id="pause">Pause Bambu</button><button id="reset">Start over</button></div>
+<p class="note">Printers, prints and numbers are made up. The real app reads TinyMaker printers on your Wi-Fi and Bambu Lab printers through your Bambu account. TinyMaker and Bambu Lab are trademarks of their respective owners; TinyStatus is an independent app.</p>
+</main>
+
+<script>
+(function(){
+"use strict";
+var VER="0.1.347";
+/* Zenklai - tikri programeles vektoriai: ic_tm_print (piramide is TinyMaker logotipo), ic_bl_print (kubas). */
+var ICON={
+ TM:'<svg viewBox="0 0 64 64"><g transform="translate(0 7.85)" fill="currentColor"><path d="M11,40 h42 a3,3 0 0 1 3,3 v3 a3,3 0 0 1 -3,3 h-42 a3,3 0 0 1 -3,-3 v-3 a3,3 0 0 1 3,-3 z M17,27 h30 a3,3 0 0 1 3,3 v3 a3,3 0 0 1 -3,3 h-30 a3,3 0 0 1 -3,-3 v-3 a3,3 0 0 1 3,-3 z M23,14 h18 a3,3 0 0 1 3,3 v3 a3,3 0 0 1 -3,3 h-18 a3,3 0 0 1 -3,-3 v-3 a3,3 0 0 1 3,-3 z"/><path d="M22,6 A14,14 0 0 1 42,6" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></g></svg>',
+ BL:'<svg viewBox="0 -960 960 960"><path fill="currentColor" d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-40-343 237-137-237-137-237 137 237 137ZM160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11L160-252Z"/></svg>'
+};
+var REF='<svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.65 6.35A7.96 7.96 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>';
+var TIPAS={TM:"#e8720c",BL:"#2fbf4f"};
+var S, ui, timer;
+
+function fresh(){
+  S={min:0,
+     P:[{t:"TM",name:"TinyMaker",show:true,model:"cup15-test2-0178",total:420,dur:40,done:22,busy:true,paused:false,vat:12.6,end:null},
+        {t:"BL",name:"Printukas",show:true,model:"VatBoxX_plate_2",total:994,dur:110,done:20,busy:true,paused:false,fil:"PLA",filPct:37,filCol:"#f2f2f2",end:null}],
+     bambu:true, tmIp:false, bg:3, al:{end:true,warn:true,stop:true,pause:false,err:true},
+     age:2, refAt:0};
+  ui={view:"app",page:0,win:false,ph:{bl:"signed",tmSeg:"name",tmMsg:"",blMsg:""},ntf:null};
+}
+
+/* ---- Simuliacija: viena demo sekunde = viena spausdinimo minute ---- */
+function tick(){
+  S.age++; if(S.age>4) S.age=0;                 // ekranas klausia kas 5 s
+  advance(1);
+  draw();
+}
+function advance(m){
+  S.min+=m;
+  S.P.forEach(function(p,i){
+    if(!p.busy||p.paused) return;
+    var was=p.vat, over=Math.max(0,p.done+m-p.dur);   // "Skip" gali persokti pabaiga
+    p.done=Math.min(p.dur,p.done+m);
+    if(p.t==="TM"){p.vat=Math.max(0,p.vat-0.23*(m-over)); if(was>=10&&p.vat<10&&S.al.warn) alert(i,"Resin running low",p.vat.toFixed(1)+" ml left at layer "+cur(p)+"/"+p.total);}
+    else {p.filPct=Math.max(5,37-Math.floor(p.done/8));}
+    if(p.done>=p.dur){p.busy=false;p.end={kind:"done",at:S.min-over,seen:false};
+      if(S.al.end) alert(i,"Print finished",p.model+" - "+(p.t==="TM"?dur(p.dur)+", ~"+(p.dur*0.23).toFixed(1)+" ml used":p.total+" layers"));}
+  });
+}
+function cur(p){return Math.round(p.total*p.done/p.dur);}
+function left(p){return Math.max(0,p.dur-p.done);}
+function dur(m){m=Math.round(m);return m>=60?Math.floor(m/60)+"h "+(m%60)+"m":m+"m";}
+function since(m){return dur(Math.max(0,S.min-m));}
+function vis(){var v=[];S.P.forEach(function(p,i){if(p.show&&(p.t!=="BL"||S.bambu)) v.push(i);});return v;}
+/* Kuri rodyti komplikacijoje ir plyteleje - TsSaltinis.rodomas(): spausdinantis, baigsiantis anksciausiai. */
+function soonest(){var v=vis(),b=-1;v.forEach(function(i){var p=S.P[i];if(p.busy&&(b<0||left(p)<left(S.P[b])))b=i;});return b>=0?b:(v.length?v[0]:-1);}
+
+function alert(i,title,text){
+  ui.ntf={title:S.P[i].name+": "+title,text:text};
+  buzz();
+}
+function buzz(){var e=document.getElementById("ws");e.classList.remove("buzz");void e.offsetWidth;e.classList.add("buzz");}
+var tt; function toast(t){var e=document.getElementById("toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on");},2400);}
+
+/* ---- Ziedas - RingView: takelis, uzpildas nuo virsaus, tarpeliai kas 10 % ---- */
+function arc(cx,cy,r,a0,a1){
+  var x0=cx+r*Math.sin(a0),y0=cy-r*Math.cos(a0),x1=cx+r*Math.sin(a1),y1=cy-r*Math.cos(a1);
+  return "M"+x0.toFixed(2)+","+y0.toFixed(2)+" A"+r+","+r+" 0 "+(a1-a0>Math.PI?1:0)+" 1 "+x1.toFixed(2)+","+y1.toFixed(2);
+}
+function ring(size,stroke,inset,prog,col,gaps){
+  var c=size/2,r=c-inset-stroke/2,h='<svg viewBox="0 0 '+size+' '+size+'"><circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="#26262a" stroke-width="'+stroke+'"/>';
+  if(prog>0){ if(prog>=0.999) h+='<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="'+stroke+'"/>';
+    else h+='<path d="'+arc(c,c,r,0,2*Math.PI*prog)+'" fill="none" stroke="'+col+'" stroke-width="'+stroke+'" stroke-linecap="round"/>';}
+  if(gaps) for(var i=1;i<10;i++){var a=i*Math.PI/5,g=0.8*Math.PI/180;h+='<path d="'+arc(c,c,r,a-g,a+g)+'" fill="none" stroke="#000" stroke-width="'+(stroke+2)+'"/>';}
+  return h+'</svg>';
+}
+
+/* ---- Laikrodzio programele: MainActivity.show() ---- */
+function printerPage(i){
+  var p=S.P[i], col=TIPAS[p.t], h, prog=-1, big, bigC="var(--text)", st="", stC="var(--latte)", model=p.model, lay="-", res, resC="var(--latte)";
+  if(!p.busy&&p.end){
+    big="DONE"; bigC="var(--ok)"; st="finished "+since(p.end.at)+" ago"; lay=p.total+" layers"; prog=1;
+  } else if(p.busy){
+    big=dur(left(p)); st=p.paused?"PAUSED":"PRINTING"; if(p.paused) stC="var(--warn)";
+    lay=cur(p)+" / "+p.total; prog=p.done/p.dur;
+  } else { big="IDLE"; bigC="var(--latte)"; model="-"; }
+  if(p.t==="TM"){ res=p.vat.toFixed(1)+" ml left"; if(p.vat<10) resC="var(--warn)"; }
+  else res='<span style="color:'+p.filCol+'">●</span> '+p.fil+" "+p.filPct+" %"+(p.busy?" · 220°":"");
+  var age=S.age+"s ago"+(p.busy?" · bg "+["","30s","2min","5min","10min"][S.bg]:"");
+  if(S.bg===0) age=S.age+"s ago";
+  if(p.t==="BL") age="local · "+age;
+  h='<div class="ring">'+ring(300,10,6,prog,p.paused?"#ffb15f":col,true)+'</div><div class="col">'+
+    '<div class="wn">'+p.name+'<i style="background:'+col+'">'+p.t.replace("TM","TM").replace("BL","BL")+'</i></div>'+
+    '<div class="wmo">'+model+'</div><div class="wbig" style="color:'+bigC+'">'+big+'</div>'+
+    '<div class="wst" style="color:'+stC+'">'+st+'</div><div class="wl">'+lay+'</div>'+
+    '<div class="wl" style="color:'+resC+'">'+res+'</div><div class="wh">'+age+'</div>'+
+    '<div class="wref'+(Date.now()-S.refAt<650?' on':'')+'" id="wref" style="color:'+(Date.now()-S.refAt<650?'#e8720c':'#55555c')+'">'+REF+'</div></div>';
+  return h;
+}
+function settingsPage(){
+  var v=vis().length, n=S.bambu?2:1, on=0; for(var k in S.al) if(S.al[k]) on++;
+  return '<div class="col" id="wsettings" style="cursor:pointer"><div class="wset">SETTINGS</div><div class="wrow">'+
+    '<span>Printers</span><span>'+v+' of '+n+'</span><span>Bambu</span><span>'+(S.bambu?"Signed in":"-")+'</span>'+
+    '<span>TinyMaker</span><span>'+(S.tmIp?"1 by IP":"By name")+'</span><span>Refresh</span><span>'+["Off","30 s","2 min","5 min","10 min"][S.bg]+'</span>'+
+    '<span>Alerts</span><span>'+(on?on+" on":"None")+'</span><span>Version</span><span>'+VER+'</span></div><div class="wtap">Tap to open</div></div>';
+}
+function sw(on){return '<span class="sw'+(on?' on':'')+'"></span>';}
+function settingsWin(){
+  var h='<h4>PRINTERS</h4>';
+  S.P.forEach(function(p,i){ if(p.t==="BL"&&!S.bambu) return; h+='<div class="tg" data-show="'+i+'"><span>'+p.name+'</span>'+sw(p.show)+'</div>';});
+  h+='<h4>REFRESH</h4>';
+  ["Off","30 s","2 min","5 min","10 min"].forEach(function(t,i){h+='<div class="wbtn'+(S.bg===i?' on':'')+'" data-bg="'+i+'">'+t+'</div>';});
+  h+='<div class="wsm">Only while printing</div><h4>ALERTS</h4>';
+  [["end","Print end"],["warn","Resin low"],["stop","Resin out"],["pause","Paused"],["err","Printer error"]].forEach(function(a){
+    h+='<div class="tg" data-al="'+a[0]+'"><span>'+a[1]+'</span>'+sw(S.al[a[0]])+'</div>';});
+  h+='<h4>BAMBU LAB</h4><div class="wsm">'+(S.bambu?"demo@example.com · 1 printer":"Sign in on the phone")+'</div>';
+  h+='<div class="wbtn" id="wclose" style="margin-top:16px">Close</div><div class="wsm">Version '+VER+'</div>';
+  return h;
+}
+function pages(){return vis().concat(["set"]);}
+/* Spausdintuvui dingus ar atsiradus karusele lieka tame paciame puslapyje (pvz. SETTINGS). */
+function keep(fn){var k=pages()[ui.page];fn();var i=pages().indexOf(k);ui.page=i<0?0:i;}
+
+/* ---- Plytele: TsTile - iki 2 spausdintuvu, spausdinantys pirma ---- */
+function tile(){
+  var v=vis().slice().sort(function(a,b){var A=S.P[a],B=S.P[b];if(A.busy!==B.busy)return A.busy?-1:1;return left(A)-left(B);}).slice(0,2);
+  if(!v.length) return '<div class="tile"><b>PRINTERS</b><div class="s" style="color:#9aa0a6;font-size:17px">No printers yet</div></div>';
+  var h='<div class="tile"><b>PRINTERS</b><div class="tr">';
+  v.forEach(function(i){var p=S.P[i], pr=p.busy?p.done/p.dur:(p.end?1:0), pct=Math.round(pr*100);
+    var s=p.busy?dur(left(p))+" left":(p.end?"Done":"Idle");
+    h+='<div data-open="'+i+'"><span style="position:relative;width:88px;height:88px">'+ring(88,8,2,pr,p.paused?"#ffb15f":TIPAS[p.t],false)+
+      '<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700">'+pct+'%</span></span>'+
+      '<span class="n">'+p.name+'</span><span class="s">'+s+'</span></div>';});
+  return h+'</div><div class="tbtn" id="topen">Open</div></div>';
+}
+
+/* ---- Ciferblatas: bendros komplikacijos "Printers time left" ir "Printers progress %" ---- */
+function face(){
+  var d=new Date(), i=soonest(), p=i>=0?S.P[i]:null;
+  var top="-", pr=0, pct="-", col="#e8ecf5";
+  if(p){ col=TIPAS[p.t]; if(p.busy){top=dur(left(p));pr=p.done/p.dur;pct=Math.round(pr*100)+"%";} else if(p.end){top="DONE";pr=1;pct="100%";} else {top="IDLE";} }
+  var days=["SUN","MON","TUE","WED","THU","FRI","SAT"], mon=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  return '<div class="face"><div class="fc" id="fopen" style="color:'+col+'">'+(p?ICON[p.t]:"")+top+'</div>'+
+    '<div class="fd">'+days[d.getDay()]+', '+mon[d.getMonth()]+' '+d.getDate()+'</div>'+
+    '<div class="ft">'+d.toTimeString().slice(0,5)+'</div>'+
+    '<div class="fr" id="fopen2">'+ring(62,5,1,pr,col,false)+'<span style="color:'+col+'">'+pct+'</span></div></div>';
+}
+
+function watch(){
+  var h;
+  if(ui.view==="tile") h=tile();
+  else if(ui.view==="face") h=face();
+  else {
+    var pg=pages(); if(ui.page>=pg.length) ui.page=0;
+    var k=pg[ui.page];
+    h=(k==="set")?settingsPage():printerPage(k);
+    var dots=""; for(var j=0;j<pg.length;j++) dots+=j===ui.page?"●":"·";
+    h+='<div class="wdots">'+dots+'</div><div class="win'+(ui.win?' on':'')+'" id="win">'+settingsWin()+'</div>';
+  }
+  if(ui.ntf) h+='<div class="ntf on" id="ntf"><div class="ap"><img src="/tinystatus.png" alt="">TinyStatus</div><b>'+ui.ntf.title+'</b><p>'+ui.ntf.text+'</p><div class="x">Dismiss</div></div>';
+  return h;
+}
+
+/* ---- Telefonas: Pagrindinis.java korteles ---- */
+function phone(){
+  var ph=ui.ph, h='<div class="ph"><img src="/tinystatus.png" alt=""><div><b>TinyStatus</b><span>3D printers on your wrist</span></div></div>';
+  h+='<div class="k"><div class="kt">GALAXY WATCH</div><div class="kh"><span class="badge">✓</span>TinyStatus is on your watch</div>'+
+     '<div class="tx">Open it on the watch to see your printers.</div><div class="tx hi" style="font-size:13px">On the watch: '+VER+'</div>'+
+     '<div class="pb blue" id="popen">Open on watch</div></div>';
+  h+='<div class="k"><div class="kt">BAMBU LAB ACCOUNT</div>';
+  if(ph.bl==="signed"){
+    h+='<div class="kh"><span class="badge">✓</span>Signed in on the watch</div><div class="tx">demo@example.com · 1 printer: Printukas</div><div class="pb" id="blother">Use another account</div>';
+  } else if(ph.bl==="code"||ph.bl==="confirming"){
+    h+='<div class="tx hi" style="margin-top:8px">Bambu Lab sent a code to demo@example.com. Enter it here.</div><div class="lbl">Code from the e-mail</div><div class="in">123456</div>'+
+       '<div class="pb'+(ph.bl==="confirming"?' wait':'')+'" id="blconfirm">Confirm</div><div class="msg">'+(ph.bl==="confirming"?"Signing in on the watch…":"No e-mail? Check spam, or sign in again for a new code.")+'</div>';
+  } else {
+    h+='<div class="tx hi" style="margin-top:8px">See your Bambu Lab printers on the watch.</div><div class="tx" style="margin-top:0">The password goes only to Bambu Lab and is not kept.</div>'+
+       '<div class="lbl">E-mail</div><div class="in">demo@example.com</div><div class="lbl">Password</div><div class="in"><span>••••••••</span><span class="sh">Show</span></div>'+
+       '<div class="pb'+(ph.bl==="sending"?' wait':'')+'" id="blsignin">Sign in on the watch</div>'+
+       (ph.bl==="sending"?'<div class="msg">Signing in on the watch…</div>':'<div class="lnk">Forgot password? bambulab.com</div>')+
+       '<div class="msg" style="font-size:12px">Demo: the fields are filled in for you, nothing is sent.</div>';
+  }
+  h+='</div>';
+  h+='<div class="k"><div class="kt">TINYMAKER</div><div class="tx">A TinyMaker printer with TinyMakerWifi firmware on the same Wi-Fi as the watch.</div>'+
+     '<div class="seg"><div data-seg="name" class="'+(ph.tmSeg==="name"?"on":"")+'">By name</div><div data-seg="ip" class="'+(ph.tmSeg==="ip"?"on":"")+'">IP address</div></div>'+
+     (ph.tmSeg==="ip"?'<div class="lbl">For example 192.168.1.50</div><div class="in">192.168.1.50</div>':'')+
+     '<div class="pb" id="tmsave">Save on the watch</div>'+
+     '<div class="msg'+(ph.tmMsg.indexOf("Saved")===0?' ok':'')+'">'+(ph.tmMsg||(S.tmIp?"On the watch: IP address 192.168.1.50":"On the watch: found by name, tinymaker.lan"))+'</div></div>';
+  h+='<div class="k"><div class="kt">GETTING STARTED</div><ol class="st"><li>Open TinyStatus on the watch.</li><li>Add a printer in SETTINGS: TinyMaker by name or IP on the same Wi-Fi, Bambu Lab with your Bambu account.</li>'+
+     '<li>Add the Printers tile: swipe left from the watch face, then + and TinyStatus.</li><li>Add complications: long-press the watch face, Customize, pick a slot, TinyStatus.</li></ol></div>';
+  h+='<div class="foot">Independent app, not made by TinyMaker or Bambu Lab.</div>';
+  return h;
+}
+
+/* Perpiesiam tik pasikeitusi irengini: kas sekunde keiciamas DOM pagauna paspaudima
+   tarp mygtuko nuspaudimo ir atleidimo, ir narsykle "click" nebeiskviecia. */
+var buvo={ph:"",w:""};
+function draw(){
+  document.getElementById("clk").textContent=new Date().toTimeString().slice(0,5);
+  var scr=document.getElementById("scr"), html=phone();
+  if(html!==buvo.ph){var y=scr.scrollTop; scr.innerHTML=html; scr.scrollTop=y; buvo.ph=html;}
+  var ws=document.getElementById("ws"), w=document.getElementById("win"), wy=w?w.scrollTop:0;
+  html=watch();
+  if(html!==buvo.w){ws.innerHTML=html; buvo.w=html; w=document.getElementById("win"); if(w) w.scrollTop=wy;}
+  [].forEach.call(document.querySelectorAll("#views button"),function(b){b.classList.toggle("on",b.dataset.v===ui.view);});
+  var bl=S.P[1]; document.getElementById("pause").textContent=bl.paused?"Resume Bambu":"Pause Bambu";
+  document.getElementById("pause").disabled=!bl.busy||!S.bambu;
+  document.getElementById("skip").disabled=!S.P.some(function(p){return p.busy&&!p.paused;});
+}
+
+/* ---- Valdymas: laikrodis ---- */
+/* Veiksmai - is atleidimo vietos (pointerup + elementFromPoint), ne is "click":
+   spausdintuvo puslapis keiciasi kas sekunde, ir paspaudimas neturi dingti. */
+function wtap(t){
+  if(t.closest("#ntf")){ui.ntf=null;draw();return;}
+  if(t.closest("#wref")){S.refAt=Date.now();S.age=0;draw();setTimeout(draw,700);return;}
+  if(t.closest("#wsettings")){ui.win=true;draw();document.getElementById("win").scrollTop=0;return;}
+  if(t.closest("#wclose")){ui.win=false;draw();return;}
+  var x=t.closest("[data-show],[data-bg],[data-al],[data-open],#topen,#fopen,#fopen2");
+  if(!x) return;
+  if(x.dataset.show){keep(function(){var p=S.P[+x.dataset.show];p.show=!p.show;});draw();return;}
+  if(x.dataset.bg){S.bg=+x.dataset.bg;draw();return;}
+  if(x.dataset.al){S.al[x.dataset.al]=!S.al[x.dataset.al];draw();return;}
+  if(x.dataset.open){openApp(+x.dataset.open);return;}
+  openApp(soonest());
+}
+function openApp(i){ui.view="app";ui.win=false;var pg=pages(),k=pg.indexOf(i);ui.page=k<0?0:k;draw();}
+var ws=document.getElementById("ws"), sx=null, sy=null;
+ws.addEventListener("pointerdown",function(e){sx=e.clientX;sy=e.clientY;});
+ws.addEventListener("pointerup",function(e){if(sx===null)return;var d=e.clientX-sx,dy=e.clientY-sy;sx=null;
+  if(Math.abs(d)>40&&ui.view==="app"&&!ui.win&&!ui.ntf){page(d<0?1:-1);return;}
+  if(Math.abs(d)<10&&Math.abs(dy)<10){var t=document.elementFromPoint(e.clientX,e.clientY);if(t&&ws.contains(t))wtap(t);}});
+function page(d){if(ui.view!=="app"){ui.view="app";ui.page=0;draw();return;}ui.win=false;var n=pages().length;ui.page=(ui.page+d+n)%n;draw();}
+document.getElementById("wl").addEventListener("click",function(){page(-1);});
+document.getElementById("wr").addEventListener("click",function(){page(1);});
+document.getElementById("views").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;ui.view=b.dataset.v;ui.win=false;draw();});
+
+/* ---- Valdymas: telefonas ---- */
+document.getElementById("scr").addEventListener("click",function(e){
+  var t=e.target.closest("#popen,#blother,#blsignin,#blconfirm,#tmsave,[data-seg]"); if(!t) return;
+  var ph=ui.ph;
+  if(t.id==="popen"){toast("Look at your watch");buzz();openApp(soonest());return;}
+  if(t.id==="blother"){ph.bl="form";keep(function(){S.bambu=false;});toast("Signed out on the watch");draw();return;}
+  if(t.id==="blsignin"&&ph.bl==="form"){ph.bl="sending";draw();setTimeout(function(){ph.bl="code";draw();},1400);return;}
+  if(t.id==="blconfirm"&&ph.bl==="code"){ph.bl="confirming";draw();setTimeout(function(){ph.bl="signed";keep(function(){S.bambu=true;S.P[1].show=true;});toast("Signed in. Printers found: 1.");buzz();draw();},1400);return;}
+  if(t.dataset.seg){ph.tmSeg=t.dataset.seg;ph.tmMsg="";draw();return;}
+  if(t.id==="tmsave"){ph.tmMsg="Saving on the watch and asking the printer…";draw();
+    setTimeout(function(){S.tmIp=ph.tmSeg==="ip";ph.tmMsg="Saved. The printer answered: TinyMaker.";draw();},1300);}
+});
+
+/* ---- Irankiai ---- */
+document.getElementById("skip").addEventListener("click",function(){advance(15);draw();});
+document.getElementById("pause").addEventListener("click",function(){var p=S.P[1];if(!p.busy)return;p.paused=!p.paused;
+  if(p.paused&&S.al.pause) alert(1,"Print paused","at layer "+cur(p)+"/"+p.total);
+  else if(p.paused) toast("Paused - the Paused alert is off by default");
+  draw();});
+document.getElementById("reset").addEventListener("click",function(){fresh();draw();});
+
+fresh(); draw(); clearInterval(timer); timer=setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
