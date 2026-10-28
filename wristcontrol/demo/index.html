@@ -189,13 +189,7 @@ canvas{width:100%;display:block}
 .cmp small{font-size:11px;color:var(--wlo);letter-spacing:.08em;font-weight:400}
 .warr{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .warr button{font:inherit;font-size:13px;background:transparent;border:1px solid var(--line);color:var(--page);border-radius:16px;padding:4px 12px;cursor:pointer}
-.extras{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:flex-start;margin-top:6px}
-.wface{width:170px;height:170px;border-radius:50%;background:#000;position:relative;box-shadow:0 0 0 7px #1a1b1f,0 6px 20px rgba(0,0,0,.3);cursor:pointer;color:var(--whi)}
-.wface .tm{font-size:36px}
-.wface .dt{font-size:10px}
-.wface .cmp{font-size:12.5px}
-.wface .cmp small{font-size:7.5px}
-.wgs{width:260px;display:flex;flex-direction:column;gap:8px}
+.wgs{width:270px;display:flex;flex-direction:column;gap:8px;margin-top:6px}
 @media (max-width:760px){.stage{gap:26px}}
 </style>
 </head>
@@ -229,12 +223,9 @@ canvas{width:100%;display:block}
     <div class="watch"><div class="ws" id="ws"></div></div>
     <div class="warr"><button id="wl">‹ Page</button><button id="wr">Page ›</button><button id="wback">Back</button><button id="wfaceBtn">Watch face</button></div>
     <div class="cap">Watch. Swipe sideways or use the page buttons; tap a page to open it.</div>
-    <div class="sec">Widgets and complications</div>
-    <div class="extras">
-      <div class="wface" id="wface" title="Watch face with complications"></div>
-      <div class="wgs" id="wgs"></div>
-    </div>
-    <div class="cap">Complications on any watch face, widgets on the phone home screen. They only show the air - tap opens the app.</div>
+    <div class="sec">Phone widgets</div>
+    <div class="wgs" id="wgs"></div>
+    <div class="cap">Widgets on the phone home screen only show the air - tap opens the app. Complications for the watch face: tap Watch face above.</div>
   </div>
 </div>
 <p class="note">Numbers are made up. The real app reads your unit through MyVallox Cloud or your home network. Vallox and MyVallox are trademarks of Vallox Oy; Wrist Control is an independent app.</p>
@@ -605,7 +596,6 @@ function draw(){
   else if(ui.wwin) over='<div class="wwin">'+wwin(ui.wwin)+'</div>';
   document.getElementById("ws").innerHTML='<div class="wp">'+r.h+'</div><div class="wdots">'+(r.dots?dots:"")+'</div>'+over;
   if(ui.wwin==="temps"&&!ui.wface&&!ui.wnote) wgraphsWatch();
-  document.getElementById("wface").innerHTML=faceHtml();
   var w=widgets(); document.getElementById("wgs").innerHTML=w.air+w.g;
   wgraphs();
 }
@@ -724,7 +714,6 @@ document.getElementById("wl").addEventListener("click",function(){ui.wwin=null;u
 document.getElementById("wr").addEventListener("click",function(){ui.wwin=null;ui.wface=false;page(1);});
 document.getElementById("wback").addEventListener("click",function(){if(ui.wnote)ui.wnote=false;else if(ui.wwin)ui.wwin=null;else if(ui.wface)ui.wface=false;draw();});
 document.getElementById("wfaceBtn").addEventListener("click",function(){ui.wface=!ui.wface;ui.wwin=null;draw();});
-document.getElementById("wface").addEventListener("click",function(){ui.wface=false;ui.wwin=null;ui.wnote=false;ui.wpage=0;draw();});
 
 document.getElementById("scen").addEventListener("click",function(e){var b=e.target.closest("[data-scen]");if(b)startScen(b.dataset.scen);});
 document.getElementById("reset").addEventListener("click",function(){fresh();document.getElementById("banner").classList.remove("on");draw();});
