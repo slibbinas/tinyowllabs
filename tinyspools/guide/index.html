@@ -44,8 +44,12 @@ img.w { display: block; border-radius: 3mm; }
 .kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
 .kontaktai span { font-size: 9.5pt; color: #1B2233; }
 
+/* Aplinka aplink A4 lapus: tamsioje temoje juoda kaip visas tinyowllabs.com (V 2026-10-29), lapai lieka balti. */
+:root { --aplink: #F3F5F9; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --aplink: #141416; } }
+:root[data-theme="dark"] { --aplink: #141416; }
 @media screen {
-  body { background: #F3F5F9; }
+  body { background: var(--aplink); }
   .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
     gap: 12px; padding: 10px 16px; background: rgba(20,20,22,.95); font-size: 10px; color: #AAAAAA; }
@@ -168,4 +172,4 @@ img.w { display: block; border-radius: 3mm; }
     <div><b>Independent developer</b>
       <span>TinyOwl</span></div>
   </div>
-</section></body></html>
+</section><script src="/tema.js?v=2"></script></body></html>
