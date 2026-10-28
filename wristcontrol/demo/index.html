@@ -143,7 +143,7 @@ canvas{width:100%;display:block}
 .fan{animation:sp 2.2s linear infinite}
 
 /* ---- Laikrodis. 1 sp tikrame 438 px ekrane = 2,55 px (2,125 x srifto mastelis 1,2); demo 300 px - 1,75 px. ---- */
-.watch{width:330px;height:330px;border-radius:50%;background:#1a1b1f;padding:15px;box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 0 0 3px #2a2c31}
+.watch{zoom:.8;width:330px;height:330px;border-radius:50%;background:#1a1b1f;padding:15px;box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 0 0 3px #2a2c31}
 .ws{width:300px;height:300px;border-radius:50%;background:#000;overflow:hidden;position:relative;color:var(--whi);user-select:none;touch-action:pan-y}
 .wp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding-top:24px}
 .wlab{color:var(--wblue2);font-size:17px;letter-spacing:.14em;display:flex;align-items:center;gap:5px}
@@ -189,7 +189,7 @@ canvas{width:100%;display:block}
 .cmp small{font-size:11px;color:var(--wlo);letter-spacing:.08em;font-weight:400}
 .warr{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .warr button{font:inherit;font-size:13px;background:transparent;border:1px solid var(--line);color:var(--page);border-radius:16px;padding:4px 12px;cursor:pointer}
-.wgs{width:270px;display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.wgs{zoom:.85;width:270px;display:flex;flex-direction:column;gap:8px}
 @media (max-width:760px){.stage{gap:26px}}
 </style>
 </head>
@@ -222,10 +222,9 @@ canvas{width:100%;display:block}
   <div class="dev">
     <div class="watch"><div class="ws" id="ws"></div></div>
     <div class="warr"><button id="wl">‹ Page</button><button id="wr">Page ›</button><button id="wback">Back</button><button id="wfaceBtn">Watch face</button></div>
-    <div class="cap">Watch. Swipe sideways or use the page buttons; tap a page to open it.</div>
-    <div class="sec">Phone widgets</div>
+    <div class="cap">Swipe or use the buttons; tap a page to open it.</div>
+    <div class="sec" style="margin-top:4px">Phone widgets · tap opens the app</div>
     <div class="wgs" id="wgs"></div>
-    <div class="cap">Widgets on the phone home screen only show the air - tap opens the app. Complications for the watch face: tap Watch face above.</div>
   </div>
 </div>
 <p class="note">Numbers are made up. The real app reads your unit through MyVallox Cloud or your home network. Vallox and MyVallox are trademarks of Vallox Oy; Wrist Control is an independent app.</p>
