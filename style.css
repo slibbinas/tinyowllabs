@@ -62,3 +62,13 @@ footer p { margin: 0 0 6px; }
 /* Kilmes eilute apacioje (V 2026-10-29: ES duoda pasitikejimo). */
 .madein { display: flex; align-items: center; gap: 8px; font-weight: 600; }
 .madein .eu { width: 24px; height: 16px; flex: none; }
+/* Logotipas be plyteles (V 2026-10-29): tamsioje temoje balta pelėda, šviesioje - su 1,5 px tamsiu rėmeliu.
+   Failuose 12 px paraštė rėmeliui, tad 54 px su -3 px = tas pats 48 px ženklas. */
+.brand img.owl { width: 54px; height: 54px; margin: -3px; }
+.brand img.owl-d { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand img.owl-l { display: none; }
+  :root:not([data-theme="light"]) .brand img.owl-d { display: block; }
+}
+:root[data-theme="dark"] .brand img.owl-l { display: none; }
+:root[data-theme="dark"] .brand img.owl-d { display: block; }
