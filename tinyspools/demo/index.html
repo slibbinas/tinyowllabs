@@ -8,11 +8,12 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <script>try{var q=new URLSearchParams(location.search).get("theme");if(q==="light"||q==="dark")localStorage.setItem("tema",q);var m=localStorage.getItem("tema");if(m==="light"||m==="dark")document.documentElement.dataset.theme=m;}catch(e){}</script>
 <style>
-/* Puslapio spalvos - tinyowllabs style.css (--fg = --page, --accent = --link); telefono viduje - programėlės
+/* Puslapio spalvos: šviesi - tinyowllabs style.css, tamsi - juoda kaip tinymakerwifi.com (V 2026-10-29: visiems
+   TinyOwl puslapiams, mėlynas fonas „degina akis“); telefono viduje - programėlės
    spalvos (Ui.java, Lapas.java): tamsi ir šviesi tema. */
 :root{--bg:#fff;--page:#0e1a33;--muted:#5c667a;--line:#e3e8f1;--link:#e8720c;--soft:#f3f5f9}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0e1a33;--page:#f2f4f8;--muted:#9fb0cc;--line:#22304f;--link:#f08a2c;--soft:#16244a}}
-:root[data-theme="dark"]{--bg:#0e1a33;--page:#f2f4f8;--muted:#9fb0cc;--line:#22304f;--link:#f08a2c;--soft:#16244a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416;--page:#eeeeee;--muted:#aaaaaa;--line:#26262a;--link:#e8720c;--soft:#1d1d20}}
+:root[data-theme="dark"]{--bg:#141416;--page:#eeeeee;--muted:#aaaaaa;--line:#26262a;--link:#e8720c;--soft:#1d1d20}
 .ps{--f:#17171a;--bar:#010102;--cardf:rgba(255,255,255,.12);--cards:rgba(255,255,255,.25);--field:#3a3a3c;--hi:#f2f2f4;--lo:#b9bcc4;--acc:#e8743f;--red:#c62828;--green:#3fa37a;--warn:#d9822b;--sheet:#2c2c30;--sline:#4a4a50;--div:#3c3c41;--track:rgba(255,255,255,.2);--x:rgba(255,255,255,.12);--res:#2a2a2e;--resl:rgba(255,255,255,.25);--snack:#e6e6ea;--snackt:#1a1a1a;--rowdiv:rgba(255,255,255,.08);--dotl:#c8c8cc;--swoff:#55565c;--knob:#c8c8cc}
 .ps.sviesi{--f:#f6f6f8;--bar:#f6f6f8;--cardf:rgba(0,0,0,.05);--cards:rgba(0,0,0,.2);--field:#e6e6e9;--hi:#1a1a1c;--lo:#4b4f58;--acc:#c9502a;--sheet:#fff;--sline:#d8d8de;--div:#e4e4e8;--track:rgba(0,0,0,.12);--x:rgba(0,0,0,.06);--res:#fff;--resl:rgba(0,0,0,.13);--snack:#2b2b2f;--snackt:#f2f2f2;--rowdiv:rgba(0,0,0,.08);--dotl:#8a8a90;--swoff:#c8c8cc;--knob:#fff}
 *{box-sizing:border-box}
