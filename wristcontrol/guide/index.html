@@ -178,9 +178,10 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   html { background: #F3F5F9; }
   body { overflow-x: clip; }
   .page { scroll-margin-top: 48px; }
-  /* Juosta ir grizimo eilute - kaip TinyStatus vadove; eilute visada smulkesne uz vadovo teksta. */
+  /* Juosta ir grizimo eilute - kaip TinyStatus vadove; eilute visada smulkesne uz vadovo teksta.
+     Turinys juostoje - lapu plociu (210mm), kad akims nereiktu begioti per visa ekrana (V 2026-10-29). */
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; padding: 10px 16px; background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
+    gap: 12px; padding: 10px max(16px, calc((100% - 210mm) / 2)); background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
   .webbar a { color: #5B9BF3; text-decoration: none; }
   .webbar .pdf { background: #2F6FE4; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   .page { width: auto; max-width: 210mm; height: auto; margin: 16px auto; border-radius: 10px;
