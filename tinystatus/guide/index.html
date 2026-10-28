@@ -18,12 +18,13 @@ p { margin: 0 0 2mm; }
 .intro { font-size: 11pt; color: #3A4458; max-width: 165mm; margin-bottom: 6mm; }
 .fine { font-size: 8pt; color: #7A8397; margin-top: 5mm; }
 img.w { display: block; }
-.cover { background: radial-gradient(120% 80% at 80% 10%, #24304A 0%, #12161E 55%, #0B0E14 100%); color: #EAF0FA; padding: 22mm 20mm; }
+/* Tamsios vietos (virselis, juosta) juodos kaip tinymakerwifi.com, ne melynos (V 2026-10-29). */
+.cover { background: radial-gradient(120% 80% at 80% 10%, #2A2A2E 0%, #1D1D20 55%, #141416 100%); color: #EEEEEE; padding: 22mm 20mm; }
 .brand { display: flex; align-items: center; gap: 4mm; font-weight: 800; letter-spacing: .18em; font-size: 10pt; color: #E8720C; }
 .brand img { width: 13mm; height: 13mm; border-radius: 3mm; }
-.brand span { color: #9FB2D3; font-weight: 500; letter-spacing: .05em; text-transform: none; }
+.brand span { color: #AAAAAA; font-weight: 500; letter-spacing: .05em; text-transform: none; }
 .cover h1 { font-size: 38pt; line-height: 1.04; font-weight: 800; margin: 14mm 0 6mm; }
-.cover .lead { font-size: 12.5pt; color: #B9C6DD; max-width: 150mm; }
+.cover .lead { font-size: 12.5pt; color: #CCCCCC; max-width: 150mm; }
 .hero { display: flex; justify-content: space-between; align-items: center; height: 100mm; margin: 12mm 0 10mm; }
 .hero img { filter: drop-shadow(0 12px 22px rgba(0,0,0,.55)); }
 .hero .h1, .hero .h3 { width: 52mm; margin-top: 18mm; }
@@ -31,8 +32,8 @@ img.w { display: block; }
 .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
 .benefits div { border-top: 2px solid #E8720C; padding-top: 3mm; }
 .benefits b { font-size: 11.5pt; color: #fff; }
-.benefits p { color: #AEBBD2; font-size: 9.5pt; margin-top: 1.5mm; }
-.cover .foot { position: absolute; bottom: 12mm; left: 20mm; font-size: 7.5pt; color: #6F7E99; }
+.benefits p { color: #BBBBBB; font-size: 9.5pt; margin-top: 1.5mm; }
+.cover .foot { position: absolute; bottom: 12mm; left: 20mm; font-size: 7.5pt; color: #888888; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm 8mm; }
 .card { display: grid; grid-template-columns: 34mm 1fr; gap: 4mm; align-items: center; }
 .card .w.sm { width: 34mm; }
@@ -48,8 +49,8 @@ img.w { display: block; }
   .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
   /* Juosta ir grizimo eilute - kaip Wrist Control vadove; eilute visada smulkesne uz vadovo teksta. */
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; padding: 10px 16px; background: rgba(14,26,51,.95); font-size: 10px; color: #9FB0CC; }
-  .webbar a { color: #F08A2C; text-decoration: none; }
+    gap: 12px; padding: 10px 16px; background: rgba(20,20,22,.95); font-size: 10px; color: #AAAAAA; }
+  .webbar a { color: #E8720C; text-decoration: none; }
   .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   /* Trys laikrodziai vienoje eileje kaip Wrist Control vadove: A4 plociai (mm) ekrane pakeiciami procentais. */
   .hero { height: auto; gap: 8px; margin: 20px 0; }
