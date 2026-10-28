@@ -289,7 +289,7 @@ function fresh(){
   G={view:"auto",ctrl:"phone",theme:"dark",from:22.5,to:23.5,alerts:{temp:true,rh:true,co2:true,filt:true},
      refresh:"Auto",clock:"Fixed automatically",min:18*60,writing:null,log:[]};
   U=[unit("Home ventilation",640,24.3,10.4,107),unit("Summer house",520,21.8,9.6,32)];
-  U[1].mode="away"; U[1].fan=30;
+  U[1].mode="away"; U[1].fan=45;
   S=U[0];
   ui={phone:"pultas",layer:"app",wpage:0,wwin:null,wface:false,wnote:false,opt:"idle",goal:"balanced",wiz:0,wizSel:0,fsure:0,alerted:false};
   logAdd("App","Optimized");
@@ -299,14 +299,15 @@ function logAdd(who,what){G.log.unshift({t:hhmm(G.min),who:who,what:what}); if(G
 
 /* Rekuperatorius: ventiliatorius pagal rezima, CO2 seka ventiliatoriu ir svecius. */
 function fanTarget(u){
-  switch(u.mode){case "boost":return 100;case "away":return 30;case "home":return 50;case "custom":return 70;
-    case "auto":return Math.min(85,45+Math.max(0,(u.co2-700)/8)+Math.max(0,(u.rh-60)*2.5));
-    default:return Math.min(100,u.plan.rest+Math.max(0,(u.co2-u.plan.limit)/5)+Math.max(0,(u.rh-60)*3));}
+  /* Greiciai - kaip V rekuperatoriuje (laikrodzio VENTILATION: Home 70 %, Away 45 %, Boost 90 %). */
+  switch(u.mode){case "boost":return 90;case "away":return 45;case "home":return 70;case "custom":return 75;
+    case "auto":return Math.min(90,50+Math.max(0,(u.co2-800)/8)+Math.max(0,(u.rh-60)*2.5));
+    default:return Math.min(100,u.plan.rest+Math.max(0,(u.co2-u.plan.limit)/8)+Math.max(0,(u.rh-60)*3));}
 }
 function tick(){
   G.min++;
   U.forEach(function(u){
-    u.fan+=(fanTarget(u)-u.fan)*0.35;
+    u.fan+=(fanTarget(u)-u.fan)*0.5;
     /* CO2 pusiausvyra: lauko 420 ppm + zmones / oro kiekis; dregme - dusas ir ventiliatorius. */
     var target=420+u.people*80*50/Math.max(20,u.fan);
     u.co2+=(target-u.co2)*0.06+(Math.random()-0.5)*3;
@@ -357,7 +358,7 @@ function airWord(){return ["Air is fresh","Air is getting stale","Air is stale"]
 function col(n){return ["var(--green)","var(--yellow)","var(--red)"][n];}
 function wcol(n){return ["var(--wgreen)","var(--wyellow)","var(--wred)"][n];}
 function f1(x){return x.toFixed(1).replace(".",",");}
-function fanSet(){return {optimized:"Fan at rest "+S.plan.rest+" % · CO2 limit "+S.plan.limit,auto:"Fan 45-85 % by CO2 and humidity",home:"Fan 50 %",away:"Fan 30 %",boost:"Fan 100 %",custom:"Fan 70 %"}[S.mode];}
+function fanSet(){return {optimized:"Fan at rest "+S.plan.rest+" % · CO2 limit "+S.plan.limit,auto:"Fan 50-90 % by CO2 and humidity",home:"Fan 70 %",away:"Fan 45 %",boost:"Fan 90 %",custom:"Fan 75 %"}[S.mode];}
 function ageTxt(){return S.age+" s ago";}
 function boostOn(){return S.mode==="boost";}
 function ctrlName(){return G.ctrl==="phone"?"this phone":"Galaxy Watch";}
