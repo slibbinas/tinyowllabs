@@ -18,8 +18,9 @@
 .ps.sviesi{--f:#f6f6f8;--bar:#f6f6f8;--cardf:rgba(0,0,0,.05);--cards:rgba(0,0,0,.2);--field:#e6e6e9;--hi:#1a1a1c;--lo:#4b4f58;--acc:#c9502a;--sheet:#fff;--sline:#d8d8de;--div:#e4e4e8;--track:rgba(0,0,0,.12);--x:rgba(0,0,0,.06);--res:#fff;--resl:rgba(0,0,0,.13);--snack:#2b2b2f;--snackt:#f2f2f2;--rowdiv:rgba(0,0,0,.08);--dotl:#8a8a90;--swoff:#c8c8cc;--knob:#fff}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--page);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-/* Turinio plotis = telefonas (360) + tarpas (28) + šoninė juosta (300): tekstas ir prototipas tų pačių kraštų. */
-main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+/* Turinio plotis - kaip Wrist Control demo (792); telefonas (360) + tarpas (28) + šoninė juosta (372) jį užpildo,
+   tad tekstas ir prototipas tų pačių kraštų. */
+main{max-width:792px;margin:0 auto;padding:20px 16px 48px}
 /* Viršaus juosta - kaip tinyowllabs style.css (.virsus, .crumb, .theme). */
 .virsus{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 16px}
 .crumb{margin:0;font-size:13px;color:var(--muted)}
@@ -39,7 +40,7 @@ h2.try button{font:inherit;font-size:13px;font-weight:600;padding:5px 12px;borde
 .stage{display:flex;gap:28px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
 .dev{display:flex;flex-direction:column;align-items:center;gap:10px}
 .cap{color:var(--muted);font-size:13px;text-align:center;max-width:340px}
-.side{max-width:300px;display:flex;flex-direction:column;gap:10px;padding-top:30px}
+.side{width:372px;max-width:100%;display:flex;flex-direction:column;gap:10px;padding-top:30px}
 .side h3{margin:0;font-size:15px}
 .side p{margin:0;color:var(--muted);font-size:13.5px}
 .side button,.tools button{font:inherit;font-size:14px;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer;text-align:left}
