@@ -782,7 +782,8 @@ function sukis(){vaizdas("semi")();sukimas=setInterval(function(){ui.wwin=null;u
 var TOUR=[
  ["#scen","Start here","Pick a situation - guests, an empty house or a shower. Then wait a minute or two: the phone and the watch react on their own.",vaizdas("auto")],
  ["[data-boost]","Tap Boost","The unit runs at full speed for an hour. Watch the spinner, the vibration, and the watch showing the same Boost.",vaizdas("auto")],
- ["#ps","Automatic view","One card with the air and one button. The app runs the ventilation for you. Tap a card to open it; ◁ goes back, ○ shows the home screen with widgets.",vaizdas("auto")],
+ ["#ps","Automatic view","One card with the air and one button. The app runs the ventilation for you. Tap a card to open its window.",vaizdas("auto")],
+ ["#ps","The phone buttons work","The buttons at the bottom work like on a real Android phone: ○ opens the home screen - here it is, with the app's widgets. ◁ goes back one step, ▢ returns to the app.",function(){vaizdas("auto")();ui.layer="home";draw();}],
  ["[data-open=settings]","Two ways to use it","In SETTINGS you pick Automatic or Semi-automatic. Next, let's switch to Semi-automatic and see what changes.",vaizdas("auto")],
  ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS. The watch followed by itself: it has 7 pages instead of 2.",vaizdas("semi","pultas","vent"),false,".watch"],
  ["#ps,.watch","VENTILATION: all modes","Optimized is the app's own mode - it learns your home. Boost runs an hour, Custom has a timer, Away and At home are fixed speeds, Auto is the unit's own. The same list opens on the watch. Tap one: a spinner, then both devices switch and buzz.",vaizdas("semi","vent","vent","pick"),false,".watch"],
