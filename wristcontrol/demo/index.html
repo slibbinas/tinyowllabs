@@ -206,6 +206,11 @@ canvas{width:100%;display:block}
 .wsub{color:var(--wlo);font-size:17px;line-height:1.25;margin-top:6px}
 .wsec{color:var(--wblue2);font-size:16px;letter-spacing:.1em;margin-top:14px}
 .wbig{font-size:36px;font-weight:700}
+.wrow2{display:flex;justify-content:space-between;align-items:center;font-size:22px;margin-top:10px;text-align:left}
+.wsw{width:46px;height:26px;border-radius:13px;background:#4a4d55;position:relative;cursor:pointer;flex:none}
+.wsw:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#c9cdd6;transition:left .15s}
+.wsw.on{background:#3b4a8a}
+.wsw.on:after{left:23px;background:#7f93dc}
 .wnote{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
 .wnote b{font-size:24px;color:var(--wyellow)}
 .wnote div{font-size:18px;color:var(--wlo);margin-top:6px}
@@ -336,7 +341,8 @@ function story1(){
 }
 function fresh(){
   G={view:"auto",ctrl:"phone",theme:"dark",from:22.5,to:23.5,alerts:{temp:true,rh:true,co2:true,filt:true},
-     refresh:"Auto",clock:"Fixed automatically",min:18*60,writing:null,log:[]};
+     refresh:"Auto",clock:"Fixed automatically",cloud:true,lang:"Auto",
+     pages:{sens:true,temps:true,unit:false,filt:false,stats:true,opt:true},min:18*60,writing:null,log:[]};
   U=[unit("Home ventilation",640,24.3,10.4,107),unit("Summer house",520,21.8,9.6,32)];
   U[1].mode="away"; U[1].fan=45;
   S=U[0];
@@ -447,6 +453,7 @@ function modeBtn(key,label,on,second,centre,attr){
 }
 function card(t,body,open){return '<div class="k" data-open="'+open+'"><div class="kt">'+t+'</div>'+body+'</div>';}
 function tile(t,v,s,open,c){return '<div class="k" data-open="'+open+'"><div class="kt">'+t+'</div><div class="kv"'+(c?' style="color:'+c+'"':'')+'>'+v+'</div><div class="sub">'+s+'</div></div>';}
+function alertsOn(){return ["temp","rh","co2","filt"].filter(function(a){return G.alerts[a];}).length;}
 function anyAlert(){return G.alerts.temp||G.alerts.rh||G.alerts.co2||G.alerts.filt;}
 function settingsCard(){return card("SETTINGS",'<div style="font-size:18px;font-weight:600">Controlled by '+ctrlName()+'</div><div class="sub">Refresh '+G.refresh+' · alerts '+(anyAlert()?"on":"off")+'</div>',"settings");}
 
@@ -541,14 +548,14 @@ var WIZ=[
  ["Who runs the unit?",["This phone - the watch shows and sends to it","The watch - the phone shows and sends to it"]],
  ["What matters most?",["Quiet","Balanced","Fresh air"]],
  ["How warm do you like it?",["Cooler: 21-22°","Normal: 22,5-23,5°","Warmer: 24-25°"]],
- ["Week schedule on the unit's panel?",["Keep the schedule","Let the app run the air"]],
+ ["Your unit follows a week schedule",["Let the app run the air|Week clock off, Optimized on","Keep the schedule|The app only shows the air"]],
  ["Alerts",["All: temperature, humidity, CO2, filters","Only filters","None"]],
  ["Pro",["Unlocked - 14 days free, then one purchase"]],
  ["Ready",["Your plan: Optimized, fan at rest 45 %, CO2 limit 500"]]];
 function wizard(){
   var q=WIZ[ui.wiz];
   var h='<div class="prog"><i style="width:'+((ui.wiz+1)/WIZ.length*100)+'%"></i></div><div class="sub" style="margin:8px 4px 0">Step '+(ui.wiz+1)+' of '+WIZ.length+'</div><div class="q">'+q[0]+'</div>';
-  q[1].forEach(function(o,i){h+='<div class="opt'+(i===ui.wizSel?' on':'')+'" data-wsel="'+i+'"><b>'+o+'</b></div>';});
+  q[1].forEach(function(o,i){var d=o.split("|");h+='<div class="opt'+(i===ui.wizSel?' on':'')+'" data-wsel="'+i+'"><b>'+d[0]+'</b>'+(d[1]?'<span class="sub">'+d[1]+'</span>':'')+'</div>';});
   h+='<div class="btn" id="wizNext">'+(ui.wiz===WIZ.length-1?"Done - write to the unit":"Next")+'</div>';
   return h;
 }
@@ -571,7 +578,9 @@ function homeScreen(){
 }
 
 /* ---- Laikrodis ---- */
-function wpages(){return G.view==="auto"?["auto","stats"]:["vent","sens","temps","opt","stats","filt","settings"];}
+/* Tvarka kaip V laikrodyje; VENTILATION ir SETTINGS visada, kitus ijungia SETTINGS → PAGES. */
+var WORDER=["vent","sens","temps","unit","filt","stats","opt","settings"];
+function wpages(){return G.view==="auto"?["auto","stats"]:WORDER.filter(function(k){return G.pages[k]!==false;});}
 function wlabel(){return '<div class="wlab"><svg viewBox="0 0 100 100">'+(G.ctrl==="phone"?P.phone:P.watch)+'</svg>'+(G.ctrl==="phone"?"PHONE":"WATCH")+'</div>';}
 function wrow(pairs,lft){return '<div class="wr'+(lft?' lft':'')+'">'+pairs.map(function(p){return '<span>'+p[0]+'</span><span'+(p[2]?' style="color:'+p[2]+'"':'')+'>'+p[1]+'</span>';}).join("")+'</div>';}
 function wpage(k){
@@ -595,10 +604,14 @@ function wpage(k){
     h+='<div class="wttl">OPTIMIZE</div><div style="display:flex;gap:26px;margin-top:6px;text-align:center"><div><div style="color:var(--wlo);font-size:20px">CO2</div><div class="wbig" style="color:var(--wgreen)">713</div><div style="color:var(--wlo);font-size:15px">goal 738</div></div><div><div style="color:var(--wlo);font-size:20px">Indoor</div><div class="wbig">'+S.temp.toFixed(1)+'°</div><div style="color:#f28c38;font-size:15px">Recovers</div></div></div><div class="wopen" data-wwin="opt">Open</div>';
   } else if(k==="stats"){
     h+='<div class="wttl">STATISTICS</div><div style="display:flex;gap:22px;margin-top:6px;text-align:center;font-size:20px"><div><div style="color:var(--wlo)">Energy</div><div class="wbig" style="color:var(--wgreen)">-35 %</div></div><div><div style="color:var(--wlo)">Fresh air</div><div class="wbig" style="color:var(--wgreen)">+30 %</div></div></div><div style="color:var(--wlo);font-size:17px">vs same week last year</div><div class="wopen" data-wwin="stats">Open</div>';
+  } else if(k==="unit"){
+    var rec=S.out<S.temp-1;
+    h+='<div class="wttl">UNIT</div><div class="wsub" style="margin-top:0">'+S.name+'</div>'+wrow([["Supply",Math.round(900+S.fan*15)+" rpm"],["Extract",Math.round(820+S.fan*14)+" rpm"],["HR cell",rec?"heat rec.":"bypass"]])+
+      '<div class="wage">'+hhmm(G.min)+'</div>';
   } else if(k==="filt"){
     h+='<div class="wttl">FILTERS</div><div class="wbig" style="margin-top:8px;color:'+(S.filt<30?"var(--wyellow)":"var(--whi)")+'">'+S.filt+' d</div><div class="wsub">left of 180</div><div class="wopen" data-wwin="filt">Open</div>';
   } else if(k==="settings"){
-    h+='<div class="wttl">SETTINGS</div>'+wrow([["Path","Auto"],["Refresh",G.refresh],["Alerts",["temp","rh","co2","filt"].filter(function(a){return G.alerts[a];}).length+" on"]])+'<div class="wopen" data-wwin="settings">Open</div>';
+    h+='<div class="wttl">SETTINGS</div>'+wrow([["Path","Auto"],["Refresh",G.refresh],["Alerts",alertsOn()+" on"],["Pages",wpages().length+" of 8"]])+'<div class="wopen" data-wwin="settings">Open</div>';
   }
   return {h:h,dots:true};
 }
@@ -618,9 +631,17 @@ function wwin(k){
   } else if(k==="filt"){
     h+='<div class="wttl">FILTERS</div><div class="wbig" style="margin-top:6px">'+S.filt+' d</div><div class="wm" id="wfchg" style="justify-content:center">Mark changed</div>';
   } else if(k==="settings"){
-    h+='<div class="wttl">SETTINGS</div><div class="wsec">CONTROLLED BY</div><div class="wsub" style="color:var(--whi)">'+(G.ctrl==="phone"?"The phone":"This watch")+'</div><div class="wsec">ALERTS</div>'+
-      [["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="wm'+(G.alerts[a[0]]?' on':'')+'" data-wal="'+a[0]+'"><span class="n">'+a[1]+'</span><span>'+(G.alerts[a[0]]?"On":"Off")+'</span></div>';}).join("")+
-      '<div class="wsub">Changes from either device reach both.</div>';
+    var tel=G.ctrl==="phone", sw=function(on,attr){return '<span class="wsw'+(on?' on':'')+'" '+attr+'></span>';};
+    h+='<div class="wttl">SETTINGS</div>'+(tel?'<div class="wsub" style="color:var(--wyellow);font-size:19px">The phone controls the VALLOX unit. Changes are made on it.</div>':'')+
+      '<div class="wsec" style="font-size:22px;font-weight:700">UNIT</div><div class="wsub" style="margin-top:0">'+(tel?"Changed on the phone":"Changed here")+'</div>'+
+      wrow([["Refresh",G.refresh],["Clock",G.clock==="Fixed automatically"?"Auto fix":G.clock],["Alerts",alertsOn()+" on"],["Temp.",G.from.toFixed(1)+"°-"+G.to.toFixed(1)+"°"]])+
+      (tel?'':[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="wrow2"><span>'+a[1]+' alert</span>'+sw(G.alerts[a[0]],'data-wal="'+a[0]+'"')+'</div>';}).join(""))+
+      '<div class="wsec" style="font-size:22px;font-weight:700">THIS WATCH</div><div class="wrow2"><span>Cloud</span>'+sw(G.cloud,'data-wcloud="1"')+'</div>'+
+      '<div class="wm on" style="justify-content:center" data-wtoast="Account: demo@example.com">My account</div><div class="wsub" style="color:var(--whi)">demo@example.com</div>'+
+      '<div class="wsec" style="font-size:22px;font-weight:700">PAGES</div>'+
+      [["sens","Sensors"],["temps","Temp."],["opt","Optimize"],["stats","Stats"],["unit","Unit"],["filt","Filters"]].map(function(pg){return '<div class="wrow2"><span>'+pg[1]+'</span>'+sw(G.pages[pg[0]],'data-wpg="'+pg[0]+'"')+'</div>';}).join("")+
+      '<div class="wsec" style="font-size:22px;font-weight:700">HOW IT WORKS</div><div class="wm" style="justify-content:center" data-wtoast="On the real watch: a short guide to modes, Optimize and who controls the unit">Open</div>'+
+      '<div class="wsec" style="font-size:22px;font-weight:700">LANGUAGE</div><div class="wm" style="justify-content:center" data-wtoast="English, Suomi, Lietuvių, Polski - Auto follows the watch">'+G.lang+'</div>';
   }
   return h;
 }
@@ -749,7 +770,7 @@ document.getElementById("wgs").addEventListener("click",function(e){var t=e.targ
 var ws=document.getElementById("ws");
 ws.addEventListener("click",function(e){
   if(ui.swiped){ui.swiped=false;return;}
-  var t=e.target.closest("#wboost,[data-wwin],[data-wmode],[data-wclose],[data-wal],#wfchg,#wnBoost,#wnClose,[data-wfaceopen]");
+  var t=e.target.closest("#wboost,[data-wwin],[data-wmode],[data-wclose],[data-wal],[data-wpg],[data-wcloud],[data-wtoast],#wfchg,#wnBoost,#wnClose,[data-wfaceopen]");
   if(!t) return;
   var d=t.dataset;
   if(d.wfaceopen){ui.wface=false;draw();return;}
@@ -760,6 +781,9 @@ ws.addEventListener("click",function(e){
   if(d.wclose){ui.wwin=null;draw();return;}
   if(d.wmode){ if(!G.writing&&d.wmode!==S.mode){write(d.wmode,"watch");setTimeout(function(){ui.wwin=null;draw();},2300);} return;}
   if(d.wal){G.alerts[d.wal]=!G.alerts[d.wal];draw();return;}
+  if(d.wpg){G.pages[d.wpg]=!G.pages[d.wpg];var sc=t.closest(".wwin").scrollTop;draw();var nw=document.querySelector("#ws .wwin");if(nw)nw.scrollTop=sc;return;}
+  if(d.wcloud){G.cloud=!G.cloud;toast(G.cloud?"Cloud on: works away from home too":"Home network only");draw();return;}
+  if(d.wtoast){toast(d.wtoast);return;}
   if(t.id==="wfchg"){S.filt=180;logAdd("You (watch)","Filters changed");buzz();draw();return;}
 });
 var sx=null;
@@ -785,7 +809,7 @@ var TOUR=[
  ["#ps","Automatic view","One card with the air and one button. The app runs the ventilation for you. Tap a card to open its window.",vaizdas("auto")],
  ["#ps","The phone buttons work","The buttons at the bottom work like on a real Android phone: ○ opens the home screen - here it is, with the app's widgets. ◁ goes back one step, ▢ returns to the app.",function(){vaizdas("auto")();ui.layer="home";draw();}],
  ["[data-open=settings]","Two ways to use it","In SETTINGS you pick Automatic or Semi-automatic. Next, let's switch to Semi-automatic and see what changes.",vaizdas("auto")],
- ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS. The watch followed by itself: it has 7 pages instead of 2.",vaizdas("semi","pultas","vent"),false,".watch"],
+ ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS. The watch followed by itself: 6 pages instead of 2 (8 with Unit and Filters, switched on in its SETTINGS).",vaizdas("semi","pultas","vent"),false,".watch"],
  ["#ps,.watch","VENTILATION: all modes","Optimized is the app's own mode - it learns your home. Boost runs an hour, Custom has a timer, Away and At home are fixed speeds, Auto is the unit's own. The same list opens on the watch. Tap one: a spinner, then both devices switch and buzz.",vaizdas("semi","vent","vent","pick"),false,".watch"],
  ["#ps,.watch","TEMPERATURES","Indoor and outdoor, and CO2 against 800 ppm - for a day, for 7 days, and the same week last year. The watch has the day graph.",vaizdas("semi","temps","temps","temps"),false,".watch"],
  ["#ps,.watch","OPTIMIZE","New plan reads two weeks of your unit's history and asks what matters most: quiet, balanced or fresh air. You see the forecast before you Apply.",vaizdas("semi","opt","opt","opt"),false,".watch"],
