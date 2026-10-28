@@ -36,9 +36,10 @@ header.top b{font-size:20px;display:block}
 header.top span{color:var(--muted);font-size:13px}
 p.lead{color:var(--muted);margin:6px 0 18px}
 p.lead a{color:var(--link)}
-.stage{display:flex;gap:40px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+/* Telefonas prie kairiojo, laikrodis prie desiniojo turinio krasto - sutampa su tekstu, kaip kituose TinyOwl demo (V 2026-10-29). */
+.stage{display:flex;gap:40px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
 .dev{display:flex;flex-direction:column;align-items:center;gap:10px}
-.cap{color:var(--muted);font-size:13px;text-align:center;max-width:340px}
+.cap{color:var(--muted);font-size:13px;text-align:center;max-width:330px}
 .warr button{font:inherit;font-size:14px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
 .warr{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .warr button{font-size:13px;border-radius:16px;padding:4px 12px}
@@ -164,7 +165,7 @@ ol.st li{margin:5px 0}
 .ntf b{font-size:19px;margin-top:10px;line-height:1.2}
 .ntf p{margin:6px 0 0;color:#c4c7c5;font-size:15px;line-height:1.25}
 .ntf .x{margin-top:14px;border-radius:20px;background:#2e2e33;padding:6px 22px;font-size:16px}
-@media (max-width:760px){.stage{gap:26px}}
+@media (max-width:760px){.stage{gap:26px;justify-content:center}}
 @media (max-width:380px){.phone{transform:scale(.9);transform-origin:top center;margin-bottom:-74px}}
 </style>
 </head>
