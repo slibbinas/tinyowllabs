@@ -44,17 +44,17 @@ img.w { display: block; }
 .kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
 .kontaktai span { font-size: 9.5pt; color: #1B2233; }
 
-/* Aplinka aplink lapus - pagal TinyOwl tema (/tema.js): tamsioje juoda kaip visas tinyowllabs.com,
-   A4 lapai lieka balti kaip PDF perziuroje (V 2026-10-29, kaip Wrist Control vadove). */
-:root { --aplink: #F3F5F9; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --aplink: #141416; } }
-:root[data-theme="dark"] { --aplink: #141416; }
+/* Aplinka aplink lapus visada sviesi; pagal TinyOwl tema (/tema.js) keiciasi tik virsutine juosta
+   (V 2026-10-29, kaip Wrist Control vadove). */
+:root { --juosta: rgba(255,255,255,.95); --juostos-tekstas: #5C667A; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; } }
+:root[data-theme="dark"] { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; }
 @media screen {
-  html, body { background: var(--aplink); }
+  body { background: #F3F5F9; }
   .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
   /* Juosta ir grizimo eilute - kaip Wrist Control vadove; eilute visada smulkesne uz vadovo teksta. */
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; padding: 10px 16px; background: rgba(20,20,22,.95); font-size: 10px; color: #AAAAAA; }
+    gap: 12px; padding: 10px 16px; background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
   .webbar a { color: #E8720C; text-decoration: none; }
   .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   /* Trys laikrodziai vienoje eileje kaip Wrist Control vadove: A4 plociai (mm) ekrane pakeiciami procentais. */
