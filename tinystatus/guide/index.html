@@ -46,9 +46,9 @@ img.w { display: block; }
 
 /* Aplinka aplink lapus visada sviesi; pagal TinyOwl tema (/tema.js) keiciasi tik virsutine juosta
    (V 2026-10-29, kaip Wrist Control vadove). */
-:root { --juosta: rgba(255,255,255,.95); --juostos-tekstas: #5C667A; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; } }
-:root[data-theme="dark"] { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; }
+:root { --juosta: rgba(255,255,255,.95); --juostos-tekstas: #5C667A; --owl: #E8720C; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; --owl: #F08A2C; } }
+:root[data-theme="dark"] { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; --owl: #F08A2C; }
 @media screen {
   body { background: #F3F5F9; }
   .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
@@ -56,7 +56,8 @@ img.w { display: block; }
      Turinys lapo plociu (800px): kelias nuo lapo kairio krasto, PDF iki desinio (V 2026-10-29). */
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
     gap: 12px; padding: 10px max(16px, calc((100% - 800px) / 2)); background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
-  .webbar a { color: #E8720C; text-decoration: none; }
+  /* Kelias - TinyOwl navigacija, TinyOwl oranzine (style.css --accent); PDF mygtukas lieka produkto. */
+  .webbar a { color: var(--owl); text-decoration: none; }
   .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   /* Trys laikrodziai vienoje eileje kaip Wrist Control vadove: A4 plociai (mm) ekrane pakeiciami procentais. */
   .hero { height: auto; gap: 8px; margin: 20px 0; }

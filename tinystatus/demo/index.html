@@ -12,17 +12,18 @@
    "akis degina"); laikrodzio ir telefono viduje - programeles:
    laikrodis res/values/colors.xml, telefonas Pagrindinis.java. */
 :root{
-  --bg:#fff; --page:#0e1a33; --muted:#5c667a; --line:#e3e8f1; --link:#e8720c; --soft:#f3f5f9;
+  --bg:#fff; --page:#0e1a33; --muted:#5c667a; --line:#e3e8f1; --link:#e8720c; --soft:#f3f5f9; --owl:#e8720c;
   --orange:#e8720c; --blue:#4da3ff; --bluel:#84bcf8; --btn:#2e2e33; --text:#eeeeee; --mut:#8a8a92;
   --latte:#cbbfae; --faint:#55555c; --ok:#2fbf4f; --warn:#ffb15f; --danger:#ff6b5a; --track:#26262a;
   --f:#0e1016; --card:#1c1f2a; --field:#262a37; --hi:#e8ecf5; --lo:#8c96b2; --green:#66bb6a;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --link:#e8720c; --soft:#26262b}}
-:root[data-theme="dark"]{--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --link:#e8720c; --soft:#26262b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --link:#e8720c; --soft:#26262b; --owl:#f08a2c}}
+:root[data-theme="dark"]{--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --link:#e8720c; --soft:#26262b; --owl:#f08a2c}
 /* Virsutine eilute kaip kituose TinyOwl puslapiuose: kelias kaireje, temos jungiklis desineje (/tema.js). */
 .virsus{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px}
 .crumb{margin:0;font-size:12px;color:var(--muted)}
-.crumb a{text-decoration:none;color:var(--link)}
+/* Kelio eilute - TinyOwl svetaines navigacija, todel TinyOwl oranzine (style.css --accent), ne produkto (V 2026-10-29). */
+.crumb a{text-decoration:none;color:var(--owl)}
 .theme{display:flex;border:1px solid var(--line);border-radius:99px;padding:3px;gap:2px;flex:none}
 .theme button{width:32px;height:28px;border:0;border-radius:99px;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center;padding:0}
 .theme button[aria-pressed="true"]{background:var(--soft);color:var(--page)}
