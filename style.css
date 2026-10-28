@@ -60,11 +60,13 @@ footer p { margin: 0 0 6px; }
 .testui { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
 .testui a { font-weight: 600; text-decoration: none; border: 1px solid var(--accent); border-radius: 99px; padding: 1px 10px; }
 /* Kilmes eilute apacioje (V 2026-10-29: ES duoda pasitikejimo). */
-.madein { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.madein { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-weight: 600; }
+.madein .sep, .madein .ct { font-weight: 400; }
 .madein .eu { width: 24px; height: 16px; flex: none; }
 /* Logotipas be plyteles (V 2026-10-29): tamsioje temoje balta pelėda, šviesioje - su 1,5 px tamsiu rėmeliu.
    Failuose 12 px paraštė rėmeliui, tad 54 px su -3 px = tas pats 48 px ženklas. */
-.brand img.owl { width: 54px; height: 54px; margin: -3px; }
+.brand .owlwrap { position: relative; flex: none; width: 54px; height: 54px; margin: -3px; }
+.brand img.owl { width: 54px; height: 54px; }
 .brand img.owl-d { display: none; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .brand img.owl-l { display: none; }
@@ -72,3 +74,14 @@ footer p { margin: 0 0 6px; }
 }
 :root[data-theme="dark"] .brand img.owl-l { display: none; }
 :root[data-theme="dark"] .brand img.owl-d { display: block; }
+/* Helovynas: raudonos pulsuojančios akys virš oranžinių (akių vietos išmatuotos logotipe). */
+.brand .eye { display: none; }
+.halloween .brand .eye { display: block; position: absolute; top: 56.9%; width: 15%; height: 15%; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #1a0000 0 22%, #ff2a2a 32%, #b30000 64%, rgba(179, 0, 0, 0) 74%);
+  animation: akis 1.6s ease-in-out infinite; }
+@keyframes akis {
+  0%, 100% { opacity: .8; box-shadow: 0 0 3px 1px rgba(255, 0, 0, .35); }
+  50% { opacity: 1; box-shadow: 0 0 10px 4px rgba(255, 30, 30, .85); }
+}
+@media (prefers-reduced-motion: reduce) { .halloween .brand .eye { animation: none; } }
