@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wrist Control for Vallox - live demo</title>
+<meta name="description" content="Try Wrist Control for Vallox in the browser: the phone app and the Wear OS watch app run a simulated Vallox unit side by side.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<style>
+/* Spalvos - is programeles: telefonas Stilius.java (tamsi ir sviesi tema), laikrodis MainActivity / VlxPiliule. */
+:root{
+  --bg:#f2f4f8; --page:#14161c; --muted:#5a6378; --line:#d5dae4;
+  --wpill:#33363c; --wblue:#2b3f9e; --whi:#e8ecf5; --wlo:#8c96b2; --wblue2:#5b9bf3;
+  --wgreen:#6fbf73; --wyellow:#f5c542; --wred:#e5615b;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0d12; --page:#e6e9ef; --muted:#9aa3b4; --line:#2a313d}}
+:root[data-theme="dark"]{--bg:#0b0d12; --page:#e6e9ef; --muted:#9aa3b4; --line:#2a313d}
+.ps{--f:#0e1016; --card:#1c1f2a; --vidus:#2a2e3b; --blue:#5b9bf3; --btn:#2e3c96; --hi:#e8ecf5; --lo:#8c96b2;
+  --green:#6fbf73; --yellow:#f5c542; --orange:#f28c38; --red:#e5615b; --track:#3c404e; --onbtn:#e8ecf5}
+.ps.light{--f:#f2f4f8; --card:#ffffff; --vidus:#eef1f6; --blue:#2e5fd8; --hi:#14161c; --lo:#5a6378;
+  --green:#2e8b3e; --yellow:#a86f00; --orange:#c2611a; --red:#c8443e; --track:#d5dae4; --onbtn:#ffffff}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--page);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1020px;margin:0 auto;padding:20px 16px 48px}
+header.top{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+header.top img{width:44px;height:44px;border-radius:10px}
+header.top b{font-size:20px;display:block}
+header.top span{color:var(--muted);font-size:13px}
+p.lead{color:var(--muted);margin:6px 0 14px;max-width:760px}
+p.lead a{color:#5b9bf3}
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0 0 10px}
+.scen button{font:inherit;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
+.scen button b{display:block;font-size:15px}
+.scen button span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.scen button.on{border-color:#5b9bf3;box-shadow:0 0 0 1px #5b9bf3 inset}
+.story{border-left:3px solid #5b9bf3;padding:6px 12px;margin:0 0 18px;color:var(--page);font-size:14px;min-height:24px}
+.story small{color:var(--muted);display:block;font-size:12.5px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:center}
+.tools button{font:inherit;font-size:14px;padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
+.tools span{color:var(--muted);font-size:13px}
+.stage{display:flex;gap:40px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.dev{display:flex;flex-direction:column;align-items:center;gap:10px}
+.cap{color:var(--muted);font-size:13px;text-align:center;max-width:340px}
+.sec{color:var(--muted);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:14px}
+.note{color:var(--muted);font-size:12.5px;text-align:center;margin-top:18px}
+
+/* ---- Telefonas ---- */
+.phone{width:360px;height:740px;border-radius:38px;background:#000;padding:10px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.ps{width:100%;height:100%;border-radius:30px;background:var(--f);overflow:hidden;position:relative;color:var(--hi)}
+.sbar{height:28px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:12px}
+.scr{position:absolute;top:28px;left:0;right:0;bottom:34px;overflow-y:auto;padding:6px 14px 20px;scrollbar-width:none}
+.scr::-webkit-scrollbar{display:none}
+.nav{position:absolute;bottom:0;left:0;right:0;height:34px;display:flex;justify-content:center;align-items:center;gap:50px}
+.nav button{background:none;border:0;color:var(--lo);font-size:17px;cursor:pointer;padding:4px 14px}
+.hd{display:flex;justify-content:space-between;align-items:baseline;margin:6px 4px 10px}
+.hd b{font-size:19px;cursor:pointer}
+.age{color:var(--yellow);font-size:12.5px}
+.k{background:var(--card);border-radius:10px;padding:12px 14px;margin-top:9px;cursor:pointer}
+.k.st{cursor:default}
+.kt{color:var(--blue);font-size:12.5px;letter-spacing:.06em;font-weight:600}
+.kt i{color:var(--lo);font-style:normal;letter-spacing:0;font-weight:400}
+.big{font-size:22px;font-weight:700;margin:2px 0}
+.sub{color:var(--lo);font-size:13px}
+.row{display:flex;justify-content:space-between;align-items:baseline;margin-top:7px;font-size:15px;gap:10px}
+.row span:first-child{color:var(--lo)}
+.two{display:flex;gap:9px}
+.two>*{flex:1;min-width:0}
+.kv{font-size:22px;font-weight:600}
+hr.l{border:0;border-top:1px solid var(--track);margin:12px 0 2px}
+.scale{position:relative;height:22px;margin:4px 6px 0}
+.scale .bar{position:absolute;left:0;right:0;top:4px;height:8px;border-radius:4px;overflow:hidden;display:flex}
+.scale .tri{position:absolute;top:-3px;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--hi);transform:translateX(-7px);transition:left .8s}
+.ticks{display:flex;justify-content:space-between;font-size:9.5px;color:var(--lo);margin:0 2px}
+.mb{display:flex;align-items:center;justify-content:center;background:var(--card);border-radius:10px;padding:12px 16px;margin-top:8px;cursor:pointer;user-select:none}
+.mb.on{background:var(--btn);color:var(--onbtn)}
+.mb svg{width:22px;height:22px;flex:none}
+.mb .tx{width:140px;padding:0 14px;font-size:16px;line-height:1.25}
+.mb .tx small{display:block;font-size:14px}
+.mb .tx.c{text-align:center}
+.mb .sl{width:22px;height:22px;flex:none;display:flex;align-items:center;justify-content:center}
+.ps.light .mb:not(.on) svg path[fill="#fff"],.ps.light .mb:not(.on) svg circle[fill="#fff"]{fill:#14161c}
+.wst{color:var(--lo);font-size:13px;text-align:center;margin-top:6px}
+.wt{font-size:24px;font-weight:700;margin:8px 4px 2px}
+.hint{color:var(--lo);font-size:13px;margin:8px 2px}
+.btn{display:block;text-align:center;padding:11px 8px;border-radius:8px;background:var(--btn);color:var(--onbtn);cursor:pointer;font-size:15px;margin-top:10px;user-select:none}
+.btn.g{background:var(--vidus);color:var(--hi)}
+.seg{display:flex;gap:8px;margin-top:10px}
+.seg div{flex:1;text-align:center;padding:11px 6px;border-radius:8px;background:var(--vidus);cursor:pointer;font-size:15px;user-select:none}
+.seg div.on{background:var(--btn);color:var(--onbtn)}
+.vc{border:1.5px solid transparent;background:var(--vidus);border-radius:10px;padding:10px 12px;margin-top:9px;cursor:pointer}
+.vc.on{border-color:var(--blue)}
+.vc b{font-size:16px}
+.vc ul{margin:4px 0 0;padding-left:18px;font-size:13.5px}
+.sw{width:40px;height:22px;border-radius:11px;background:var(--track);position:relative;cursor:pointer;flex:none}
+.sw:after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
+.sw.on{background:var(--blue)}
+.sw.on:after{left:21px}
+.pm{display:flex;align-items:center;gap:10px;margin-top:8px}
+.pm span{width:46px;height:40px;border-radius:8px;background:var(--vidus);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;user-select:none}
+.pm div{flex:1;text-align:center}
+.pm div small{display:block;color:var(--lo);font-size:12px}
+.pm div b{font-size:20px}
+.log{font-size:13.5px;margin-top:6px}
+.log div{display:flex;gap:8px;padding:3px 0;border-top:1px solid var(--track)}
+.log div:first-child{border-top:0}
+.log span:first-child{color:var(--lo);width:42px;flex:none}
+.log span:nth-child(2){flex:1}
+.log span:last-child{color:var(--lo)}
+.q{font-size:20px;font-weight:700;margin:12px 4px 4px}
+.opt{background:var(--vidus);border-radius:10px;padding:11px 13px;margin-top:8px;cursor:pointer;border:1.5px solid transparent}
+.opt.on{border-color:var(--blue)}
+.opt b{display:block}
+.prog{height:4px;background:var(--track);border-radius:2px;margin:6px 4px 0}
+.prog i{display:block;height:100%;background:var(--blue);border-radius:2px}
+.home{position:absolute;inset:28px 0 34px;padding:14px;background:linear-gradient(160deg,#1c2b4a,#0e1016 70%)}
+.wg{background:rgba(28,31,42,.94);border-radius:20px;padding:11px 14px;cursor:pointer;color:#e8ecf5}
+.wg .h{display:flex;justify-content:space-between;font-size:12px;font-weight:600;letter-spacing:.05em}
+.wg .h b{color:#5b9bf3}
+.wg .h span{color:#f5c542;font-weight:400}
+.wg .r{display:flex;justify-content:space-between;font-size:13px;margin-top:2px}
+.wg .r span:first-child{color:#8c96b2}
+.icons{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:22px}
+.icons div{width:52px;height:52px;border-radius:14px;background:#2a2e3b;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#8c96b2}
+.icons img{width:52px;height:52px;border-radius:14px}
+.banner{position:absolute;top:32px;left:10px;right:10px;background:var(--card);border:1px solid var(--track);border-radius:16px;padding:10px 12px;box-shadow:0 6px 20px rgba(0,0,0,.4);transform:translateY(-140%);transition:transform .3s;z-index:5}
+.banner.on{transform:none}
+.banner .t{font-size:11.5px;color:var(--lo)}
+.banner b{display:block;font-size:14.5px;margin-top:2px}
+.banner .a{color:var(--blue);font-size:14px;margin-top:6px;cursor:pointer;font-weight:600}
+.toast{position:absolute;left:50%;bottom:52px;transform:translateX(-50%);background:#3a3f4d;color:#fff;padding:8px 14px;border-radius:18px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;width:max-content;max-width:300px;text-align:center}
+.toast.on{opacity:1}
+.list{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;z-index:6}
+.list>div{background:var(--card);width:100%;border-radius:18px 18px 0 0;padding:14px 16px 20px}
+canvas{width:100%;display:block}
+.lg{display:flex;gap:12px;font-size:12px;color:var(--lo);margin-top:4px}
+.lg i{display:inline-block;width:10px;height:3px;vertical-align:middle;margin-right:4px}
+.buzz{animation:buzz .35s}
+@keyframes buzz{0%,100%{transform:translate(0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-2px,0)}80%{transform:translate(2px,1px)}}
+.spin{width:20px;height:20px;border-radius:50%;border:3px solid rgba(232,236,245,.25);border-top-color:#e8ecf5;animation:sp 1s linear infinite;flex:none}
+.ps.light .spin{border-color:rgba(20,22,28,.15);border-top-color:#14161c}
+.ps.light .mb.on .spin{border-color:rgba(255,255,255,.3);border-top-color:#fff}
+@keyframes sp{to{transform:rotate(360deg)}}
+.fan{animation:sp 2.2s linear infinite}
+
+/* ---- Laikrodis. 1 sp tikrame 438 px ekrane = 2,55 px (2,125 x srifto mastelis 1,2); demo 300 px - 1,75 px. ---- */
+.watch{width:330px;height:330px;border-radius:50%;background:#1a1b1f;padding:15px;box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 0 0 3px #2a2c31}
+.ws{width:300px;height:300px;border-radius:50%;background:#000;overflow:hidden;position:relative;color:var(--whi);user-select:none;touch-action:pan-y}
+.wp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding-top:24px}
+.wlab{color:var(--wblue2);font-size:17px;letter-spacing:.14em;display:flex;align-items:center;gap:5px}
+.wlab svg{width:15px;height:15px}
+.wttl{color:var(--wblue2);font-size:26px;font-weight:700;margin-top:4px}
+.wzod{font-size:33px;font-weight:700;margin-top:2px;line-height:1.15}
+.wr{display:grid;grid-template-columns:auto auto;column-gap:10px;font-size:22px;margin-top:2px;line-height:1.25}
+.wr span:nth-child(odd){color:var(--wlo);text-align:right}
+.wr.lft{width:212px;grid-template-columns:1fr auto}
+.wr.lft span:nth-child(odd){text-align:left}
+.wr.lft span:nth-child(even){text-align:right}
+.wpill{width:202px;border-radius:30px;background:var(--wblue);margin-top:8px;padding:5px 7px;display:flex;align-items:center;cursor:pointer;min-height:56px}
+.wpill svg{width:21px;height:21px;flex:none;margin-left:4px}
+.wpill .tx{flex:1;text-align:center;font-size:22px;line-height:1.1}
+.wpill .tx small{display:block;font-size:15.5px;margin-top:2px}
+.wpill .sl{width:21px;height:21px;margin-right:4px;flex:none;display:flex;align-items:center;justify-content:center}
+.ws .spin{width:18px;height:18px;border-width:3px}
+.wage{color:var(--wyellow);font-size:17.5px;margin-top:3px}
+.wdots{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#c9cfdd;font-size:12px;letter-spacing:2px}
+.wopen{color:var(--wyellow);font-size:23px;margin-top:6px;cursor:pointer}
+.wmode{display:flex;align-items:center;gap:8px;font-size:26px;font-weight:700;margin-top:2px;cursor:pointer}
+.wmode svg{width:24px;height:24px}
+.wwin{position:absolute;inset:0;background:#000;overflow-y:auto;padding:26px 46px 70px;scrollbar-width:none;text-align:center}
+.wwin::-webkit-scrollbar{display:none}
+.wwin .wr{margin:4px auto 0;width:max-content}
+.wm{display:flex;align-items:center;border-radius:30px;background:var(--wpill);padding:11px 12px 11px 14px;margin-top:7px;cursor:pointer;font-size:22px;text-align:left}
+.wm.on{background:var(--wblue)}
+.wm svg{width:20px;height:20px;margin-right:9px;flex:none}
+.wm .n{flex:1}
+.wm .sl{width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+.wmsg{color:var(--wlo);font-size:16px;text-align:center;margin-top:6px;min-height:18px;line-height:1.2}
+.wsub{color:var(--wlo);font-size:17px;line-height:1.25;margin-top:6px}
+.wsec{color:var(--wblue2);font-size:16px;letter-spacing:.1em;margin-top:14px}
+.wbig{font-size:36px;font-weight:700}
+.wnote{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
+.wnote b{font-size:24px;color:var(--wyellow)}
+.wnote div{font-size:18px;color:var(--wlo);margin-top:6px}
+.wnote .wm{margin-top:12px;width:190px;color:var(--whi)}
+.face{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%}
+.face .tm{font-size:66px;font-weight:700;color:#5b9bf3;line-height:1}
+.face .dt{font-size:16px;color:var(--wyellow);margin-bottom:4px;letter-spacing:.04em}
+.cmp{position:absolute;display:flex;flex-direction:column;align-items:center;font-size:18px;font-weight:600}
+.cmp small{font-size:11px;color:var(--wlo);letter-spacing:.08em;font-weight:400}
+.warr{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.warr button{font:inherit;font-size:13px;background:transparent;border:1px solid var(--line);color:var(--page);border-radius:16px;padding:4px 12px;cursor:pointer}
+.extras{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:flex-start;margin-top:6px}
+.wface{width:170px;height:170px;border-radius:50%;background:#000;position:relative;box-shadow:0 0 0 7px #1a1b1f,0 6px 20px rgba(0,0,0,.3);cursor:pointer;color:var(--whi)}
+.wface .tm{font-size:36px}
+.wface .dt{font-size:10px}
+.wface .cmp{font-size:12.5px}
+.wface .cmp small{font-size:7.5px}
+.wgs{width:260px;display:flex;flex-direction:column;gap:8px}
+@media (max-width:760px){.stage{gap:26px}}
+</style>
+</head>
+<body>
+<main>
+<header class="top"><img src="/wristcontrol/icon.png" alt=""><div><b>Wrist Control for Vallox</b><span>Live demo · a simulated unit, nothing leaves this page</span></div></header>
+<p class="lead">The phone app and the Wear OS watch app side by side, running one pretend Vallox unit. Everything you tap works on both: Boost, modes, Optimize, settings, who controls the unit, Automatic or Semi-automatic view. Demo time runs 60 times faster - one second is one minute. <a href="/wristcontrol/">About the app</a> · <a href="/wristcontrol/guide/">User guide</a></p>
+<div class="sec" style="margin:0 0 8px">Try a day at home - pick what happens, then watch the phone and the watch</div>
+<div class="scen" id="scen">
+  <button data-scen="guests"><b>Guests arrive</b><span>Six friends come over and CO2 climbs. Optimized turns the fan up by itself; if the air still gets stale, both devices offer Boost.</span></button>
+  <button data-scen="away"><b>Everyone leaves</b><span>The house is empty. CO2 falls and the fan slows to its rest speed - quieter and cheaper, no mode to remember.</span></button>
+  <button data-scen="shower"><b>Shower</b><span>Humidity jumps. The unit runs faster until the moisture is out, then slows down again on its own.</span></button>
+  <button id="reset"><b>Start over</b><span>Back to a quiet evening: two people at home, fresh air.</span></button>
+</div>
+<div class="story" id="story"></div>
+
+<div class="stage">
+  <div class="dev">
+    <div class="phone"><div class="ps" id="ps">
+      <div class="sbar"><span id="clk">18:00</span><span>▾ ◢ 87%</span></div>
+      <div class="scr" id="scr"></div>
+      <div id="homeLayer"></div>
+      <div class="banner" id="banner"></div>
+      <div class="nav"><button id="back" aria-label="Back">◁</button><button id="homeBtn" aria-label="Home screen">○</button><button id="appBtn" aria-label="Open app">▢</button></div>
+      <div class="toast" id="toast"></div>
+      <div id="sheet"></div>
+    </div></div>
+    <div class="cap">Phone. Tap cards to open windows. ◁ back, ○ home screen with widgets, ▢ back to the app.</div>
+  </div>
+  <div class="dev">
+    <div class="watch"><div class="ws" id="ws"></div></div>
+    <div class="warr"><button id="wl">‹ Page</button><button id="wr">Page ›</button><button id="wback">Back</button><button id="wfaceBtn">Watch face</button></div>
+    <div class="cap">Watch. Swipe sideways or use the page buttons; tap a page to open it.</div>
+    <div class="sec">Widgets and complications</div>
+    <div class="extras">
+      <div class="wface" id="wface" title="Watch face with complications"></div>
+      <div class="wgs" id="wgs"></div>
+    </div>
+    <div class="cap">Complications on any watch face, widgets on the phone home screen. They only show the air - tap opens the app.</div>
+  </div>
+</div>
+<p class="note">Numbers are made up. The real app reads your unit through MyVallox Cloud or your home network. Vallox and MyVallox are trademarks of Vallox Oy; Wrist Control is an independent app.</p>
+</main>
+
+<script>
+(function(){
+"use strict";
+/* Piktogramos - tikri programeles vektoriai (res/drawable/ic_m_*.xml, 100x100). */
+var P={
+ boost:'<path fill="#fff" d="M50,10 L86,48 L66,48 L66,90 L34,90 L34,48 L14,48 Z"/>',
+ home:'<path fill="#fff" fill-rule="evenodd" d="M50,18 L96,44 L86,44 L86,86 L14,86 L14,44 L4,44 Z M39,86 L39,64 L61,64 L61,86 Z"/>',
+ away:'<path fill="#fff" fill-rule="evenodd" d="M58,12 L92,12 L92,88 L58,88 Z M66,20 L84,20 L84,80 L66,80 Z"/><circle cx="30" cy="22" r="9" fill="#fff"/><path fill="#fff" d="M24,34 L36,34 L40,56 L48,74 L40,79 L31,62 L27,78 L33,88 L25,92 L16,78 L20,56 L14,44 L14,34 Z"/>',
+ custom:'<path fill="#fff" fill-rule="evenodd" d="M50,18 L96,44 L86,44 L86,86 L14,86 L14,44 L4,44 Z M38,52 L46,52 L46,44 L54,44 L54,52 L62,52 L62,60 L54,60 L54,68 L46,68 L46,60 L38,60 Z"/>',
+ auto:'<path fill="#fff" fill-rule="evenodd" d="M50,18 L96,44 L86,44 L86,86 L14,86 L14,44 L4,44 Z M50,36 L67,80 L57,80 L54,71 L46,71 L43,80 L33,80 Z M50,51 L47.4,63 L52.6,63 Z"/>',
+ optimized:'<path fill="none" stroke="#5B9BF3" stroke-width="10" d="M12,46 L50,12 L88,46"/><path fill="none" stroke="#E8720C" stroke-width="10" d="M20,62 C30,54 40,56 50,62 C60,68 70,70 80,62"/><path fill="none" stroke="#E8ECF5" stroke-width="10" d="M20,84 C30,76 40,78 50,84 C60,90 70,92 80,84"/>',
+ fan:'<g fill="currentColor"><path d="M50,44 C48,30 52,18 64,14 C74,12 80,22 74,32 C68,38 60,42 50,44 Z"/><path d="M55,53 C68,58 76,68 74,80 C70,90 58,90 54,80 C51,72 52,62 55,53 Z"/><path d="M45,53 C35,62 22,64 13,57 C6,49 12,38 22,38 C30,38 38,44 45,53 Z"/><circle cx="50" cy="50" r="7"/></g>',
+ phone:'<path fill="#5B9BF3" d="M7 1h10a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 3v15h10V4H7z" transform="scale(4.1)"/>',
+ watch:'<path fill="#5B9BF3" d="M9 1h6l1 4a7 7 0 0 1 0 14l-1 4H9l-1-4a7 7 0 0 1 0-14zm3 6a5 5 0 1 0 0 10 5 5 0 0 0 0-10z" transform="scale(4.1)"/>'
+};
+function ic(n,cls){return '<svg viewBox="0 0 100 100"'+(cls?' class="'+cls+'"':'')+'>'+P[n]+'</svg>';}
+
+var MODES=[["optimized","Optimized"],["boost","Boost"],["away","Away"],["home","At home"],["custom","Custom"],["auto","Auto"]];
+var NAME={optimized:"Optimized",boost:"Boost",away:"Away",home:"At home",custom:"Custom",auto:"Auto"};
+var G, U, S, timer, ui;
+
+/* ---- Busena: G - programele, U - rekuperatoriai, S - pasirinktas ---- */
+function unit(name,co2,temp,out,filt){
+  var u={name:name,mode:"optimized",prev:"optimized",left:0,co2:co2,temp:temp,rh:52,out:out,fan:52,filt:filt,
+    people:2,shower:0,scen:null,scenLeft:0,peak:0,age:0,plan:{rest:45,limit:500},hist:[],week:[]};
+  for(var i=0;i<144;i++){var t=i/144*24;u.hist.push({co2:co2-80+260*Math.max(0,Math.sin((t-7)/24*2*Math.PI))+40*Math.sin(t*1.7),
+    tin:temp-0.7+0.8*Math.sin((t-9)/24*2*Math.PI),tout:out-3+5*Math.sin((t-9)/24*2*Math.PI)});}
+  var d=["M","T","W","T","F","S","S"];
+  for(var j=0;j<7;j++) u.week.push({d:d[j],tin:temp-0.3+Math.sin(j)*0.3,tout:out-2+Math.cos(j*1.3)*2.5,co2:co2-60+Math.sin(j*2)*70});
+  return u;
+}
+/* Situacijos (V 2026-10-28: demo forumams - kad matytusi nauda). */
+var SC={guests:{people:8,shower:0,dur:50,start:"Six guests arrived - CO2 is rising",end:"Guests left"},
+        away:{people:0,shower:0,dur:60,start:"Everyone left the house",end:"Back home"},
+        shower:{people:2,shower:1,dur:20,start:"Someone is in the shower - humidity is rising",end:"Shower done"}};
+function startScen(k){var u=S;u.scen=k;u.scenLeft=SC[k].dur;u.peak=u.fan;u.scenFrom=Math.round(u.fan);u.low=u.fan;u.people=SC[k].people;u.shower=SC[k].shower;u.done=null;logAdd("Home",SC[k].start);toast(SC[k].start);draw();}
+function endScen(u){var k=u.scen;u.people=2;u.shower=0;u.scen=null;if(u===S)logAdd("Home",SC[k].end);u.done={k:k,peak:Math.round(u.peak),from:u.scenFrom,t:G.min};}
+function story(){
+  var u=S, auto=u.mode==="optimized"||u.mode==="auto", f=Math.round(u.fan);
+  if(u.scen==="guests") return '<b>Guests: 8 people at home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' raised it by itself.':' - the fan stays where you set it ('+NAME[u.mode]+').')+'<small>'+u.scenLeft+' min until they leave. Above 1000 ppm you get an alert with Boost.</small>';
+  if(u.scen==="away") return '<b>Nobody home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' slows it down by itself.':'.')+'<small>Coming back in '+u.scenLeft+' min. Leaving for longer? Tap Away on the watch on your way out.</small>';
+  if(u.scen==="shower") return '<b>Shower running.</b> Humidity '+Math.round(u.rh)+' %, fan '+f+' %'+(auto?' - the unit speeds up for the moisture.':'.')+'<small>'+u.scenLeft+' min left. Above 70 % you get an alert.</small>';
+  if(u.done&&G.min-u.done.t<30){var d=u.done;
+    if(d.k==="away") return '<b>Done.</b> While the house was empty the fan ran slower; now everyone is back and it is at '+f+' %. Nothing to tap.';
+    return '<b>Done.</b> The fan went from '+d.from+' % up to '+d.peak+' % and is coming back down ('+f+' % now). Nothing to tap.';}
+  return '<small>Pick a situation above. In SETTINGS switch to Semi-automatic to see every window, or pick Away or Custom in VENTILATION to compare with Optimized.</small>';
+}
+function fresh(){
+  G={view:"auto",ctrl:"phone",theme:"dark",from:22.5,to:23.5,alerts:{temp:true,rh:true,co2:true,filt:true},
+     refresh:"Auto",clock:"Fixed automatically",min:18*60,writing:null,log:[]};
+  U=[unit("Home ventilation",640,24.3,10.4,107),unit("Summer house",520,21.8,9.6,32)];
+  U[1].mode="away"; U[1].fan=30;
+  S=U[0];
+  ui={phone:"pultas",layer:"app",wpage:0,wwin:null,wface:false,wnote:false,opt:"idle",goal:"balanced",wiz:0,wizSel:0,fsure:0,alerted:false};
+  logAdd("App","Optimized");
+}
+function hhmm(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");}
+function logAdd(who,what){G.log.unshift({t:hhmm(G.min),who:who,what:what}); if(G.log.length>12) G.log.pop();}
+
+/* Rekuperatorius: ventiliatorius pagal rezima, CO2 seka ventiliatoriu ir svecius. */
+function fanTarget(u){
+  switch(u.mode){case "boost":return 100;case "away":return 30;case "home":return 50;case "custom":return 70;
+    case "auto":return Math.min(85,45+Math.max(0,(u.co2-700)/8)+Math.max(0,(u.rh-60)*2.5));
+    default:return Math.min(100,u.plan.rest+Math.max(0,(u.co2-u.plan.limit)/5)+Math.max(0,(u.rh-60)*3));}
+}
+function tick(){
+  G.min++;
+  U.forEach(function(u){
+    u.fan+=(fanTarget(u)-u.fan)*0.35;
+    /* CO2 pusiausvyra: lauko 420 ppm + zmones / oro kiekis; dregme - dusas ir ventiliatorius. */
+    var target=420+u.people*80*50/Math.max(20,u.fan);
+    u.co2+=(target-u.co2)*0.06+(Math.random()-0.5)*3;
+    var rhT=48+u.shower*42*50/Math.max(20,u.fan);
+    u.rh+=(rhT-u.rh)*0.15+(Math.random()-0.5)*0.2; u.temp+=(Math.random()-0.5)*0.02;
+    if(u.scen){u.peak=Math.max(u.peak,u.fan);u.scenLeft--;if(u.scenLeft<=0)endScen(u);}
+    u.age++; if(u.age>=60) u.age=0;
+    if((u.mode==="boost"||u.mode==="custom")&&u.left>0){u.left--; if(u.left<=0){u.mode=u.prev;u.left=0;if(u===S){logAdd("Unit",NAME[u.mode]);toast("Timer ended - back to "+NAME[u.mode]);}}}
+    if(G.min%10===0){u.hist.push({co2:u.co2,tin:u.temp,tout:u.out});u.hist.shift();}
+  });
+  if(G.alerts.co2&&S.co2>1000&&!ui.alerted){ui.alerted=true;notify("co2");}
+  if(G.alerts.rh&&S.rh>70&&!ui.rhAlerted){ui.rhAlerted=true;notify("rh");}
+  if(S.rh<62) ui.rhAlerted=false;
+  if(S.co2<850) ui.alerted=false;
+  draw();
+}
+
+/* Rasymas: suktukas ~1,6 s; rasys valdantis; vibracija abiejuose (V 2026-10-28). */
+function write(mode,from){
+  if(G.writing) return;
+  G.writing={mode:mode,from:from}; draw();
+  setTimeout(function(){
+    if(mode==="boost"||mode==="custom"){ if(S.mode!=="boost"&&S.mode!=="custom") S.prev=S.mode; S.left=60; }
+    else S.left=0;
+    S.mode=mode; G.writing=null; S.age=0;
+    logAdd(from==="phone"?"You (phone)":"You (watch)",NAME[mode]);
+    buzz(); draw();
+  },1600);
+}
+function writingMsg(dev){
+  if(!G.writing||G.writing.from!==dev) return "";
+  if(G.ctrl===dev) return "Writing to the unit…";
+  return dev==="phone"?"Sent to the watch - waiting for the unit…":"Sent to the phone - waiting for the unit…";
+}
+function buzz(){["ps","ws"].forEach(function(id){var e=document.getElementById(id);e.classList.remove("buzz");void e.offsetWidth;e.classList.add("buzz");});}
+var tt; function toast(t){var e=document.getElementById("toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on");},2600);}
+function notify(kind){
+  var b=document.getElementById("banner");
+  ui.wnoteKind=kind;
+  b.innerHTML=kind==="rh"?'<div class="t">Wrist Control · now</div><b>Humidity high · '+Math.round(S.rh)+' %</b><div class="sub">The unit already runs faster. Boost clears it sooner.</div><div class="a" id="nBoost">Boost 1 h</div>'
+    :'<div class="t">Wrist Control · now</div><b>Air is getting stale · '+Math.round(S.co2)+' ppm</b><div class="sub">Open a window or Boost for an hour.</div><div class="a" id="nBoost">Boost 1 h</div>';
+  b.classList.add("on"); setTimeout(function(){b.classList.remove("on");},8000);
+  ui.wnote=true; buzz(); draw();
+}
+
+function co2Lvl(v){v=v===undefined?S.co2:v;return v<800?0:v<1200?1:2;}
+function airWord(){return ["Air is fresh","Air is getting stale","Air is stale"][co2Lvl()];}
+function col(n){return ["var(--green)","var(--yellow)","var(--red)"][n];}
+function wcol(n){return ["var(--wgreen)","var(--wyellow)","var(--wred)"][n];}
+function f1(x){return x.toFixed(1).replace(".",",");}
+function fanSet(){return {optimized:"Fan at rest "+S.plan.rest+" % · CO2 limit "+S.plan.limit,auto:"Fan 45-85 % by CO2 and humidity",home:"Fan 50 %",away:"Fan 30 %",boost:"Fan 100 %",custom:"Fan 70 %"}[S.mode];}
+function ageTxt(){return S.age+" s ago";}
+function boostOn(){return S.mode==="boost";}
+function ctrlName(){return G.ctrl==="phone"?"this phone":"Galaxy Watch";}
+
+/* ---- Telefono dalys ---- */
+function scale(v,min,max,zones,ticks){
+  var h='<div class="scale"><div class="bar">', last=min;
+  zones.forEach(function(z){h+='<i style="flex:'+(z[0]-last)+';background:'+z[1]+'"></i>';last=z[0];});
+  var p=Math.max(0,Math.min(1,(v-min)/(max-min)))*100;
+  h+='</div><div class="tri" style="left:'+p+'%"></div></div><div class="ticks">';
+  ticks.forEach(function(t){h+='<span>'+t+'</span>';}); return h+'</div>';
+}
+function scales(){
+  var Y="var(--yellow)",Gr="var(--green)",R="var(--red)";
+  return '<div class="row"><span>CO2</span><span style="color:'+col(co2Lvl())+'">'+Math.round(S.co2)+' ppm · '+(co2Lvl()?"high":"ok")+'</span></div>'+
+  scale(S.co2,400,2000,[[800,Gr],[1200,Y],[2000,R]],[400,800,1200,2000])+
+  '<div class="row"><span>Temperature</span><span style="color:var(--green)">'+f1(S.temp)+'° · ok</span></div>'+
+  scale(S.temp,16,29,[[18,R],[20,Y],[25,Gr],[27,Y],[29,R]],[16,18,20,25,27,29])+
+  '<div class="row"><span>Humidity</span><span style="color:'+(S.rh>70?"var(--red)":S.rh>50?"var(--yellow)":"var(--green)")+'">'+Math.round(S.rh)+' %'+(S.rh>50?' ▲':' · ok')+'</span></div>'+
+  scale(S.rh,22,66,[[25,R],[30,Y],[50,Gr],[60,Y],[66,R]],[22,25,30,50,60,66]);
+}
+function airCard(){
+  return '<div class="k st"><div class="kt">AIR</div><div class="big" style="color:'+col(co2Lvl())+'">'+airWord()+'</div>'+scales()+
+  '<hr class="l"><div class="row"><span>Outdoor</span><span>'+f1(S.out)+'°</span></div>'+
+  '<div class="row"><span>Fan</span><span>'+Math.round(S.fan)+' %</span></div>'+
+  '<div class="row"><span>Heater</span><span style="color:var(--lo)">OFF</span></div>'+
+  (S.mode!=="optimized"&&S.mode!=="boost"?'<div class="row"><span>Mode</span><span>'+NAME[S.mode]+(S.left>0?' · '+S.left+' min left':'')+'</span></div>':'')+'</div>';
+}
+/* Rezimo mygtukas - Stilius.rezimoMygtukas: piktograma, teksto stulpelis, ventiliatoriaus vieta. */
+function modeBtn(key,label,on,second,centre,attr){
+  var w=G.writing&&G.writing.mode===key;
+  var right=w?'<div class="spin"></div>':(on?ic("fan","fan"):'');
+  var m=writingMsg("phone");
+  return '<div class="mb'+(on||centre?' on':'')+'" '+(attr||'data-mode="'+key+'"')+'>'+ic(key)+
+    '<div class="tx'+(centre?' c':'')+'">'+label+(second?'<small>'+second+'</small>':'')+'</div><div class="sl">'+right+'</div></div>'+
+    (w&&m?'<div class="wst">'+m+'</div>':'');
+}
+function card(t,body,open){return '<div class="k" data-open="'+open+'"><div class="kt">'+t+'</div>'+body+'</div>';}
+function tile(t,v,s,open,c){return '<div class="k" data-open="'+open+'"><div class="kt">'+t+'</div><div class="kv"'+(c?' style="color:'+c+'"':'')+'>'+v+'</div><div class="sub">'+s+'</div></div>';}
+function anyAlert(){return G.alerts.temp||G.alerts.rh||G.alerts.co2||G.alerts.filt;}
+function settingsCard(){return card("SETTINGS",'<div style="font-size:18px;font-weight:600">Controlled by '+ctrlName()+'</div><div class="sub">Refresh '+G.refresh+' · alerts '+(anyAlert()?"on":"off")+'</div>',"settings");}
+
+function pultas(){
+  var h='<div class="hd"><b data-units="1">'+S.name+' ▾</b><span class="age">'+ageTxt()+'</span></div>';
+  if(G.view==="auto"){
+    h+=airCard();
+    var on=boostOn();
+    h+='<div style="margin-top:9px">'+modeBtn("boost",on?"Stop Boost":"Boost",on,on?S.left+" min left":"1 h",true,'data-boost="1"')+'</div>';
+    h+=card("STATISTICS",'<div class="two" style="margin-top:2px"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">-35 %</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">+30 %</div></div></div><div class="sub">Same week last year</div>',"stats");
+    h+=settingsCard();
+    h+=card("SETUP",'<div style="font-size:18px;font-weight:600">'+S.name+'</div><div class="sub">Run setup again</div>',"setup");
+    return h;
+  }
+  h+='<div class="k" data-open="vent"><div class="kt">VENTILATION</div><div style="display:flex;align-items:center;gap:10px;margin-top:4px">'+
+     '<span style="width:26px;height:26px;display:block">'+ic(S.mode)+'</span><span class="big" style="flex:1">'+NAME[S.mode]+'</span><span style="width:24px;height:24px;display:block">'+ic("fan","fan")+'</span></div>'+
+     '<div class="sub">'+fanSet()+(S.left>0?' · '+S.left+' min':'')+'</div></div>';
+  h+='<div class="two">'+tile("SENSORS",Math.round(S.co2),"Humidity "+Math.round(S.rh)+" %","sens",col(co2Lvl()))+tile("TEMPERATURES",f1(S.temp)+"°","Outdoor "+f1(S.out)+"° · Heater off","temps")+'</div>';
+  h+='<div class="two">'+tile("OPTIMIZE","713","goal 738","opt","var(--green)")+tile("STATISTICS","-35 %","Energy · same week last year","stats","var(--green)")+'</div>';
+  h+='<div class="two">'+tile("FILTERS",S.filt,S.filt+" d left","filt",S.filt<30?"var(--yellow)":null)+tile("SETUP","",S.name,"setup")+'</div>';
+  h+=settingsCard();
+  return h;
+}
+
+function graphHtml(id,h,leg){return '<div class="k st"><canvas id="'+id+'" height="'+h+'"></canvas><div class="lg">'+leg+'</div></div>';}
+var LEG_T='<span><i style="background:var(--hi)"></i>Indoor</span><span><i style="background:#5b9bf3"></i>Outdoor</span>';
+var LEG_C='<span><i style="background:#f5c542"></i>CO2</span><span><i style="background:#8c96b2"></i>800 ppm</span>';
+
+function langas(w){
+  var h="";
+  if(w==="vent"){
+    h+='<div class="wt">VENTILATION</div><div style="font-size:17px;margin-left:4px">'+NAME[S.mode]+'</div><div class="sub" style="margin-left:4px">'+fanSet()+(S.left>0?' · '+S.left+' min':'')+'</div>';
+    MODES.forEach(function(m){var on=S.mode===m[0];h+=modeBtn(m[0],m[1],on,on&&S.left>0?S.left+" min left":null,false);});
+    h+='<div class="hint">Switch modes here: the panel skips tuned settings</div>';
+    h+='<div class="kt" style="margin:14px 4px 0">WEEK CLOCK</div><div class="k st"><div>Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="sub">No events: set them on the unit\'s panel.</div></div>';
+  } else if(w==="sens"){
+    h+='<div class="wt">SENSORS</div><div class="k st">'+scales()+'</div>'+
+      '<div class="k st"><div class="kt">FAN AND HEAT</div><div class="row"><span>Fan</span><span>'+Math.round(S.fan)+' %</span></div><div class="row"><span>Heat recovery</span><span style="color:var(--green)">84 %</span></div><div class="row"><span>Extract</span><span>'+f1(S.temp)+'°</span></div><div class="row"><span>Supply</span><span>22,1°</span></div><div class="row"><span>Outdoor</span><span>'+f1(S.out)+'°</span></div><div class="row"><span>Exhaust</span><span>14,5°</span></div></div>';
+  } else if(w==="temps"){
+    h+='<div class="wt">TEMPERATURES</div><div class="kt" style="margin:12px 4px 0">A DAY</div>'+graphHtml("cvd1",130,LEG_T)+graphHtml("cvd2",100,LEG_C)+
+      '<div class="kt" style="margin:12px 4px 0">7 DAYS</div>'+graphHtml("cvw1",120,LEG_T)+graphHtml("cvw2",100,LEG_C)+
+      '<div class="kt" style="margin:12px 4px 0">LAST YEAR</div><div class="k st"><div class="row"><span>Outdoor</span><span>9,6°</span></div><div class="row"><span>CO2</span><span>624</span></div><div class="sub">Same week last year, averages</div></div>';
+  } else if(w==="opt"){
+    h+='<div class="wt">OPTIMIZE</div>';
+    if(ui.opt==="idle"){
+      h+='<div class="k st"><div class="kt">YOUR PLAN</div><div class="row"><span>Fan at rest</span><span>'+S.plan.rest+' %</span></div><div class="row"><span>CO2 limit</span><span>'+S.plan.limit+' ppm</span></div><div class="row"><span>Average CO2</span><span style="color:var(--green)">713 · goal 738</span></div></div>'+
+        '<div class="hint">Optimize reads two weeks of your unit\'s history and finds the quietest fan settings that still keep the air fresh. Optimized mode then uses them.</div>'+
+        '<div class="btn" id="oNew">New plan</div><div class="btn g" id="oRestore">Restore: fan 50 %, CO2 limit 800</div>';
+    } else if(ui.opt==="busy"){
+      h+='<div class="k st" style="text-align:center"><div class="spin" style="margin:6px auto"></div><div>Analysing…</div><div class="sub">Reading 14 days from the unit</div></div>';
+    } else {
+      var g={quiet:[35,700,"Fewer fan hours, CO2 a bit higher"],balanced:[45,500,"Like now"],fresh:[55,450,"Lower CO2, more fan"]};
+      h+='<div class="q">What matters most?</div>';
+      ["quiet","balanced","fresh"].forEach(function(k){h+='<div class="opt'+(ui.goal===k?' on':'')+'" data-goal="'+k+'"><b>'+{quiet:"Quiet",balanced:"Balanced",fresh:"Fresh air"}[k]+'</b><span class="sub">'+g[k][2]+'</span></div>';});
+      var p=g[ui.goal];
+      h+='<div class="k st"><div class="kt">FORECAST</div><div class="row"><span>Fan at rest</span><span>'+S.plan.rest+' → '+p[0]+' %</span></div><div class="row"><span>CO2 limit</span><span>'+S.plan.limit+' → '+p[1]+'</span></div><div class="row"><span>Fan electricity</span><span style="color:var(--green)">'+(p[0]<S.plan.rest?"less":p[0]>S.plan.rest?"more":"no change")+'</span></div></div>'+
+        '<div class="btn" id="oApply">Apply</div><div class="btn g" id="oCancel">Cancel</div>';
+    }
+  } else if(w==="stats"){
+    h+='<div class="wt">STATISTICS</div><div class="kt" style="margin:12px 4px 0">VS PREVIOUS WEEK</div><div class="k st"><div class="big" style="color:var(--green)">Better week</div><div class="two"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">-37 %</div><div class="sub">97 → 61 kWh</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">+12 %</div><div class="sub">81 → 91 %</div></div></div></div>'+
+      '<div class="kt" style="margin:12px 4px 0">VS SAME WEEK LAST YEAR</div><div class="k st"><div class="two"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">-35 %</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">+30 %</div></div></div><div class="sub">Weather taken out · outdoor last year 10°</div></div>'+
+      '<div class="kt" style="margin:12px 4px 0">APP AT WORK</div><div class="k st"><div class="row"><span>Optimized raised the fan</span><span>14 times</span></div><div class="row"><span>Boost</span><span>2 h</span></div></div>'+
+      '<div class="kt" style="margin:12px 4px 0">CHANGE LOG <i>· in this demo</i></div><div class="k st"><div class="log">'+G.log.map(function(e){return '<div><span>'+e.t+'</span><span>'+e.what+'</span><span>'+e.who+'</span></div>';}).join("")+'</div></div>';
+  } else if(w==="filt"){
+    h+='<div class="wt">FILTERS</div><div class="k st"><div class="big" style="color:'+(S.filt<30?"var(--yellow)":"var(--hi)")+'">'+S.filt+' days left</div><div class="sub">Change every 180 days. You get a reminder when it is due.</div></div>'+
+      '<div class="btn'+(ui.fsure?'':' g')+'" id="fchg">'+(ui.fsure?"Confirm: changed today":"Mark as changed")+'</div>';
+  } else if(w==="settings"){
+    h+='<div class="wt">SETTINGS</div><div class="k st"><div class="kt">VALLOX UNIT CONTROLLED BY</div><div class="seg"><div data-ctrl="phone" class="'+(G.ctrl==="phone"?"on":"")+'">This phone</div><div data-ctrl="watch" class="'+(G.ctrl==="watch"?"on":"")+'">The watch</div></div>'+
+      '<div class="sub" style="margin-top:6px">Watch 0.1.976 · Phone 0.1.976</div></div>'+
+      '<div class="k st"><div class="kt">AUTOMATION <i>· tap a card to switch</i></div>'+
+      '<div class="vc'+(G.view==="auto"?" on":"")+'" data-view="auto"><b>Automatic</b><div class="sub">The app runs the air for you</div><ul><li>One card: how fresh the air is</li><li>One button: Boost for an hour</li><li>Few notifications - only when something needs you</li></ul></div>'+
+      '<div class="vc'+(G.view==="semi"?" on":"")+'" data-view="semi"><b>Semi-automatic</b><div class="sub">All windows and settings</div><ul><li>Modes, Optimize plan, sensors, graphs, statistics</li><li>Every change - you decide</li></ul></div></div>'+
+      '<div class="k st"><div class="kt">THEME</div><div class="seg"><div data-theme="dark" class="'+(G.theme==="dark"?"on":"")+'">Dark</div><div data-theme="light" class="'+(G.theme==="light"?"on":"")+'">Light</div></div></div>'+
+      '<div class="k st"><div class="kt">UNIT · TEMPERATURE</div><div class="pm"><span data-t="from-">-</span><div><small>From</small><b>'+f1(G.from)+'°</b></div><span data-t="from+">+</span></div><div class="pm"><span data-t="to-">-</span><div><small>To</small><b>'+f1(G.to)+'°</b></div><span data-t="to+">+</span></div>'+
+      '<div class="sub" style="margin-top:8px">Below '+f1(G.from)+'° the unit keeps the heat, above '+f1(G.to)+'° it cools with outdoor air.</div></div>'+
+      '<div class="k st"><div class="kt">UNIT · ALERTS</div>'+[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="row"><span style="color:var(--hi)">'+a[1]+'</span><span class="sw'+(G.alerts[a[0]]?' on':'')+'" data-al="'+a[0]+'"></span></div>';}).join("")+'</div>'+
+      '<div class="k st"><div class="kt">UNIT <i>· tap to change</i></div><div class="row" data-cyc="refresh" style="cursor:pointer"><span>Refresh</span><span>'+G.refresh+'</span></div><div class="row" data-cyc="clock" style="cursor:pointer"><span>Clock</span><span>'+G.clock+'</span></div></div>'+
+      '<div class="k st"><div class="kt">PRO</div><div class="row"><span>Pro</span><span>Unlocked</span></div><div class="sub">Smart modes, Optimize and Statistics. One-time purchase, 14 days free.</div></div>'+
+      '<div class="k st"><div class="kt">ABOUT</div><div style="display:flex;gap:12px;align-items:center;margin-top:6px"><img src="/wristcontrol/icon.png" alt="" style="width:46px;height:46px;border-radius:10px"><div><div style="font-size:18px;font-weight:600">Wrist Control</div><div class="sub">for Vallox</div></div></div><div class="sub" style="margin-top:8px">Independent app, not made by Vallox Oy.<br>Watch 0.1.976 · Phone 0.1.976</div></div>';
+  } else if(w==="setup"){
+    h+='<div class="wt">SETUP</div><div class="k st"><div class="btn" id="wizGo">Run setup again</div><div class="sub" style="margin-top:6px">7 short questions, about 2 minutes: who controls the unit, what matters most, how warm you like it, the week schedule and alerts. Your account stays signed in.</div></div>'+
+      '<div class="k st"><div class="kt" style="color:var(--lo)">GALAXY WATCH</div><div style="font-size:16px;margin-top:4px"><span style="color:var(--green)">✔</span> Wrist Control is on your watch</div><div class="sub">Shows your air and Boost on the wrist, and complications for the watch face.</div><div class="btn" id="openWatch">Open on watch</div><div class="sub" style="text-align:center;margin-top:6px">Watch 0.1.976 · Phone 0.1.976</div></div>'+
+      '<div class="k st"><div style="font-size:16px;font-weight:600">Vallox account</div><div>Signed in as demo@example.com</div><div class="sub">Units: '+U.map(function(u){return u.name;}).join(", ")+'</div><div class="btn g" data-toast="Account change - not in the demo">Change account or password</div></div>';
+  } else if(w==="wiz"){
+    h+=wizard();
+  }
+  return h;
+}
+
+/* Vedlys - 7 klausimai (telefonas/Vedlys.java); demo - be rasymo iki pabaigos. */
+var WIZ=[
+ ["Who runs the unit?",["This phone - the watch shows and sends to it","The watch - the phone shows and sends to it"]],
+ ["What matters most?",["Quiet","Balanced","Fresh air"]],
+ ["How warm do you like it?",["Cooler: 21-22°","Normal: 22,5-23,5°","Warmer: 24-25°"]],
+ ["Week schedule on the unit's panel?",["Keep the schedule","Let the app run the air"]],
+ ["Alerts",["All: temperature, humidity, CO2, filters","Only filters","None"]],
+ ["Pro",["Unlocked - 14 days free, then one purchase"]],
+ ["Ready",["Your plan: Optimized, fan at rest 45 %, CO2 limit 500"]]];
+function wizard(){
+  var q=WIZ[ui.wiz];
+  var h='<div class="prog"><i style="width:'+((ui.wiz+1)/WIZ.length*100)+'%"></i></div><div class="sub" style="margin:8px 4px 0">Step '+(ui.wiz+1)+' of '+WIZ.length+'</div><div class="q">'+q[0]+'</div>';
+  q[1].forEach(function(o,i){h+='<div class="opt'+(i===ui.wizSel?' on':'')+'" data-wsel="'+i+'"><b>'+o+'</b></div>';});
+  h+='<div class="btn" id="wizNext">'+(ui.wiz===WIZ.length-1?"Done - write to the unit":"Next")+'</div>';
+  return h;
+}
+
+/* ---- Pradzios ekranas ir valdikliai (telefonas/Valdikliai.java) ---- */
+function widgets(){
+  var c=wcol(co2Lvl());
+  var air='<div class="wg" data-wopen="pultas"><div class="h"><b>AIR</b><span>'+hhmm(G.min)+'</span></div><div style="font-size:17px;font-weight:700;color:'+c+';margin:2px 0">'+airWord()+'</div>'+
+    '<div class="r"><span>CO2</span><span style="color:'+c+'">'+Math.round(S.co2)+'</span></div><div class="r"><span>Indoor</span><span style="color:var(--wgreen)">'+f1(S.temp)+'°</span></div><div class="r"><span>Humidity</span><span style="color:'+(S.rh>70?"var(--wred)":S.rh>50?"var(--wyellow)":"var(--wgreen)")+'">'+(S.rh>50?"▲ ":"")+Math.round(S.rh)+' %</span></div><div class="r"><span>Outdoor</span><span>'+f1(S.out)+'°</span></div><div class="r"><span>Fan</span><span>'+Math.round(S.fan)+' %</span></div></div>';
+  var st='<div class="wg" data-wopen="stats"><div class="h"><b>STATS</b><span style="color:#8c96b2">08:39</span></div><div style="font-size:17px;font-weight:700;color:var(--wgreen);margin:2px 0">Better week</div>'+
+    '<div class="r"><span>Energy</span><span style="color:#8c96b2">Fresh air</span></div><div class="r" style="font-size:16px;font-weight:700"><span style="color:var(--wgreen)">-37 %</span><span style="color:var(--wgreen)">+12 %</span></div><div style="text-align:center;font-size:11.5px;color:#8c96b2">Previous week</div>'+
+    '<div class="r" style="font-size:16px;font-weight:700"><span style="color:var(--wgreen)">-35 %</span><span style="color:var(--wgreen)">+30 %</span></div><div style="text-align:center;font-size:11.5px;color:#8c96b2">vs last year</div></div>';
+  var g='<div class="wg" data-wopen="temps"><div class="h"><b>7 DAYS</b><span style="color:#e8ecf5;font-weight:400">Indoor <span style="color:#5b9bf3">Outdoor</span></span></div><canvas class="wgc" data-k="t" height="54"></canvas><canvas class="wgc" data-k="c" height="48"></canvas></div>';
+  return {air:air,st:st,g:g};
+}
+function homeScreen(){
+  var w=widgets();
+  return '<div class="home"><div class="two">'+w.air+w.st+'</div><div style="margin-top:10px">'+w.g+'</div>'+
+    '<div class="icons"><div data-wopen="pultas" title="Wrist Control"><img src="/wristcontrol/icon.png" alt="Wrist Control"></div><div>Phone</div><div>Mail</div><div>Apps</div></div></div>';
+}
+
+/* ---- Laikrodis ---- */
+function wpages(){return G.view==="auto"?["auto","stats"]:["vent","sens","temps","opt","stats","filt","settings"];}
+function wlabel(){return '<div class="wlab"><svg viewBox="0 0 100 100">'+(G.ctrl==="phone"?P.phone:P.watch)+'</svg>'+(G.ctrl==="phone"?"PHONE":"WATCH")+'</div>';}
+function wrow(pairs,lft){return '<div class="wr'+(lft?' lft':'')+'">'+pairs.map(function(p){return '<span>'+p[0]+'</span><span'+(p[2]?' style="color:'+p[2]+'"':'')+'>'+p[1]+'</span>';}).join("")+'</div>';}
+function wpage(k){
+  var h=wlabel(), c=wcol(co2Lvl()), m;
+  if(k==="auto"){
+    var on=boostOn();
+    h+='<div class="wzod" style="color:'+c+'">'+airWord()+'</div>'+wrow([["CO2",Math.round(S.co2)+" · "+(co2Lvl()?"high":"ok"),c],["Indoor",S.temp.toFixed(1)+"°C · ok","var(--wgreen)"],["Humidity",Math.round(S.rh)+(S.rh>50?" % ▲":" % · ok"),S.rh>70?"var(--wred)":S.rh>50?"var(--wyellow)":"var(--wgreen)"]],true);
+    h+='<div class="wpill" id="wboost">'+ic("boost")+'<div class="tx">'+(on?"Stop Boost":"Boost")+'<small>'+(on?S.left+" min left":"1 h")+'</small></div><div class="sl">'+(G.writing?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</div></div>';
+    m=writingMsg("watch");
+    h+=m?'<div class="wmsg">'+m+'</div>':'<div class="wage">'+ageTxt()+'</div>';
+    return {h:h,dots:!m};
+  }
+  if(k==="vent"){
+    h+='<div class="wttl">VENTILATION</div><div class="wmode" data-wwin="pick">'+ic(S.mode)+NAME[S.mode]+(S.left>0?' · '+S.left+'m':'')+'</div>'+
+      wrow([["Fan",Math.round(S.fan)+"%"],["CO2",Math.round(S.co2)+" ppm",c]])+'<div class="wopen" data-wwin="pick">Change</div>';
+  } else if(k==="sens"){
+    h+='<div class="wttl">SENSORS</div>'+wrow([["Fan",Math.round(S.fan)+"%"],["Recovers",S.temp.toFixed(1)+"°C","var(--wgreen)"],["Humidity",Math.round(S.rh)+(S.rh>50?"% ▲":"%"),S.rh>70?"var(--wred)":S.rh>50?"var(--wyellow)":"var(--wgreen)"],["CO2",Math.round(S.co2)+" ppm",c]])+'<div class="wage">'+ageTxt()+'</div>';
+  } else if(k==="temps"){
+    h+='<div class="wttl">TEMPERATURES</div>'+wrow([["Extract",S.temp.toFixed(1)+"°C"],["Supply","22.1°C"],["Outdoor",S.out.toFixed(1)+"°C"],["Heater","OFF","var(--wlo)"]])+'<div class="wopen" data-wwin="temps">Open</div>';
+  } else if(k==="opt"){
+    h+='<div class="wttl">OPTIMIZE</div><div style="display:flex;gap:26px;margin-top:6px;text-align:center"><div><div style="color:var(--wlo);font-size:20px">CO2</div><div class="wbig" style="color:var(--wgreen)">713</div><div style="color:var(--wlo);font-size:15px">goal 738</div></div><div><div style="color:var(--wlo);font-size:20px">Indoor</div><div class="wbig">'+S.temp.toFixed(1)+'°</div><div style="color:#f28c38;font-size:15px">Recovers</div></div></div><div class="wopen" data-wwin="opt">Open</div>';
+  } else if(k==="stats"){
+    h+='<div class="wttl">STATISTICS</div><div style="display:flex;gap:22px;margin-top:6px;text-align:center;font-size:20px"><div><div style="color:var(--wlo)">Energy</div><div class="wbig" style="color:var(--wgreen)">-35 %</div></div><div><div style="color:var(--wlo)">Fresh air</div><div class="wbig" style="color:var(--wgreen)">+30 %</div></div></div><div style="color:var(--wlo);font-size:17px">vs same week last year</div><div class="wopen" data-wwin="stats">Open</div>';
+  } else if(k==="filt"){
+    h+='<div class="wttl">FILTERS</div><div class="wbig" style="margin-top:8px;color:'+(S.filt<30?"var(--wyellow)":"var(--whi)")+'">'+S.filt+' d</div><div class="wsub">left of 180</div><div class="wopen" data-wwin="filt">Open</div>';
+  } else if(k==="settings"){
+    h+='<div class="wttl">SETTINGS</div>'+wrow([["Path","Auto"],["Refresh",G.refresh],["Alerts",["temp","rh","co2","filt"].filter(function(a){return G.alerts[a];}).length+" on"]])+'<div class="wopen" data-wwin="settings">Open</div>';
+  }
+  return {h:h,dots:true};
+}
+function wwin(k){
+  var h='', m=writingMsg("watch");
+  if(k==="pick"){
+    h+='<div class="wttl" data-wclose="1">MODE</div>';
+    MODES.forEach(function(md){var on=S.mode===md[0], w=G.writing&&G.writing.mode===md[0];
+      h+='<div class="wm'+(on?' on':'')+'" data-wmode="'+md[0]+'">'+ic(md[0])+'<span class="n">'+md[1]+'</span><span class="sl">'+(w?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</span></div>';});
+    h+='<div class="wmsg">'+(m||"Switch modes here: the panel skips tuned settings")+'</div>';
+  } else if(k==="temps"){
+    h+='<div class="wttl">A DAY</div><canvas id="wcv1" height="70" style="margin-top:6px"></canvas><canvas id="wcv2" height="60"></canvas><div class="wsub">Indoor · <span style="color:#5b9bf3">Outdoor</span> · <span style="color:#f5c542">CO2</span></div>';
+  } else if(k==="opt"){
+    h+='<div class="wttl">OPTIMIZE</div><div class="wsec">YOUR PLAN</div>'+wrow([["Fan at rest",S.plan.rest+"%"],["CO2 limit",S.plan.limit]])+'<div class="wsub">New plan works here too; in the demo, try it on the phone.</div>';
+  } else if(k==="stats"){
+    h+='<div class="wttl">STATISTICS</div><div class="wsec">PREVIOUS WEEK</div>'+wrow([["Energy","-37 %","var(--wgreen)"],["Fresh air","+12 %","var(--wgreen)"]])+'<div class="wsec">LAST YEAR</div>'+wrow([["Energy","-35 %","var(--wgreen)"],["Fresh air","+30 %","var(--wgreen)"]]);
+  } else if(k==="filt"){
+    h+='<div class="wttl">FILTERS</div><div class="wbig" style="margin-top:6px">'+S.filt+' d</div><div class="wm" id="wfchg" style="justify-content:center">Mark changed</div>';
+  } else if(k==="settings"){
+    h+='<div class="wttl">SETTINGS</div><div class="wsec">CONTROLLED BY</div><div class="wsub" style="color:var(--whi)">'+(G.ctrl==="phone"?"The phone":"This watch")+'</div><div class="wsec">ALERTS</div>'+
+      [["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="wm'+(G.alerts[a[0]]?' on':'')+'" data-wal="'+a[0]+'"><span class="n">'+a[1]+'</span><span>'+(G.alerts[a[0]]?"On":"Off")+'</span></div>';}).join("")+
+      '<div class="wsub">Changes from either device reach both.</div>';
+  }
+  return h;
+}
+function faceHtml(){
+  var c=wcol(co2Lvl());
+  return '<div class="face"><div class="dt">WED · 28</div><div class="tm">'+hhmm(G.min)+'</div>'+
+    '<div class="cmp" style="left:20%;top:16%"><span style="color:'+c+'">'+Math.round(S.co2)+'</span><small>CO2</small></div>'+
+    '<div class="cmp" style="right:20%;top:16%"><span>'+Math.round(S.fan)+'%</span><small>FAN</small></div>'+
+    '<div class="cmp" style="left:20%;bottom:17%"><span style="color:var(--wgreen)">'+S.temp.toFixed(1)+'°</span><small>INDOOR</small></div>'+
+    '<div class="cmp" style="right:20%;bottom:17%"><span style="color:#5b9bf3">'+S.out.toFixed(1)+'°</span><small>OUTDOOR</small></div></div>';
+}
+
+/* ---- Piesimas ---- */
+function draw(){
+  document.getElementById("clk").textContent=hhmm(G.min);
+  document.getElementById("story").innerHTML=story();
+  document.querySelectorAll("[data-scen]").forEach(function(b){b.classList.toggle("on",S.scen===b.dataset.scen);});
+  document.getElementById("ps").classList.toggle("light",G.theme==="light");
+  var scr=document.getElementById("scr"), y=scr.scrollTop;
+  scr.innerHTML=ui.phone==="pultas"?pultas():langas(ui.phone);
+  scr.scrollTop=y;
+  document.getElementById("homeLayer").innerHTML=ui.layer==="home"?homeScreen():"";
+  if(ui.phone==="temps") graphs();
+  var pages=wpages(); if(ui.wpage>=pages.length) ui.wpage=0;
+  var r=wpage(pages[ui.wpage]);
+  var dots=""; if(pages.length>1) for(var i=0;i<pages.length;i++) dots+=i===ui.wpage?"●":"·";
+  var over="";
+  if(ui.wface) over='<div style="position:absolute;inset:0" data-wfaceopen="1">'+faceHtml()+'</div>';
+  else if(ui.wnote) over='<div class="wnote"><b>'+(ui.wnoteKind==="rh"?"Humidity high":"Air is getting stale")+'</b><div>'+(ui.wnoteKind==="rh"?"Humidity "+Math.round(S.rh)+" %":"CO2 "+Math.round(S.co2)+" ppm")+'</div><div class="wm on" id="wnBoost" style="justify-content:center">Boost 1 h</div><div class="wsub" id="wnClose" style="cursor:pointer;margin-top:10px">Dismiss</div></div>';
+  else if(ui.wwin) over='<div class="wwin">'+wwin(ui.wwin)+'</div>';
+  document.getElementById("ws").innerHTML='<div class="wp">'+r.h+'</div><div class="wdots">'+(r.dots?dots:"")+'</div>'+over;
+  if(ui.wwin==="temps"&&!ui.wface&&!ui.wnote) wgraphsWatch();
+  document.getElementById("wface").innerHTML=faceHtml();
+  var w=widgets(); document.getElementById("wgs").innerHTML=w.air+w.g;
+  wgraphs();
+}
+
+function plot(c,series,ref,opts){
+  if(!c) return; opts=opts||{};
+  var W=c.clientWidth||200, H=+c.getAttribute("height"); c.width=W*2; c.height=H*2; var x=c.getContext("2d"); x.scale(2,2);
+  var vals=[]; series.forEach(function(s){vals=vals.concat(s.v);}); if(ref) vals.push(ref);
+  var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals), pad=(mx-mn)*0.15||1; mn-=pad; mx+=pad;
+  var bottom=opts.labels?14:4;
+  function Y(v){return 4+(H-4-bottom)*(1-(v-mn)/(mx-mn));}
+  x.font="10px system-ui";
+  if(opts.labels){x.fillStyle="#8c96b2";opts.labels.forEach(function(t,i){x.fillText(t,2+(W-40)*i/(opts.labels.length-1),H-2);});}
+  if(ref){x.strokeStyle="#8c96b2";x.setLineDash([4,4]);x.lineWidth=1;x.beginPath();x.moveTo(0,Y(ref));x.lineTo(W,Y(ref));x.stroke();x.setLineDash([]);}
+  series.forEach(function(s){x.strokeStyle=s.c;x.lineWidth=2;x.beginPath();
+    s.v.forEach(function(v,i){var px=2+(W-40)*i/(s.v.length-1);i?x.lineTo(px,Y(v)):x.moveTo(px,Y(v));});x.stroke();
+    var last=s.v[s.v.length-1]; x.fillStyle=s.c; x.fillText(s.fmt(last),W-34,Y(last)+3);});
+}
+function hiCol(){return G.theme==="light"?"#14161c":"#e8ecf5";}
+function deg(v){return v.toFixed(1)+"°";}
+function ppm(v){return String(Math.round(v));}
+function graphs(){
+  var h=S.hist, wk=S.week, L=["0","6","12","18","24"], D=wk.map(function(d){return d.d;});
+  plot(document.getElementById("cvd1"),[{v:h.map(function(p){return p.tin;}),c:hiCol(),fmt:deg},{v:h.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:deg}],null,{labels:L});
+  plot(document.getElementById("cvd2"),[{v:h.map(function(p){return p.co2;}),c:"#f5c542",fmt:ppm}],800,{labels:L});
+  plot(document.getElementById("cvw1"),[{v:wk.map(function(p){return p.tin;}),c:hiCol(),fmt:deg},{v:wk.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:deg}],null,{labels:D});
+  plot(document.getElementById("cvw2"),[{v:wk.map(function(p){return p.co2;}),c:"#f5c542",fmt:ppm}],800,{labels:D});
+}
+function wgraphs(){
+  document.querySelectorAll(".wgc").forEach(function(c){
+    var wk=S.week;
+    if(c.dataset.k==="t") plot(c,[{v:wk.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:deg},{v:wk.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:deg}]);
+    else plot(c,[{v:wk.map(function(p){return p.co2;}),c:"#6fbf73",fmt:ppm}],800,{labels:wk.map(function(d){return d.d;})});
+  });
+}
+function wgraphsWatch(){
+  var h=S.hist;
+  plot(document.getElementById("wcv1"),[{v:h.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:deg},{v:h.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:deg}]);
+  plot(document.getElementById("wcv2"),[{v:h.map(function(p){return p.co2;}),c:"#f5c542",fmt:ppm}],800);
+}
+
+/* ---- Valdymas: telefonas ---- */
+function openPhone(w){ui.phone=w;ui.layer="app";document.getElementById("scr").scrollTop=0;if(w==="opt")ui.opt="idle";draw();}
+document.getElementById("ps").addEventListener("click",function(e){
+  var t=e.target.closest("[data-open],[data-mode],[data-boost],[data-ctrl],[data-view],[data-toast],[data-theme],[data-t],[data-al],[data-cyc],[data-goal],[data-wsel],[data-units],[data-unit],[data-wopen],#fchg,#oNew,#oRestore,#oApply,#oCancel,#wizGo,#wizNext,#openWatch,#nBoost,.list");
+  if(!t) return;
+  var d=t.dataset;
+  if(d.wopen){openPhone(d.wopen);return;}
+  if(d.open){openPhone(d.open);return;}
+  if(d.boost){ if(!G.writing) write(boostOn()?"optimized":"boost","phone"); return;}
+  if(d.mode){ if(!G.writing&&d.mode!==S.mode) write(d.mode,"phone"); return;}
+  if(d.ctrl){ if(d.ctrl!==G.ctrl){G.ctrl=d.ctrl;logAdd("You (phone)","Control: "+(G.ctrl==="phone"?"phone":"watch"));toast(G.ctrl==="phone"?"The phone now runs the unit":"The watch now runs the unit");draw();} return;}
+  if(d.view){G.view=d.view;ui.wpage=0;ui.wwin=null;toast((G.view==="auto"?"Automatic":"Semi-automatic")+" - the watch follows");draw();return;}
+  if(d.theme){G.theme=d.theme;draw();return;}
+  if(d.t){var k=d.t.slice(0,-1),s=d.t.slice(-1)==="+"?0.5:-0.5;G[k]=Math.round((G[k]+s)*2)/2;if(G.from>G.to-0.5){if(k==="from")G.from=G.to-0.5;else G.to=G.from+0.5;}draw();return;}
+  if(d.al){G.alerts[d.al]=!G.alerts[d.al];draw();return;}
+  if(d.cyc){var o=d.cyc==="refresh"?["Auto","15 min","30 min","1 h"]:["Fixed automatically","Ask me","Off"];G[d.cyc]=o[(o.indexOf(G[d.cyc])+1)%o.length];draw();return;}
+  if(d.goal){ui.goal=d.goal;draw();return;}
+  if(d.wsel){ui.wizSel=+d.wsel;draw();return;}
+  if(d.units){sheet();return;}
+  if(d.unit!==undefined){S=U[+d.unit];document.getElementById("sheet").innerHTML="";toast("Now showing "+S.name);draw();return;}
+  if(d.toast){toast(d.toast);return;}
+  if(t.classList.contains("list")){if(e.target===t)document.getElementById("sheet").innerHTML="";return;}
+  switch(t.id){
+    case "fchg": if(!ui.fsure){ui.fsure=1;draw();setTimeout(function(){ui.fsure=0;draw();},4000);} else {ui.fsure=0;S.filt=180;logAdd("You (phone)","Filters changed");toast("Filter timer reset to 180 days");draw();} return;
+    case "oNew": ui.opt="busy";draw();setTimeout(function(){ui.opt="result";draw();},1800);return;
+    case "oCancel": ui.opt="idle";draw();return;
+    case "oRestore": S.plan={rest:50,limit:800};logAdd("You (phone)","Optimize restored");toast("Old settings back: fan 50 %, CO2 limit 800");draw();return;
+    case "oApply": var g={quiet:[35,700],balanced:[45,500],fresh:[55,450]}[ui.goal];S.plan={rest:g[0],limit:g[1]};ui.opt="idle";logAdd("You (phone)","Optimize plan applied");write("optimized","phone");return;
+    case "wizGo": ui.wiz=0;ui.wizSel=0;openPhone("wiz");return;
+    case "wizNext": if(ui.wiz<WIZ.length-1){if(ui.wiz===0)G.ctrl=ui.wizSel===1?"watch":"phone";ui.wiz++;ui.wizSel=0;draw();} else {ui.phone="pultas";logAdd("You (phone)","Setup done");write("optimized","phone");} return;
+    case "openWatch": ui.wface=false;ui.wwin=null;ui.wnote=false;ui.wpage=0;buzz();toast("Opened on the watch");draw();return;
+    case "nBoost": document.getElementById("banner").classList.remove("on");ui.wnote=false;if(!boostOn())write("boost","phone");else draw();return;
+  }
+});
+function sheet(){
+  var h='<div class="list"><div><div class="kt">UNIT</div>';
+  U.forEach(function(u,i){h+='<div class="opt'+(u===S?' on':'')+'" data-unit="'+i+'"><b>'+u.name+'</b><span class="sub">'+NAME[u.mode]+' · CO2 '+Math.round(u.co2)+'</span></div>';});
+  h+='<div class="sub" style="margin-top:10px">Pro: up to 3 units · Installer: unlimited</div></div></div>';
+  document.getElementById("sheet").innerHTML=h;
+}
+document.getElementById("back").addEventListener("click",function(){
+  if(document.getElementById("sheet").innerHTML){document.getElementById("sheet").innerHTML="";return;}
+  if(ui.layer==="home"){ui.layer="app";draw();return;}
+  if(ui.phone==="wiz"&&ui.wiz>0){ui.wiz--;ui.wizSel=0;draw();return;}
+  if(ui.phone==="opt"&&ui.opt!=="idle"){ui.opt="idle";draw();return;}
+  if(ui.phone!=="pultas"){ui.phone="pultas";draw();}
+});
+document.getElementById("homeBtn").addEventListener("click",function(){ui.layer="home";draw();});
+document.getElementById("appBtn").addEventListener("click",function(){ui.layer="app";draw();});
+document.getElementById("wgs").addEventListener("click",function(e){var t=e.target.closest("[data-wopen]");if(t)openPhone(t.dataset.wopen);});
+
+/* ---- Valdymas: laikrodis ---- */
+var ws=document.getElementById("ws");
+ws.addEventListener("click",function(e){
+  if(ui.swiped){ui.swiped=false;return;}
+  var t=e.target.closest("#wboost,[data-wwin],[data-wmode],[data-wclose],[data-wal],#wfchg,#wnBoost,#wnClose,[data-wfaceopen]");
+  if(!t) return;
+  var d=t.dataset;
+  if(d.wfaceopen){ui.wface=false;draw();return;}
+  if(t.id==="wnBoost"){ui.wnote=false;document.getElementById("banner").classList.remove("on");if(!boostOn())write("boost","watch");else draw();return;}
+  if(t.id==="wnClose"){ui.wnote=false;draw();return;}
+  if(t.id==="wboost"){ if(!G.writing) write(boostOn()?"optimized":"boost","watch"); return;}
+  if(d.wwin){ui.wwin=d.wwin;draw();return;}
+  if(d.wclose){ui.wwin=null;draw();return;}
+  if(d.wmode){ if(!G.writing&&d.wmode!==S.mode){write(d.wmode,"watch");setTimeout(function(){ui.wwin=null;draw();},2300);} return;}
+  if(d.wal){G.alerts[d.wal]=!G.alerts[d.wal];draw();return;}
+  if(t.id==="wfchg"){S.filt=180;logAdd("You (watch)","Filters changed");buzz();draw();return;}
+});
+var sx=null;
+ws.addEventListener("pointerdown",function(e){sx=e.clientX;});
+ws.addEventListener("pointerup",function(e){ if(sx===null) return; var d=e.clientX-sx; sx=null;
+  if(Math.abs(d)>40&&!ui.wwin&&!ui.wface&&!ui.wnote){ui.swiped=true;page(d<0?1:-1);} });
+function page(d){var n=wpages().length;if(n<2)return;ui.wpage=(ui.wpage+d+n)%n;draw();}
+document.getElementById("wl").addEventListener("click",function(){ui.wwin=null;ui.wface=false;page(-1);});
+document.getElementById("wr").addEventListener("click",function(){ui.wwin=null;ui.wface=false;page(1);});
+document.getElementById("wback").addEventListener("click",function(){if(ui.wnote)ui.wnote=false;else if(ui.wwin)ui.wwin=null;else if(ui.wface)ui.wface=false;draw();});
+document.getElementById("wfaceBtn").addEventListener("click",function(){ui.wface=!ui.wface;ui.wwin=null;draw();});
+document.getElementById("wface").addEventListener("click",function(){ui.wface=false;ui.wwin=null;ui.wnote=false;ui.wpage=0;draw();});
+
+document.getElementById("scen").addEventListener("click",function(e){var b=e.target.closest("[data-scen]");if(b)startScen(b.dataset.scen);});
+document.getElementById("reset").addEventListener("click",function(){fresh();document.getElementById("banner").classList.remove("on");draw();});
+
+fresh(); draw(); clearInterval(timer); timer=setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
