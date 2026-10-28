@@ -128,15 +128,24 @@ hr.l{border:0;border-top:1px solid var(--track);margin:12px 0 2px}
 .pm div{flex:1;text-align:center}
 .pm div small{display:block;color:var(--lo);font-size:12px}
 .pm div b{font-size:20px}
-.log{font-size:13.5px;margin-top:6px}
-.log div{display:flex;gap:8px;padding:3px 0;border-top:1px solid var(--track)}
-.log div:first-child{border-top:0}
-.log span:first-child{color:var(--lo);width:42px;flex:none}
-.log span:nth-child(2){flex:1}
-.log span:last-child{color:var(--lo)}
+.zl{display:flex;gap:10px;padding:7px 0;border-top:1px solid var(--track);font-size:13.5px}
+.zl:first-child{border-top:0}
+.zl .w{width:72px;flex:none;color:var(--lo)}
+.zl .w b{display:block;font-size:12px}
+.zl .x{flex:1;font-weight:600}
+.zl .x small{display:block;color:var(--lo);font-size:12.5px;font-weight:400}
+.lgd{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin:2px 0 4px}
+.lnk{display:flex;gap:18px;margin-top:10px}
+.lnk a{color:var(--blue);font-weight:600;text-decoration:none;font-size:15px}
+.steps{margin:6px 4px 0;padding:0;list-style:none}
+.steps li{display:flex;gap:10px;font-size:13.5px;color:var(--lo);margin-top:8px}
+.steps li b{width:20px;height:20px;border-radius:50%;border:2px solid var(--blue);color:var(--blue);font-size:11px;display:flex;align-items:center;justify-content:center;flex:none}
+.pull{position:absolute;inset:28px 0 34px;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:4}
+.pull .spin{width:48px;height:48px;border-width:5px}
 .q{font-size:20px;font-weight:700;margin:12px 4px 4px}
 .opt{background:var(--vidus);border-radius:10px;padding:11px 13px;margin-top:8px;cursor:pointer;border:1.5px solid transparent}
-.opt.on{border-color:var(--blue)}
+.opt.on{background:var(--btn);color:var(--onbtn)}
+.opt.on .sub{color:var(--onbtn)}
 .opt b{display:block}
 .prog{height:4px;background:var(--track);border-radius:2px;margin:6px 4px 0}
 .prog i{display:block;height:100%;background:var(--blue);border-radius:2px}
@@ -160,8 +169,6 @@ hr.l{border:0;border-top:1px solid var(--track);margin:12px 0 2px}
 .list{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;z-index:6}
 .list>div{background:var(--card);width:100%;border-radius:18px 18px 0 0;padding:14px 16px 20px}
 canvas{width:100%;display:block}
-.lg{display:flex;gap:12px;font-size:12px;color:var(--lo);margin-top:4px}
-.lg i{display:inline-block;width:10px;height:3px;vertical-align:middle;margin-right:4px}
 .buzz{animation:buzz .35s}
 @keyframes buzz{0%,100%{transform:translate(0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-2px,0)}80%{transform:translate(2px,1px)}}
 .spin{width:20px;height:20px;border-radius:50%;border:3px solid rgba(232,236,245,.25);border-top-color:#e8ecf5;animation:sp 1s linear infinite;flex:none}
@@ -215,11 +222,20 @@ canvas{width:100%;display:block}
 .wnote b{font-size:24px;color:var(--wyellow)}
 .wnote div{font-size:18px;color:var(--wlo);margin-top:6px}
 .wnote .wm{margin-top:12px;width:190px;color:var(--whi)}
+.wnote .act{cursor:pointer}
+.ws .scale .tri{border-top-color:#e8ecf5}
+.ws .ticks{color:#8c96b2;font-size:11px}
+.wsl{display:flex;justify-content:space-between;font-size:19px;margin-top:10px;text-align:left}
+.wseg{display:flex;gap:5px;margin-top:6px}
+.wseg .wm{flex:1;justify-content:center;font-size:15px;padding:8px 4px;margin-top:0}
+.wpm{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:20px}
+.wpm span{width:44px;height:36px;border-radius:18px;background:var(--wpill);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.wpm div small{display:block;color:var(--wlo);font-size:14px}
 .face{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%}
 .face .tm{font-size:66px;font-weight:700;color:#5b9bf3;line-height:1}
 .face .dt{font-size:16px;color:var(--wyellow);margin-bottom:4px;letter-spacing:.04em}
 .cmp{position:absolute;display:flex;flex-direction:column;align-items:center;font-size:18px;font-weight:600}
-.cmp small{font-size:11px;color:var(--wlo);letter-spacing:.08em;font-weight:400}
+.cmp svg{width:22px;height:22px;margin-bottom:2px}
 .warr{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .warr button{font:inherit;font-size:13px;background:transparent;border:1px solid var(--line);color:var(--page);border-radius:16px;padding:4px 12px;cursor:pointer}
 .wgs{zoom:1;width:270px;display:flex;flex-direction:column;gap:8px}
@@ -241,9 +257,9 @@ canvas{width:100%;display:block}
 <h2 class="try">Try it yourself: a day at home <button id="tourBtn">Show me around</button></h2>
 <p class="try">This is a simulation. Pick what happens at home - the demo plays it in fast time (1 second = 1 minute), and the phone and the watch react the way they would in a real home.</p>
 <div class="scen" id="scen">
-  <button data-scen="guests"><b>Guests arrive</b><span>Six friends come over and CO2 climbs. Optimized turns the fan up by itself; if the air still gets stale, both devices offer Boost.</span></button>
-  <button data-scen="away"><b>Everyone leaves</b><span>The house is empty. CO2 falls and the fan slows to its rest speed - quieter and cheaper, no mode to remember.</span></button>
-  <button data-scen="shower"><b>Shower</b><span>Humidity jumps. The unit runs faster until the moisture is out, then slows down again on its own.</span></button>
+  <button data-scen="guests"><b>Guests arrive</b><span>Six friends come over and CO2 climbs. Optimized turns the fan up by itself; above 800 ppm both devices show a CO2 alert.</span></button>
+  <button data-scen="away"><b>Everyone leaves</b><span>The house is empty. CO2 falls and the fan slows to its rest speed - no mode to remember. Afterwards the app adjusts its plan, with Undo.</span></button>
+  <button data-scen="shower"><b>Shower</b><span>Humidity jumps. The unit runs faster, and Optimized suggests Boost - one tap on the watch. Then it slows down again on its own.</span></button>
   <button id="reset"><b>Start over</b><span>Back to a quiet evening: two people at home, fresh air.</span></button>
 </div>
 <div class="story" id="story"></div>
@@ -280,7 +296,7 @@ canvas{width:100%;display:block}
 <script>
 (function(){
 "use strict";
-/* Piktogramos - tikri programeles vektoriai (res/drawable/ic_m_*.xml, 100x100). */
+/* Piktogramos - tikri programeles vektoriai (res/drawable/ic_m_*.xml, 100x100; ic_kelias_wifi, ic_co2 - Material Symbols 960). */
 var P={
  boost:'<path fill="#fff" d="M50,10 L86,48 L66,48 L66,90 L34,90 L34,48 L14,48 Z"/>',
  home:'<path fill="#fff" fill-rule="evenodd" d="M50,18 L96,44 L86,44 L86,86 L14,86 L14,44 L4,44 Z M39,86 L39,64 L61,64 L61,86 Z"/>',
@@ -290,18 +306,28 @@ var P={
  optimized:'<path fill="none" stroke="#5B9BF3" stroke-width="10" d="M12,46 L50,12 L88,46"/><path fill="none" stroke="#E8720C" stroke-width="10" d="M20,62 C30,54 40,56 50,62 C60,68 70,70 80,62"/><path fill="none" stroke="#E8ECF5" stroke-width="10" d="M20,84 C30,76 40,78 50,84 C60,90 70,92 80,84"/>',
  fan:'<g fill="currentColor"><path d="M50,44 C48,30 52,18 64,14 C74,12 80,22 74,32 C68,38 60,42 50,44 Z"/><path d="M55,53 C68,58 76,68 74,80 C70,90 58,90 54,80 C51,72 52,62 55,53 Z"/><path d="M45,53 C35,62 22,64 13,57 C6,49 12,38 22,38 C30,38 38,44 45,53 Z"/><circle cx="50" cy="50" r="7"/></g>',
  phone:'<path fill="#5B9BF3" d="M7 1h10a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 3v15h10V4H7z" transform="scale(4.1)"/>',
- watch:'<path fill="#5B9BF3" d="M9 1h6l1 4a7 7 0 0 1 0 14l-1 4H9l-1-4a7 7 0 0 1 0-14zm3 6a5 5 0 1 0 0 10 5 5 0 0 0 0-10z" transform="scale(4.1)"/>'
+ wifi:'<path fill="#5B9BF3" transform="translate(0,100) scale(0.10417)" d="M480-120q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM254-346l-84-86q59-59 138.5-93.5T480-560q92 0 171.5 35T790-430l-84 84q-44-44-102-69t-124-25q-66 0-124 25t-102 69ZM84-516 0-600q92-94 215-147t265-53q142 0 265 53t215 147l-84 84q-77-77-178.5-120.5T480-680q-116 0-217.5 43.5T84-516Z"/>',
+ co2:'<path fill="#5B9BF3" transform="translate(0,100) scale(0.10417)" d="M440-360q-17 0-28.5-11.5T400-400v-160q0-17 11.5-28.5T440-600h120q17 0 28.5 11.5T600-560v160q0 17-11.5 28.5T560-360H440Zm20-60h80v-120h-80v120Zm-300 60q-17 0-28.5-11.5T120-400v-160q0-17 11.5-28.5T160-600h120q17 0 28.5 11.5T320-560v40h-60v-20h-80v120h80v-20h60v40q0 17-11.5 28.5T280-360H160Zm520 120v-100q0-17 11.5-28.5T720-380h80v-40H680v-60h140q17 0 28.5 11.5T860-440v60q0 17-11.5 28.5T820-340h-80v40h120v60H680Z"/>',
+ vlx:'<g transform="scale(0.1953)"><path d="M256,70 L442,256 L256,442 L70,256 Z" fill="#2B2F35" stroke="#8E949C" stroke-width="22" stroke-linejoin="round"/><path d="M61,131 C210,131 300,355 402,355" fill="none" stroke="#5B9BF3" stroke-width="34" stroke-linecap="round"/><path d="M461.5,355 L393.1,308.6 L393.1,401.4 Z" fill="#3D84C6"/><path d="M451,131 C302,131 212,355 110,355" fill="none" stroke="#C9CDD6" stroke-width="34" stroke-linecap="round"/></g>'
 };
 function ic(n,cls){return '<svg viewBox="0 0 100 100"'+(cls?' class="'+cls+'"':'')+'>'+P[n]+'</svg>';}
 
+/* Rinkiklio mygtukai (m_*) ir profilio vardai pulte (prof_*: Custom - "Fireplace", Auto - "Automatic"). */
 var MODES=[["optimized","Optimized"],["boost","Boost"],["away","Away"],["home","At home"],["custom","Custom"],["auto","Auto"]];
-var NAME={optimized:"Optimized",boost:"Boost",away:"Away",home:"At home",custom:"Custom",auto:"Auto"};
+var NAME={optimized:"Optimized",boost:"Boost",away:"Away",home:"At home",custom:"Fireplace",auto:"Automatic"};
 var G, U, S, timer, ui;
+/* Kokybes ribos (VlxJuosta): {gerasNuo, gerasIki, pakenciamaNuo, pakenciamaIki}. */
+var R_CO2=[0,800,0,1200], R_T=[20,25,18,27], R_RH=[30,50,25,60];
+/* Statistika - tos pacios reiksmes visur (pultas, langai, valdiklis, laikrodis). */
+var ST={prev:{e:-37,fresh:[81,91],co2:[694,583],fan:[62,54],parts:["+9 %","-38 %","-8 %"]},
+        year:{e:-35,fresh:[70,91],co2:[760,583],fan:[66,54],total:"-28 %",weather:"-7 %",out:10}};
+/* Optimize tikslai (VlxOptimize: Clean air / Balance / Quiet). */
+var GOALS={clean:{n:"Clean air",a:"CO2 ~620",rest:55,limit:500},balance:{n:"Balance",a:"CO2 ~700",rest:45,limit:600},quiet:{n:"Quiet",a:"less air",rest:35,limit:800}};
 
 /* ---- Busena: G - programele, U - rekuperatoriai, S - pasirinktas ---- */
 function unit(name,co2,temp,out,filt){
   var u={name:name,mode:"optimized",prev:"optimized",left:0,co2:co2,temp:temp,rh:52,out:out,fan:52,filt:filt,
-    people:2,shower:0,scen:null,scenLeft:0,peak:0,age:0,plan:{rest:45,limit:500},hist:[],week:[]};
+    people:2,shower:0,scen:null,scenLeft:0,peak:0,age:0,plan:{rest:45,limit:500},hist:[],week:[],rhH:[]};
   for(var i=0;i<144;i++){var t=i/144*24;u.hist.push({co2:co2-80+260*Math.max(0,Math.sin((t-7)/24*2*Math.PI))+40*Math.sin(t*1.7),
     tin:temp-0.7+0.8*Math.sin((t-9)/24*2*Math.PI),tout:out-3+5*Math.sin((t-9)/24*2*Math.PI)});}
   var d=["M","T","W","T","F","S","S"];
@@ -312,8 +338,9 @@ function unit(name,co2,temp,out,filt){
 var SC={guests:{people:8,shower:0,dur:50,start:"Six guests arrived - CO2 is rising",end:"Guests left"},
         away:{people:0,shower:0,dur:60,start:"Everyone left the house",end:"Back home"},
         shower:{people:2,shower:1,dur:20,start:"Someone is in the shower - humidity is rising",end:"Shower done"}};
-function startScen(k){var u=S;u.scen=k;u.scenLeft=SC[k].dur;u.peak=u.fan;u.scenFrom=Math.round(u.fan);u.low=u.fan;u.people=SC[k].people;u.shower=SC[k].shower;u.done=null;logAdd("Home",SC[k].start);toast(SC[k].start);draw();}
-function endScen(u){var k=u.scen;u.people=2;u.shower=0;u.scen=null;if(u===S)logAdd("Home",SC[k].end);u.done={k:k,peak:Math.round(u.peak),from:u.scenFrom,t:G.min};}
+function startScen(k){var u=S;u.scen=k;u.scenLeft=SC[k].dur;u.peak=u.fan;u.scenFrom=Math.round(u.fan);u.low=u.fan;u.people=SC[k].people;u.shower=SC[k].shower;u.done=null;toast(SC[k].start);draw();}
+function endScen(u){var k=u.scen;u.people=2;u.shower=0;u.scen=null;u.done={k:k,peak:Math.round(u.peak),from:u.scenFrom,t:G.min};
+  if(u===S&&k==="away"&&u.mode==="optimized"){u.done.auto=true;autopilot();}}
 function story(){
   var t=story1(), w=S.scen?'<div class="wait">Wait 1-2 minutes: the demo simulates real changes. Watch CO2 and the fan on both devices.</div>':'';
   return '<div>'+t+'</div>'+w;
@@ -331,26 +358,33 @@ function galutinis(u){
 function story1(){
   var u=S, auto=u.mode==="optimized"||u.mode==="auto", tg=galutinis(u), f0=Math.round(u.fan),
       f=Math.abs(tg-f0)>=2?f0+' % → '+tg:''+f0;
-  if(u.scen==="guests") return '<b>Guests: 8 people at home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' turns it up by itself.':' - the fan stays where you set it ('+NAME[u.mode]+').')+'<small>'+u.scenLeft+' min until they leave. Above 1000 ppm you get an alert with Boost.</small>';
+  if(u.scen==="guests") return '<b>Guests: 8 people at home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' turns it up by itself.':' - the fan stays where you set it ('+NAME[u.mode]+').')+'<small>'+u.scenLeft+' min until they leave. Above 800 ppm both devices show a CO2 alert; tapping it opens VENTILATION.</small>';
   if(u.scen==="away") return '<b>Nobody home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' slows it down by itself.':'.')+'<small>Coming back in '+u.scenLeft+' min. Leaving for longer? Tap Away on the watch on your way out.</small>';
-  if(u.scen==="shower") return '<b>Shower running.</b> Humidity '+Math.round(u.rh)+' %, fan '+f+' %'+(auto?' - the unit speeds up for the moisture.':'.')+'<small>'+u.scenLeft+' min left. Above 70 % you get an alert.</small>';
+  if(u.scen==="shower") return '<b>Shower running.</b> Humidity '+Math.round(u.rh)+' %, fan '+f+' %'+(auto?' - the unit speeds up for the moisture.':'.')+'<small>'+u.scenLeft+' min left. When humidity jumps, Optimized suggests Boost - tap it on the watch. Above 60 % you also get a humidity alert.</small>';
   if(u.done&&G.min-u.done.t<30){var d=u.done;
-    if(d.k==="away") return '<b>Done.</b> While the house was empty the fan ran slower; now everyone is back and it is at '+f0+' %. Nothing to tap.';
+    if(d.k==="away") return '<b>Done.</b> While the house was empty the fan ran slower; now everyone is back and it is at '+f0+' %.'+(d.auto?' The app also adjusted its plan to the past week - see the notification, Undo puts it back.':' Nothing to tap.');
     return '<b>Done.</b> The fan went from '+d.from+' % up to '+d.peak+' % and is coming back down ('+f0+' % now). Nothing to tap.';}
   return '<small>Pick a situation above. In SETTINGS switch to Semi-automatic to see every window, or pick Away or Custom in VENTILATION to compare with Optimized.</small>';
 }
 function fresh(){
   G={view:"auto",ctrl:"phone",theme:"dark",from:22.5,to:23.5,alerts:{temp:true,rh:true,co2:true,filt:true},
-     refresh:"Auto",clock:"Fixed automatically",cloud:true,lang:"Auto",
-     pages:{sens:true,temps:true,unit:false,filt:false,stats:true,opt:true},min:18*60,writing:null,log:[]};
+     refresh:"Auto",clock:"Auto fix",conn:"Auto",cloud:true,lang:"Auto",waiting:false,
+     orig:{rest:30,limit:800},canRestore:true,work:{nobody:3,nobodyH:14,cooled:0,heat:96,boost:2},
+     pages:{sens:true,temps:true,unit:true,filt:true,stats:true,opt:true},min:18*60,writing:null,log:[],upd:null};
   U=[unit("Home ventilation",640,24.3,10.4,107),unit("Summer house",520,21.8,9.6,32)];
   U[1].mode="away"; U[1].fan=45;
   S=U[0];
-  ui={phone:"pultas",layer:"app",wpage:0,wwin:null,wface:false,wnote:false,opt:"idle",goal:"balanced",wiz:0,wizSel:0,fsure:0,alerted:false};
-  logAdd("App","Optimized");
+  ui={phone:"pultas",layer:"app",wpage:0,wwin:null,wface:false,wnote:false,note:null,opt:"idle",prop:null,wiz:0,wizA:[],
+      fsure:0,wfsure:0,wfsaved:0,co2L:0,rhL:0,boostSug:false,pulling:false};
+  logAdd("App","Mode: Automatic → Optimized","Optimized started");
 }
 function hhmm(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");}
-function logAdd(who,what){G.log.unshift({t:hhmm(G.min),who:who,what:what}); if(G.log.length>12) G.log.pop();}
+function dayName(m){return ["Wed","Thu","Fri","Sat","Sun","Mon","Tue"][Math.floor(m/1440)%7];}
+function logAdd(who,what,why){G.log.unshift({t:G.min,who:who,what:what,why:why||""}); if(G.log.length>12) G.log.pop();}
+/* Demo diena - 2026-10-28 (trečiadienis). */
+function dateAdd(days){var d=new Date(2026,9,28);d.setDate(d.getDate()+Math.floor(G.min/1440)+days);return d;}
+function md(d){return String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function ymd(d){return d.getFullYear()+"-"+md(d);}
 
 /* Rekuperatorius: ventiliatorius pagal rezima, CO2 seka ventiliatoriu ir svecius. */
 function fanTarget(u){
@@ -359,6 +393,7 @@ function fanTarget(u){
     case "auto":return Math.min(90,50+Math.max(0,(u.co2-800)/8)+Math.max(0,(u.rh-60)*2.5));
     default:return Math.min(100,u.plan.rest+Math.max(0,(u.co2-u.plan.limit)/8)+Math.max(0,(u.rh-60)*3));}
 }
+var READ={"Auto":30,"20 min":20,"30 min":30,"1 h":60,"Only in app":60};
 function tick(){
   G.min++;
   U.forEach(function(u){
@@ -368,55 +403,122 @@ function tick(){
     u.co2+=(target-u.co2)*0.06+(Math.random()-0.5)*3;
     var rhT=48+u.shower*42*50/Math.max(20,u.fan);
     u.rh+=(rhT-u.rh)*0.15+(Math.random()-0.5)*0.2; u.temp+=(Math.random()-0.5)*0.02;
+    u.rhH.push(u.rh); if(u.rhH.length>30) u.rhH.shift();
     if(u.scen){u.peak=Math.max(u.peak,u.fan);u.scenLeft--;if(u.scenLeft<=0)endScen(u);}
-    u.age++; if(u.age>=60) u.age=0;
-    if((u.mode==="boost"||u.mode==="custom")&&u.left>0){u.left--; if(u.left<=0){u.mode=u.prev;u.left=0;if(u===S){logAdd("Unit",NAME[u.mode]);toast("Timer ended - back to "+NAME[u.mode]);}}}
+    u.age++; if(u.age>=READ[G.refresh]) u.age=0;
+    if((u.mode==="boost"||u.mode==="custom")&&u.left>0){u.left--; if(u.left<=0){u.mode=u.prev;u.left=0;}}
     if(G.min%10===0){u.hist.push({co2:u.co2,tin:u.temp,tout:u.out});u.hist.shift();}
   });
-  if(G.alerts.co2&&S.co2>1000&&!ui.alerted){ui.alerted=true;notify("co2");}
-  if(G.alerts.rh&&S.rh>70&&!ui.rhAlerted){ui.rhAlerted=true;notify("rh");}
-  if(S.rh<62) ui.rhAlerted=false;
-  if(S.co2<850) ui.alerted=false;
+  alerts();
   draw();
+}
+/* Pranesimai kaip VlxPranesimas: CO2 >800 „CO2 rising“, >1200 „CO2 high“; dregme >60 „Humid air“;
+   Optimized: dregme +8 % per ~30 min - Boost pasiulymas. Be fono skaitymu („Only in app“) - nieko. */
+function alerts(){
+  if(G.refresh==="Only in app") return;
+  var c=S.co2, cl=c<=800?0:c>1200?2:1, rl=S.rh>60?1:0;
+  if(G.alerts.co2&&cl>ui.co2L) notify("co2",cl===2?"CO2 high":"CO2 rising",Math.round(c)+" ppm - time to air out");
+  ui.co2L=cl;
+  if(G.alerts.rh&&rl>ui.rhL) notify("rh","Humid air",Math.round(S.rh)+"% indoors");
+  ui.rhL=rl;
+  var d=S.rh-(S.rhH[0]||S.rh);
+  if(S.mode==="optimized"&&d>=8&&!ui.boostSug){ui.boostSug=true;G.work.boost++;
+    logAdd("App","Boost suggested","Humidity +"+Math.round(d)+" % in 30 min");
+    notify("boost","Humidity rising fast - cooking or shower?","Tap to Boost");}
+  if(S.rh<55) ui.boostSug=false;
+}
+/* Autopilotas (Automatic) arba savaitinis Optimize pasiulymas (Semi-automatic). */
+function autopilot(){
+  var p=S.plan, n={rest:Math.max(20,p.rest-5),limit:Math.min(1000,p.limit+50)};
+  if(G.view==="auto"){
+    ui.undo={rest:p.rest,limit:p.limit}; S.plan=n;
+    logAdd("App","Plan adjusted to the past week","Fan "+p.rest+" → "+n.rest+" %, CO2 limit "+p.limit+" → "+n.limit);
+    notify("auto","Autopilot adjusted the air","Fan at rest "+p.rest+"→"+n.rest+" % · CO2 limit "+p.limit+"→"+n.limit+".");
+  } else {
+    ui.planProp=n;
+    notify("plan","New Optimize plan","Away "+p.rest+"→"+n.rest+" % · CO2 limit "+p.limit+"→"+n.limit+". Tap to see the forecast.");
+  }
+}
+function undoAuto(){
+  if(!ui.undo) return; var p=S.plan; S.plan=ui.undo; ui.undo=null;
+  logAdd("You","Settings restored","Fan "+p.rest+" → "+S.plan.rest+" %, CO2 limit "+p.limit+" → "+S.plan.limit);
+  document.getElementById("banner").classList.remove("on"); ui.wnote=false; buzz(); draw();
 }
 
 /* Rasymas: suktukas ~1,6 s; rasys valdantis; vibracija abiejuose (V 2026-10-28). */
-function write(mode,from){
+function write(mode,from,done){
   if(G.writing) return;
   G.writing={mode:mode,from:from}; draw();
   setTimeout(function(){
+    var was=S.mode;
     if(mode==="boost"||mode==="custom"){ if(S.mode!=="boost"&&S.mode!=="custom") S.prev=S.mode; S.left=60; }
     else S.left=0;
     S.mode=mode; G.writing=null; S.age=0;
-    logAdd(from==="phone"?"You (phone)":"You (watch)",NAME[mode]);
-    buzz(); draw();
+    if(was!==mode) logAdd("You","Mode: "+NAME[was]+" → "+NAME[mode]);
+    buzz(); if(done) done(); draw();
   },1600);
 }
 function writingMsg(dev){
   if(!G.writing||G.writing.from!==dev) return "";
   if(G.ctrl===dev) return "Writing to the unit…";
-  return dev==="phone"?"Sent to the watch - waiting for the unit…":"Sent to the phone - waiting for the unit…";
+  return dev==="phone"?"Sent to Galaxy Watch - waiting for the unit…":"Sent to the phone - waiting for the unit…";
 }
 function buzz(){["ps","ws"].forEach(function(id){var e=document.getElementById(id);e.classList.remove("buzz");void e.offsetWidth;e.classList.add("buzz");});}
 var tt; function toast(t){var e=document.getElementById("toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on");},2600);}
-function notify(kind){
+var nt;
+function notify(kind,title,text){
   var b=document.getElementById("banner");
-  ui.wnoteKind=kind;
-  b.innerHTML=kind==="rh"?'<div class="t">Wrist Control · now</div><b>Humidity high · '+Math.round(S.rh)+' %</b><div class="sub">The unit already runs faster. Boost clears it sooner.</div><div class="a" id="nBoost">Boost 1 h</div>'
-    :'<div class="t">Wrist Control · now</div><b>Air is getting stale · '+Math.round(S.co2)+' ppm</b><div class="sub">Open a window or Boost for an hour.</div><div class="a" id="nBoost">Boost 1 h</div>';
-  b.classList.add("on"); setTimeout(function(){b.classList.remove("on");},8000);
+  ui.note={kind:kind,title:title,text:text};
+  b.innerHTML='<div class="t">Wrist Control · now</div><b>'+title+'</b><div class="sub">'+text+'</div>'+(kind==="auto"?'<div class="a" id="nUndo">Undo</div>':'');
+  b.classList.add("on"); clearTimeout(nt); nt=setTimeout(function(){b.classList.remove("on");},8000);
   ui.wnote=true; buzz(); draw();
 }
+/* Pranesimo bakstelejimas telefone: CO2, dregme ir Boost pasiulymas atidaro VENTILATION (telefonas be
+   zmogaus paspaudimo nieko nerasys); planas - prognoze; autopilotas - pultas. */
+function notePhone(){
+  var n=ui.note; document.getElementById("banner").classList.remove("on"); ui.wnote=false; if(!n) return;
+  if(n.kind==="plan"){openOpt(ui.planProp);return;}
+  openPhone(n.kind==="auto"?"pultas":"vent");
+}
+/* Laikrodyje: Boost pasiulymas - Boost; CO2 ir dregme - rezimu rinkiklis; planas - OPTIMIZE. */
+function noteWatch(){
+  var n=ui.note; ui.wnote=false; document.getElementById("banner").classList.remove("on"); if(!n){draw();return;}
+  if(n.kind==="boost"){ui.wwin=null;goVent();if(!G.writing&&S.mode!=="boost")write("boost","watch");else draw();return;}
+  if(n.kind==="co2"||n.kind==="rh"){goVent();ui.wwin="pick";}
+  else if(n.kind==="plan"){ui.wwin="opt";}
+  draw();
+}
+function goVent(){var i=wpages().indexOf("vent");if(i>=0)ui.wpage=i;}
 
-function co2Lvl(v){v=v===undefined?S.co2:v;return v<800?0:v<1200?1:2;}
+function lvl(v,r){return v>=r[0]&&v<=r[1]?0:(v>=r[2]&&v<=r[3]?1:2);}
+function arrow(v,r){return lvl(v,r)?(v>r[1]?"▲":"▼"):"";}
+function co2Lvl(v){return lvl(v===undefined?S.co2:v,R_CO2);}
 function airWord(){return ["Air is fresh","Air is getting stale","Air is stale"][co2Lvl()];}
 function col(n){return ["var(--green)","var(--yellow)","var(--red)"][n];}
 function wcol(n){return ["var(--wgreen)","var(--wyellow)","var(--wred)"][n];}
-function f1(x){return x.toFixed(1).replace(".",",");}
-function fanSet(){return {optimized:"Fan at rest "+S.plan.rest+" % · CO2 limit "+S.plan.limit,auto:"Fan 50-90 % by CO2 and humidity",home:"Fan 70 %",away:"Fan 45 %",boost:"Fan 90 %",custom:"Fan 75 %"}[S.mode];}
-function ageTxt(){return S.age+" s ago";}
+/* Angliska programele rodo taska (lietuviskame telefone - kableli). */
+function f1(x){return x.toFixed(1);}
+function deg(x,comma){return x%1===0?x+"°":(comma?f1(x):x.toFixed(1))+"°";}
+function rangeTxt(comma){return deg(G.from,comma)+"-"+deg(G.to,comma);}
+function fanSet(){
+  if(S.mode==="optimized") return "Fan at rest "+S.plan.rest+" % · CO2 limit "+S.plan.limit;
+  return "Fan "+Math.round(S.fan)+" %"+(S.left>0?" · "+S.left+" min":"");
+}
+function ageTxt(){return S.age<1?"10 s ago":S.age+" min ago";}
+function wageTxt(){return S.age<1?"10s ago":S.age+"min ago";}
 function boostOn(){return S.mode==="boost";}
 function ctrlName(){return G.ctrl==="phone"?"this phone":"Galaxy Watch";}
+function isLight(){
+  if(G.theme!=="system") return G.theme==="light";
+  var t=document.documentElement.dataset.theme; if(t) return t==="light";
+  return !!(window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches);
+}
+/* Optimized temperaturos automatika: sildymo sezone saugo siluma, kitaip virs rezio vesina lauko oru. */
+function tempMode(){
+  if(S.mode!=="optimized") return "";
+  if(S.out<12) return "keep";
+  return S.temp>G.to&&S.out<S.temp-2?"cool":"";
+}
 
 /* ---- Telefono dalys ---- */
 function scale(v,min,max,zones,ticks){
@@ -426,21 +528,27 @@ function scale(v,min,max,zones,ticks){
   h+='</div><div class="tri" style="left:'+p+'%"></div></div><div class="ticks">';
   ticks.forEach(function(t){h+='<span>'+t+'</span>';}); return h+'</div>';
 }
-function scales(){
-  var Y="var(--yellow)",Gr="var(--green)",R="var(--red)";
-  return '<div class="row"><span>CO2</span><span style="color:'+col(co2Lvl())+'">'+Math.round(S.co2)+' ppm · '+(co2Lvl()?"high":"ok")+'</span></div>'+
-  scale(S.co2,400,2000,[[800,Gr],[1200,Y],[2000,R]],[400,800,1200,2000])+
-  '<div class="row"><span>Temperature</span><span style="color:var(--green)">'+f1(S.temp)+'° · ok</span></div>'+
-  scale(S.temp,16,29,[[18,R],[20,Y],[25,Gr],[27,Y],[29,R]],[16,18,20,25,27,29])+
-  '<div class="row"><span>Humidity</span><span style="color:'+(S.rh>70?"var(--red)":S.rh>50?"var(--yellow)":"var(--green)")+'">'+Math.round(S.rh)+' %'+(S.rh>50?' ▲':' · ok')+'</span></div>'+
-  scale(S.rh,22,66,[[25,R],[30,Y],[50,Gr],[60,Y],[66,R]],[22,25,30,50,60,66]);
+var ZC={g:"var(--green)",y:"var(--yellow)",r:"var(--red)"}, WZC={g:"#6fbf73",y:"#f5c542",r:"#e5615b"};
+function sc(k,v,z){
+  if(k==="co2") return scale(v,400,2000,[[800,z.g],[1200,z.y],[2000,z.r]],[400,800,1200,2000]);
+  if(k==="t") return scale(v,16,29,[[18,z.r],[20,z.y],[25,z.g],[27,z.y],[29,z.r]],[16,18,20,25,27,29]);
+  return scale(v,22,66,[[25,z.r],[30,z.y],[50,z.g],[60,z.y],[66,z.r]],[22,25,30,50,60,66]);
 }
+/* Automatic oro kortele (Pultas.oroRodmuo): reiksme ir „· ok“ arba rodykle po jos. */
+function airRow(l,t,v,r){var n=lvl(v,r);return '<div class="row"><span>'+l+'</span><span style="color:'+col(n)+'">'+t+' '+(n?arrow(v,r):'· ok')+'</span></div>';}
+function scales(){
+  return airRow("CO2",Math.round(S.co2)+" ppm",S.co2,R_CO2)+sc("co2",S.co2,ZC)+
+    airRow("Temperature",f1(S.temp)+"°",S.temp,R_T)+sc("t",S.temp,ZC)+
+    airRow("Humidity",Math.round(S.rh)+" %",Math.round(S.rh),R_RH)+sc("rh",S.rh,ZC);
+}
+function row(l,v,c){return '<div class="row"><span>'+l+'</span><span'+(c?' style="color:'+c+'"':'')+'>'+v+'</span></div>';}
+/* SENSORS lango eilute: rodykle pries skaiciu (Langas.kokybesEilute). */
+function qrow(l,t,v,r){var a=arrow(v,r);return row(l,(a?a+" ":"")+t,col(lvl(v,r)));}
 function airCard(){
+  var m=S.mode!=="optimized"&&S.mode!=="boost";
   return '<div class="k st"><div class="kt">AIR</div><div class="big" style="color:'+col(co2Lvl())+'">'+airWord()+'</div>'+scales()+
-  '<hr class="l"><div class="row"><span>Outdoor</span><span>'+f1(S.out)+'°</span></div>'+
-  '<div class="row"><span>Fan</span><span>'+Math.round(S.fan)+' %</span></div>'+
-  '<div class="row"><span>Heater</span><span style="color:var(--lo)">OFF</span></div>'+
-  (S.mode!=="optimized"&&S.mode!=="boost"?'<div class="row"><span>Mode</span><span>'+NAME[S.mode]+(S.left>0?' · '+S.left+' min left':'')+'</span></div>':'')+'</div>';
+  '<hr class="l">'+row("Outdoor",f1(S.out)+"°")+row("Fan",Math.round(S.fan)+" %")+row("Heater","OFF","var(--lo)")+
+  (m?row(NAME[S.mode]+" fan",Math.round(S.fan)+" %"+(S.mode==="custom"&&S.left>0?" · "+S.left+" min":"")):'')+'</div>';
 }
 /* Rezimo mygtukas - Stilius.rezimoMygtukas: piktograma, teksto stulpelis, ventiliatoriaus vieta. */
 function modeBtn(key,label,on,second,centre,attr){
@@ -452,10 +560,15 @@ function modeBtn(key,label,on,second,centre,attr){
     (w&&m?'<div class="wst">'+m+'</div>':'');
 }
 function card(t,body,open){return '<div class="k" data-open="'+open+'"><div class="kt">'+t+'</div>'+body+'</div>';}
-function tile(t,v,s,open,c){return '<div class="k" data-open="'+open+'"><div class="kt">'+t+'</div><div class="kv"'+(c?' style="color:'+c+'"':'')+'>'+v+'</div><div class="sub">'+s+'</div></div>';}
-function alertsOn(){return ["temp","rh","co2","filt"].filter(function(a){return G.alerts[a];}).length;}
+function tile(t,v,s,open,c){return '<div class="k" data-open="'+open+'"><div class="kt">'+t+'</div>'+(v!==""?'<div class="kv"'+(c?' style="color:'+c+'"':'')+'>'+v+'</div>':'')+'<div class="sub">'+s+'</div></div>';}
+function kt(t){return '<div class="kt" style="margin:14px 4px 0">'+t+'</div>';}
 function anyAlert(){return G.alerts.temp||G.alerts.rh||G.alerts.co2||G.alerts.filt;}
-function settingsCard(){return card("SETTINGS",'<div style="font-size:18px;font-weight:600">Controlled by '+ctrlName()+'</div><div class="sub">Refresh '+G.refresh+' · alerts '+(anyAlert()?"on":"off")+'</div>',"settings");}
+function alertsOn(){return ["temp","rh","co2","filt"].filter(function(a){return G.alerts[a];}).length;}
+var REF_SHORT={"Auto":"Auto","20 min":"20 min","30 min":"30 min","1 h":"1 h","Only in app":"in app"};
+var REF_LONG={"Auto":"Auto 15-60 min","20 min":"20 min","30 min":"30 min","1 h":"1 h","Only in app":"Only in app"};
+function setSub(){return G.refresh==="Only in app"?"Only in app · no alerts":"Refresh "+REF_SHORT[G.refresh]+" · alerts "+(anyAlert()?"on":"off");}
+function settingsCard(){return card("SETTINGS",'<div style="font-size:18px;font-weight:600">Controlled by '+ctrlName()+'</div><div class="sub">'+setSub()+'</div>',"settings");}
+function wAlerts(){return G.refresh==="Only in app"||!alertsOn()?"none":alertsOn()+" on";}
 
 function pultas(){
   var h='<div class="hd"><b data-units="1">'+S.name+' ▾</b><span class="age">'+ageTxt()+'</span></div>';
@@ -463,195 +576,331 @@ function pultas(){
     h+=airCard();
     var on=boostOn();
     h+='<div style="margin-top:9px">'+modeBtn("boost",on?"Stop Boost":"Boost",on,on?S.left+" min left":"1 h",true,'data-boost="1"')+'</div>';
-    h+=card("STATISTICS",'<div class="two" style="margin-top:2px"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">-35 %</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">+30 %</div></div></div><div class="sub">Same week last year</div>',"stats");
+    h+=card("STATISTICS",'<div class="two" style="margin-top:2px"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">'+ST.year.e+' %</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">+30 %</div></div></div><div class="sub">Same week last year</div>',"stats");
     h+=settingsCard();
     h+=card("SETUP",'<div style="font-size:18px;font-weight:600">'+S.name+'</div><div class="sub">Run setup again</div>',"setup");
     return h;
   }
   h+='<div class="k" data-open="vent"><div class="kt">VENTILATION</div><div style="display:flex;align-items:center;gap:10px;margin-top:4px">'+
      '<span style="width:26px;height:26px;display:block">'+ic(S.mode)+'</span><span class="big" style="flex:1">'+NAME[S.mode]+'</span><span style="width:24px;height:24px;display:block">'+ic("fan","fan")+'</span></div>'+
-     '<div class="sub">'+fanSet()+(S.left>0?' · '+S.left+' min':'')+'</div></div>';
+     '<div class="sub">'+fanSet()+'</div></div>';
   h+='<div class="two">'+tile("SENSORS",Math.round(S.co2),"Humidity "+Math.round(S.rh)+" %","sens",col(co2Lvl()))+tile("TEMPERATURES",f1(S.temp)+"°","Outdoor "+f1(S.out)+"° · Heater off","temps")+'</div>';
-  h+='<div class="two">'+tile("OPTIMIZE","713","goal 738","opt","var(--green)")+tile("STATISTICS","-35 %","Energy · same week last year","stats","var(--green)")+'</div>';
-  h+='<div class="two">'+tile("FILTERS",S.filt,S.filt+" d left","filt",S.filt<30?"var(--yellow)":null)+tile("SETUP","",S.name,"setup")+'</div>';
+  h+='<div class="two">'+tile("OPTIMIZE","713","goal 738","opt","var(--green)")+tile("STATISTICS",ST.year.e+" %","Energy Same week last year","stats","var(--green)")+'</div>';
+  h+='<div class="two">'+tile("FILTERS",S.filt,S.filt+" d left","filt",null)+tile("SETUP","",S.name,"setup")+'</div>';
   h+=settingsCard();
   return h;
 }
 
-function graphHtml(id,h,leg){return '<div class="k st"><canvas id="'+id+'" height="'+h+'"></canvas><div class="lg">'+leg+'</div></div>';}
-var LEG_T='<span><i style="background:var(--hi)"></i>Indoor</span><span><i style="background:#5b9bf3"></i>Outdoor</span>';
-var LEG_C='<span><i style="background:#f5c542"></i>CO2</span><span><i style="background:#8c96b2"></i>800 ppm</span>';
+/* Grafiko kortele: legenda virs grafiko (Langas.legenda). */
+function gcard(id,h,l,lc,r,rc){return '<div class="k st"><div class="lgd"><span style="color:'+lc+'">'+l+'</span>'+(r?'<span style="color:'+rc+'">'+r+'</span>':'')+'</div><canvas id="'+id+'" height="'+h+'"></canvas></div>';}
+function avg(a){return a.reduce(function(s,x){return s+x;},0)/a.length;}
+function updLine(){return 'Updated '+(G.upd===null?"10-28 08:39":md(dateAdd(0))+" "+hhmm(G.upd));}
+function pokytis(l,a,b,unit,lessBetter){
+  var k=Math.round((b/a-1)*100), good=lessBetter?k:-k;
+  return '<div class="row"><span>'+l+'</span><span><span style="color:var(--lo);font-size:14px;margin-right:12px">'+a+' → '+b+unit+'</span><span style="color:'+(good>2?"var(--yellow)":good<-2?"var(--green)":"var(--hi)")+'">'+(k>0?"+":"")+k+' %</span></span></div>';
+}
+function ecol(e){return e>2?"var(--yellow)":e<-2?"var(--green)":"var(--hi)";}
+function logRows(){
+  var c={App:"var(--blue)",You:"var(--green)",Other:"var(--yellow)"};
+  if(!G.log.length) return '<div class="sub" style="margin-top:8px">No changes yet. They are recorded from this version on.</div>';
+  return G.log.map(function(e){return '<div class="zl"><div class="w">'+dayName(e.t)+' '+hhmm(e.t)+'<b style="color:'+c[e.who]+'">'+e.who+'</b></div><div class="x">'+e.what+(e.why?'<small>'+e.why+'</small>':'')+'</div></div>';}).join("");
+}
+function busyBtn(id,label,busy){return '<div class="btn" id="'+id+'">'+(busy?'<span class="spin" style="display:inline-block;width:16px;height:16px;vertical-align:-3px"></span>':label)+'</div>';}
+function prog(rest,limit){
+  var p=S.plan, m0=640, d0=700, f0=48;
+  var m1=Math.round(m0+(limit-p.limit)*0.35-(rest-p.rest)*4), d1=Math.round(d0+(limit-p.limit)*0.4-(rest-p.rest)*5),
+      fv=Math.round(f0+(rest-p.rest)*0.8);
+  return {rest:rest,limit:limit,m:[m0,m1],d:[d0,d1],f:[f0,fv],e:Math.round((Math.pow(fv/f0,3)-1)*100)};
+}
+function changesTxt(r,l){var p=S.plan;return p.rest===r&&p.limit===l?"Away "+r+" % · CO2 limit "+l+" · no change":"Away "+p.rest+"›"+r+" % · CO2 limit "+p.limit+"›"+l;}
+var CTRL_OTHER={phone:"The watch controls the VALLOX unit. Changes are made on it.",watch:"The phone controls the VALLOX unit. Changes are made on it."};
 
 function langas(w){
-  var h="";
+  var h="", reader=G.ctrl!=="phone";
   if(w==="vent"){
-    h+='<div class="wt">VENTILATION</div><div style="font-size:17px;margin-left:4px">'+NAME[S.mode]+'</div><div class="sub" style="margin-left:4px">'+fanSet()+(S.left>0?' · '+S.left+' min':'')+'</div>';
-    MODES.forEach(function(m){var on=S.mode===m[0];h+=modeBtn(m[0],m[1],on,on&&S.left>0?S.left+" min left":null,false);});
+    h+='<div class="wt">VENTILATION</div><div style="font-size:17px;margin-left:4px">'+NAME[S.mode]+'</div><div class="sub" style="margin-left:4px">'+fanSet()+'</div>';
+    MODES.forEach(function(m){var on=S.mode===m[0];h+=modeBtn(m[0],m[1],on,on&&S.left>0&&(m[0]==="boost"||m[0]==="custom")?S.left+" min left":null,false);});
     h+='<div class="hint">Switch modes here: the panel skips tuned settings</div>';
-    h+='<div class="kt" style="margin:14px 4px 0">WEEK CLOCK</div><div class="k st"><div>Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="sub">No events: set them on the unit\'s panel.</div></div>';
+    h+=kt("WEEK CLOCK")+'<div class="k st"><div>Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="sub">No events: set them on the unit\'s panel.</div></div>'+
+      '<div class="hint" style="margin-top:12px">Wrist Control has no week clock of its own: Optimized follows what actually happens at home - CO2, humidity, temperature - so the fans do not need a clock.</div>';
   } else if(w==="sens"){
-    h+='<div class="wt">SENSORS</div><div class="k st">'+scales()+'</div>'+
-      '<div class="k st"><div class="kt">FAN AND HEAT</div><div class="row"><span>Fan</span><span>'+Math.round(S.fan)+' %</span></div><div class="row"><span>Heat recovery</span><span style="color:var(--green)">84 %</span></div><div class="row"><span>Extract</span><span>'+f1(S.temp)+'°</span></div><div class="row"><span>Supply</span><span>22,1°</span></div><div class="row"><span>Outdoor</span><span>'+f1(S.out)+'°</span></div><div class="row"><span>Exhaust</span><span>14,5°</span></div></div>';
+    h+='<div class="wt">SENSORS</div><div class="age" style="margin-left:4px">'+ageTxt()+'</div><div class="k st">'+
+      row("Fan",Math.round(S.fan)+" %")+qrow("Indoor",f1(S.temp)+"°",S.temp,R_T)+qrow("Humidity",Math.round(S.rh)+" %",Math.round(S.rh),R_RH)+
+      qrow("CO2",Math.round(S.co2),S.co2,R_CO2)+row("Outdoor",f1(S.out)+"°")+row("Supply","22,1°")+'</div>'+kt("COMFORT ZONE")+
+      [["Temp",S.temp.toFixed(1)+"°C","t",S.temp],["Humidity",Math.round(S.rh)+"%","rh",S.rh],["CO2",Math.round(S.co2)+" ppm","co2",S.co2]].map(function(x){
+        return '<div class="k st"><div class="lgd"><span style="color:var(--lo)">'+x[0]+'</span><b>'+x[1]+'</b></div>'+sc(x[2],x[3],ZC)+'</div>';}).join("");
   } else if(w==="temps"){
-    h+='<div class="wt">TEMPERATURES</div><div class="kt" style="margin:12px 4px 0">A DAY</div>'+graphHtml("cvd1",130,LEG_T)+graphHtml("cvd2",100,LEG_C)+
-      '<div class="kt" style="margin:12px 4px 0">7 DAYS</div>'+graphHtml("cvw1",120,LEG_T)+graphHtml("cvw2",100,LEG_C)+
-      '<div class="kt" style="margin:12px 4px 0">LAST YEAR</div><div class="k st"><div class="row"><span>Outdoor</span><span>9,6°</span></div><div class="row"><span>CO2</span><span>624</span></div><div class="sub">Same week last year, averages</div></div>';
+    var wk=S.week, tin=wk.map(function(p){return p.tin;}), tout=wk.map(function(p){return p.tout;}), wc=wk.map(function(p){return p.co2;});
+    h+='<div class="wt">TEMPERATURES</div><div class="sub" style="margin-left:4px">Heater off</div>'+kt("A DAY")+'<div class="sub" style="margin:0 4px">last 24 hours</div>'+
+      gcard("cvd1",130,"Indoor","var(--hi)","Outdoor","var(--blue)")+gcard("cvd2",100,"CO2","var(--hi)")+
+      kt("7 DAYS")+gcard("cvw1",120,"Indoor "+f1(avg(tin))+"°","var(--hi)","Outdoor "+Math.round(avg(tout))+"°","var(--blue)")+
+      gcard("cvw2",100,"CO2 "+Math.round(avg(wc)),"var(--hi)","peak "+Math.round(Math.max.apply(null,wc)),"var(--lo)")+
+      kt("LAST YEAR")+'<div class="lgd" style="margin:6px 4px 0;color:var(--lo)"><span>Outdoor '+ST.year.out+'°</span><span>CO2 624</span></div><div class="sub" style="margin:2px 4px 0">dashed = same week last year</div>'+
+      busyBtn("tUpd","Update",ui.busy==="tUpd")+'<div class="sub" style="margin:6px 4px">'+updLine()+'</div>';
   } else if(w==="opt"){
     h+='<div class="wt">OPTIMIZE</div>';
-    if(ui.opt==="idle"){
-      h+='<div class="k st"><div class="kt">YOUR PLAN</div><div class="row"><span>Fan at rest</span><span>'+S.plan.rest+' %</span></div><div class="row"><span>CO2 limit</span><span>'+S.plan.limit+' ppm</span></div><div class="row"><span>Average CO2</span><span style="color:var(--green)">713 · goal 738</span></div></div>'+
-        '<div class="hint">Optimize reads two weeks of your unit\'s history and finds the quietest fan settings that still keep the air fresh. Optimized mode then uses them.</div>'+
-        '<div class="btn" id="oNew">New plan</div><div class="btn g" id="oRestore">Restore: fan 50 %, CO2 limit 800</div>';
+    if(ui.opt==="goal"){
+      h+='<div class="sub" style="margin:2px 4px 0;font-size:15px">GOAL</div>';
+      ["clean","balance","quiet"].forEach(function(k){var g=GOALS[k];h+='<div class="btn g" data-ogoal="'+k+'">'+g.n+'  ·  '+g.a+'</div>';});
+      h+='<div class="hint">from the unit, or the cloud when away</div>';
     } else if(ui.opt==="busy"){
-      h+='<div class="k st" style="text-align:center"><div class="spin" style="margin:6px auto"></div><div>Analysing…</div><div class="sub">Reading 14 days from the unit</div></div>';
+      h+='<div class="hint" style="font-size:15px">Analysing…</div><div class="spin" style="margin:10px auto"></div>';
+    } else if(ui.opt==="result"){
+      var r=ui.prop;
+      h+=kt("FORECAST")+'<div class="k st">'+row("Morning",r.m[0]+"›"+r.m[1],col(co2Lvl(r.m[1])))+row("Day",r.d[0]+"›"+r.d[1],col(co2Lvl(r.d[1])))+
+        row("Fan",r.f[0]+"›"+r.f[1]+" %")+row("Energy",(r.e>0?"+":"")+r.e+" %",ecol(r.e))+'</div><div class="hint">'+changesTxt(r.rest,r.limit)+'</div>';
+      h+=reader?'<div class="hint">'+CTRL_OTHER.phone+'</div>':busyBtn("oApply","Apply",ui.busy==="oApply")+'<div class="hint">original values saved</div>';
     } else {
-      var g={quiet:[35,700,"Fewer fan hours, CO2 a bit higher"],balanced:[45,500,"Like now"],fresh:[55,450,"Lower CO2, more fan"]};
-      h+='<div class="q">What matters most?</div>';
-      ["quiet","balanced","fresh"].forEach(function(k){h+='<div class="opt'+(ui.goal===k?' on':'')+'" data-goal="'+k+'"><b>'+{quiet:"Quiet",balanced:"Balanced",fresh:"Fresh air"}[k]+'</b><span class="sub">'+g[k][2]+'</span></div>';});
-      var p=g[ui.goal];
-      h+='<div class="k st"><div class="kt">FORECAST</div><div class="row"><span>Fan at rest</span><span>'+S.plan.rest+' → '+p[0]+' %</span></div><div class="row"><span>CO2 limit</span><span>'+S.plan.limit+' → '+p[1]+'</span></div><div class="row"><span>Fan electricity</span><span style="color:var(--green)">'+(p[0]<S.plan.rest?"less":p[0]>S.plan.rest?"more":"no change")+'</span></div></div>'+
-        '<div class="btn" id="oApply">Apply</div><div class="btn g" id="oCancel">Cancel</div>';
+      h+=kt("CO2")+'<div class="k st"><div class="sub">Result</div><div class="big" style="color:var(--green);font-size:24px">713 ppm</div><div class="sub">goal 738</div>'+
+        row("Fan at rest",S.plan.rest+" %")+row("CO2 limit",S.plan.limit)+'</div>'+busyBtn("oCheck","Check again",ui.busy==="oCheck")+kt("CHANGE");
+      if(reader) h+='<div class="hint">'+CTRL_OTHER.phone+'</div>';
+      else {
+        h+='<div class="hint">'+(G.canRestore?'New plan measures the home again and lets you pick a goal. Restore puts back fan '+G.orig.rest+' % and CO2 limit '+G.orig.limit+' from before Optimize.':'New plan measures the home again and lets you pick a goal. Values from before Optimize were not saved.')+'</div>'+
+          '<div class="btn g" id="oNew">New plan</div>'+(G.canRestore?busyBtn("oRestore","Restore",ui.busy==="oRestore").replace('class="btn"','class="btn g"'):'');
+      }
     }
   } else if(w==="stats"){
-    h+='<div class="wt">STATISTICS</div><div class="kt" style="margin:12px 4px 0">VS PREVIOUS WEEK</div><div class="k st"><div class="big" style="color:var(--green)">Better week</div><div class="two"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">-37 %</div><div class="sub">97 → 61 kWh</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">+12 %</div><div class="sub">81 → 91 %</div></div></div></div>'+
-      '<div class="kt" style="margin:12px 4px 0">VS SAME WEEK LAST YEAR</div><div class="k st"><div class="two"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">-35 %</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">+30 %</div></div></div><div class="sub">Weather taken out · outdoor last year 10°</div></div>'+
-      '<div class="kt" style="margin:12px 4px 0">APP AT WORK</div><div class="k st"><div class="row"><span>Optimized raised the fan</span><span>14 times</span></div><div class="row"><span>Boost</span><span>2 h</span></div></div>'+
-      '<div class="kt" style="margin:12px 4px 0">CHANGE LOG <i>· in this demo</i></div><div class="k st"><div class="log">'+G.log.map(function(e){return '<div><span>'+e.t+'</span><span>'+e.what+'</span><span>'+e.who+'</span></div>';}).join("")+'</div></div>';
+    var pv=ST.prev, yr=ST.year;
+    h+='<div class="wt">STATISTICS</div>'+kt("PREVIOUS WEEK")+'<div class="k st"><div class="big" style="color:var(--green);font-size:24px">Better week</div>'+
+      pokytis("Fresh air",pv.fresh[0],pv.fresh[1]," %",false)+pokytis("CO2 avg",pv.co2[0],pv.co2[1],"",true)+pokytis("Fan avg",pv.fan[0],pv.fan[1]," %",true)+
+      row("Energy",pv.e+" %",ecol(pv.e))+'<div class="sub" style="margin-top:6px">Settings '+pv.parts[0]+' · People '+pv.parts[1]+' · Weather '+pv.parts[2]+'</div></div>'+
+      kt("SAME WEEK LAST YEAR")+'<div class="k st"><div class="big" style="color:var(--green);font-size:24px">Better than last year</div>'+
+      pokytis("Fresh air",yr.fresh[0],yr.fresh[1]," %",false)+pokytis("CO2 avg",yr.co2[0],yr.co2[1],"",true)+pokytis("Fan avg",yr.fan[0],yr.fan[1]," %",true)+
+      row("Energy",yr.e+" %",ecol(yr.e))+'<div class="sub" style="margin-top:6px">Weather taken out · with it '+yr.total+'</div><div class="sub">Outdoor last year '+yr.out+'°</div></div>'+
+      busyBtn("sUpd","Update",ui.busy==="sUpd")+'<div class="sub" style="margin:6px 4px">'+updLine()+'</div>'+
+      kt("APP AT WORK · 7 DAYS")+'<div class="k st">'+row("Fan lowered - nobody home",G.work.nobody+" × · "+G.work.nobodyH+" h")+row("Cooled with outdoor air",G.work.cooled+" h")+
+      row("Heat kept - bypass closed",G.work.heat+" h")+row("Boost suggested",G.work.boost+" ×")+'</div>'+
+      kt("CHANGE LOG · 7 DAYS")+'<div class="k st">'+logRows()+'</div>';
   } else if(w==="filt"){
-    h+='<div class="wt">FILTERS</div><div class="k st"><div class="big" style="color:'+(S.filt<30?"var(--yellow)":"var(--hi)")+'">'+S.filt+' days left</div><div class="sub">Change every 180 days. You get a reminder when it is due.</div></div>'+
-      '<div class="btn'+(ui.fsure?'':' g')+'" id="fchg">'+(ui.fsure?"Confirm: changed today":"Mark as changed")+'</div>';
+    h+='<div class="wt">FILTERS</div><div class="k st">'+row("Next",S.filt+" d left")+row("Replaced",ymd(dateAdd(S.filt-180)))+'</div>'+
+      '<div class="btn'+(ui.fsure?'':' g')+'" id="fchg">'+(ui.fsure?"Confirm: changed today":"Mark as changed")+'</div><div class="age" style="margin:8px 4px">'+ageTxt()+'</div>';
   } else if(w==="settings"){
-    h+='<div class="wt">SETTINGS</div><div class="k st"><div class="kt">VALLOX UNIT CONTROLLED BY</div><div class="seg"><div data-ctrl="phone" class="'+(G.ctrl==="phone"?"on":"")+'">This phone</div><div data-ctrl="watch" class="'+(G.ctrl==="watch"?"on":"")+'">The watch</div></div>'+
+    h+='<div class="wt">SETTINGS</div><div class="k st"><div class="kt">VALLOX UNIT CONTROLLED BY</div><div class="seg"><div data-ctrl="phone" class="'+(G.ctrl==="phone"&&!G.waiting?"on":"")+'">This phone</div><div data-ctrl="watch" class="'+(G.ctrl==="watch"?"on":"")+'">The watch</div></div>'+
+      (G.waiting?'<div class="sub" style="margin-top:10px;color:var(--yellow)">Waiting for the watch to confirm…</div>':'')+
       '<div class="sub" style="margin-top:6px">Watch 0.1.976 · Phone 0.1.976</div></div>'+
-      '<div class="k st"><div class="kt">AUTOMATION <i>· tap a card to switch</i></div>'+
-      '<div class="vc'+(G.view==="auto"?" on":"")+'" data-view="auto"><b>Automatic</b><div class="sub">The app runs the air for you</div><ul><li>One card: how fresh the air is</li><li>One button: Boost for an hour</li><li>Few notifications - only when something needs you</li></ul></div>'+
-      '<div class="vc'+(G.view==="semi"?" on":"")+'" data-view="semi"><b>Semi-automatic</b><div class="sub">All windows and settings</div><ul><li>Modes, Optimize plan, sensors, graphs, statistics</li><li>Every change - you decide</li></ul></div></div>'+
-      '<div class="k st"><div class="kt">THEME</div><div class="seg"><div data-theme="dark" class="'+(G.theme==="dark"?"on":"")+'">Dark</div><div data-theme="light" class="'+(G.theme==="light"?"on":"")+'">Light</div></div></div>'+
-      '<div class="k st"><div class="kt">UNIT · TEMPERATURE</div><div class="pm"><span data-t="from-">-</span><div><small>From</small><b>'+f1(G.from)+'°</b></div><span data-t="from+">+</span></div><div class="pm"><span data-t="to-">-</span><div><small>To</small><b>'+f1(G.to)+'°</b></div><span data-t="to+">+</span></div>'+
-      '<div class="sub" style="margin-top:8px">Below '+f1(G.from)+'° the unit keeps the heat, above '+f1(G.to)+'° it cools with outdoor air.</div></div>'+
-      '<div class="k st"><div class="kt">UNIT · ALERTS</div>'+[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="row"><span style="color:var(--hi)">'+a[1]+'</span><span class="sw'+(G.alerts[a[0]]?' on':'')+'" data-al="'+a[0]+'"></span></div>';}).join("")+'</div>'+
-      '<div class="k st"><div class="kt">UNIT <i>· tap to change</i></div><div class="row" data-cyc="refresh" style="cursor:pointer"><span>Refresh</span><span>'+G.refresh+'</span></div><div class="row" data-cyc="clock" style="cursor:pointer"><span>Clock</span><span>'+G.clock+'</span></div></div>'+
-      '<div class="k st"><div class="kt">PRO</div><div class="row"><span>Pro</span><span>Unlocked</span></div><div class="sub">Smart modes, Optimize and Statistics. One-time purchase, 14 days free.</div></div>'+
-      '<div class="k st"><div class="kt">ABOUT</div><div style="display:flex;gap:12px;align-items:center;margin-top:6px"><img src="/wristcontrol/icon.png" alt="" style="width:46px;height:46px;border-radius:10px"><div><div style="font-size:18px;font-weight:600">Wrist Control</div><div class="sub">for Vallox</div></div></div><div class="sub" style="margin-top:8px">Independent app, not made by Vallox Oy.<br>Watch 0.1.976 · Phone 0.1.976</div></div>';
+      '<div class="k st"><div class="kt">AUTOMATION <i>·  tap a card to switch</i></div>'+
+      '<div class="vc'+(G.view==="auto"?" on":"")+'" data-view="auto"><b>Automatic</b><div class="sub">The app runs the air for you</div><ul><li>One card: how fresh the air is, temperatures</li><li>One button: Boost for an hour</li><li>The app runs the air and adjusts it weekly - you can undo any change</li><li>Weekly summary: air and energy</li><li>Few notifications - only when something needs you</li></ul></div>'+
+      '<div class="vc'+(G.view==="semi"?" on":"")+'" data-view="semi"><b>Semi-automatic</b><div class="sub">All windows and settings</div><ul><li>Modes, Optimize plan, sensors, graphs, statistics</li><li>Temperature range, notifications, refresh rate</li><li>Every change - you decide</li></ul></div></div>'+
+      '<div class="k st"><div class="kt">THEME</div><div class="seg">'+[["system","System"],["dark","Dark"],["light","Light"]].map(function(t){return '<div data-theme="'+t[0]+'" class="'+(G.theme===t[0]?"on":"")+'">'+t[1]+'</div>';}).join("")+'</div><div class="sub" style="margin-top:6px">System follows the phone\'s dark mode.</div></div>';
+    if(reader){
+      h+='<div class="k st"><div class="kt">UNIT · Changed on Galaxy Watch</div>'+row("Temp.",rangeTxt(true))+
+        row("Alerts",[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].filter(function(a){return G.alerts[a[0]];}).map(function(a){return a[1];}).join(", ")||"none")+
+        row("Refresh",REF_LONG[G.refresh])+row("Clock",G.clock)+'</div>';
+    } else {
+      h+='<div class="k st"><div class="kt">UNIT · TEMPERATURE</div><div class="pm"><span data-t="from-">-</span><div><small>From</small><b>'+deg(G.from,true)+'</b></div><span data-t="from+">+</span></div><div class="pm"><span data-t="to-">-</span><div><small>To</small><b>'+deg(G.to,true)+'</b></div><span data-t="to+">+</span></div>'+
+        '<div class="sub" style="margin-top:8px">Below '+deg(G.from,true)+' the bypass closes to keep heat, above '+deg(G.to,true)+' it cools with outdoor air.</div></div>'+
+        '<div class="k st"><div class="kt">UNIT · ALERTS</div>'+[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="row"><span style="color:var(--hi)">'+a[1]+'</span><span class="sw'+(G.alerts[a[0]]?' on':'')+'" data-al="'+a[0]+'"></span></div>';}).join("")+'</div>';
+      if(G.view==="auto"){
+        h+='<div class="k st"><div class="kt">UNIT</div>'+row("Refresh","Automatic")+row("Clock","Fixed automatically")+'</div>';
+      } else {
+        var rb=function(k){return '<div data-ref="'+k+'" class="'+(G.refresh===k?"on":"")+'">'+REF_LONG[k]+'</div>';};
+        h+='<div class="k st"><div class="kt">UNIT · DATA REFRESH</div><div class="seg">'+rb("Auto")+'</div><div class="seg">'+rb("20 min")+rb("30 min")+rb("1 h")+'</div><div class="seg">'+rb("Only in app")+'</div></div>'+
+          '<div class="k st"><div class="kt">UNIT · CLOCK</div><div class="seg">'+["Ask to fix","Auto fix","Off"].map(function(k){return '<div data-clk="'+k+'" class="'+(G.clock===k?"on":"")+'">'+k+'</div>';}).join("")+'</div></div>';
+      }
+    }
+    h+='<div class="k st"><div class="kt">PRO</div>'+row("PRO","Unlocked","var(--hi)")+'</div>'+
+      '<div class="k st"><div class="kt">ABOUT</div><div style="display:flex;gap:12px;align-items:center;margin-top:6px"><img src="/wristcontrol/icon.png" alt="" style="width:46px;height:46px;border-radius:10px"><div><div style="font-size:18px;font-weight:600">Wrist Control</div><div class="sub">for Vallox</div></div></div>'+
+      '<div class="lnk"><a href="/wristcontrol/guide/" target="_blank" rel="noopener">User guide</a><a href="/wristcontrol/privacy/" target="_blank" rel="noopener">Privacy</a><a href="#" data-toast="Contact: e-mail to hello@tinyowllabs.com">Contact</a></div>'+
+      '<div class="sub" style="margin-top:8px">Independent app, not made by Vallox Oy.<br>Watch 0.1.976 · Phone 0.1.976</div></div>';
   } else if(w==="setup"){
-    h+='<div class="wt">SETUP</div><div class="k st"><div class="btn" id="wizGo">Run setup again</div><div class="sub" style="margin-top:6px">7 short questions, about 2 minutes: who controls the unit, what matters most, how warm you like it, the week schedule and alerts. Your account stays signed in.</div></div>'+
+    h+='<div class="wt">SETUP</div><div class="k st"><div class="btn" id="wizGo" style="margin-top:0">Run setup again</div><div class="sub" style="margin-top:8px">7 short questions, about 2 minutes: who controls the unit, what matters most, how warm you like it, the week schedule and alerts. Then a new plan. Your account stays signed in.</div></div>'+
       '<div class="k st"><div class="kt" style="color:var(--lo)">GALAXY WATCH</div><div style="font-size:16px;margin-top:4px"><span style="color:var(--green)">✔</span> Wrist Control is on your watch</div><div class="sub">Shows your air and Boost on the wrist, and complications for the watch face.</div><div class="btn" id="openWatch">Open on watch</div><div class="sub" style="text-align:center;margin-top:6px">Watch 0.1.976 · Phone 0.1.976</div></div>'+
-      '<div class="k st"><div style="font-size:16px;font-weight:600">Vallox account</div><div>Signed in as demo@example.com</div><div class="sub">Units: '+U.map(function(u){return u.name;}).join(", ")+'</div><div class="btn g" data-toast="Account change - not in the demo">Change account or password</div></div>';
+      '<div class="k st"><div style="font-size:16px;font-weight:600">Vallox account</div><div style="margin-top:6px">Signed in as demo@example.com</div>'+kt("UNIT").replace("margin:14px 4px 0","margin:10px 0 0")+
+      U.map(function(u,i){return '<div class="opt'+(u===S?' on':'')+'" data-unit="'+i+'"><b>'+u.name+'</b></div>';}).join("")+
+      '<div class="btn g" data-toast="Account change - not in the demo">Change account or password</div></div>'+
+      '<div class="kt" style="margin:18px 4px 0;color:var(--lo)">GETTING STARTED</div><ul class="steps">'+
+      ["Run setup above: sign in with your MyVallox account, answer 7 short questions and get a plan.",
+       "Choose who runs the unit: this phone or the watch. Without a watch the phone does it all.",
+       "Add widgets: long-press the home screen, Widgets, Wrist Control.",
+       "On the watch, add complications: long-press the watch face, Customize, pick a slot, Wrist Control.",
+       "Pro (smart modes, Optimize, Statistics) is free for 14 days, then you buy it in setup or on the watch."].map(function(s,i){return '<li><b>'+(i+1)+'</b><span>'+s+'</span></li>';}).join("")+'</ul>';
   } else if(w==="wiz"){
     h+=wizard();
   }
   return h;
 }
 
-/* Vedlys - 7 klausimai (telefonas/Vedlys.java); demo - be rasymo iki pabaigos. */
+/* Vedlys (telefonas/Vedlys.java), „Run setup again“: paskyra jau yra, pirmo ekrano nera. */
 var WIZ=[
- ["Who runs the unit?",["This phone - the watch shows and sends to it","The watch - the phone shows and sends to it"]],
- ["What matters most?",["Quiet","Balanced","Fresh air"]],
- ["How warm do you like it?",["Cooler: 21-22°","Normal: 22,5-23,5°","Warmer: 24-25°"]],
- ["Your unit follows a week schedule",["Let the app run the air|Week clock off, Optimized on","Keep the schedule|The app only shows the air"]],
- ["Alerts",["All: temperature, humidity, CO2, filters","Only filters","None"]],
- ["Pro",["Unlocked - 14 days free, then one purchase"]],
- ["Ready",["Your plan: Optimized, fan at rest 45 %, CO2 limit 500"]]];
+ {t:"Do you wear the watch most of the day?",s:"One device reads the unit and runs it; the other shows the same.",o:[["Yes - let the watch run it"],["No - let this phone run it"]],d:1},
+ {t:"What matters most?",s:"You can change it later.",o:[["Fresh air","For kids, allergies, working from home"],["Balanced","Fresh air without wasting heat"],["Quiet & thrifty","Less fan noise and lower bills"]],d:1},
+ {t:"How do you feel at home?",s:"Above this we cool the rooms with outdoor air.",o:[["I get warm easily","21,5-22,5°"],["Neither","22,5-23°"],["I get cold easily","23-24°"]],d:1},
+ {t:"Your unit follows a week schedule",s:"The app can run the air instead - by what actually happens at home.",o:[["Let the app run the air","Week clock off, Optimized on"],["Keep the schedule","The app only shows the air"]],d:0},
+ {t:"When should we tell you?",o:[["Only when you need to act","Filters to change"],["Also when something changes","Air got stale, too warm, too humid"]],d:0},
+ {t:"Your plan",s:"From the last 14 days at home:",plan:true}];
+var WIZ_GOAL=["clean","balance","quiet"], WIZ_RANGE=[[21.5,22.5],[22.5,23],[23,24]];
+function wizPlan(){var g=GOALS[WIZ_GOAL[ui.wizA[1]]];return {rest:g.rest,limit:g.limit};}
 function wizard(){
+  if(ui.wiz<0) return '<div class="q">Getting ready</div><div class="sub" style="margin:0 4px">While you answer, this phone runs the unit. At the end you choose which device keeps it.</div><div class="spin" style="margin:24px auto"></div>';
+  if(ui.wiz>=WIZ.length) return '<div class="q">Your plan</div><div class="sub" style="margin:0 4px">Writing to the unit…</div><div class="spin" style="margin:24px auto"></div>';
+  var q=WIZ[ui.wiz], h='<div class="prog"><i style="width:'+((ui.wiz+1)/WIZ.length*100)+'%"></i></div><div class="sub" style="margin:8px 4px 0">Step '+(ui.wiz+1)+' of '+WIZ.length+'</div><div class="q">'+q.t+'</div>'+(q.s?'<div class="sub" style="margin:0 4px">'+q.s+'</div>':'');
+  if(q.plan){
+    if(ui.wizBusy) return h+'<div class="hint">Reading 14 days of history…</div><div class="spin" style="margin:24px auto"></div>';
+    var p=wizPlan();
+    return h+'<div class="k st" style="font-size:15px">'+changesTxt(p.rest,p.limit)+'</div><div class="btn" id="wizNext">Apply and finish</div>';
+  }
+  var sel=ui.wizA[ui.wiz]===undefined?q.d:ui.wizA[ui.wiz];
+  q.o.forEach(function(o,i){h+='<div class="opt'+(i===sel?' on':'')+'" data-wsel="'+i+'"><b>'+o[0]+'</b>'+(o[1]?'<span class="sub">'+o[1]+'</span>':'')+'</div>';});
+  return h+'<div class="btn" id="wizNext">Next</div>';
+}
+function wizStart(){
+  ui.wiz=0; ui.wizA=[]; ui.wizBusy=false; ui.wizTook=false; openPhone("wiz");
+  if(G.ctrl==="watch"){ui.wiz=-1;draw();setTimeout(function(){G.ctrl="phone";ui.wizTook=true;ui.wiz=0;draw();},1600);}
+}
+function wizNext(){
   var q=WIZ[ui.wiz];
-  var h='<div class="prog"><i style="width:'+((ui.wiz+1)/WIZ.length*100)+'%"></i></div><div class="sub" style="margin:8px 4px 0">Step '+(ui.wiz+1)+' of '+WIZ.length+'</div><div class="q">'+q[0]+'</div>';
-  q[1].forEach(function(o,i){var d=o.split("|");h+='<div class="opt'+(i===ui.wizSel?' on':'')+'" data-wsel="'+i+'"><b>'+d[0]+'</b>'+(d[1]?'<span class="sub">'+d[1]+'</span>':'')+'</div>';});
-  h+='<div class="btn" id="wizNext">'+(ui.wiz===WIZ.length-1?"Done - write to the unit":"Next")+'</div>';
-  return h;
+  if(!q.plan){
+    if(ui.wizA[ui.wiz]===undefined) ui.wizA[ui.wiz]=q.d;
+    ui.wiz++;
+    if(WIZ[ui.wiz].plan&&ui.wizA[3]===1){wizFinish();return;}
+    if(WIZ[ui.wiz].plan){ui.wizBusy=true;setTimeout(function(){ui.wizBusy=false;draw();},1500);}
+    draw(); return;
+  }
+  wizFinish();
+}
+/* Pabaiga: rezis, pranesimai, planas, Optimized, vaizdas Automatic, valdymas laikrodziui (jei pasirinkta). */
+function wizFinish(){
+  var a=ui.wizA, r=WIZ_RANGE[a[2]], keep=a[3]===1;
+  G.from=r[0]; G.to=r[1];
+  var all=a[4]===1; G.alerts={temp:all,rh:all,co2:all,filt:true};
+  var end=function(){G.view="auto";G.refresh="Auto";G.clock="Auto fix";if(a[0]===0)G.ctrl="watch";ui.phone="pultas";ui.wpage=0;ui.wwin=null;draw();};
+  if(keep){end();return;}
+  var p=wizPlan(); if(!G.canRestore){G.orig={rest:S.plan.rest,limit:S.plan.limit};G.canRestore=true;}
+  logAdd("You","Optimize plan applied","Fan "+S.plan.rest+" → "+p.rest+" %, CO2 limit "+S.plan.limit+" → "+p.limit);
+  S.plan=p; ui.wiz=WIZ.length; draw();
+  if(S.mode==="optimized") setTimeout(function(){buzz();end();},1600);
+  else write("optimized","phone",end);
 }
 
 /* ---- Pradzios ekranas ir valdikliai (telefonas/Valdikliai.java) ---- */
 function widgets(){
-  var c=wcol(co2Lvl());
-  var air='<div class="wg" data-wopen="pultas"><div class="h"><b>AIR</b><span>'+hhmm(G.min)+'</span></div><div style="font-size:17px;font-weight:700;color:'+c+';margin:2px 0">'+airWord()+'</div>'+
-    '<div class="r"><span>CO2</span><span style="color:'+c+'">'+Math.round(S.co2)+'</span></div><div class="r"><span>Indoor</span><span style="color:var(--wgreen)">'+f1(S.temp)+'°</span></div><div class="r"><span>Humidity</span><span style="color:'+(S.rh>70?"var(--wred)":S.rh>50?"var(--wyellow)":"var(--wgreen)")+'">'+(S.rh>50?"▲ ":"")+Math.round(S.rh)+' %</span></div><div class="r"><span>Outdoor</span><span>'+f1(S.out)+'°</span></div><div class="r"><span>Fan</span><span>'+Math.round(S.fan)+' %</span></div></div>';
+  var c=wcol(co2Lvl()), m=S.mode!=="optimized";
+  var wr=function(l,t,v,r){var n=lvl(v,r),a=arrow(v,r);return '<div class="r"><span>'+l+'</span><span style="color:'+wcol(n)+'">'+(a?a+" ":"")+t+'</span></div>';};
+  var air='<div class="wg" data-wopen="pultas"><div class="h"><b>AIR</b><span>'+hhmm(G.min-S.age)+'</span></div><div style="font-size:17px;font-weight:700;color:'+c+';margin:2px 0">'+airWord()+'</div>'+
+    wr("CO2",Math.round(S.co2),S.co2,R_CO2)+wr("Indoor",f1(S.temp)+"°",S.temp,R_T)+wr("Humidity",Math.round(S.rh)+" %",Math.round(S.rh),R_RH)+
+    '<div class="r"><span>Outdoor</span><span>'+f1(S.out)+'°</span></div><div class="r"><span>Fan</span><span>'+Math.round(S.fan)+' %</span></div>'+
+    (m?'<div class="r"><span>'+NAME[S.mode]+'</span></div>':'')+'</div>';
   var st='<div class="wg" data-wopen="stats"><div class="h"><b>STATS</b><span style="color:#8c96b2">08:39</span></div><div style="font-size:17px;font-weight:700;color:var(--wgreen);margin:2px 0">Better week</div>'+
-    '<div class="r"><span>Energy</span><span style="color:#8c96b2">Fresh air</span></div><div class="r" style="font-size:16px;font-weight:700"><span style="color:var(--wgreen)">-37 %</span><span style="color:var(--wgreen)">+12 %</span></div><div style="text-align:center;font-size:11.5px;color:#8c96b2">Previous week</div>'+
-    '<div class="r" style="font-size:16px;font-weight:700"><span style="color:var(--wgreen)">-35 %</span><span style="color:var(--wgreen)">+30 %</span></div><div style="text-align:center;font-size:11.5px;color:#8c96b2">vs last year</div></div>';
-  var g='<div class="wg" data-wopen="temps"><div class="h"><b>7 DAYS</b><span style="color:#e8ecf5;font-weight:400">Indoor <span style="color:#5b9bf3">Outdoor</span></span></div><canvas class="wgc" data-k="t" height="54"></canvas><canvas class="wgc" data-k="c" height="48"></canvas></div>';
-  return {air:air,st:st,g:g};
+    '<div class="r"><span>Energy</span><span style="color:#8c96b2">Fresh air</span></div><div class="r" style="font-size:16px;font-weight:700"><span style="color:var(--wgreen)">'+ST.prev.e+' %</span><span style="color:var(--wgreen)">+12 %</span></div><div style="text-align:center;font-size:11.5px;color:#8c96b2">Previous week</div>'+
+    '<div class="r" style="font-size:16px;font-weight:700"><span style="color:var(--wgreen)">'+ST.year.e+' %</span><span style="color:var(--wgreen)">+30 %</span></div><div style="text-align:center;font-size:11.5px;color:#8c96b2">2026 vs 2025</div></div>';
+  var g=function(t,p){return '<div class="wg" data-wopen="temps"><div class="h"><b>'+t+'</b><span style="color:#e8ecf5;font-weight:400">Indoor <span style="color:#5b9bf3">Outdoor</span></span></div><canvas class="wgc" data-k="t" data-p="'+p+'" height="54"></canvas><canvas class="wgc" data-k="c" data-p="'+p+'" height="48"></canvas></div>';};
+  return {air:air,st:st,g:g("7 DAYS","w"),d:g("A DAY","d")};
 }
 function homeScreen(){
   var w=widgets();
-  return '<div class="home"><div class="two">'+w.air+w.st+'</div><div style="margin-top:10px">'+w.g+'</div>'+
+  return '<div class="home"><div class="two">'+w.air+w.st+'</div><div style="margin-top:10px">'+w.g+'</div><div style="margin-top:10px">'+w.d+'</div>'+
     '<div class="icons"><div data-wopen="pultas" title="Wrist Control"><img src="/wristcontrol/icon.png" alt="Wrist Control"></div><div>Phone</div><div>Mail</div><div>Apps</div></div></div>';
 }
 
 /* ---- Laikrodis ---- */
-/* Tvarka kaip V laikrodyje; VENTILATION ir SETTINGS visada, kitus ijungia SETTINGS → PAGES. */
+/* Tvarka kaip V laikrodyje (keiciama ilgu paspaudimu); VENTILATION ir SETTINGS visada, kitus isjungia SETTINGS → PAGES. */
 var WORDER=["vent","sens","temps","unit","filt","stats","opt","settings"];
+var PNAME={sens:"Sensors",temps:"Temp.",unit:"Unit",filt:"Filters",opt:"Optimize",stats:"Stats"};
 function wpages(){return G.view==="auto"?["auto","stats"]:WORDER.filter(function(k){return G.pages[k]!==false;});}
-function wlabel(){return '<div class="wlab"><svg viewBox="0 0 100 100">'+(G.ctrl==="phone"?P.phone:P.watch)+'</svg>'+(G.ctrl==="phone"?"PHONE":"WATCH")+'</div>';}
+/* Kelio zyma (MainActivity.zymekKelia): valdo telefonas - PHONE; valdo laikrodis - LOCAL arba CLOUD su Wi-Fi zenklu. */
+function wlabel(){var t=G.ctrl==="phone";return '<div class="wlab"><svg viewBox="0 0 100 100">'+(t?P.phone:P.wifi)+'</svg>'+(t?"PHONE":(G.conn==="Cloud"&&G.cloud?"CLOUD":"LOCAL"))+'</div>';}
 function wrow(pairs,lft){return '<div class="wr'+(lft?' lft':'')+'">'+pairs.map(function(p){return '<span>'+p[0]+'</span><span'+(p[2]?' style="color:'+p[2]+'"':'')+'>'+p[1]+'</span>';}).join("")+'</div>';}
+function wq(v,r){return wcol(lvl(v,r));}
+var PWIN={auto:"air",vent:"pick",sens:"comfort",temps:"temps",filt:"filt",opt:"opt",stats:"stats",settings:"settings"};
 function wpage(k){
   var h=wlabel(), c=wcol(co2Lvl()), m;
   if(k==="auto"){
-    var on=boostOn();
-    h+='<div class="wzod" style="color:'+c+'">'+airWord()+'</div>'+wrow([["CO2",Math.round(S.co2)+" · "+(co2Lvl()?"high":"ok"),c],["Indoor",S.temp.toFixed(1)+"°C · ok","var(--wgreen)"],["Humidity",Math.round(S.rh)+(S.rh>50?" % ▲":" % · ok"),S.rh>70?"var(--wred)":S.rh>50?"var(--wyellow)":"var(--wgreen)"]],true);
+    var on=boostOn(), showMode=!on&&S.mode!=="optimized"&&S.mode!=="auto";
+    h+='<div class="wzod" style="color:'+c+'">'+airWord()+'</div>'+wrow([["CO2",Math.round(S.co2)+" "+(co2Lvl()?arrow(S.co2,R_CO2):"· ok"),c],["Indoor",S.temp.toFixed(1)+"°C "+(lvl(S.temp,R_T)?arrow(S.temp,R_T):"· ok"),wq(S.temp,R_T)],["Humidity",Math.round(S.rh)+" % "+(lvl(Math.round(S.rh),R_RH)?arrow(Math.round(S.rh),R_RH):"· ok"),wq(Math.round(S.rh),R_RH)]],true);
+    if(showMode) h+='<div class="wsub" style="margin-top:2px">'+NAME[S.mode]+(S.left>0?" · "+S.left+" min":"")+'</div>';
     h+='<div class="wpill" id="wboost">'+ic("boost")+'<div class="tx">'+(on?"Stop Boost":"Boost")+'<small>'+(on?S.left+" min left":"1 h")+'</small></div><div class="sl">'+(G.writing?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</div></div>';
     m=writingMsg("watch");
-    h+=m?'<div class="wmsg">'+m+'</div>':'<div class="wage">'+ageTxt()+'</div>';
+    h+=m?'<div class="wmsg">'+m+'</div>':'<div class="wage">'+wageTxt()+'</div>';
     return {h:h,dots:!m};
   }
   if(k==="vent"){
-    h+='<div class="wttl">VENTILATION</div><div class="wmode" data-wwin="pick">'+ic(S.mode)+NAME[S.mode]+(S.left>0?' · '+S.left+'m':'')+'</div>'+
-      wrow([["Fan",Math.round(S.fan)+"%"],["CO2",Math.round(S.co2)+" ppm",c]])+'<div class="wopen" data-wwin="pick">Change</div>';
+    h+='<div class="wttl">VENTILATION</div><div class="wmode">'+ic(S.mode)+NAME[S.mode]+(S.left>0?' · '+S.left+'m':'')+'</div>'+
+      wrow([["Target","18.0°C"],["Home","70%"],["Away",S.plan.rest+"%"],["Boost","90%"]]);
   } else if(k==="sens"){
-    h+='<div class="wttl">SENSORS</div>'+wrow([["Fan",Math.round(S.fan)+"%"],["Recovers",S.temp.toFixed(1)+"°C","var(--wgreen)"],["Humidity",Math.round(S.rh)+(S.rh>50?"% ▲":"%"),S.rh>70?"var(--wred)":S.rh>50?"var(--wyellow)":"var(--wgreen)"],["CO2",Math.round(S.co2)+" ppm",c]])+'<div class="wage">'+ageTxt()+'</div>';
+    var tm=tempMode();
+    h+='<div class="wttl">SENSORS</div>'+wrow([["Fan",Math.round(S.fan)+"%"],[tm==="keep"?'<span style="color:#f28c38">Recovers</span>':tm==="cool"?'<span style="color:#5b9bf3">Cooling</span>':"Indoor",S.temp.toFixed(1)+"°C",wq(S.temp,R_T)],["Humidity",Math.round(S.rh)+"%"+(arrow(Math.round(S.rh),R_RH)?" "+arrow(Math.round(S.rh),R_RH):""),wq(Math.round(S.rh),R_RH)],["CO2",Math.round(S.co2)+" ppm",c]])+'<div class="wage">'+wageTxt()+'</div>';
   } else if(k==="temps"){
-    h+='<div class="wttl">TEMPERATURES</div>'+wrow([["Extract",S.temp.toFixed(1)+"°C"],["Supply","22.1°C"],["Outdoor",S.out.toFixed(1)+"°C"],["Heater","OFF","var(--wlo)"]])+'<div class="wopen" data-wwin="temps">Open</div>';
+    h+='<div class="wttl">TEMPERATURES</div>'+wrow([["Extract",S.temp.toFixed(1)+"°C"],["Supply","22.1°C"],["Outdoor",S.out.toFixed(1)+"°C"],["Exhaust","14.5°C"],["Heater","OFF","var(--wlo)"]])+'<div class="wage">'+wageTxt()+'</div>';
   } else if(k==="opt"){
-    h+='<div class="wttl">OPTIMIZE</div><div style="display:flex;gap:26px;margin-top:6px;text-align:center"><div><div style="color:var(--wlo);font-size:20px">CO2</div><div class="wbig" style="color:var(--wgreen)">713</div><div style="color:var(--wlo);font-size:15px">goal 738</div></div><div><div style="color:var(--wlo);font-size:20px">Indoor</div><div class="wbig">'+S.temp.toFixed(1)+'°</div><div style="color:#f28c38;font-size:15px">Recovers</div></div></div><div class="wopen" data-wwin="opt">Open</div>';
+    var t2=tempMode();
+    h+='<div class="wttl">OPTIMIZE</div><div style="display:flex;gap:26px;margin-top:6px;text-align:center"><div><div style="color:var(--wlo);font-size:20px">CO2</div><div class="wbig" style="color:var(--wgreen)">713</div><div style="color:var(--wlo);font-size:15px">goal 738</div></div><div><div style="color:var(--wlo);font-size:20px">Indoor</div><div class="wbig">'+S.temp.toFixed(1)+'°</div><div style="color:'+(t2==="cool"?"#5b9bf3":"#f28c38")+';font-size:15px">'+(t2==="keep"?"Recovers":t2==="cool"?"Cooling":"&nbsp;")+'</div></div></div><div class="wopen">Open</div>';
   } else if(k==="stats"){
-    h+='<div class="wttl">STATISTICS</div><div style="display:flex;gap:22px;margin-top:6px;text-align:center;font-size:20px"><div><div style="color:var(--wlo)">Energy</div><div class="wbig" style="color:var(--wgreen)">-35 %</div></div><div><div style="color:var(--wlo)">Fresh air</div><div class="wbig" style="color:var(--wgreen)">+30 %</div></div></div><div style="color:var(--wlo);font-size:17px">vs same week last year</div><div class="wopen" data-wwin="stats">Open</div>';
+    h+='<div class="wttl">STATISTICS</div><div style="display:flex;gap:22px;margin-top:6px;text-align:center;font-size:20px"><div><div style="color:var(--wlo)">Energy</div><div class="wbig" style="color:var(--wgreen)">'+ST.year.e+' %</div></div><div><div style="color:var(--wlo)">Fresh air</div><div class="wbig" style="color:var(--wgreen)">+30 %</div></div></div><div style="color:var(--wlo);font-size:17px">vs same week last year</div><div class="wopen">Open</div>';
   } else if(k==="unit"){
     var rec=S.out<S.temp-1;
     h+='<div class="wttl">UNIT</div><div class="wsub" style="margin-top:0">'+S.name+'</div>'+wrow([["Supply",Math.round(900+S.fan*15)+" rpm"],["Extract",Math.round(820+S.fan*14)+" rpm"],["HR cell",rec?"heat rec.":"bypass"]])+
-      '<div class="wage">'+hhmm(G.min)+'</div>';
+      '<div class="wage">'+hhmm(G.min-S.age)+'</div>';
   } else if(k==="filt"){
-    h+='<div class="wttl">FILTERS</div><div class="wbig" style="margin-top:8px;color:'+(S.filt<30?"var(--wyellow)":"var(--whi)")+'">'+S.filt+' d</div><div class="wsub">left of 180</div><div class="wopen" data-wwin="filt">Open</div>';
+    h+='<div class="wttl">FILTERS</div>'+wrow([["Replaced",md(dateAdd(S.filt-180))],["Interval","180 d"],["Next",md(dateAdd(S.filt))]])+'<div class="wage" style="color:'+(S.filt<=7?"var(--wyellow)":"var(--wlo)")+'">'+S.filt+' d left</div>';
   } else if(k==="settings"){
-    h+='<div class="wttl">SETTINGS</div>'+wrow([["Path","Auto"],["Refresh",G.refresh],["Alerts",alertsOn()+" on"],["Pages",wpages().length+" of 8"]])+'<div class="wopen" data-wwin="settings">Open</div>';
+    h+='<div class="wttl">SETTINGS</div>'+wrow([["Path",G.conn],["Refresh",REF_SHORT[G.refresh]],["Alerts",wAlerts()],["Pages",wpages().length+" of 8"]])+'<div class="wopen">Open</div>';
   }
   return {h:h,dots:true};
 }
+function wsec(t){return '<div class="wsec" style="font-size:22px;font-weight:700">'+t+'</div>';}
+function wsec2(t){return '<div class="wsec">'+t+'</div>';}
+function wsw(on,attr){return '<span class="wsw'+(on?' on':'')+'" '+attr+'></span>';}
+function wscale(l,t,k,v){return '<div class="wsl"><span style="color:var(--whi)">'+l+'</span><b>'+t+'</b></div>'+sc(k,v,WZC);}
 function wwin(k){
-  var h='', m=writingMsg("watch");
+  var h='', m=writingMsg("watch"), tel=G.ctrl==="phone";
   if(k==="pick"){
     h+='<div class="wttl" data-wclose="1">MODE</div>';
     MODES.forEach(function(md){var on=S.mode===md[0], w=G.writing&&G.writing.mode===md[0];
       h+='<div class="wm'+(on?' on':'')+'" data-wmode="'+md[0]+'">'+ic(md[0])+'<span class="n">'+md[1]+'</span><span class="sl">'+(w?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</span></div>';});
-    h+='<div class="wmsg">'+(m||"Switch modes here: the panel skips tuned settings")+'</div>';
+    h+='<div class="wmsg">'+(m||"Switch modes here: the panel skips tuned settings")+'</div>'+wsec2("WEEK CLOCK")+'<div class="wsub">Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="wsub">Auto = Vallox factory settings</div>';
+  } else if(k==="air"||k==="comfort"){
+    h+=k==="air"?'<div class="wzod" style="color:'+wcol(co2Lvl())+';font-size:24px">'+airWord()+'</div>':'<div class="wttl">COMFORT ZONE</div>';
+    var tt=[["Temp",S.temp.toFixed(1)+"°C","t",S.temp],["Humidity",Math.round(S.rh)+"%","rh",S.rh],["CO2",Math.round(S.co2)+" ppm","co2",S.co2]];
+    if(k==="air") tt=[tt[2],["Indoor",tt[0][1],"t",S.temp],tt[1]];
+    tt.forEach(function(x){h+=wscale(x[0],x[1],x[2],x[3]);});
   } else if(k==="temps"){
-    h+='<div class="wttl">A DAY</div><canvas id="wcv1" height="70" style="margin-top:6px"></canvas><canvas id="wcv2" height="60"></canvas><div class="wsub">Indoor · <span style="color:#5b9bf3">Outdoor</span> · <span style="color:#f5c542">CO2</span></div>';
+    h+='<div class="wttl">A DAY</div><div class="wsub" style="margin-top:0">last 24 hours</div><canvas id="wcv1" height="70" style="margin-top:6px"></canvas><canvas id="wcv2" height="60"></canvas><div class="wsub">Indoor · <span style="color:#5b9bf3">Outdoor</span> · CO2</div>';
   } else if(k==="opt"){
-    h+='<div class="wttl">OPTIMIZE</div><div class="wsec">YOUR PLAN</div>'+wrow([["Fan at rest",S.plan.rest+"%"],["CO2 limit",S.plan.limit]])+'<div class="wsub">New plan works here too; in the demo, try it on the phone.</div>';
+    h+='<div class="wttl">OPTIMIZED</div><div class="wsub" style="margin-top:0">Settings tuned to your home, and the result</div>'+wsec("CO2")+'<div class="wsub">Result</div><div class="wbig" style="color:var(--wgreen);font-size:30px">713 ppm</div><div class="wsub" style="margin-top:0">goal 738</div>'+
+      wrow([["Fan at rest",S.plan.rest+"%"],["CO2 limit",S.plan.limit]])+'<div class="wm on" style="justify-content:center" data-wtoast="Checked: morning CO2 713, goal 738">Check again</div>'+
+      wsec("CHANGE")+'<div class="wsub">'+(tel?CTRL_OTHER.watch:"New plan and Restore work here too; in the demo, try them on the phone.")+'</div>'+
+      wsec("TEMPERATURE")+'<div class="wsub">On: the app keeps heat and cools by indoor temperature</div><div class="wsub">'+rangeTxt(false)+'</div>';
   } else if(k==="stats"){
-    h+='<div class="wttl">STATISTICS</div><div class="wsec">PREVIOUS WEEK</div>'+wrow([["Energy","-37 %","var(--wgreen)"],["Fresh air","+12 %","var(--wgreen)"]])+'<div class="wsec">LAST YEAR</div>'+wrow([["Energy","-35 %","var(--wgreen)"],["Fresh air","+30 %","var(--wgreen)"]]);
+    var pv=ST.prev, yr=ST.year, pc=function(a){var x=Math.round((a[1]/a[0]-1)*100);return (x>0?"+":"")+x+" %";};
+    h+='<div class="wttl">STATISTICS</div>'+wsec("VS LAST WEEK")+wrow([["Fresh air",pc(pv.fresh),"var(--wgreen)"],["CO2 avg",pc(pv.co2),"var(--wgreen)"],["Fan avg",pc(pv.fan)],["Energy",pv.e+" %","var(--wgreen)"]])+
+      '<div class="wsub">Now: fresh air '+pv.fresh[1]+' %, CO2 '+pv.co2[1]+', fan '+pv.fan[1]+' %.</div><div class="wsub">Week before: '+pv.fresh[0]+' %, '+pv.co2[0]+', '+pv.fan[0]+' %.</div>'+
+      wsec("VS LAST YEAR")+wrow([["Fresh air",pc(yr.fresh),"var(--wgreen)"],["CO2 avg",pc(yr.co2),"var(--wgreen)"],["Fan avg",pc(yr.fan),"var(--wgreen)"],["Energy",yr.e+" %","var(--wgreen)"]])+
+      '<div class="wsub">Energy without the weather. Total '+yr.total+', weather '+yr.weather+'</div>';
   } else if(k==="filt"){
-    h+='<div class="wttl">FILTERS</div><div class="wbig" style="margin-top:6px">'+S.filt+' d</div><div class="wm" id="wfchg" style="justify-content:center">Mark changed</div>';
+    h+='<div class="wttl">FILTERS</div>'+wrow([["Replaced",md(dateAdd(S.filt-180))],["Interval","180 d"],["Next",md(dateAdd(S.filt))]])+
+      '<div class="wm'+(ui.wfsure?' on':'')+'" id="wfchg" style="justify-content:center">'+(ui.wfsure?"Confirm today":"Mark changed")+'</div>'+(ui.wfsaved?'<div class="wmsg">Saved</div>':'');
   } else if(k==="settings"){
-    var tel=G.ctrl==="phone", sw=function(on,attr){return '<span class="wsw'+(on?' on':'')+'" '+attr+'></span>';};
-    h+='<div class="wttl">SETTINGS</div>'+(tel?'<div class="wsub" style="color:var(--wyellow);font-size:19px">The phone controls the VALLOX unit. Changes are made on it.</div>':'')+
-      '<div class="wsec" style="font-size:22px;font-weight:700">UNIT</div><div class="wsub" style="margin-top:0">'+(tel?"Changed on the phone":"Changed here")+'</div>'+
-      wrow([["Refresh",G.refresh],["Clock",G.clock==="Fixed automatically"?"Auto fix":G.clock],["Alerts",alertsOn()+" on"],["Temp.",G.from.toFixed(1)+"°-"+G.to.toFixed(1)+"°"]])+
-      (tel?'':[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="wrow2"><span>'+a[1]+' alert</span>'+sw(G.alerts[a[0]],'data-wal="'+a[0]+'"')+'</div>';}).join(""))+
-      '<div class="wsec" style="font-size:22px;font-weight:700">THIS WATCH</div><div class="wrow2"><span>Cloud</span>'+sw(G.cloud,'data-wcloud="1"')+'</div>'+
-      '<div class="wm on" style="justify-content:center" data-wtoast="Account: demo@example.com">My account</div><div class="wsub" style="color:var(--whi)">demo@example.com</div>'+
-      '<div class="wsec" style="font-size:22px;font-weight:700">PAGES</div>'+
-      [["sens","Sensors"],["temps","Temp."],["opt","Optimize"],["stats","Stats"],["unit","Unit"],["filt","Filters"]].map(function(pg){return '<div class="wrow2"><span>'+pg[1]+'</span>'+sw(G.pages[pg[0]],'data-wpg="'+pg[0]+'"')+'</div>';}).join("")+
-      '<div class="wsec" style="font-size:22px;font-weight:700">HOW IT WORKS</div><div class="wm" style="justify-content:center" data-wtoast="On the real watch: a short guide to modes, Optimize and who controls the unit">Open</div>'+
-      '<div class="wsec" style="font-size:22px;font-weight:700">LANGUAGE</div><div class="wm" style="justify-content:center" data-wtoast="English, Suomi, Lietuvių, Polski - Auto follows the watch">'+G.lang+'</div>';
+    h+='<div class="wttl">SETTINGS</div>';
+    if(tel) h+=wsec("VALLOX UNIT CONTROLLED BY")+'<div class="wsub" style="color:var(--wyellow);font-size:19px">The phone controls the VALLOX unit. Changes are made on it.</div>';
+    h+=wsec("UNIT");
+    if(tel){
+      h+='<div class="wsub" style="margin-top:0">Changed on the phone</div>'+wrow([["Temp.",rangeTxt(false)],["Alerts",wAlerts()],["Refresh",REF_SHORT[G.refresh]],["Clock",G.clock]]);
+    } else {
+      var wb=function(attr,v,on){return '<div class="wm'+(on?' on':'')+'" '+attr+'="'+v+'">'+v+'</div>';};
+      h+=wsec2("TEMPERATURE")+[["from","From"],["to","To"]].map(function(x){return '<div class="wpm"><span data-wt="'+x[0]+'-">-</span><div><small>'+x[1]+'</small>'+deg(G[x[0]],false)+'</div><span data-wt="'+x[0]+'+">+</span></div>';}).join("")+
+        wsec2("ALERTS")+[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="wrow2"><span>'+a[1]+'</span>'+wsw(G.alerts[a[0]],'data-wal="'+a[0]+'"')+'</div>';}).join("")+
+        wsec2("DATA REFRESH")+'<div class="wseg">'+wb("data-wref","Auto",G.refresh==="Auto").replace(">Auto<",">Auto 15-60 min<")+'</div><div class="wsub" style="margin-top:2px">Drains battery faster</div>'+
+        '<div class="wseg">'+wb("data-wref","20 min",G.refresh==="20 min")+wb("data-wref","30 min",G.refresh==="30 min")+wb("data-wref","1 h",G.refresh==="1 h")+'</div><div class="wseg">'+wb("data-wref","Only in app",G.refresh==="Only in app")+'</div>'+
+        wsec2("UNIT CLOCK")+'<div class="wseg">'+["Ask to fix","Auto fix","Off"].map(function(v){return wb("data-wclk",v,G.clock===v);}).join("")+'</div>';
+    }
+    h+=wsec("PRO")+'<div class="wrow2"><span>Pro</span><span>Unlocked</span></div>'+
+      wsec("THIS WATCH")+'<div class="wrow2"><span>Cloud</span>'+wsw(G.cloud,'data-wcloud="1"')+'</div>'+
+      '<div class="wm on" style="justify-content:center" data-wtoast="Account: demo@example.com">My account</div><div class="wsub" style="color:var(--whi)">demo@example.com</div>';
+    if(!tel) h+=wsec("CONNECTION")+'<div class="wseg">'+["Auto","Local","Cloud"].map(function(v){return '<div class="wm'+(G.conn===v?' on':'')+'" data-wconn="'+v+'">'+v+'</div>';}).join("")+'</div><div class="wsub">Local: more battery</div>';
+    h+=wsec("PAGES")+WORDER.filter(function(p){return PNAME[p];}).map(function(pg){return '<div class="wrow2"><span>'+PNAME[pg]+'</span>'+wsw(G.pages[pg],'data-wpg="'+pg+'"')+'</div>';}).join("")+
+      wsec("HOW IT WORKS")+'<div class="wm" style="justify-content:center" data-wtoast="On the real watch: a short guide to modes, Optimize, automation, humidity and statistics">Open</div>'+
+      wsec("LANGUAGE")+'<div class="wm" style="justify-content:center" data-wtoast="English, Suomi, Lietuvių, Polski - Auto follows the watch">'+G.lang+'</div>'+
+      '<div class="wm" style="justify-content:center;margin-top:14px" data-wtoast="5 test alerts sent">Send test alerts</div>';
   }
   return h;
 }
 function faceHtml(){
-  var c=wcol(co2Lvl());
-  return '<div class="face"><div class="dt">WED · 28</div><div class="tm">'+hhmm(G.min)+'</div>'+
-    '<div class="cmp" style="left:20%;top:16%"><span style="color:'+c+'">'+Math.round(S.co2)+'</span><small>CO2</small></div>'+
-    '<div class="cmp" style="right:20%;top:16%"><span>'+Math.round(S.fan)+'%</span><small>FAN</small></div>'+
-    '<div class="cmp" style="left:20%;bottom:17%"><span style="color:var(--wgreen)">'+S.temp.toFixed(1)+'°</span><small>INDOOR</small></div>'+
-    '<div class="cmp" style="right:20%;bottom:17%"><span style="color:#5b9bf3">'+S.out.toFixed(1)+'°</span><small>OUTDOOR</small></div></div>';
+  var cm=function(pos,icon,val){return '<div class="cmp" style="'+pos+'">'+icon+'<span>'+val+'</span></div>';};
+  return '<div class="face"><div class="dt">'+dayName(G.min).toUpperCase()+' · '+dateAdd(0).getDate()+'</div><div class="tm">'+hhmm(G.min)+'</div>'+
+    cm("left:20%;top:14%",ic("co2"),Math.round(S.co2))+
+    cm("right:20%;top:14%",'<svg viewBox="0 0 100 100" style="color:#e8ecf5">'+P.fan+'</svg>',Math.round(S.fan)+"%")+
+    cm("left:20%;bottom:13%",ic("vlx"),S.temp.toFixed(1)+"°")+
+    cm("right:20%;bottom:13%",ic("vlx"),S.out.toFixed(1)+"°")+'</div>';
 }
 
 /* ---- Piesimas ---- */
@@ -659,20 +908,21 @@ function draw(){
   document.getElementById("clk").textContent=hhmm(G.min);
   document.getElementById("story").innerHTML=story();
   document.querySelectorAll("[data-scen]").forEach(function(b){b.classList.toggle("on",S.scen===b.dataset.scen);});
-  document.getElementById("ps").classList.toggle("light",G.theme==="light");
+  document.getElementById("ps").classList.toggle("light",isLight());
   var scr=document.getElementById("scr"), y=scr.scrollTop;
   scr.innerHTML=ui.phone==="pultas"?pultas():langas(ui.phone);
   scr.scrollTop=y;
-  document.getElementById("homeLayer").innerHTML=ui.layer==="home"?homeScreen():"";
+  document.getElementById("homeLayer").innerHTML=(ui.layer==="home"?homeScreen():"")+(ui.pulling?'<div class="pull"><div class="spin"></div></div>':'');
   if(ui.phone==="temps") graphs();
   var pages=wpages(); if(ui.wpage>=pages.length) ui.wpage=0;
-  var r=wpage(pages[ui.wpage]);
+  var pk=pages[ui.wpage], r=wpage(pk);
   var dots=""; if(pages.length>1) for(var i=0;i<pages.length;i++) dots+=i===ui.wpage?"●":"·";
-  var over="";
+  var over="", n=ui.note;
   if(ui.wface) over='<div style="position:absolute;inset:0" data-wfaceopen="1">'+faceHtml()+'</div>';
-  else if(ui.wnote) over='<div class="wnote"><b>'+(ui.wnoteKind==="rh"?"Humidity high":"Air is getting stale")+'</b><div>'+(ui.wnoteKind==="rh"?"Humidity "+Math.round(S.rh)+" %":"CO2 "+Math.round(S.co2)+" ppm")+'</div><div class="wm on" id="wnBoost" style="justify-content:center">Boost 1 h</div><div class="wsub" id="wnClose" style="cursor:pointer;margin-top:10px">Dismiss</div></div>';
+  else if(ui.wnote&&n) over='<div class="wnote"><div class="act" id="wnAct"><b>'+n.title+'</b><div>'+n.text+'</div></div>'+(n.kind==="auto"?'<div class="wm on" id="wnUndo" style="justify-content:center">Undo</div>':'')+'<div class="wsub" id="wnClose" style="cursor:pointer;margin-top:10px">Dismiss</div></div>';
   else if(ui.wwin) over='<div class="wwin">'+wwin(ui.wwin)+'</div>';
-  document.getElementById("ws").innerHTML='<div class="wp">'+r.h+'</div><div class="wdots">'+(r.dots?dots:"")+'</div>'+over;
+  var act=pk==="unit"?' data-wread="1"':(PWIN[pk]?' data-wwin="'+PWIN[pk]+'"':'');
+  document.getElementById("ws").innerHTML='<div class="wp"'+act+'>'+r.h+'</div><div class="wdots">'+(r.dots?dots:"")+'</div>'+over;
   if(ui.wwin==="temps"&&!ui.wface&&!ui.wnote) wgraphsWatch();
   var w=widgets(); document.getElementById("wgs").innerHTML=w.air+w.g;
   wgraphs();
@@ -687,66 +937,89 @@ function plot(c,series,ref,opts){
   function Y(v){return 4+(H-4-bottom)*(1-(v-mn)/(mx-mn));}
   x.font="10px system-ui";
   if(opts.labels){x.fillStyle="#8c96b2";opts.labels.forEach(function(t,i){x.fillText(t,2+(W-40)*i/(opts.labels.length-1),H-2);});}
-  if(ref){x.strokeStyle="#8c96b2";x.setLineDash([4,4]);x.lineWidth=1;x.beginPath();x.moveTo(0,Y(ref));x.lineTo(W,Y(ref));x.stroke();x.setLineDash([]);}
-  series.forEach(function(s){x.strokeStyle=s.c;x.lineWidth=2;x.beginPath();
-    s.v.forEach(function(v,i){var px=2+(W-40)*i/(s.v.length-1);i?x.lineTo(px,Y(v)):x.moveTo(px,Y(v));});x.stroke();
-    var last=s.v[s.v.length-1]; x.fillStyle=s.c; x.fillText(s.fmt(last),W-34,Y(last)+3);});
+  if(ref){x.strokeStyle=opts.refCol||"#8c96b2";x.setLineDash([4,4]);x.lineWidth=1;x.beginPath();x.moveTo(0,Y(ref));x.lineTo(W,Y(ref));x.stroke();x.setLineDash([]);
+    if(opts.refLab){x.fillStyle=opts.refCol;x.fillText(opts.refLab,2,Y(ref)-3);}}
+  series.forEach(function(s){x.strokeStyle=s.c;x.lineWidth=s.dash?1.5:2;x.setLineDash(s.dash?[4,4]:[]);x.beginPath();
+    s.v.forEach(function(v,i){var px=2+(W-40)*i/(s.v.length-1);i?x.lineTo(px,Y(v)):x.moveTo(px,Y(v));});x.stroke();x.setLineDash([]);
+    if(!s.dash){var last=s.v[s.v.length-1]; x.fillStyle=s.c; x.fillText(s.fmt(last),W-34,Y(last)+3);}});
 }
-function hiCol(){return G.theme==="light"?"#14161c":"#e8ecf5";}
-function deg(v){return v.toFixed(1)+"°";}
+function hiCol(){return isLight()?"#14161c":"#e8ecf5";}
+function degf(v){return v.toFixed(1)+"°";}
 function ppm(v){return String(Math.round(v));}
+function flat(n,v){var a=[];for(var i=0;i<n;i++)a.push(v);return a;}
 function graphs(){
-  var h=S.hist, wk=S.week, L=["0","6","12","18","24"], D=wk.map(function(d){return d.d;});
-  plot(document.getElementById("cvd1"),[{v:h.map(function(p){return p.tin;}),c:hiCol(),fmt:deg},{v:h.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:deg}],null,{labels:L});
-  plot(document.getElementById("cvd2"),[{v:h.map(function(p){return p.co2;}),c:"#f5c542",fmt:ppm}],800,{labels:L});
-  plot(document.getElementById("cvw1"),[{v:wk.map(function(p){return p.tin;}),c:hiCol(),fmt:deg},{v:wk.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:deg}],null,{labels:D});
-  plot(document.getElementById("cvw2"),[{v:wk.map(function(p){return p.co2;}),c:"#f5c542",fmt:ppm}],800,{labels:D});
+  var h=S.hist, wk=S.week, L=["0","6","12","18","24"], D=wk.map(function(d){return d.d;}), Y="#f5c542", B="#5b9bf3", Gy="#8c96b2";
+  plot(document.getElementById("cvd1"),[{v:h.map(function(p){return p.tin;}),c:hiCol(),fmt:degf},{v:h.map(function(p){return p.tout;}),c:B,fmt:degf}],null,{labels:L});
+  plot(document.getElementById("cvd2"),[{v:h.map(function(p){return p.co2;}),c:hiCol(),fmt:ppm}],800,{labels:L,refCol:Y,refLab:"800"});
+  plot(document.getElementById("cvw1"),[{v:wk.map(function(p){return p.tin;}),c:hiCol(),fmt:degf},{v:wk.map(function(p){return p.tout;}),c:B,fmt:degf},{v:flat(7,ST.year.out),c:Gy,dash:true}],null,{labels:D});
+  plot(document.getElementById("cvw2"),[{v:wk.map(function(p){return p.co2;}),c:hiCol(),fmt:ppm},{v:flat(7,624),c:Gy,dash:true}],800,{labels:D,refCol:Y,refLab:"800"});
 }
 function wgraphs(){
   document.querySelectorAll(".wgc").forEach(function(c){
-    var wk=S.week;
-    if(c.dataset.k==="t") plot(c,[{v:wk.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:deg},{v:wk.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:deg}]);
-    else plot(c,[{v:wk.map(function(p){return p.co2;}),c:"#6fbf73",fmt:ppm}],800,{labels:wk.map(function(d){return d.d;})});
+    var day=c.dataset.p==="d", src=day?S.hist:S.week, lab=day?["0","6","12","18","24"]:S.week.map(function(d){return d.d;});
+    if(c.dataset.k==="t") plot(c,[{v:src.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:degf},{v:src.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:degf}]);
+    else plot(c,[{v:src.map(function(p){return p.co2;}),c:"#6fbf73",fmt:ppm}],800,{labels:lab});
   });
 }
 function wgraphsWatch(){
   var h=S.hist;
-  plot(document.getElementById("wcv1"),[{v:h.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:deg},{v:h.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:deg}]);
-  plot(document.getElementById("wcv2"),[{v:h.map(function(p){return p.co2;}),c:"#f5c542",fmt:ppm}],800);
+  plot(document.getElementById("wcv1"),[{v:h.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:degf},{v:h.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:degf}]);
+  plot(document.getElementById("wcv2"),[{v:h.map(function(p){return p.co2;}),c:"#e8ecf5",fmt:ppm}],800,{refCol:"#f5c542"});
 }
 
 /* ---- Valdymas: telefonas ---- */
-function openPhone(w){ui.phone=w;ui.layer="app";document.getElementById("scr").scrollTop=0;if(w==="opt")ui.opt="idle";draw();}
+function openPhone(w){ui.phone=w;ui.layer="app";document.getElementById("scr").scrollTop=0;if(w==="opt"){ui.opt="idle";ui.prop=null;}draw();}
+function openOpt(p){openPhone("opt");ui.prop=prog(p.rest,p.limit);ui.opt="result";draw();}
+function busy(id,ms,done){ui.busy=id;draw();setTimeout(function(){ui.busy=null;if(done)done();draw();},ms);}
+function setView(v){G.view=v;ui.wpage=0;ui.wwin=null;if(v==="auto"){G.refresh="Auto";G.clock="Auto fix";}draw();}
+/* Rezis kaip VlxAutomatika: From 20-24°, To From+0,5..From+2, zingsnis 0,5. */
+function stepRange(k,s){
+  if(k==="from"){G.from=Math.max(20,Math.min(24,G.from+s));G.to=Math.max(G.from+0.5,Math.min(G.from+2,G.to));}
+  else G.to=Math.max(G.from+0.5,Math.min(G.from+2,G.to+s));
+}
 document.getElementById("ps").addEventListener("click",function(e){
-  var t=e.target.closest("[data-open],[data-mode],[data-boost],[data-ctrl],[data-view],[data-toast],[data-theme],[data-t],[data-al],[data-cyc],[data-goal],[data-wsel],[data-units],[data-unit],[data-wopen],#fchg,#oNew,#oRestore,#oApply,#oCancel,#wizGo,#wizNext,#openWatch,#nBoost,.list");
+  if(ui.pulled){ui.pulled=false;return;}
+  var t=e.target.closest("[data-open],[data-mode],[data-boost],[data-ctrl],[data-view],[data-toast],[data-theme],[data-t],[data-al],[data-ref],[data-clk],[data-ogoal],[data-wsel],[data-units],[data-unit],[data-wopen],#fchg,#oNew,#oRestore,#oApply,#oCheck,#tUpd,#sUpd,#wizGo,#wizNext,#openWatch,#nUndo,#banner,.list");
   if(!t) return;
   var d=t.dataset;
+  if(t.id==="nUndo"){undoAuto();return;}
+  if(t.id==="banner"){notePhone();return;}
   if(d.wopen){openPhone(d.wopen);return;}
   if(d.open){openPhone(d.open);return;}
   if(d.boost){ if(!G.writing) write(boostOn()?"optimized":"boost","phone"); return;}
   if(d.mode){ if(!G.writing&&d.mode!==S.mode) write(d.mode,"phone"); return;}
-  if(d.ctrl){ if(d.ctrl!==G.ctrl){G.ctrl=d.ctrl;logAdd("You (phone)","Control: "+(G.ctrl==="phone"?"phone":"watch"));toast(G.ctrl==="phone"?"The phone now runs the unit":"The watch now runs the unit");draw();} return;}
-  if(d.view){G.view=d.view;ui.wpage=0;ui.wwin=null;toast((G.view==="auto"?"Automatic":"Semi-automatic")+" - the watch follows");draw();return;}
+  if(d.ctrl){
+    if(G.waiting) return;
+    if(d.ctrl==="watch"&&G.ctrl==="phone"){G.waiting=true;draw();setTimeout(function(){G.waiting=false;G.ctrl="watch";draw();},1800);}
+    else if(d.ctrl==="phone"&&G.ctrl==="watch"){G.ctrl="phone";draw();}
+    return;}
+  if(d.view){setView(d.view);return;}
   if(d.theme){G.theme=d.theme;draw();return;}
-  if(d.t){var k=d.t.slice(0,-1),s=d.t.slice(-1)==="+"?0.5:-0.5;G[k]=Math.round((G[k]+s)*2)/2;if(G.from>G.to-0.5){if(k==="from")G.from=G.to-0.5;else G.to=G.from+0.5;}draw();return;}
+  if(d.t){stepRange(d.t.slice(0,-1),d.t.slice(-1)==="+"?0.5:-0.5);draw();return;}
   if(d.al){G.alerts[d.al]=!G.alerts[d.al];draw();return;}
-  if(d.cyc){var o=d.cyc==="refresh"?["Auto","15 min","30 min","1 h"]:["Fixed automatically","Ask me","Off"];G[d.cyc]=o[(o.indexOf(G[d.cyc])+1)%o.length];draw();return;}
-  if(d.goal){ui.goal=d.goal;draw();return;}
-  if(d.wsel){ui.wizSel=+d.wsel;draw();return;}
+  if(d.ref){G.refresh=d.ref;draw();return;}
+  if(d.clk){G.clock=d.clk;draw();return;}
+  if(d.ogoal){var g=GOALS[d.ogoal];ui.opt="busy";draw();setTimeout(function(){ui.prop=prog(g.rest,g.limit);ui.opt="result";draw();},1800);return;}
+  if(d.wsel){ui.wizA[ui.wiz]=+d.wsel;draw();return;}
   if(d.units){sheet();return;}
-  if(d.unit!==undefined){S=U[+d.unit];document.getElementById("sheet").innerHTML="";toast("Now showing "+S.name);draw();return;}
-  if(d.toast){toast(d.toast);return;}
+  if(d.unit!==undefined){S=U[+d.unit];document.getElementById("sheet").innerHTML="";S.age=0;draw();return;}
+  if(d.toast){e.preventDefault();toast(d.toast);return;}
   if(t.classList.contains("list")){if(e.target===t)document.getElementById("sheet").innerHTML="";return;}
   switch(t.id){
-    case "fchg": if(!ui.fsure){ui.fsure=1;draw();setTimeout(function(){ui.fsure=0;draw();},4000);} else {ui.fsure=0;S.filt=180;logAdd("You (phone)","Filters changed");toast("Filter timer reset to 180 days");draw();} return;
-    case "oNew": ui.opt="busy";draw();setTimeout(function(){ui.opt="result";draw();},1800);return;
-    case "oCancel": ui.opt="idle";draw();return;
-    case "oRestore": S.plan={rest:50,limit:800};logAdd("You (phone)","Optimize restored");toast("Old settings back: fan 50 %, CO2 limit 800");draw();return;
-    case "oApply": var g={quiet:[35,700],balanced:[45,500],fresh:[55,450]}[ui.goal];S.plan={rest:g[0],limit:g[1]};ui.opt="idle";logAdd("You (phone)","Optimize plan applied");write("optimized","phone");return;
-    case "wizGo": ui.wiz=0;ui.wizSel=0;openPhone("wiz");return;
-    case "wizNext": if(ui.wiz<WIZ.length-1){if(ui.wiz===0)G.ctrl=ui.wizSel===1?"watch":"phone";ui.wiz++;ui.wizSel=0;draw();} else {ui.phone="pultas";logAdd("You (phone)","Setup done");write("optimized","phone");} return;
-    case "openWatch": ui.wface=false;ui.wwin=null;ui.wnote=false;ui.wpage=0;buzz();toast("Opened on the watch");draw();return;
-    case "nBoost": document.getElementById("banner").classList.remove("on");ui.wnote=false;if(!boostOn())write("boost","phone");else draw();return;
+    case "fchg": if(!ui.fsure){ui.fsure=1;draw();clearTimeout(ui.fT);ui.fT=setTimeout(function(){ui.fsure=0;draw();},4000);} else {clearTimeout(ui.fT);ui.fsure=0;busy("fchg",1200,function(){S.filt=180;toast("Saved");});} return;
+    case "oNew": ui.opt="goal";draw();return;
+    case "oCheck": busy("oCheck",1500);return;
+    case "tUpd": case "sUpd": busy(t.id,1500,function(){G.upd=G.min;});return;
+    case "oRestore": busy("oRestore",1600,function(){var p=S.plan;S.plan={rest:G.orig.rest,limit:G.orig.limit};G.canRestore=false;
+      logAdd("You","Settings restored","Fan "+p.rest+" → "+S.plan.rest+" %, CO2 limit "+p.limit+" → "+S.plan.limit);buzz();});return;
+    case "oApply": var r=ui.prop, p0=S.plan; if(!G.canRestore){G.orig={rest:p0.rest,limit:p0.limit};G.canRestore=true;}
+      logAdd("You","Optimize plan applied","Fan "+p0.rest+" → "+r.rest+" %, CO2 limit "+p0.limit+" → "+r.limit);
+      S.plan={rest:r.rest,limit:r.limit};ui.opt="idle";ui.prop=null;
+      if(S.mode==="optimized") busy("oApply",1600,buzz); else write("optimized","phone");
+      return;
+    case "wizGo": wizStart();return;
+    case "wizNext": wizNext();return;
+    case "openWatch": ui.wface=false;ui.wwin=null;ui.wnote=false;ui.wpage=0;buzz();toast("Look at your watch");draw();return;
   }
 });
 function sheet(){
@@ -758,33 +1031,50 @@ function sheet(){
 document.getElementById("back").addEventListener("click",function(){
   if(document.getElementById("sheet").innerHTML){document.getElementById("sheet").innerHTML="";return;}
   if(ui.layer==="home"){ui.layer="app";draw();return;}
-  if(ui.phone==="wiz"&&ui.wiz>0){ui.wiz--;ui.wizSel=0;draw();return;}
-  if(ui.phone==="opt"&&ui.opt!=="idle"){ui.opt="idle";draw();return;}
+  if(ui.phone==="wiz"&&ui.wiz>0&&ui.wiz<WIZ.length){ui.wiz--;ui.wizBusy=false;draw();return;}
+  if(ui.phone==="opt"&&ui.opt!=="idle"){ui.opt="idle";ui.prop=null;draw();return;}
   if(ui.phone!=="pultas"){ui.phone="pultas";draw();}
 });
 document.getElementById("homeBtn").addEventListener("click",function(){ui.layer="home";draw();});
 document.getElementById("appBtn").addEventListener("click",function(){ui.layer="app";draw();});
 document.getElementById("wgs").addEventListener("click",function(e){var t=e.target.closest("[data-wopen]");if(t)openPhone(t.dataset.wopen);});
+/* Braukimas zemyn pulto virsuje - perskaityti dabar (Pultas.dispatchTouchEvent). */
+var py=null, scrEl=document.getElementById("scr");
+scrEl.addEventListener("pointerdown",function(e){py=(ui.phone==="pultas"&&ui.layer==="app"&&scrEl.scrollTop===0)?e.clientY:null;});
+scrEl.addEventListener("pointerup",function(e){
+  if(py===null) return; var d=e.clientY-py; py=null;
+  if(d>70&&!ui.pulling){ui.pulled=true;setTimeout(function(){ui.pulled=false;},50);ui.pulling=true;draw();setTimeout(function(){ui.pulling=false;S.age=0;draw();},1200);}
+});
 
 /* ---- Valdymas: laikrodis ---- */
 var ws=document.getElementById("ws");
 ws.addEventListener("click",function(e){
   if(ui.swiped){ui.swiped=false;return;}
-  var t=e.target.closest("#wboost,[data-wwin],[data-wmode],[data-wclose],[data-wal],[data-wpg],[data-wcloud],[data-wtoast],#wfchg,#wnBoost,#wnClose,[data-wfaceopen]");
+  var t=e.target.closest("#wboost,#wnAct,#wnUndo,#wnClose,#wfchg,[data-wmode],[data-wclose],[data-wal],[data-wpg],[data-wcloud],[data-wtoast],[data-wt],[data-wref],[data-wclk],[data-wconn],[data-wfaceopen],[data-wwin],[data-wread]");
   if(!t) return;
   var d=t.dataset;
   if(d.wfaceopen){ui.wface=false;draw();return;}
-  if(t.id==="wnBoost"){ui.wnote=false;document.getElementById("banner").classList.remove("on");if(!boostOn())write("boost","watch");else draw();return;}
+  if(t.id==="wnUndo"){undoAuto();return;}
+  if(t.id==="wnAct"){noteWatch();return;}
   if(t.id==="wnClose"){ui.wnote=false;draw();return;}
   if(t.id==="wboost"){ if(!G.writing) write(boostOn()?"optimized":"boost","watch"); return;}
-  if(d.wwin){ui.wwin=d.wwin;draw();return;}
+  if(d.wread){S.age=0;draw();return;}
+  if(d.wwin){ui.wwin=d.wwin;ui.wfsaved=0;draw();return;}
   if(d.wclose){ui.wwin=null;draw();return;}
   if(d.wmode){ if(!G.writing&&d.wmode!==S.mode){write(d.wmode,"watch");setTimeout(function(){ui.wwin=null;draw();},2300);} return;}
-  if(d.wal){G.alerts[d.wal]=!G.alerts[d.wal];draw();return;}
-  if(d.wpg){G.pages[d.wpg]=!G.pages[d.wpg];var sc=t.closest(".wwin").scrollTop;draw();var nw=document.querySelector("#ws .wwin");if(nw)nw.scrollTop=sc;return;}
-  if(d.wcloud){G.cloud=!G.cloud;toast(G.cloud?"Cloud on: works away from home too":"Home network only");draw();return;}
+  var keep=function(){var sc=t.closest(".wwin")?t.closest(".wwin").scrollTop:0;draw();var nw=document.querySelector("#ws .wwin");if(nw)nw.scrollTop=sc;};
+  if(d.wal){G.alerts[d.wal]=!G.alerts[d.wal];keep();return;}
+  if(d.wpg){G.pages[d.wpg]=!G.pages[d.wpg];keep();return;}
+  if(d.wt){stepRange(d.wt.slice(0,-1),d.wt.slice(-1)==="+"?0.5:-0.5);keep();return;}
+  if(d.wref){G.refresh=d.wref;keep();return;}
+  if(d.wclk){G.clock=d.wclk;keep();return;}
+  if(d.wconn){G.conn=d.wconn;keep();return;}
+  if(d.wcloud){G.cloud=!G.cloud;keep();return;}
   if(d.wtoast){toast(d.wtoast);return;}
-  if(t.id==="wfchg"){S.filt=180;logAdd("You (watch)","Filters changed");buzz();draw();return;}
+  if(t.id==="wfchg"){
+    if(!ui.wfsure){ui.wfsure=1;ui.wfsaved=0;draw();clearTimeout(ui.wfT);ui.wfT=setTimeout(function(){ui.wfsure=0;draw();},4000);}
+    else {clearTimeout(ui.wfT);ui.wfsure=0;S.filt=180;ui.wfsaved=1;buzz();draw();}
+    return;}
 });
 var sx=null;
 ws.addEventListener("pointerdown",function(e){sx=e.clientX;});
@@ -799,25 +1089,26 @@ document.getElementById("wfaceBtn").addEventListener("click",function(){ui.wface
 /* ---- Ivadinis turas ---- */
 /* Kiekvienas zingsnis: ka parysinti, antraste, tekstas ir (nebutinai) ka parodyti pries tai. */
 function vaizdas(v,langas,wp,ww){return function(){G.view=v;ui.phone=langas||"pultas";ui.layer="app";ui.wwin=ww||null;
-  ui.wpage=Math.max(0,wpages().indexOf(wp||""));if(langas==="opt")ui.opt="idle";document.getElementById("scr").scrollTop=0;draw();};}
+  if(v==="auto"){G.refresh="Auto";G.clock="Auto fix";}
+  ui.wpage=Math.max(0,wpages().indexOf(wp||""));if(langas==="opt"){ui.opt="idle";ui.prop=null;}document.getElementById("scr").scrollTop=0;draw();};}
 /* Laikrodzio puslapiai sukasi patys, kol rodomas zingsnis apie laikrodi. */
 var sukimas=null;
 function sukis(){vaizdas("semi")();sukimas=setInterval(function(){ui.wwin=null;ui.wpage=(ui.wpage+1)%wpages().length;draw();},1500);}
 var TOUR=[
  ["#scen","Start here","Pick a situation - guests, an empty house or a shower. Then wait a minute or two: the phone and the watch react on their own.",vaizdas("auto")],
- ["[data-boost]","Tap Boost","The unit runs at full speed for an hour. Watch the spinner, the vibration, and the watch showing the same Boost.",vaizdas("auto")],
+ ["[data-boost]","Tap Boost","The unit runs at Boost speed for an hour. Watch the spinner, the vibration, and the watch showing the same Boost. Tap again to stop it.",vaizdas("auto")],
  ["#ps","Automatic view","One card with the air and one button. The app runs the ventilation for you. Tap a card to open its window.",vaizdas("auto")],
  ["#ps","The phone buttons work","The buttons at the bottom work like on a real Android phone: ○ opens the home screen - here it is, with the app's widgets. ◁ goes back one step, ▢ returns to the app.",function(){vaizdas("auto")();ui.layer="home";draw();}],
  ["[data-open=settings]","Two ways to use it","In SETTINGS you pick Automatic or Semi-automatic. Next, let's switch to Semi-automatic and see what changes.",vaizdas("auto")],
- ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS. The watch followed by itself: 6 pages instead of 2 (8 with Unit and Filters, switched on in its SETTINGS).",vaizdas("semi","pultas","vent"),false,".watch"],
- ["#ps,.watch","VENTILATION: all modes","Optimized is the app's own mode - it learns your home. Boost runs an hour, Custom has a timer, Away and At home are fixed speeds, Auto is the unit's own. The same list opens on the watch. Tap one: a spinner, then both devices switch and buzz.",vaizdas("semi","vent","vent","pick"),false,".watch"],
+ ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS. The watch followed by itself: 8 pages instead of 2 (pick which ones in its SETTINGS → PAGES).",vaizdas("semi","pultas","vent"),false,".watch"],
+ ["#ps,.watch","VENTILATION: all modes","Optimized is the unit's Automatic with settings tuned to your home. Boost runs an hour, Custom is the unit's Fireplace timer, Away and At home are fixed speeds, Auto puts back the Vallox factory settings. The same list opens on the watch. Tap one: a spinner, then both devices switch and buzz.",vaizdas("semi","vent","vent","pick"),false,".watch"],
  ["#ps,.watch","TEMPERATURES","Indoor and outdoor, and CO2 against 800 ppm - for a day, for 7 days, and the same week last year. The watch has the day graph.",vaizdas("semi","temps","temps","temps"),false,".watch"],
- ["#ps,.watch","OPTIMIZE","New plan reads two weeks of your unit's history and asks what matters most: quiet, balanced or fresh air. You see the forecast before you Apply.",vaizdas("semi","opt","opt","opt"),false,".watch"],
- ["#ps,.watch","Who controls the unit","The phone or the watch - only one writes to the unit, so they never fight. Pick The watch: the watch label turns WATCH, the phone sends its taps to the watch.",vaizdas("semi","settings","settings","settings"),false,".watch"],
- [".watch","The watch app","Its pages go by on their own now. Swipe sideways or use the Page buttons to browse; tap a page to open it - on VENTILATION tap the mode to change it.",sukis],
+ ["#ps,.watch","OPTIMIZE","New plan asks for a goal - clean air, balance or quiet - then reads two weeks of your unit's history. You see the forecast before you Apply; Restore puts back the settings from before Optimize.",vaizdas("semi","opt","opt","opt"),false,".watch"],
+ ["#ps,.watch","Who controls the unit","The phone or the watch - only one writes to the unit, so they never fight. Pick The watch: the watch confirms, its label turns from PHONE to LOCAL (it now reads the unit itself), and the phone sends its taps to the watch.",vaizdas("semi","settings","settings","settings"),false,".watch"],
+ [".watch","The watch app","Its pages go by on their own now. Swipe sideways or use the Page buttons to browse; tap a page to open it - on VENTILATION the tap opens the mode list.",sukis],
  ["#wfaceBtn","Watch face","Your air on any watch face: CO2, fan and temperatures as complications.",null],
  ["#wgs","Phone widgets","They only show the air. Tap one to jump into the app.",null],
- [".stage","Now explore on your own","Ideas: run Guests arrive in Away mode and wait for the alert. Apply a Quiet plan in OPTIMIZE. Hand control to the watch and Boost from it. Open the phone home screen ○. Start over any time.",null,true]];
+ [".stage","Now explore on your own","Ideas: run Guests arrive in Away mode and wait for the CO2 alert. Run Shower and tap the Boost suggestion on the watch. Apply a Quiet plan in OPTIMIZE. Hand control to the watch and Boost from it. Open the phone home screen ○. Start over any time.",null,true]];
 var tourI=-1, tourEls=null;
 function tour(i){
   if(i<0||i>=TOUR.length){endTour();return;}
