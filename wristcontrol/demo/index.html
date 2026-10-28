@@ -33,8 +33,14 @@ p.lead a{color:#5b9bf3}
 .scen button b{display:block;font-size:15px}
 .scen button span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
 .scen button.on{border-color:#5b9bf3;box-shadow:0 0 0 1px #5b9bf3 inset}
-.story{border-left:3px solid #5b9bf3;padding:6px 12px;margin:0 0 18px;color:var(--page);font-size:14px;min-height:24px}
+.story{border-left:3px solid #5b9bf3;padding:6px 12px;margin:0 0 18px;color:var(--page);font-size:14px;min-height:46px;display:flex;gap:18px;align-items:center}
+.story>div:first-child{flex:1}
 .story small{color:var(--muted);display:block;font-size:12.5px}
+.wait{flex:0 0 260px;color:#5b9bf3;font-size:13.5px;font-weight:600;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h2.try{font-size:18px;margin:4px 0 2px}
+p.try{color:var(--muted);margin:0 0 10px;font-size:14px}
+@media (max-width:760px){.story{flex-direction:column;align-items:flex-start;gap:4px}.wait{flex:none}}
 .tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:center}
 .tools button{font:inherit;font-size:14px;padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
 .tools span{color:var(--muted);font-size:13px}
@@ -201,7 +207,8 @@ canvas{width:100%;display:block}
 <main>
 <header class="top"><img src="/wristcontrol/icon.png" alt=""><div><b>Wrist Control for Vallox</b><span>Live demo · a simulated unit, nothing leaves this page</span></div></header>
 <p class="lead">The phone app and the Wear OS watch app side by side, running one pretend Vallox unit. Everything you tap works on both: Boost, modes, Optimize, settings, who controls the unit, Automatic or Semi-automatic view. Demo time runs 60 times faster - one second is one minute. <a href="/wristcontrol/">About the app</a> · <a href="/wristcontrol/guide/">User guide</a></p>
-<div class="sec" style="margin:0 0 8px">Try a day at home - pick what happens, then watch the phone and the watch</div>
+<h2 class="try">Try it yourself: a day at home</h2>
+<p class="try">This is a simulation. Pick what happens at home - the demo plays it in fast time (1 second = 1 minute), and the phone and the watch react the way they would in a real home.</p>
 <div class="scen" id="scen">
   <button data-scen="guests"><b>Guests arrive</b><span>Six friends come over and CO2 climbs. Optimized turns the fan up by itself; if the air still gets stale, both devices offer Boost.</span></button>
   <button data-scen="away"><b>Everyone leaves</b><span>The house is empty. CO2 falls and the fan slows to its rest speed - quieter and cheaper, no mode to remember.</span></button>
@@ -276,13 +283,28 @@ var SC={guests:{people:8,shower:0,dur:50,start:"Six guests arrived - CO2 is risi
 function startScen(k){var u=S;u.scen=k;u.scenLeft=SC[k].dur;u.peak=u.fan;u.scenFrom=Math.round(u.fan);u.low=u.fan;u.people=SC[k].people;u.shower=SC[k].shower;u.done=null;logAdd("Home",SC[k].start);toast(SC[k].start);draw();}
 function endScen(u){var k=u.scen;u.people=2;u.shower=0;u.scen=null;if(u===S)logAdd("Home",SC[k].end);u.done={k:k,peak:Math.round(u.peak),from:u.scenFrom,t:G.min};}
 function story(){
-  var u=S, auto=u.mode==="optimized"||u.mode==="auto", f=Math.round(u.fan);
-  if(u.scen==="guests") return '<b>Guests: 8 people at home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' raised it by itself.':' - the fan stays where you set it ('+NAME[u.mode]+').')+'<small>'+u.scenLeft+' min until they leave. Above 1000 ppm you get an alert with Boost.</small>';
+  var t=story1(), w=S.scen?'<div class="wait">Wait 1-2 minutes: the demo simulates real changes. Watch CO2 and the fan on both devices.</div>':'';
+  return '<div>'+t+'</div>'+w;
+}
+/* Kur ventiliatorius nusistovės: tas pats modelis kaip tick(), tik be triuksmo. */
+function galutinis(u){
+  var v={mode:u.mode,plan:u.plan,fan:u.fan,co2:u.co2,rh:u.rh};
+  for(var i=0;i<300;i++){
+    v.fan+=(fanTarget(v)-v.fan)*0.5;
+    v.co2+=(420+u.people*80*50/Math.max(20,v.fan)-v.co2)*0.06;
+    v.rh+=(48+u.shower*42*50/Math.max(20,v.fan)-v.rh)*0.15;
+  }
+  return Math.round(v.fan);
+}
+function story1(){
+  var u=S, auto=u.mode==="optimized"||u.mode==="auto", tg=galutinis(u), f0=Math.round(u.fan),
+      f=Math.abs(tg-f0)>=2?f0+' % → '+tg:''+f0;
+  if(u.scen==="guests") return '<b>Guests: 8 people at home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' turns it up by itself.':' - the fan stays where you set it ('+NAME[u.mode]+').')+'<small>'+u.scenLeft+' min until they leave. Above 1000 ppm you get an alert with Boost.</small>';
   if(u.scen==="away") return '<b>Nobody home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' slows it down by itself.':'.')+'<small>Coming back in '+u.scenLeft+' min. Leaving for longer? Tap Away on the watch on your way out.</small>';
   if(u.scen==="shower") return '<b>Shower running.</b> Humidity '+Math.round(u.rh)+' %, fan '+f+' %'+(auto?' - the unit speeds up for the moisture.':'.')+'<small>'+u.scenLeft+' min left. Above 70 % you get an alert.</small>';
   if(u.done&&G.min-u.done.t<30){var d=u.done;
-    if(d.k==="away") return '<b>Done.</b> While the house was empty the fan ran slower; now everyone is back and it is at '+f+' %. Nothing to tap.';
-    return '<b>Done.</b> The fan went from '+d.from+' % up to '+d.peak+' % and is coming back down ('+f+' % now). Nothing to tap.';}
+    if(d.k==="away") return '<b>Done.</b> While the house was empty the fan ran slower; now everyone is back and it is at '+f0+' %. Nothing to tap.';
+    return '<b>Done.</b> The fan went from '+d.from+' % up to '+d.peak+' % and is coming back down ('+f0+' % now). Nothing to tap.';}
   return '<small>Pick a situation above. In SETTINGS switch to Semi-automatic to see every window, or pick Away or Custom in VENTILATION to compare with Optimized.</small>';
 }
 function fresh(){
