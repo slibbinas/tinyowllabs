@@ -44,16 +44,16 @@ img.w { display: block; border-radius: 3mm; }
 .kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
 .kontaktai span { font-size: 9.5pt; color: #1B2233; }
 
-/* Aplinka aplink A4 lapus: tamsioje temoje juoda kaip visas tinyowllabs.com (V 2026-10-29), lapai lieka balti. */
-:root { --aplink: #F3F5F9; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --aplink: #141416; } }
-:root[data-theme="dark"] { --aplink: #141416; }
+/* Aplinka aplink A4 lapus visada šviesi; pagal svetainės temą keičiasi tik viršutinė juosta (V 2026-10-29). */
+:root { --juosta: rgba(255,255,255,.95); --juostos-tekstas: #5C667A; --owl: #e8720c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; --owl: #f08a2c; } }
+:root[data-theme="dark"] { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; --owl: #f08a2c; }
 @media screen {
-  body { background: var(--aplink); }
+  body { background: #F3F5F9; }
   .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; padding: 10px 16px; background: rgba(20,20,22,.95); font-size: 10px; color: #AAAAAA; }
-  .webbar a { color: #F08A2C; text-decoration: none; }
+    gap: 12px; padding: 10px max(16px, calc((100% - 800px) / 2)); background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
+  .webbar a { color: var(--owl); text-decoration: none; }
   .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   .hero { height: auto; gap: 3%; margin: 20px 0; }
   .hero .h1, .hero .h3 { width: 28%; }
