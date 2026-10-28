@@ -38,7 +38,16 @@ p.lead a{color:#5b9bf3}
 .story small{color:var(--muted);display:block;font-size:12.5px}
 .wait{flex:0 0 260px;color:#5b9bf3;font-size:13.5px;font-weight:600;animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-h2.try{font-size:18px;margin:4px 0 2px}
+h2.try{font-size:18px;margin:4px 0 2px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+h2.try button{font:inherit;font-size:13px;font-weight:600;padding:5px 12px;border-radius:16px;border:1px solid #5b9bf3;background:transparent;color:#5b9bf3;cursor:pointer}
+/* Turas: paryskinta vieta ir paaiskinimas salia. */
+.tour-hole{position:fixed;z-index:50;border-radius:14px;box-shadow:0 0 0 9999px rgba(8,10,16,.62);outline:2px solid #5b9bf3;transition:all .3s;pointer-events:none}
+.tour-tip{position:fixed;z-index:51;width:300px;background:#fff;color:#14161c;border-radius:12px;padding:14px 16px;box-shadow:0 10px 30px rgba(0,0,0,.4);font-size:14.5px;line-height:1.45;transition:top .3s,left .3s}
+.tour-tip b{display:block;font-size:15.5px;margin-bottom:4px}
+.tour-tip .tb{display:flex;align-items:center;gap:8px;margin-top:12px}
+.tour-tip .tb span{flex:1;color:#5a6378;font-size:12.5px}
+.tour-tip button{font:inherit;font-size:13.5px;padding:6px 12px;border-radius:8px;border:0;cursor:pointer;background:#eef1f6;color:#14161c}
+.tour-tip button.go{background:#2e3c96;color:#fff}
 p.try{color:var(--muted);margin:0 0 10px;font-size:14px}
 @media (max-width:760px){.story{flex-direction:column;align-items:flex-start;gap:4px}.wait{flex:none}}
 .tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:center}
@@ -207,7 +216,7 @@ canvas{width:100%;display:block}
 <main>
 <header class="top"><img src="/wristcontrol/icon.png" alt=""><div><b>Wrist Control for Vallox</b><span>Live demo · a simulated unit, nothing leaves this page</span></div></header>
 <p class="lead">The phone app and the Wear OS watch app side by side, running one pretend Vallox unit. Everything you tap works on both: Boost, modes, Optimize, settings, who controls the unit, Automatic or Semi-automatic view. Demo time runs 60 times faster - one second is one minute. <a href="/wristcontrol/">About the app</a> · <a href="/wristcontrol/guide/">User guide</a></p>
-<h2 class="try">Try it yourself: a day at home</h2>
+<h2 class="try">Try it yourself: a day at home <button id="tourBtn">Show me around</button></h2>
 <p class="try">This is a simulation. Pick what happens at home - the demo plays it in fast time (1 second = 1 minute), and the phone and the watch react the way they would in a real home.</p>
 <div class="scen" id="scen">
   <button data-scen="guests"><b>Guests arrive</b><span>Six friends come over and CO2 climbs. Optimized turns the fan up by itself; if the air still gets stale, both devices offer Boost.</span></button>
@@ -745,10 +754,49 @@ document.getElementById("wr").addEventListener("click",function(){ui.wwin=null;u
 document.getElementById("wback").addEventListener("click",function(){if(ui.wnote)ui.wnote=false;else if(ui.wwin)ui.wwin=null;else if(ui.wface)ui.wface=false;draw();});
 document.getElementById("wfaceBtn").addEventListener("click",function(){ui.wface=!ui.wface;ui.wwin=null;draw();});
 
+/* ---- Ivadinis turas ---- */
+var TOUR=[
+ ["#scen","Start here","Pick a situation - guests, an empty house or a shower. Then wait a minute or two: the phone and the watch react on their own."],
+ ["[data-boost]","Tap Boost","The unit runs at full speed for an hour. Watch the spinner, the vibration, and the watch showing the same Boost."],
+ ["#ps","This is the phone app","Tap any card to open its window. The ◁ button goes back, ○ shows the home screen with widgets."],
+ ["[data-open=settings]","Two ways to use it","In SETTINGS pick Automatic (one card and Boost - the app runs the air) or Semi-automatic (every window: modes, Optimize, graphs, statistics). The watch follows."],
+ [".watch","The watch app","Swipe sideways or use the Page buttons below to browse its pages. Tap a page to open it - on VENTILATION, tap the mode to change it."],
+ ["#wfaceBtn","Watch face","Your air on any watch face: CO2, fan and temperatures as complications."],
+ ["#wgs","Phone widgets","They only show the air. Tap one to jump into the app."]];
+var tourI=-1, tourEls=null;
+function tour(i){
+  if(i<0||i>=TOUR.length){endTour();return;}
+  tourI=i;
+  if(!tourEls){tourEls={h:document.createElement("div"),t:document.createElement("div")};tourEls.h.className="tour-hole";tourEls.t.className="tour-tip";
+    document.body.appendChild(tourEls.h);document.body.appendChild(tourEls.t);
+    tourEls.t.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+      if(b.dataset.k==="next")tour(tourI+1);else if(b.dataset.k==="back")tour(tourI-1);else endTour();});}
+  var el=document.querySelector(TOUR[i][0]); if(!el){tour(i+1);return;}
+  el.scrollIntoView({block:"center",behavior:"smooth"});
+  tourEls.t.innerHTML='<b>'+TOUR[i][1]+'</b>'+TOUR[i][2]+'<div class="tb"><span>'+(i+1)+' of '+TOUR.length+'</span>'+
+    (i?'<button data-k="back">Back</button>':'<button data-k="skip">Skip</button>')+'<button class="go" data-k="next">'+(i===TOUR.length-1?"Let's go":"Next")+'</button></div>';
+  setTimeout(placeTour,350); placeTour();
+}
+function placeTour(){
+  if(tourI<0||!tourEls) return;
+  var el=document.querySelector(TOUR[tourI][0]); if(!el) return;
+  var r=el.getBoundingClientRect(), p=8, h=tourEls.h, t=tourEls.t;
+  h.style.left=(r.left-p)+"px";h.style.top=(r.top-p)+"px";h.style.width=(r.width+2*p)+"px";h.style.height=(r.height+2*p)+"px";
+  var tw=300, th=t.offsetHeight||150, vw=innerWidth, vh=innerHeight, x, y;
+  if(r.right+tw+24<vw){x=r.right+16;y=Math.max(10,Math.min(vh-th-10,r.top));}
+  else if(r.left-tw-24>0){x=r.left-tw-16;y=Math.max(10,Math.min(vh-th-10,r.top));}
+  else{x=Math.max(10,Math.min(vw-tw-10,r.left));y=r.bottom+16+th<vh?r.bottom+16:Math.max(10,r.top-th-16);}
+  t.style.left=x+"px";t.style.top=y+"px";
+}
+function endTour(){tourI=-1;if(tourEls){tourEls.h.remove();tourEls.t.remove();tourEls=null;}try{localStorage.setItem("wc-demo-turas","1");}catch(e){}}
+addEventListener("scroll",placeTour,{passive:true}); addEventListener("resize",placeTour);
+document.getElementById("tourBtn").addEventListener("click",function(){tour(0);});
 document.getElementById("scen").addEventListener("click",function(e){var b=e.target.closest("[data-scen]");if(b)startScen(b.dataset.scen);});
 document.getElementById("reset").addEventListener("click",function(){fresh();document.getElementById("banner").classList.remove("on");draw();});
 
 fresh(); draw(); clearInterval(timer); timer=setInterval(tick,1000);
+var matytas=false; try{matytas=localStorage.getItem("wc-demo-turas")==="1";}catch(e){}
+if(!matytas) setTimeout(function(){tour(0);},700);
 })();
 </script>
 </body>
