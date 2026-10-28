@@ -17,8 +17,8 @@
   --latte:#cbbfae; --faint:#55555c; --ok:#2fbf4f; --warn:#ffb15f; --danger:#ff6b5a; --track:#26262a;
   --f:#0e1016; --card:#1c1f2a; --field:#262a37; --hi:#e8ecf5; --lo:#8c96b2; --green:#66bb6a;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416; --page:#eee; --muted:#aaa; --line:#26262a; --link:#e8720c; --soft:#1d1d20}}
-:root[data-theme="dark"]{--bg:#141416; --page:#eee; --muted:#aaa; --line:#26262a; --link:#e8720c; --soft:#1d1d20}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --link:#e8720c; --soft:#26262b}}
+:root[data-theme="dark"]{--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --link:#e8720c; --soft:#26262b}
 /* Virsutine eilute kaip kituose TinyOwl puslapiuose: kelias kaireje, temos jungiklis desineje (/tema.js). */
 .virsus{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px}
 .crumb{margin:0;font-size:12px;color:var(--muted)}
@@ -39,12 +39,33 @@ p.lead a{color:var(--link)}
 .stage{display:flex;gap:40px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
 .dev{display:flex;flex-direction:column;align-items:center;gap:10px}
 .cap{color:var(--muted);font-size:13px;text-align:center;max-width:340px}
-.tools{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
-.tools button,.warr button{font:inherit;font-size:14px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
+.warr button{font:inherit;font-size:14px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
 .warr{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .warr button{font-size:13px;border-radius:16px;padding:4px 12px}
 .warr button.on{background:var(--page);color:var(--bg);border-color:var(--page)}
 .note{color:var(--muted);font-size:12.5px;text-align:center;margin-top:14px}
+/* Situacijos ir turas - kaip Wrist Control ir TinySpools demo (V 2026-10-29: visi demo vienodi). */
+h2.try{font-size:18px;margin:4px 0 2px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+h2.try button{font:inherit;font-size:13px;font-weight:600;padding:5px 12px;border-radius:16px;border:1px solid #e8720c;background:transparent;color:#e8720c;cursor:pointer}
+p.try{color:var(--muted);margin:0 0 10px;font-size:14px}
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0 0 10px}
+.scen button{font:inherit;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--page);cursor:pointer}
+.scen button b{display:block;font-size:15px}
+.scen button span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.scen button.on{border-color:#e8720c;box-shadow:0 0 0 1px #e8720c inset}
+.story{border-left:3px solid #e8720c;padding:6px 12px;margin:0 0 18px;color:var(--page);font-size:14px;min-height:46px;display:flex;gap:18px;align-items:center}
+.story>div:first-child{flex:1}
+.story small{color:var(--muted);display:block;font-size:12.5px}
+.wait{flex:0 0 260px;color:#e8720c;font-size:13.5px;font-weight:600;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (max-width:760px){.story{flex-direction:column;align-items:flex-start;gap:4px}.wait{flex:none}}
+.tour-hole{position:fixed;z-index:50;border-radius:14px;box-shadow:0 0 0 9999px rgba(8,10,16,.62);outline:2px solid #e8720c;transition:all .3s;pointer-events:none}
+.tour-tip{position:fixed;z-index:51;width:300px;max-width:calc(100vw - 20px);background:#fff;color:#14161c;border-radius:12px;padding:14px 16px;box-shadow:0 10px 30px rgba(0,0,0,.4);font-size:14.5px;line-height:1.45;transition:top .3s,left .3s}
+.tour-tip b{display:block;font-size:15.5px;margin-bottom:4px}
+.tour-tip .tb{display:flex;align-items:center;gap:8px;margin-top:12px}
+.tour-tip .tb span{flex:1;color:#5a6378;font-size:12.5px}
+.tour-tip button{font:inherit;font-size:13.5px;padding:6px 12px;border-radius:8px;border:0;cursor:pointer;background:#eef1f6;color:#14161c}
+.tour-tip button.go{background:#e8720c;color:#fff}
 .buzz{animation:buzz .35s}
 @keyframes buzz{0%,100%{transform:translate(0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-2px,0)}80%{transform:translate(2px,1px)}}
 @keyframes sp{to{transform:rotate(360deg)}}
@@ -160,6 +181,16 @@ ol.st li{margin:5px 0}
 <header class="top"><img src="/tinystatus.png" alt=""><div><b>TinyStatus</b><span>Live demo · two simulated printers, nothing leaves this page</span></div></header>
 <p class="lead">The Wear OS watch app and its phone helper, side by side. A TinyMaker resin printer and a Bambu Lab printer are printing; follow them on the watch, the tile and the watch face, and get the alerts when they finish. Demo time runs 60 times faster: one print minute lasts a second. <a href="/tinystatus/">About the app</a> · <a href="/tinystatus/guide/">User guide</a></p>
 
+<h2 class="try">Try it yourself: a print night <button id="tourBtn">Show me around</button></h2>
+<p class="try">This is a simulation. Pick what happens at the printers - the demo plays it in fast time (1 second = 1 minute), and the watch reacts the way it would on your wrist.</p>
+<div class="scen" id="scen">
+  <button data-scen="finish"><b>A print finishes</b><span>TinyMaker has 3 minutes left. The watch buzzes with Print finished, the page says DONE, the tile and the watch face move on to the next printer.</span></button>
+  <button data-scen="resin"><b>Resin runs low</b><span>The VAT is almost empty. Below 10 ml the watch warns; at 3 ml the printer pauses and the watch says Resin out.</span></button>
+  <button data-scen="filament"><b>Filament runs out</b><span>The Bambu Lab spool is nearly empty. When it runs out the printer pauses and the watch tells you to load filament.</span></button>
+  <button id="reset"><b>Start over</b><span>Back to the start: both printers printing, nothing wrong.</span></button>
+</div>
+<div class="story" id="story"></div>
+
 <div class="stage">
   <div class="dev">
     <div class="phone"><div class="ps" id="ps">
@@ -177,8 +208,7 @@ ol.st li{margin:5px 0}
     <div class="cap">Watch. Swipe sideways or use the page buttons. Tap the arrow to refresh, tap SETTINGS to open it.</div>
   </div>
 </div>
-<div class="tools"><button id="skip">Skip 15 min</button><button id="pause">Pause Bambu</button><button id="reset">Start over</button></div>
-<p class="note">Printers, prints and numbers are made up. The real app reads TinyMaker printers on your Wi-Fi and Bambu Lab printers through your Bambu account. TinyMaker and Bambu Lab are trademarks of their respective owners; TinyStatus is an independent app.</p>
+<p class="note">This is a simplified demonstration: printers and numbers are made up, and it may not show every feature or the latest version of the app. The real app reads TinyMaker printers on your Wi-Fi and Bambu Lab printers through your Bambu account. TinyMaker and Bambu Lab are trademarks of their respective owners; TinyStatus is an independent app.</p>
 </main>
 <script src="/tema.js?v=2"></script>
 
@@ -197,17 +227,17 @@ var S, ui, timer;
 
 function fresh(){
   S={min:0,
-     P:[{t:"TM",name:"TinyMaker",show:true,model:"cup15-test2-0178",total:420,dur:40,done:22,busy:true,paused:false,vat:12.6,end:null},
-        {t:"BL",name:"Printukas",show:true,model:"VatBoxX_plate_2",total:994,dur:110,done:20,busy:true,paused:false,fil:"PLA",filPct:37,filCol:"#f2f2f2",end:null}],
+     P:[{t:"TM",name:"TinyMaker",show:true,model:"cup15-test2-0178",total:420,dur:40,done:22,busy:true,paused:false,why:"",vat:12.6,end:null},
+        {t:"BL",name:"Printukas",show:true,model:"VatBoxX_plate_2",total:994,dur:110,done:20,busy:true,paused:false,why:"",fil:"PLA",filF:37,filPct:37,filCol:"#f2f2f2",end:null}],
      bambu:true, tmIp:false, bg:3, al:{end:true,warn:true,stop:true,pause:false,err:true},
-     age:2, refAt:0};
+     age:2, refAt:0, scen:null, vatRate:0.23, filRate:0.125};
   ui={view:"app",page:0,win:false,ph:{bl:"signed",tmSeg:"name",tmMsg:"",blMsg:""},ntf:null};
 }
 
 /* ---- Simuliacija: viena demo sekunde = viena spausdinimo minute ---- */
 function tick(){
   S.age++; if(S.age>4) S.age=0;                 // ekranas klausia kas 5 s
-  advance(1);
+  if(turoI<0) advance(1);                       // turo metu spausdintuvai laukia - pranesimai neuzdengia paaiskinimu
   draw();
 }
 function advance(m){
@@ -216,9 +246,16 @@ function advance(m){
     if(!p.busy||p.paused) return;
     var was=p.vat, over=Math.max(0,p.done+m-p.dur);   // "Skip" gali persokti pabaiga
     p.done=Math.min(p.dur,p.done+m);
-    if(p.t==="TM"){p.vat=Math.max(0,p.vat-0.23*(m-over)); if(was>=10&&p.vat<10&&S.al.warn) alert(i,"Resin running low",p.vat.toFixed(1)+" ml left at layer "+cur(p)+"/"+p.total);}
-    else {p.filPct=Math.max(5,37-Math.floor(p.done/8));}
-    if(p.done>=p.dur){p.busy=false;p.end={kind:"done",at:S.min-over,seen:false};
+    /* Ispejimai - TsPranesimas: derva < 10 ml "Resin running low", 3 ml - spausdintuvas sustoja ("Resin out");
+       Bambu gija baigesi - pauze ir "Filament ran out" (tas pats jungiklis "Resin out"). */
+    if(p.t==="TM"){p.vat=Math.max(0,p.vat-S.vatRate*(m-over));
+      if(was>=10&&p.vat<10&&S.al.warn) alert(i,"Resin running low",p.vat.toFixed(1)+" ml left at layer "+cur(p)+"/"+p.total);
+      if(p.vat<=3){p.vat=3;p.paused=true;p.why="REFILL RESIN";
+        if(S.al.stop) alert(i,"Resin out - printer paused",p.vat.toFixed(1)+" ml left at layer "+cur(p)+"/"+p.total+" - refill the VAT");}}
+    else {p.filF=Math.max(0,p.filF-S.filRate*(m-over));p.filPct=Math.ceil(p.filF);
+      if(p.filF<=0){p.paused=true;p.why="FILAMENT RUNOUT";
+        if(S.al.stop) alert(i,"Filament ran out - printer paused","at layer "+cur(p)+"/"+p.total+" - load filament");}}
+    if(!p.paused&&p.done>=p.dur){p.busy=false;p.end={kind:"done",at:S.min-over,seen:false};
       if(S.al.end) alert(i,"Print finished",p.model+" - "+(p.t==="TM"?dur(p.dur)+", ~"+(p.dur*0.23).toFixed(1)+" ml used":p.total+" layers"));}
   });
 }
@@ -256,7 +293,7 @@ function printerPage(i){
   if(!p.busy&&p.end){
     big="DONE"; bigC="var(--ok)"; st="finished "+since(p.end.at)+" ago"; lay=p.total+" layers"; prog=1;
   } else if(p.busy){
-    big=dur(left(p)); st=p.paused?"PAUSED":"PRINTING"; if(p.paused) stC="var(--warn)";
+    big=dur(left(p)); st=p.paused?(p.why||"PAUSED"):"PRINTING"; if(p.paused) stC="var(--warn)";
     lay=cur(p)+" / "+p.total; prog=p.done/p.dur;
   } else { big="IDLE"; bigC="var(--latte)"; model="-"; }
   if(p.t==="TM"){ res=p.vat.toFixed(1)+" ml left"; if(p.vat<10) resC="var(--warn)"; }
@@ -369,7 +406,7 @@ function phone(){
 
 /* Perpiesiam tik pasikeitusi irengini: kas sekunde keiciamas DOM pagauna paspaudima
    tarp mygtuko nuspaudimo ir atleidimo, ir narsykle "click" nebeiskviecia. */
-var buvo={ph:"",w:""};
+var buvo={ph:"",w:"",st:""};
 function draw(){
   document.getElementById("clk").textContent=new Date().toTimeString().slice(0,5);
   var scr=document.getElementById("scr"), html=phone();
@@ -378,9 +415,8 @@ function draw(){
   html=watch();
   if(html!==buvo.w){ws.innerHTML=html; buvo.w=html; w=document.getElementById("win"); if(w) w.scrollTop=wy;}
   [].forEach.call(document.querySelectorAll("#views button"),function(b){b.classList.toggle("on",b.dataset.v===ui.view);});
-  var bl=S.P[1]; document.getElementById("pause").textContent=bl.paused?"Resume Bambu":"Pause Bambu";
-  document.getElementById("pause").disabled=!bl.busy||!S.bambu;
-  document.getElementById("skip").disabled=!S.P.some(function(p){return p.busy&&!p.paused;});
+  var st=story(); if(st!==buvo.st){document.getElementById("story").innerHTML=st;buvo.st=st;}
+  [].forEach.call(document.querySelectorAll("[data-scen]"),function(b){b.classList.toggle("on",S.scen===b.dataset.scen);});
 }
 
 /* ---- Valdymas: laikrodis ---- */
@@ -424,14 +460,84 @@ document.getElementById("scr").addEventListener("click",function(e){
 });
 
 /* ---- Irankiai ---- */
-document.getElementById("skip").addEventListener("click",function(){advance(15);draw();});
-document.getElementById("pause").addEventListener("click",function(){var p=S.P[1];if(!p.busy)return;p.paused=!p.paused;
-  if(p.paused&&S.al.pause) alert(1,"Print paused","at layer "+cur(p)+"/"+p.total);
-  else if(p.paused) toast("Paused - the Paused alert is off by default");
-  draw();});
+/* ---- Situacijos (kaip Wrist Control demo): kiekviena pradeda nuo svarios busenos ---- */
+function startScen(k){
+  fresh(); S.scen=k;
+  if(k==="finish") S.P[0].done=S.P[0].dur-3;
+  if(k==="resin"){S.P[0].done=8;S.P[0].vat=11;S.vatRate=0.3;}
+  if(k==="filament"){S.P[1].filF=S.P[1].filPct=5;S.filRate=0.5;S.P[0].vat=20;}   // dervos ispejimas neuzdengs gijos
+  openApp(k==="filament"?1:0);
+}
+function story(){
+  var tm=S.P[0], bl=S.P[1], t, w=true;
+  if(S.scen==="finish"){
+    if(tm.busy) t='<b>TinyMaker: '+dur(left(tm))+' left.</b> When it ends the watch buzzes with Print finished, the ring fills and the page says DONE.<small>Then look at the Tile and the Watch face: they move on to Printukas, the printer that finishes next.</small>';
+    else {w=false;t='<b>Done.</b> The watch showed Print finished with the print time and the resin used. Nothing to tap.<small>The tile and the complications now show Printukas, which finishes next.</small>';}
+  } else if(S.scen==="resin"){
+    if(!tm.paused) t='<b>TinyMaker: '+tm.vat.toFixed(1)+' ml of resin left in the VAT.</b> Below 10 ml the watch warns Resin running low; at 3 ml the printer pauses and the watch says Resin out.<small>Which alerts you get: watch SETTINGS, ALERTS.</small>';
+    else {w=false;t='<b>The printer paused: Resin out.</b> Refill the VAT and resume on the printer; the watch page says REFILL RESIN until then.<small>TinyStatus only watches - it never controls the printer.</small>';}
+  } else if(S.scen==="filament"){
+    if(!bl.paused) t='<b>Printukas: '+bl.fil+' '+bl.filPct+' % left on the spool.</b> When it runs out the printer pauses and the watch tells you to load filament.<small>The same alert switch as Resin out: watch SETTINGS, ALERTS.</small>';
+    else {w=false;t='<b>The printer paused: Filament runout.</b> Load a new spool and resume on the printer or in Bambu Handy.<small>TinyStatus only watches - it never controls the printer.</small>';}
+  } else {w=false;t='<small>Pick a situation above. Or just watch: both printers keep printing - swipe the watch, open the Tile and the Watch face.</small>';}
+  return '<div>'+t+'</div>'+(w?'<div class="wait">Wait a few seconds: the demo runs 60 times faster. Watch the ring and the alert on the watch.</div>':'');
+}
+document.getElementById("scen").addEventListener("click",function(e){var b=e.target.closest("[data-scen]");if(b)startScen(b.dataset.scen);});
 document.getElementById("reset").addEventListener("click",function(){fresh();draw();});
 
+/* ---- Ivadinis turas (kaip Wrist Control ir TinySpools demo): [vieta, antraste, tekstas, ka parodyti, paskutinis] ---- */
+function rodyk(v,pg,win){return function(){ui.view=v;ui.page=pg||0;ui.win=!!win;ui.ntf=null;draw();};}
+var TURAS=[
+ ["#scen","Start here","Pick what happens at the printers: a print finishes, resin runs low or filament runs out. Then wait a few seconds - the watch reacts on its own.",null],
+ [".watch","A printer on your wrist","One page per printer: time left, layers, resin or filament, and a ring that fills as the print goes. TM or BL says which printer it is.",rodyk("app",0)],
+ [".watch","Swipe for the next one","Swipe sideways (or ‹ Page ›) for the next printer. SETTINGS is the last page.",rodyk("app",1)],
+ [".watch","Settings on the watch","Which printers to show, how often to check while a print is running, and which alerts you get. It checks only while printing, to save the battery.",rodyk("app",2,true)],
+ [".watch","The tile","Up to two printers at a glance: the one that finishes first comes first. Tap a ring to open it.",rodyk("tile")],
+ [".watch","On the watch face","Two complications: time left and progress of the printer that finishes next. The pyramid is TinyMaker, the cube is Bambu Lab.",rodyk("face")],
+ ["#ps","The phone app","Sign in to Bambu Lab and set up a TinyMaker printer here - typing on a watch is slow. Everything else happens on the watch.",rodyk("app",0)],
+ [".stage","Now explore on your own","Ideas: run Resin runs low and see both alerts. Turn off Print end in the watch SETTINGS, then run A print finishes - nothing buzzes. Sign out of Bambu on the phone and see Printukas disappear. Start over any time.",null,true]];
+var turoI=-1, turoEl=null;
+function turas(i){
+  if(i<0||i>=TURAS.length) return baigtiTura();
+  turoI=i;
+  if(!turoEl){
+    turoEl={h:document.createElement("div"),t:document.createElement("div")};
+    turoEl.h.className="tour-hole"; turoEl.t.className="tour-tip";
+    document.body.appendChild(turoEl.h); document.body.appendChild(turoEl.t);
+    turoEl.t.onclick=function(e){var b=e.target.closest("button");if(!b)return;var k=b.dataset.k;
+      if(k==="next") turas(turoI+1); else if(k==="back") turas(turoI-1);
+      else {if(k!=="stay") rodyk("app",0)(); baigtiTura();}};
+  }
+  var T=TURAS[i]; if(T[3]) T[3]();
+  var el=document.querySelector(T[0]); if(!el) return turas(i+1);
+  el.scrollIntoView({block:"center",behavior:"smooth"});
+  turoEl.t.innerHTML='<b>'+T[1]+'</b>'+T[2]+'<div class="tb"><span>'+(i+1)+' of '+TURAS.length+'</span>'+
+    (T[4]?'<button class="go" data-k="stay">Explore</button>'
+      :(i?'<button data-k="back">Back</button>':'<button data-k="skip">Skip</button>')+'<button class="go" data-k="next">Next</button>')+'</div>';
+  setTimeout(detiTura,350); detiTura();
+}
+function detiTura(){
+  if(turoI<0||!turoEl) return;
+  var el=document.querySelector(TURAS[turoI][0]); if(!el) return;
+  var r=el.getBoundingClientRect(), p=8, h=turoEl.h, t=turoEl.t;
+  h.style.left=(r.left-p)+"px"; h.style.top=(r.top-p)+"px"; h.style.width=(r.width+2*p)+"px"; h.style.height=(r.height+2*p)+"px";
+  h.style.borderRadius=el.classList.contains("watch")?"50%":"14px";
+  var tw=Math.min(300,innerWidth-20), th=t.offsetHeight||150, vw=innerWidth, vh=innerHeight, x, y;
+  /* Platus elementas (situaciju korteles) - paaiskinimas po juo, kad jo neuzdengtu. */
+  if(r.width>700){x=Math.max(10,Math.min(vw-tw-10,r.left+r.width/2-tw/2));y=r.bottom+16+th<vh?r.bottom+16:Math.max(10,Math.min(vh-th-10,r.top+40));}
+  else if(r.right+tw+24<vw){x=r.right+16;y=Math.max(10,Math.min(vh-th-10,r.top));}
+  else if(r.left-tw-24>0){x=r.left-tw-16;y=Math.max(10,Math.min(vh-th-10,r.top));}
+  else {x=Math.max(10,Math.min(vw-tw-10,r.left));y=r.bottom+16+th<vh?r.bottom+16:Math.max(10,r.top-th-16);}
+  t.style.left=x+"px"; t.style.top=y+"px";
+}
+function baigtiTura(){turoI=-1;if(turoEl){turoEl.h.remove();turoEl.t.remove();turoEl=null;}}
+addEventListener("scroll",detiTura,{passive:true});
+addEventListener("resize",detiTura);
+document.getElementById("tourBtn").addEventListener("click",function(){turas(0);});
+
 fresh(); draw(); clearInterval(timer); timer=setInterval(tick,1000);
+/* Turas pasileidzia kiekviena karta atidarius puslapi (V 2026-10-29), Skip ji uzdaro. */
+setTimeout(function(){turas(0);},700);
 })();
 </script>
 </body>
