@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TinySpools - live demo</title>
-<meta name="description" content="Try TinySpools in the browser: a real filament collection, with the Spools list, the Palette, Locations, spool editing, barcode scan and Bambu Lab spool touch simulated.">
+<meta name="description" content="Try TinySpools in the browser: a real filament collection with the Spools list, the Palette, Locations, spool editing, Check spools, settings, barcode scan and Bambu Lab spool touch.">
 <link rel="icon" type="image/png" href="/favicon.png">
 <style>
 /* Puslapio spalvos - kaip tinyowllabs; telefono viduje - programėlės tamsi tema (Ui.java, res/values-night). */
 :root{--bg:#f2f4f8;--page:#14161c;--muted:#5a6378;--line:#d5dae4;--link:#c9502a}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0d12;--page:#e6e9ef;--muted:#9aa3b4;--line:#2a313d;--link:#e8743f}}
 :root[data-theme="dark"]{--bg:#0b0d12;--page:#e6e9ef;--muted:#9aa3b4;--line:#2a313d;--link:#e8743f}
-.ps{--f:#17171a;--bar:#010102;--card:#333336;--cline:#58585b;--field:#3a3a3c;--hi:#f2f2f4;--lo:#b9bcc4;--acc:#e8743f;--red:#e5615b;--sheet:#2c2c30}
+.ps{--f:#17171a;--bar:#010102;--card:#333336;--cline:#58585b;--field:#3a3a3c;--hi:#f2f2f4;--lo:#b9bcc4;--acc:#e8743f;--red:#e5615b;--green:#3fa37a;--warn:#e0a33a;--sheet:#2c2c30}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--page);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 main{max-width:1000px;margin:0 auto;padding:20px 16px 48px}
@@ -38,7 +38,11 @@ a{color:var(--link)}
 @keyframes buzz{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 .ps{width:100%;height:100%;border-radius:30px;background:var(--f);overflow:hidden;position:relative;color:var(--hi);display:flex;flex-direction:column}
 .sbar{height:26px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:12px;background:var(--bar)}
-.abar{flex:none;background:var(--bar);padding:4px 18px 12px;font-size:22px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.abar{flex:none;background:var(--bar);padding:4px 8px 10px 18px;display:flex;align-items:center;gap:8px}
+.abar b{flex:1;min-width:0;font-size:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.abar button{background:none;border:0;color:var(--hi);font-size:22px;cursor:pointer;padding:0 8px;line-height:1}
+.menu{position:absolute;top:34px;right:10px;background:#2c2c30;border:1px solid #4a4a4e;border-radius:12px;padding:4px 0;z-index:8;min-width:170px;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.menu button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--hi);font:inherit;font-size:15px;padding:10px 16px;cursor:pointer}
 .body{flex:1;min-height:0;display:flex;flex-direction:column;padding:0 10px}
 .scr{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;padding-bottom:8px}
 .scr::-webkit-scrollbar{display:none}
@@ -53,11 +57,12 @@ a{color:var(--link)}
 .search input{flex:1;min-width:0;background:none;border:0;color:var(--hi);font:inherit;font-size:15px;outline:none}
 .search input::placeholder{color:var(--lo)}
 .pills{display:flex;gap:6px;margin:4px 0}
+.pills.du{display:grid;grid-template-columns:1fr 1fr}
 .pill{flex:1;min-width:0;border:1.5px solid var(--lo);border-radius:20px;background:none;color:var(--hi);font:inherit;font-size:13.5px;padding:6px 4px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pill.on{background:var(--acc);border-color:var(--acc);color:#fff}
-.sum{display:flex;justify-content:space-between;align-items:center;color:var(--lo);font-size:13px;margin:6px 2px}
-.sw{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--lo)}
-.sw i{width:30px;height:14px;border-radius:7px;background:#55565c;position:relative}
+.sum{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--lo);font-size:13px;margin:6px 2px}
+.sw{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--lo);flex:none}
+.sw i{width:30px;height:14px;border-radius:7px;background:#55565c;position:relative;flex:none}
 .sw i:after{content:"";position:absolute;top:-3px;left:-2px;width:20px;height:20px;border-radius:50%;background:#c8c8cc;transition:left .15s}
 .sw.on i{background:#7a4a31}.sw.on i:after{left:12px;background:var(--acc)}
 .k{background:var(--card);border:1px solid var(--cline);border-radius:16px;padding:12px 14px;margin-top:7px;cursor:pointer}
@@ -65,7 +70,7 @@ a{color:var(--link)}
 .fk{display:flex;gap:12px;align-items:center}
 .dot{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid #c8c8cc}
 .fk .mid{flex:1;min-width:0}
-.fk .t1{display:flex;align-items:center;gap:8px;font-size:17px;white-space:nowrap;overflow:hidden}
+.t1{display:flex;align-items:center;gap:8px;font-size:17px;white-space:nowrap;overflow:hidden}
 .logo{height:18px;max-width:80px;background:#fff;border-radius:4px;padding:2px 5px;object-fit:contain;flex:none}
 .brand{font-size:12px;color:var(--lo);border:1px solid var(--lo);border-radius:4px;padding:0 4px;flex:none}
 .t2,.t3{color:var(--lo);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -86,13 +91,14 @@ a{color:var(--link)}
 .loc .lh b{font-size:17px}
 .loc .lh span{color:var(--lo);font-size:13.5px;white-space:nowrap}
 .loc.none .lh b{color:var(--lo)}
-.dots{display:flex;gap:5px;margin-top:8px;align-items:center;color:var(--lo);font-size:13px}
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;align-items:center;color:var(--lo);font-size:13px}
 .dots i{width:17px;height:17px;border-radius:50%;border:1px solid #c8c8cc;flex:none}
 .back{display:flex;align-items:center;gap:6px;margin:8px 2px 2px;color:var(--hi);background:none;border:0;font:inherit;font-size:16px;font-weight:700;cursor:pointer;padding:0}
 .bottom{flex:none;display:flex;gap:6px;padding:6px 0 4px}
 .btn{border:0;border-radius:22px;background:var(--acc);color:#fff;font:inherit;font-size:16px;padding:10px;cursor:pointer}
 .btn.o{background:none;border:1.5px solid var(--lo);color:var(--hi)}
 .btn.d{background:none;color:var(--red);padding:10px 4px}
+.btn.m{border-radius:12px;font-size:14px;font-weight:700;padding:7px 12px}
 .fhead{display:flex;gap:12px;align-items:center}
 .fhead .dot{width:40px;height:40px}
 .info{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:14px;margin-top:10px}
@@ -102,6 +108,38 @@ a{color:var(--link)}
 .sp .pin{color:var(--lo);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sp .g{font-weight:600;font-size:16px}
 .sp .arr{color:var(--acc);font-size:18px}
+/* Check spools */
+.bus{background:#2a2a2e;border:1px solid #4a4a4e;border-radius:16px;padding:12px 14px;margin-top:8px}
+.bus.vyksta{border:2px solid var(--acc)}
+.bus .bh{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700}
+.bus .bh i{width:9px;height:9px;border-radius:50%;background:var(--lo)}
+.bus.vyksta .bh i{background:var(--acc)}
+.bus p{margin:3px 0 0;color:var(--lo);font-size:13px}
+.bus .pr{height:4px;border-radius:2px;background:#55565c;margin:8px 0 6px;overflow:hidden}
+.bus .pr b{display:block;height:100%;background:var(--acc)}
+.bus .be{display:flex;align-items:center;gap:8px;margin-top:8px}
+.bus .be span{flex:1;font-size:13.5px}
+.pb h5{margin:0 0 2px;font-size:15px;display:flex;align-items:center;gap:8px;white-space:nowrap;overflow:hidden}
+.pb h5 .dot{width:14px;height:14px}
+.pe{display:flex;align-items:center;gap:10px;border-top:1px solid rgba(255,255,255,.08);padding-top:6px;margin-top:6px}
+.pe .tx{flex:1;min-width:0;cursor:pointer}
+.pe .tx div{font-size:15px}
+.pe .tx small{font-size:13px}
+.bb{width:34px;height:34px;border-radius:50%;border:2px solid;background:none;cursor:pointer;font-size:15px;font-weight:700;flex:none;display:grid;place-items:center}
+.bb.n{border-color:var(--red);color:var(--red)}.bb.n.on{background:var(--red);color:#fff}
+.bb.y{border-color:var(--green);color:var(--green)}.bb.y.on{background:var(--green);color:#0f2a20}
+.ua{display:flex;align-items:center;margin-top:14px}
+.ua div{flex:1}
+.ua b{display:block;font-size:16px}.ua small{color:var(--lo)}
+/* Settings */
+.seg{display:flex;border:1.5px solid var(--lo);border-radius:12px;overflow:hidden;margin-top:8px}
+.seg button{flex:1;background:none;border:0;color:var(--hi);font:inherit;font-size:13.5px;padding:7px 2px;cursor:pointer;border-right:1px solid var(--lo)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--acc);color:#fff}
+.lbl{color:var(--lo);font-size:13px;margin-top:10px}
+.about{text-align:center;padding:20px 10px}
+.about img{width:72px;height:72px;border-radius:16px}
+.about p{color:var(--lo);font-size:14px}
 
 /* ---- Lapas ir kortelė ---- */
 .dim{position:absolute;inset:0 0 30px 0;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;z-index:5}
@@ -114,6 +152,7 @@ a{color:var(--link)}
 .sh .x{width:34px;height:34px;border-radius:50%;border:0;background:#4a4a4e;color:var(--hi);font-size:17px;cursor:pointer;flex:none}
 .sbody{overflow-y:auto;padding:4px 12px 10px;scrollbar-width:none}
 .sbody::-webkit-scrollbar{display:none}
+.sbody p.lo{color:var(--lo);font-size:13.5px;margin:6px 2px}
 .bl{background:#3a3a3e;border:1px solid #535357;border-radius:14px;padding:10px 12px;margin-top:8px}
 .bl .bt{font-size:12.5px;letter-spacing:.06em;color:var(--lo);font-weight:600;margin-bottom:6px}
 .grams{text-align:center}
@@ -143,24 +182,24 @@ input[type=range]{width:100%;accent-color:var(--acc);margin:12px 0 8px}
 <body>
 <main>
 <header class="top"><img src="/tinyspools.png" alt=""><div><b>TinySpools</b><span>Live demo · a real filament shelf, nothing leaves this page</span></div></header>
-<p class="lead">This is the author's own filament: 50 filaments, 73 spools, six locations (names translated to English). Browse the Spools list, the Palette and Locations, open a spool and change how much is left or where it is, add spools, scan a box or touch a Bambu Lab spool. Changes stay in this page until you reload it. <a href="/tinyspools/">About the app</a> · <a href="/tinyspools/guide/">User guide</a></p>
+<p class="lead">This is the author's own filament: 50 filaments, 73 spools, six locations (names translated to English). Browse the Spools list, the Palette and Locations, open a spool and change how much is left or where it is, add spools, run a Check spools round, change the settings, scan a box or touch a Bambu Lab spool. Changes stay in this page until you reload it. <a href="/tinyspools/">About the app</a> · <a href="/tinyspools/guide/">User guide</a></p>
 
 <div class="stage">
   <div class="dev">
     <div class="phone" id="phone"><div class="ps" id="ps">
       <div class="sbar"><span id="clk">12:00</span><span>▾ ◢ 87%</span></div>
-      <div class="abar" id="abar">TinySpools</div>
+      <div class="abar"><b id="abar">TinySpools</b><button id="mbtn" aria-label="Menu">⋮</button></div>
       <div class="body" id="body"></div>
       <div class="nav"><button id="back" aria-label="Back">◁</button><i></i><button aria-hidden="true" tabindex="-1">○</button></div>
     </div></div>
-    <div class="cap">Tap cards to open them, ◁ goes back.</div>
+    <div class="cap">Tap cards to open them, ⋮ for Check spools and Settings, ◁ goes back.</div>
   </div>
   <div class="side">
     <h3>Things the phone does</h3>
     <p>In the app the camera and NFC do this. Here these buttons pretend.</p>
     <button id="nfc">📳 Touch a Bambu Lab spool to the phone</button>
     <p>The spool's RFID tag gives the material, color and weight. A filament you already have opens; a new one is offered with Add.</p>
-    <p>For the barcode on a filament box, tap <b>Scan</b> in the phone.</p>
+    <p>For the barcode on a filament box, tap <b>Scan</b> in the phone. During Check spools, Scan reads the TinySpools QR label on a spool.</p>
   </div>
 </div>
 <div class="tools"><button id="reset">Start over</button></div>
@@ -169,10 +208,14 @@ input[type=range]{width:100%;accent-color:var(--acc);margin:12px 0 8px}
 
 <script src="data.js"></script>
 <script>
-// TinySpools demo: programėlės langų kopija (Pagrindinis, Filamento, ritės lapas, Pasirinkimas) su V ričių duomenimis.
+// TinySpools demo: programėlės langų kopija (Pagrindinis, Filamento, ritės lapas, Pasirinkimas, Patikra, Nustatymai)
+// su V ričių duomenimis. Numatytosios nustatymų reikšmės - kaip Nustatymai.java.
 const PS = document.getElementById('ps'), BODY = document.getElementById('body'), ABAR = document.getElementById('abar');
 const LOGO = {'Bambu Lab':'bambu_lab','SUNLU':'sunlu','Rosa3D':'rosa3d','Fiberon':'fiberon','Inslogic':'inslogic','eSUN':'esun'};
 const FILTRAI = ['Brand', 'Material', 'Type', 'Color'];
+const PFILTRAI = ['Shelf', 'Material', 'Color', 'Brand'];
+const DALINTI_IKI = 10;
+const DIENA = 86400000;
 // Bambu ritės, kurias „priglaudžia“ mygtukas: viena turima, viena nauja (spalva iš katalogo).
 const BAMBU = [{g:'Bambu Lab', t:'PLA', p:'Basic', s:'Red', hex:'#C12E1F', kodas:'10200', pilnas:1000},
                {g:'Bambu Lab', t:'PLA', p:'Basic', s:'Jade White', hex:'#FFFFFF', kodas:'10100', pilnas:1000}];
@@ -180,35 +223,45 @@ let S, bambuKartas = 0, korteleLaikas;
 
 function pradzia() {
   const d = JSON.parse(JSON.stringify(window.DEMO));
+  for (const r of d.rites) Object.assign(r, {tikrinta: 0, nerasta: false, buvo: null});
   S = {lentynos: d.lentynos.sort((a, b) => a.vardas.localeCompare(b.vardas)), fil: d.filamentai, rites: d.rites, kodai: d.kodai,
-       tab: 'spools', q: '', filt: {Brand: new Set(), Material: new Set(), Type: new Set(), Color: new Set()},
-       pradetos: false, likutis: true, pagalFil: true, vieta: null, langai: [], kitasId: 1000};
+       tab: 'spools', q: '', q2: '', pq: '', filt: tusti(FILTRAI), pfilt: tusti(PFILTRAI),
+       pradetos: false, vieta: null, langai: [], kitasId: 1000, ua: new Set(),
+       patikra: {vyksta: false, pradzia: 0, pabaiga: 0, santrauka: null},
+       nust: {likutis: false, pagalFil: true, ziedai: true, blokaiPagalKieki: false, tvarka: 'Brand', juostaBendra: false, eilutes: 1, dviEil: false}};
   uzdarytiLapa();
-  PS.querySelectorAll('.card').forEach(x => x.remove());
+  PS.querySelectorAll('.card,.menu').forEach(x => x.remove());
   piesti();
 }
+function tusti(k) { const o = {}; for (const x of k) o[x] = new Set(); return o; }
 
 // ---- Pagalbinės ----
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fil = id => S.fil.find(f => f.id === id);
 const lentyna = id => S.lentynos.find(l => l.id === id);
+const vietosVardas = r => r.l ? lentyna(r.l).vardas : 'No location';
 const vardas = f => [f.t, f.p].filter(Boolean).join(' ');
 const pilnasVardas = f => (f.g + ' ' + vardas(f) + ' · ' + f.s).trim();
 const svoris = g => g >= 1000 ? (g / 1000).toFixed(1) + ' kg' : Math.round(g) + ' g';
 const kiek = (n, v, d) => n + ' ' + (n === 1 ? v : d);
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const data = t => new Date(t).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'});
 function logo(g) {
   return LOGO[g] ? `<img class="logo" src="img/logo_${LOGO[g]}.png" alt="${esc(g)}">` : `<span class="brand">${esc(g)}</span>`;
 }
+function rgb(hex) { const n = parseInt(hex.slice(1), 16); return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255]; }
+function hsl(hex) {
+  const [r, g, b] = rgb(hex), mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  let h = d === 0 ? 0 : mx === r ? ((g - b) / d + 6) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return [h * 60, s, l];
+}
+const sviesi = hex => { const [r, g, b] = rgb(hex); return 0.299 * r + 0.587 * g + 0.114 * b > 0.6; };
 /** Spalvų grupė Color filtrui - pagal HEX atspalvį ir šviesumą. */
 function spalvosGrupe(hex) {
-  const n = parseInt(hex.slice(1), 16), r = (n >> 16 & 255) / 255, g = (n >> 8 & 255) / 255, b = (n & 255) / 255;
-  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
-  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  const [h, s, l] = hsl(hex);
   if (l < 0.13) return 'Black';
   if (s < 0.15) return l > 0.85 ? 'White' : 'Gray';
-  let h = d === 0 ? 0 : mx === r ? ((g - b) / d + 6) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
-  h *= 60;
   if (h >= 10 && h < 45 && l < 0.42) return 'Brown';
   if (h < 12 || h >= 345) return 'Red';
   if (h < 42) return 'Orange';
@@ -218,8 +271,16 @@ function spalvosGrupe(hex) {
   if (h < 300) return 'Purple';
   return 'Pink';
 }
-function reiksme(f, filtras) {
-  return filtras === 'Brand' ? f.g : filtras === 'Material' ? f.t : filtras === 'Type' ? (f.p || 'Basic') : spalvosGrupe(f.hex);
+/** Atspalvis rikiavimui „Color“ (Pagrindinis.atspalvis): pilkos - gale, pagal šviesumą. */
+function atspalvis(hex) { const [h, s, l] = hsl(hex); return s < 0.15 ? 400 + l : h; }
+function reiksme(f, filtras, r) {
+  switch (filtras) {
+    case 'Brand': return f.g;
+    case 'Material': return f.t;
+    case 'Type': return f.p || 'Basic';
+    case 'Shelf': return vietosVardas(r);
+    default: return spalvosGrupe(f.hex);
+  }
 }
 function tinka(f) {
   if (S.q && !norm(f.g + ' ' + f.t + ' ' + f.p + ' ' + f.s + ' ' + f.hex).includes(norm(S.q))) return false;
@@ -228,10 +289,16 @@ function tinka(f) {
 function rusiuoti(a, b) {
   return a.g.localeCompare(b.g) || a.t.localeCompare(b.t) || a.p.localeCompare(b.p) || a.s.localeCompare(b.s);
 }
+/** Spools sąrašo tvarka (Settings → Spools list): Brand / Material / Color. */
+function sarasoTvarka(a, b) {
+  if (S.nust.tvarka === 'Material') return a.t.localeCompare(b.t) || a.p.localeCompare(b.p) || a.g.localeCompare(b.g) || a.s.localeCompare(b.s);
+  if (S.nust.tvarka === 'Color') return atspalvis(a.hex) - atspalvis(b.hex) || a.g.localeCompare(b.g);
+  return rusiuoti(a, b);
+}
 /** Filamentai su jų ritėmis pagal paiešką, filtrus ir (jei reikia) lentyną ar pradėtas. */
 function grupes(pradetos, vieta) {
   const rez = [];
-  for (const f of [...S.fil].sort(rusiuoti)) {
+  for (const f of [...S.fil].sort(sarasoTvarka)) {
     if (!tinka(f)) continue;
     let r = S.rites.filter(x => x.f === f.id);
     if (vieta !== undefined && vieta !== null) r = r.filter(x => (x.l || 0) === vieta);
@@ -240,35 +307,48 @@ function grupes(pradetos, vieta) {
   }
   return rez;
 }
+function piliules(filtrai, pasirinkta, duom) {
+  return `<div class="pills ${S.nust.dviEil ? 'du' : ''}">${filtrai.map(k => {
+    const n = pasirinkta[k].size, pirmas = [...pasirinkta[k]][0];
+    const tekstas = !n ? k : S.nust.dviEil ? k + ': ' + pirmas + (n > 1 ? ' +' + (n - 1) : '') : n === 1 ? pirmas : k + ' ' + n;
+    return `<button class="pill ${n ? 'on' : ''}" ${duom}="${k}">${esc(tekstas)} ▾</button>`;
+  }).join('')}</div>`;
+}
+function paieska(id, vieta, reiksme) {
+  return `<div class="search">🔍<input id="${id}" placeholder="${vieta}" value="${esc(reiksme)}"></div>`;
+}
+/** Paieškos laukas po perpiešimo lieka su žymekliu toje pačioje vietoje. */
+function laukas(id, kur) {
+  const i = document.getElementById(id);
+  if (!i) return;
+  i.oninput = () => { S[kur] = i.value; const p = i.selectionStart; piesti(); const n = document.getElementById(id); n.focus(); n.setSelectionRange(p, p); };
+}
 
 // ---- Piešimas ----
 function piesti() {
+  PS.querySelectorAll('.menu').forEach(x => x.remove());
   const langas = S.langai[S.langai.length - 1];
-  if (langas && langas.tipas === 'fil') return filamentoLangas(langas.id);
-  if (langas && langas.tipas === 'naujas') return naujoLangas();
+  document.getElementById('mbtn').style.visibility = langas ? 'hidden' : 'visible';
+  if (langas) return ({fil: () => filamentoLangas(langas.id), naujas: naujoLangas, patikra: patikrosLangas,
+    nustatymai: nustatymuLangas, apie: apieLangas})[langas.tipas]();
   ABAR.textContent = 'TinySpools';
   let h = `<div class="tabs">${['Spools', 'Palette', 'Locations'].map(t =>
     `<button class="${S.tab === t.toLowerCase() ? 'on' : ''}" data-tab="${t.toLowerCase()}">${t}</button>`).join('')}</div>`;
-  if (S.tab !== 'locations' || S.vieta !== null) {
-    h += `<div class="search">🔍<input id="q" placeholder="Search spools" value="${esc(S.q)}"></div>`;
-    h += `<div class="pills">${FILTRAI.map(k => {
-      const n = S.filt[k].size;
-      return `<button class="pill ${n ? 'on' : ''}" data-filt="${k}">${n ? esc(n === 1 ? [...S.filt[k]][0] : k + ' ' + n) : k} ▾</button>`;
-    }).join('')}</div>`;
-  }
-  let sarasas = '', apacia = '+ New spool';
+  if (S.tab !== 'locations' || S.vieta !== null) h += paieska('q', 'Search spools', S.q) + piliules(FILTRAI, S.filt, 'data-filt');
+  let sarasas, apacia = '+ New spool';
   if (S.tab === 'spools') sarasas = riciuSarasas(grupes(false));
-  else if (S.tab === 'palette') { h += `<div class="pills">${['All spools', 'Opened'].map((t, i) =>
-      `<button class="pill ${S.pradetos === !!i ? 'on' : ''}" data-pradetos="${i}">${t}</button>`).join('')}</div>`; sarasas = palete(); }
-  else if (S.vieta !== null) {
+  else if (S.tab === 'palette') {
+    h += `<div class="pills">${['All spools', 'Opened'].map((t, i) =>
+      `<button class="pill ${S.pradetos === !!i ? 'on' : ''}" data-pradetos="${i}">${t}</button>`).join('')}</div>`;
+    sarasas = palete();
+  } else if (S.vieta !== null) {
     const l = S.vieta === 0 ? 'No location' : lentyna(S.vieta).vardas;
     sarasas = `<button class="back" data-vietos="1">‹ ${esc(l)}</button>` + riciuSarasas(grupes(false, S.vieta));
   } else { sarasas = vietos(); apacia = null; }
   BODY.innerHTML = h + `<div class="scr" id="scr">${sarasas}</div>` +
     `<div class="bottom"><button class="btn" style="flex:1" data-scan="1">Scan</button>` +
     (apacia ? `<button class="btn" style="flex:2" data-naujas="1">${apacia}</button>` : '') + `</div>`;
-  const q = document.getElementById('q');
-  if (q) q.oninput = () => { S.q = q.value; const p = q.selectionStart; piesti(); const n = document.getElementById('q'); n.focus(); n.setSelectionRange(p, p); };
+  laukas('q', 'q');
 }
 
 function riciuSarasas(gr) {
@@ -281,12 +361,14 @@ function riciuSarasas(gr) {
 
 function vietuTekstas(r) {
   const n = new Map();
-  for (const x of r) { const v = x.l ? lentyna(x.l).vardas : 'No location'; n.set(v, (n.get(v) || 0) + 1); }
+  for (const x of r) { const v = vietosVardas(x); n.set(v, (n.get(v) || 0) + 1); }
   return [...n].map(([v, k]) => k > 1 ? v + ' ×' + k : v).join(' · ');
 }
 
+/** Likučio juosta: po dalį ritei iki DALINTI_IKI (Settings → Remaining bar), kitaip viena bendra. */
 function juostos(f, r) {
-  const rodomos = r.length <= 10 ? [...r].sort((a, b) => b.lik - a.lik) : [{lik: r.reduce((s, x) => s + x.lik, 0) / r.length}];
+  const bendra = r.length > DALINTI_IKI || (S.nust.juostaBendra && r.length > 1);
+  const rodomos = bendra ? [{lik: r.reduce((s, x) => s + x.lik, 0) / r.length}] : [...r].sort((a, b) => b.lik - a.lik);
   return `<div class="bars">${rodomos.map(x => `<span><b style="width:${Math.max(0, Math.min(100, x.lik / f.pilnas * 100))}%"></b></span>`).join('')}</div>`;
 }
 
@@ -298,33 +380,52 @@ function filamentoKortele(f, r) {
     <div class="right"><div class="n">×${r.length}</div><div class="kg">${svoris(g)}</div></div></div>`;
 }
 
-/** Paletės žiedas: spalva, centre ričių skaičius; rodant likutį - sunaudota dalis užbrūkšniuota (Pyragas.java). */
-function ziedas(hex, n, dalis) {
-  const R = 24, w = 13, c = 27, r = R - w / 2, L = 2 * Math.PI * r;
-  let h = `<svg viewBox="0 0 54 54"><defs><pattern id="br" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="rgba(0,0,0,.45)"/><rect width="1.6" height="4" fill="rgba(255,255,255,.25)"/></pattern></defs>`;
-  h += `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${hex}" stroke-width="${w}"/>`;
-  if (dalis !== null && dalis < 0.999) {
-    // Likutis - nuo 12 val. pagal laikrodžio rodyklę, sunaudota dalis - likusi lanko dalis iki 12 val.
-    const liko = L * Math.max(0, dalis);
-    h += `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="url(#br)" stroke-width="${w}" stroke-dasharray="0 ${liko} ${L - liko} ${L}" transform="rotate(-90 ${c} ${c})"/>`;
+/**
+ * Paletės langelis (Pyragas.java): žiedas arba kvadratas. Rodant likutį - likusi dalis vientisa (žiede nuo 12 val.
+ * pagal laikrodžio rodyklę, kvadrate iš apačios), sunaudota - tos pačios spalvos brūkšneliai ant fono.
+ */
+let pyragoNr = 0;
+function langelis(hex, n, dalis) {
+  const c = 27, R = 26, id = 'b' + (pyragoNr++);
+  let h = `<svg viewBox="0 0 54 54"><defs><pattern id="${id}" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="4" fill="${hex}" fill-opacity=".55"/></pattern></defs>`;
+  if (S.nust.ziedai) {
+    const w = 15, r = R - w / 2, L = 2 * Math.PI * r;
+    if (dalis === null) h += `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${hex}" stroke-width="${w}"/>`;
+    else {
+      const liko = L * Math.max(0, Math.min(1, dalis));
+      h += `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="url(#${id})" stroke-width="${w}"/>` +
+        `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${hex}" stroke-width="${w}" stroke-dasharray="${liko} ${L}" transform="rotate(-90 ${c} ${c})"/>`;
+    }
+    h += `<circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#b9bcc4" stroke-width="1"/><circle cx="${c}" cy="${c}" r="${R - w}" fill="none" stroke="#b9bcc4" stroke-width="1"/>` +
+      `<text x="${c}" y="${c + 5}" text-anchor="middle" fill="#f2f2f4" font-size="14" font-weight="700">${n}</text>`;
+  } else {
+    if (dalis === null) h += `<rect x="1" y="1" width="52" height="52" rx="6" fill="${hex}" stroke="#b9bcc4"/>` +
+      `<text x="${c}" y="${c + 6}" text-anchor="middle" fill="${sviesi(hex) ? '#000' : '#fff'}" font-size="17" font-weight="700">${n}</text>`;
+    else {
+      const y = 1 + 52 * (1 - Math.max(0, Math.min(1, dalis)));
+      h += `<clipPath id="k${id}"><rect x="1" y="1" width="52" height="52" rx="6"/></clipPath><g clip-path="url(#k${id})"><rect x="1" y="1" width="52" height="52" fill="url(#${id})"/><rect x="1" y="${y}" width="52" height="${53 - y}" fill="${hex}"/></g>` +
+        `<rect x="1" y="1" width="52" height="52" rx="6" fill="none" stroke="#b9bcc4"/>` +
+        `<text x="${c}" y="${c + 6}" text-anchor="middle" fill="#fff" stroke="rgba(0,0,0,.85)" stroke-width="3" paint-order="stroke" font-size="17" font-weight="700">${n}</text>`;
+    }
   }
-  h += `<circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#b9bcc4" stroke-width="1"/><circle cx="${c}" cy="${c}" r="${R - w}" fill="none" stroke="#b9bcc4" stroke-width="1"/>`;
-  return h + `<text x="${c}" y="${c + 5}" text-anchor="middle" fill="#f2f2f4" font-size="14" font-weight="700">${n}</text></svg>`;
+  return h + `</svg>`;
 }
 
 function palete() {
   const gr = grupes(S.pradetos);
   const riciu = gr.reduce((s, x) => s + x.r.length, 0);
   let h = `<div class="sum"><span>${kiek(gr.length, 'color', 'colors')} · ${kiek(riciu, 'spool', 'spools')}</span>` +
-    (S.pradetos ? '' : `<span class="sw ${S.likutis ? 'on' : ''}" data-likutis="1">Total remaining <i></i></span>`) + `</div>`;
+    (S.pradetos ? '' : `<span class="sw ${S.nust.likutis ? 'on' : ''}" data-likutis="1">Total remaining <i></i></span>`) + `</div>`;
   if (!gr.length) return h + `<div class="empty">${S.pradetos ? 'No opened spools with these filters.' : 'Nothing matches with these filters.'}</div>`;
   const medziagos = new Map();
   for (const x of gr) { if (!medziagos.has(x.f.t)) medziagos.set(x.f.t, []); medziagos.get(x.f.t).push(x); }
-  for (const [m, xs] of [...medziagos].sort((a, b) => a[0].localeCompare(b[0]))) {
-    h += `<div class="blk"><h4>${esc(m)} · ${kiek(xs.reduce((s, x) => s + x.r.length, 0), 'spool', 'spools')}</h4><div class="grid">`;
+  const ritiu = xs => xs.reduce((s, x) => s + x.r.length, 0);
+  const blokai = [...medziagos].sort((a, b) => S.nust.blokaiPagalKieki ? ritiu(b[1]) - ritiu(a[1]) || a[0].localeCompare(b[0]) : a[0].localeCompare(b[0]));
+  for (const [m, xs] of blokai) {
+    h += `<div class="blk"><h4>${esc(m)} · ${kiek(ritiu(xs), 'spool', 'spools')}</h4><div class="grid">`;
     for (const {f, r} of xs) {
-      const dalis = S.pradetos || S.likutis ? r.reduce((s, x) => s + x.lik, 0) / (f.pilnas * r.length) : null;
-      h += `<div class="cell" data-fil="${f.id}">${ziedas(f.hex, r.length, dalis)}<small>${esc(f.p || 'Basic')}<br>${esc(f.s)}</small></div>`;
+      const dalis = S.pradetos || S.nust.likutis ? r.reduce((s, x) => s + x.lik, 0) / (f.pilnas * r.length) : null;
+      h += `<div class="cell" data-fil="${f.id}">${langelis(f.hex, r.length, dalis)}<small>${esc(f.p || 'Basic')}<br>${esc(f.s)}</small></div>`;
     }
     h += `</div></div>`;
   }
@@ -332,20 +433,19 @@ function palete() {
 }
 
 function vietos() {
-  const visos = [...S.lentynos.map(l => l.id), 0];
-  let h = `<div class="sum"><span>${kiek(S.lentynos.length, 'location', 'locations')}</span><span class="sw ${S.pagalFil ? 'on' : ''}" data-pagalfil="1">Group by filaments <i></i></span></div>`;
-  for (const id of visos) {
+  let h = `<div class="sum"><span>${kiek(S.lentynos.length, 'location', 'locations')}</span><span class="sw ${S.nust.pagalFil ? 'on' : ''}" data-pagalfil="1">Group by filaments <i></i></span></div>`;
+  for (const id of [...S.lentynos.map(l => l.id), 0]) {
     const r = S.rites.filter(x => (x.l || 0) === id);
     if (id === 0 && !r.length) continue;
     const g = r.reduce((s, x) => s + x.lik, 0);
     const kiekis = new Map();
     for (const x of r) kiekis.set(x.f, (kiekis.get(x.f) || 0) + 1);
-    const tvarka = [...kiekis].sort((a, b) => b[1] - a[1]);
     const spalvos = [];
-    for (const [fid, n] of tvarka) for (let i = S.pagalFil ? 1 : n; i > 0; i--) spalvos.push(fil(fid).hex);
-    const telpa = 12, rodyti = spalvos.length > telpa ? spalvos.slice(0, telpa - 1) : spalvos;
+    for (const [fid, n] of [...kiekis].sort((a, b) => b[1] - a[1])) for (let i = S.nust.pagalFil ? 1 : n; i > 0; i--) spalvos.push(fil(fid).hex);
+    // Eilutėje telpa 12 taškelių; netilpę - „+N“ paskutinėje vietoje (Settings → Locations).
+    const telpa = 12 * S.nust.eilutes, rodyti = spalvos.length > telpa ? spalvos.slice(0, telpa - 1) : spalvos;
     h += `<div class="k loc ${id ? '' : 'none'}" data-vieta="${id}"><div class="lh"><b>${esc(id ? lentyna(id).vardas : 'No location')}</b><span>${kiek(r.length, 'spool', 'spools')}${r.length ? ' · ' + svoris(g) : ''}</span></div>
-      <div class="dots">${rodyti.map(c => `<i style="background:${c}"></i>`).join('')}${spalvos.length > rodyti.length ? '+' + (spalvos.length - rodyti.length) : ''}</div></div>`;
+      <div class="dots" style="max-width:${12 * 22}px">${rodyti.map(c => `<i style="background:${c}"></i>`).join('')}${spalvos.length > rodyti.length ? '+' + (spalvos.length - rodyti.length) : ''}</div></div>`;
   }
   return h;
 }
@@ -355,25 +455,172 @@ function filamentoLangas(id) {
   ABAR.textContent = pilnasVardas(f);
   const r = S.rites.filter(x => x.f === id).sort((a, b) => b.lik - a.lik);
   const kodai = S.kodai.filter(k => k.filamentas === id).map(k => k.kodas);
-  let h = `<div class="k st"><div class="fhead"><span class="dot" style="background:${f.hex}"></span><div><div class="t1" style="display:flex;gap:8px;align-items:center;font-size:17px">${logo(f.g)}<span>${esc(vardas(f))}</span></div><div class="t2">${esc(f.s)}</div></div></div>
+  let h = `<div class="k st"><div class="fhead"><span class="dot" style="background:${f.hex}"></span><div><div class="t1">${logo(f.g)}<span>${esc(vardas(f))}</span></div><div class="t2">${esc(f.s)}</div></div></div>
     <div class="info"><span>Brand</span><span>${esc(f.g)}</span><span>Material</span><span>${esc(f.t)}</span><span>Type</span><span>${esc(f.p || 'Basic')}</span><span>Color</span><span>${esc(f.s)} · ${esc(f.hex.toUpperCase())}</span>${f.kodas ? `<span>Color code</span><span>${esc(f.kodas)}</span>` : ''}<span>Full spool</span><span>${f.pilnas} g</span>${kodai.length ? `<span>Barcode</span><span>${kodai.map(esc).join(', ')}</span>` : ''}</div></div>`;
   h += `<div class="sum"><span>${kiek(r.length, 'spool', 'spools')} · ${svoris(r.reduce((s, x) => s + x.lik, 0))} left</span></div>`;
   if (!r.length) h += `<div class="empty">No spools of this filament.</div>`;
-  for (const x of r) h += `<div class="k sp" data-rite="${x.id}"><div class="mid"><div class="pin">📍 ${esc(x.l ? lentyna(x.l).vardas : 'No location')}${x.refill ? ' · Refill' : ''}</div>${juostos(f, [x])}</div><span class="g">${x.lik} g</span><span class="arr">▸</span></div>`;
+  for (const x of r) h += `<div class="k sp" data-rite="${x.id}"><div class="mid"><div class="pin">📍 ${esc(vietosVardas(x))}${x.refill ? ' · Refill' : ''}</div>${juostos(f, [x])}</div><span class="g">${x.lik} g</span><span class="arr">▸</span></div>`;
   BODY.innerHTML = `<div class="scr" id="scr">${h}</div><div class="bottom"><button class="btn" style="flex:1" data-prideti="${id}">+ Add spool</button></div>`;
 }
 
 function naujoLangas() {
   ABAR.textContent = 'New spool';
-  let h = `<div class="search">🔍<input id="q2" placeholder="Search your filaments" value="${esc(S.q2 || '')}"></div><div class="sum"><span>Pick the filament for the new spool</span></div>`;
-  const q = norm(S.q2 || '');
+  let h = paieska('q2', 'Search your filaments', S.q2) + `<div class="sum"><span>Pick the filament for the new spool</span></div>`;
+  const q = norm(S.q2);
   for (const f of [...S.fil].sort(rusiuoti)) {
     if (q && !norm(f.g + ' ' + f.t + ' ' + f.p + ' ' + f.s).includes(q)) continue;
     h += `<div class="k fk" data-naujam="${f.id}"><span class="dot" style="background:${f.hex}"></span><div class="mid"><div class="t1">${logo(f.g)}<span>${esc(vardas(f))}</span></div><div class="t2">${esc(f.s)}</div></div></div>`;
   }
   BODY.innerHTML = `<div class="scr" id="scr">${h}</div>`;
-  const i = document.getElementById('q2');
-  i.oninput = () => { S.q2 = i.value; const p = i.selectionStart; piesti(); const n = document.getElementById('q2'); n.focus(); n.setSelectionRange(p, p); };
+  laukas('q2', 'q2');
+}
+
+// ---- Check spools (Patikra.java) ----
+const patikrinta = r => !r.nerasta && S.patikra.vyksta && r.tikrinta >= S.patikra.pradzia;
+function kada(t) {
+  const d = Math.floor((Date.now() - t) / DIENA);
+  return d <= 0 ? 'today' : d === 1 ? 'yesterday' : d + ' days ago';
+}
+function ptinka(f, r) {
+  if (S.pq && !norm(f.g + ' ' + f.t + ' ' + f.p + ' ' + f.s + ' ' + vietosVardas(r)).includes(norm(S.pq))) return false;
+  return PFILTRAI.every(k => S.pfilt[k].size === 0 || S.pfilt[k].has(reiksme(f, k, r)));
+}
+function patikrosLangas() {
+  ABAR.textContent = 'Check spools';
+  const P = S.patikra, visos = S.rites.filter(r => r.l), rodomos = visos.filter(r => ptinka(fil(r.f), r));
+  const rasta = rodomos.filter(patikrinta).length, nerasta = rodomos.filter(r => r.nerasta).length;
+  let h = `<div class="bus ${P.vyksta ? 'vyksta' : ''}"><div class="bh"><i></i>${P.vyksta ? 'Check in progress' : 'No check running'}</div>`;
+  if (P.vyksta) {
+    h += `<p>Started ${data(P.pradzia)} · ${rasta + nerasta} of ${kiek(rodomos.length, 'spool', 'spools')} checked</p>
+      <div class="pr"><b style="width:${rodomos.length ? (rasta + nerasta) / rodomos.length * 100 : 0}%"></b></div>
+      <div class="be"><span>✓ ${rasta} found · ✕ ${nerasta} not found · ${rodomos.length - rasta - nerasta} left</span><button class="btn m" data-baigti="1">Finish check</button></div>`;
+  } else {
+    const s = P.santrauka;
+    h += `<p>${s ? `Last check ${data(P.pabaiga)}: ${s.rasta} found${s.perkelta ? ' · ' + s.perkelta + ' moved to Unassigned' : ''} · ${s.liko} not checked` : 'Go shelf by shelf: mark each spool found or not found.'}</p>
+      <div class="be"><span></span><button class="btn m" data-pradeti="1">Start check</button></div>`;
+  }
+  h += `</div>`;
+  let sar = '';
+  const pagalF = new Map();
+  for (const r of rodomos) { if (!pagalF.has(r.f)) pagalF.set(r.f, []); pagalF.get(r.f).push(r); }
+  const seniausia = rs => Math.min(...rs.map(r => r.tikrinta));
+  for (const [fid, rs] of [...pagalF].sort((a, b) => seniausia(a[1]) - seniausia(b[1]))) {
+    const f = fil(fid);
+    sar += `<div class="k st pb"><h5><span class="dot" style="background:${f.hex}"></span>${esc(pilnasVardas(f))}</h5>`;
+    for (const r of rs) {
+      const ar = patikrinta(r);
+      let busena, spalva;
+      if (!P.vyksta) { busena = r.tikrinta ? 'last seen ' + kada(r.tikrinta) : 'never checked'; spalva = 'var(--lo)'; }
+      else if (r.nerasta) { busena = 'not found'; spalva = 'var(--red)'; }
+      else if (ar) { busena = 'found ' + kada(r.tikrinta); spalva = 'var(--green)'; }
+      else { busena = 'not checked' + (r.tikrinta ? ' · last ' + kada(r.tikrinta) : ''); spalva = 'var(--warn)'; }
+      sar += `<div class="pe"><div class="tx" data-rite="${r.id}"><div>${esc(vietosVardas(r))} · ${svoris(r.lik)}${r.refill ? ' · refill' : ''}</div><small style="color:${spalva}">${busena}</small></div>` +
+        (P.vyksta ? `<button class="bb n ${r.nerasta ? 'on' : ''}" data-ner="${r.id}" aria-label="Not found">✕</button><button class="bb y ${ar ? 'on' : ''}" data-ras="${r.id}" aria-label="Found">✓</button>` : '') + `</div>`;
+    }
+    sar += `</div>`;
+  }
+  if (!rodomos.length) sar += `<div class="empty">No spools match.</div>`;
+  // Unassigned: ritės be lentynos; pažymėtas ✓ „To the shelf (N)“ perkelia ir pažymi found.
+  const ua = S.rites.filter(r => !r.l && ptinka(fil(r.f), r));
+  for (const id of [...S.ua]) if (!ua.some(r => r.id === id)) S.ua.delete(id);
+  if (ua.length) {
+    sar += `<div class="ua"><div><b>Unassigned (${ua.length})</b><small>not on any shelf</small></div>${S.ua.size ? `<button class="btn m" data-ilentyna="1">To the shelf (${S.ua.size})</button>` : ''}</div>`;
+    const ug = new Map();
+    for (const r of ua) { if (!ug.has(r.f)) ug.set(r.f, []); ug.get(r.f).push(r); }
+    for (const [fid, rs] of ug) {
+      const f = fil(fid);
+      sar += `<div class="k st pb"><h5><span class="dot" style="background:${f.hex}"></span>${esc(pilnasVardas(f))}</h5>` + rs.map(r =>
+        `<div class="pe"><div class="tx" data-rite="${r.id}"><div>${svoris(r.lik)}${r.refill ? ' · refill' : ''}</div>${r.buvo ? `<small style="color:var(--lo)">was on ${esc(r.buvo)}</small>` : ''}</div><button class="bb y ${S.ua.has(r.id) ? 'on' : ''}" data-uas="${r.id}" aria-label="Found">✓</button></div>`).join('') + `</div>`;
+    }
+  }
+  BODY.innerHTML = `<div class="scr" id="scr">${h}${paieska('pq', 'Search spools', S.pq)}${piliules(PFILTRAI, S.pfilt, 'data-pfilt')}${sar}</div>` +
+    (P.vyksta ? `<div class="bottom"><button class="btn" style="flex:1" data-pscan="1">Scan</button></div>` : '');
+  laukas('pq', 'pq');
+}
+function pazymeti(id, kas) {
+  const r = S.rites.find(x => x.id === id);
+  if (kas === 'ras') {
+    if (r.nerasta) { r.nerasta = false; r.tikrinta = Date.now(); }
+    else r.tikrinta = patikrinta(r) ? (r.ankstesne || 0) : (r.ankstesne = r.tikrinta, Date.now());
+  } else r.nerasta = !r.nerasta;
+  piesti();
+}
+function baigtiPatikra() {
+  const lentynose = S.rites.filter(r => r.l), nerastos = lentynose.filter(r => r.nerasta);
+  const rasta = lentynose.filter(patikrinta).length, liko = lentynose.length - rasta - nerastos.length;
+  const d = lapas('Finish check?', `${rasta} found · ${nerastos.length} not found · ${liko} not checked`, null,
+    nerastos.length ? `<div class="opt" id="kelti"><span class="bx">✓</span>Move ${nerastos.length} not found to Unassigned</div>` : '<p class="lo">Found spools keep the date they were seen.</p>',
+    `<span class="sp1"></span><button class="btn o" data-a="1">Keep checking</button><button class="btn" data-b="1">Finish</button>`);
+  const k = d.querySelector('#kelti');
+  if (k) k.onclick = () => k.classList.toggle('on');
+  d.querySelector('.sfoot').onclick = e => {
+    const t = e.target.closest('button'); if (!t) return;
+    uzdarytiLapa();
+    if (!t.dataset.b) return;
+    const kelti = k && k.classList.contains('on');
+    const perkeltos = kelti ? nerastos.map(r => ({r, l: r.l, buvo: r.buvo})) : [];
+    for (const {r} of perkeltos) { r.buvo = lentyna(r.l).vardas; r.l = null; }
+    for (const r of S.rites) r.nerasta = false;
+    Object.assign(S.patikra, {vyksta: false, pabaiga: Date.now(), santrauka: {rasta, perkelta: perkeltos.length, liko: liko + (kelti ? 0 : nerastos.length)}});
+    piesti();
+    if (perkeltos.length) kortele('ok', kiek(perkeltos.length, 'spool', 'spools') + ' moved to Unassigned', null, 'Undo', () => {
+      for (const p of perkeltos) { p.r.l = p.l; p.r.buvo = p.buvo; }
+      piesti();
+    });
+  };
+}
+function ilentyna() {
+  const d = lapas('Move ' + kiek(S.ua.size, 'spool', 'spools') + ' to which shelf?', 'They will be marked found.', null,
+    `<div class="chips" style="margin-top:8px">${S.lentynos.map(l => `<button class="chip" data-l="${l.id}">${esc(l.vardas)}</button>`).join('')}</div>`, null);
+  d.querySelector('.sbody').onclick = e => {
+    const t = e.target.closest('[data-l]'); if (!t) return;
+    for (const id of S.ua) Object.assign(S.rites.find(r => r.id === id), {l: +t.dataset.l, buvo: null, nerasta: false, tikrinta: Date.now()});
+    const n = S.ua.size; S.ua.clear();
+    uzdarytiLapa(); piesti();
+    kortele('ok', kiek(n, 'spool', 'spools') + ' moved to ' + lentyna(+t.dataset.l).vardas, null);
+  };
+}
+/** Patikros Scan: savas QR lipdukas - ritė pažymima iš karto, kortelė „Found“ su Undo. */
+function patikrosSkeneris() {
+  const neTikrintos = S.rites.filter(r => r.l && !patikrinta(r) && !r.nerasta).slice(0, 6);
+  const turinys = `<p class="lo">In the app the camera reads the TinySpools QR label on the spool. Pick a spool to “scan” its label:</p>` +
+    (neTikrintos.length ? neTikrintos.map(r => { const f = fil(r.f);
+      return `<div class="opt" data-i="${r.id}"><span class="dot" style="width:20px;height:20px;background:${f.hex}"></span>${esc(pilnasVardas(f))}<span class="c">${esc(vietosVardas(r))}</span></div>`; }).join('')
+      : '<p class="lo">Every spool on the shelves is checked.</p>');
+  const d = lapas('Scan', 'QR label on a spool', null, turinys, null);
+  d.querySelector('.sbody').onclick = e => {
+    const o = e.target.closest('.opt'); if (!o) return;
+    const r = S.rites.find(x => x.id === +o.dataset.i), buvo = r.tikrinta, f = fil(r.f);
+    r.tikrinta = Date.now(); r.nerasta = false;
+    uzdarytiLapa(); virpinti(); piesti();
+    kortele('ok', 'Found', pilnasVardas(f) + ' · ' + vietosVardas(r), 'Undo', () => { r.tikrinta = buvo; piesti(); });
+  };
+}
+
+// ---- Settings (Nustatymai.java) ir About ----
+function seg(raktas, reiksmes, vardai) {
+  return `<div class="seg">${reiksmes.map((v, i) => `<button class="${S.nust[raktas] === v ? 'on' : ''}" data-nust="${raktas}" data-v="${i}">${vardai[i]}</button>`).join('')}</div>`;
+}
+const NUST = {ziedai: [true, false], blokaiPagalKieki: [false, true], tvarka: ['Brand', 'Material', 'Color'],
+  juostaBendra: [false, true], eilutes: [1, 2, 3, 4], dviEil: [false, true]};
+function nustatymuLangas() {
+  ABAR.textContent = 'Settings';
+  const blokas = (t, p, turinys) => `<div class="k st"><b style="font-size:17px">${t}</b><div class="t2" style="white-space:normal">${p}</div>${turinys}</div>`;
+  BODY.innerHTML = `<div class="scr" id="scr">` +
+    blokas('Palette', 'How colors are drawn on the Palette tab.', seg('ziedai', NUST.ziedai, ['Rings (spools)', 'Squares']) +
+      `<div class="lbl">Material blocks</div>` + seg('blokaiPagalKieki', NUST.blokaiPagalKieki, ['A-Z', 'Most spools first'])) +
+    blokas('Spools list', 'Order of the Spools tab.', seg('tvarka', NUST.tvarka, ['Brand', 'Material', 'Color']) +
+      `<div class="lbl">Remaining bar</div>` + seg('juostaBendra', NUST.juostaBendra, ['Split up to ' + DALINTI_IKI + ' spools', 'Show total'])) +
+    blokas('Locations', 'Rows of color dots on each location card; the rest show as +N.', seg('eilutes', NUST.eilutes, ['1 row', '2 rows', '3 rows', '4 rows'])) +
+    blokas('Filters', 'Two rows leave room to show what is selected, e.g. “Brand: Bambu Lab +2”.', seg('dviEil', NUST.dviEil, ['One row', 'Two rows'])) +
+    `<p class="t2" style="white-space:normal;margin:12px 4px">The app also has Appearance (dark / light), the NFC setting, backups, import from 3D Filament Profiles and the barcode database - not in this demo.</p></div>`;
+}
+function apieLangas() {
+  ABAR.textContent = 'About';
+  BODY.innerHTML = `<div class="scr" id="scr"><div class="about"><img src="/tinyspools.png" alt=""><h3>TinySpools</h3>
+    <p>Your filament, sorted: what you have, how much is left and where it is. No account, no server, everything stays on your phone.</p>
+    <p><a href="/tinyspools/" target="_blank" rel="noopener">tinyowllabs.com/tinyspools</a> · <a href="/tinyspools/guide/" target="_blank" rel="noopener">User guide</a> · <a href="/tinyspools/privacy/" target="_blank" rel="noopener">Privacy</a></p>
+    <p>Filament catalog: SpoolmanDB. Barcodes: Open Filament Database. Bambu Lab tag format: Bambu Research Group.</p></div></div>`;
 }
 
 // ---- Lapai ----
@@ -395,7 +642,7 @@ function ritesLapas(f, rite, pavadinimas) {
   const turinys = `<div class="bl"><div class="bt">REMAINING</div><div class="grams"><input id="gr" inputmode="numeric" value="${b.lik}"> <span style="font-size:30px;font-weight:700">g</span><small id="grt"></small></div>
     <input type="range" id="sl" min="0" max="${f.pilnas}" value="${b.lik}"><div class="steps">${[-50, -10, 10, 50].map(x => `<button data-z="${x}">${x > 0 ? '+' + x : x}</button>`).join('')}<button data-z="tuscia">Empty</button></div></div>
     <div class="bl"><div class="bt">${nauja ? 'KIND AND COUNT' : 'KIND'}</div><div class="chips" id="rus">${['Spool', 'Refill'].map((t, i) => `<button class="chip ${b.refill === i ? 'on' : ''}" data-r="${i}">${t}</button>`).join('')}</div>
-    ${nauja ? `<div class="cnt"><button data-n="-1">−</button><span id="nn"></span><button data-n="1">+</button></div>` : ''}</div>
+    ${nauja ? `<div class="cnt"><button data-n="-1">-</button><span id="nn"></span><button data-n="1">+</button></div>` : ''}</div>
     <div class="bl"><div class="bt">LOCATION</div><div class="chips" id="vt">${[{id: 0, vardas: 'No location'}, ...S.lentynos].map(l => `<button class="chip ${b.l === l.id ? 'on' : ''}" data-l="${l.id}">${esc(l.vardas)}</button>`).join('')}</div></div>`;
   const apacia = (nauja ? '' : `<button class="btn d" data-trinti="1">Delete</button>`) + `<span class="sp1"></span><button class="btn o" data-atsaukti="1">Cancel</button><button class="btn" data-saugoti="1">Save</button>`;
   const d = lapas(pavadinimas || (nauja ? 'New spool' : 'Spool'), pilnasVardas(f), f.hex, turinys, apacia);
@@ -417,7 +664,7 @@ function ritesLapas(f, rite, pavadinimas) {
     if (t.dataset.saugoti) {
       if (nauja) {
         if (!S.fil.includes(f)) S.fil.push(f);
-        for (let i = 0; i < b.n; i++) S.rites.push({id: S.kitasId++, f: f.id, lik: b.lik, l: b.l || null, refill: b.refill});
+        for (let i = 0; i < b.n; i++) S.rites.push({id: S.kitasId++, f: f.id, lik: b.lik, l: b.l || null, refill: b.refill, tikrinta: 0, nerasta: false, buvo: null});
       } else Object.assign(rite, {lik: b.lik, l: b.l || null, refill: b.refill});
       uzdarytiLapa();
       if (nauja) atidarytiFilamenta(f.id); else piesti();
@@ -429,7 +676,7 @@ function ritesLapas(f, rite, pavadinimas) {
 }
 
 function trintiRite(f, rite) {
-  const d = lapas('Delete this spool?', pilnasVardas(f) + ' · ' + rite.lik + ' g', f.hex, '<p style="color:var(--lo);font-size:14px">The spool disappears from the list. This cannot be undone.</p>',
+  const d = lapas('Delete this spool?', pilnasVardas(f) + ' · ' + rite.lik + ' g', f.hex, '<p class="lo">The spool disappears from the list. This cannot be undone.</p>',
     `<span class="sp1"></span><button class="btn o" data-a="1">Cancel</button><button class="btn" style="background:var(--red)" data-t="1">Delete</button>`);
   d.querySelector('.sfoot').onclick = e => {
     const t = e.target.closest('button'); if (!t) return;
@@ -438,12 +685,16 @@ function trintiRite(f, rite) {
   };
 }
 
-function filtroLapas(k) {
+/** Filtro lapas: Spools (Brand, Material, Type, Color) ir Check spools (Shelf, Material, Color, Brand). */
+function filtroLapas(k, patikroje) {
   const kiekiai = new Map();
-  for (const f of S.fil) { if (!S.rites.some(r => r.f === f.id)) continue; const v = reiksme(f, k); kiekiai.set(v, (kiekiai.get(v) || 0) + 1); }
-  const pasirinkta = new Set(S.filt[k]);
+  for (const r of S.rites) {
+    if (patikroje && !r.l && k === 'Shelf') continue;
+    const v = reiksme(fil(r.f), k, r); kiekiai.set(v, (kiekiai.get(v) || 0) + 1);
+  }
+  const setas = patikroje ? S.pfilt : S.filt, pasirinkta = new Set(setas[k]);
   const turinys = [...kiekiai].sort((a, b) => a[0].localeCompare(b[0])).map(([v, n]) =>
-    `<div class="opt ${pasirinkta.has(v) ? 'on' : ''}" data-v="${esc(v)}"><span class="bx">✓</span>${esc(v)}<span class="c">${n}</span></div>`).join('');
+    `<div class="opt ${pasirinkta.has(v) ? 'on' : ''}" data-v="${esc(v)}"><span class="bx">✓</span>${esc(v)}<span class="c">${kiek(n, 'spool', 'spools')}</span></div>`).join('');
   const d = lapas(k, 'Show only the ones you tick', null, turinys, `<button class="btn d" data-c="1">Clear</button><span class="sp1"></span><button class="btn" data-ok="1">Done</button>`);
   d.querySelector('.sbody').onclick = e => {
     const o = e.target.closest('.opt'); if (!o) return;
@@ -451,13 +702,13 @@ function filtroLapas(k) {
   };
   d.querySelector('.sfoot').onclick = e => {
     const t = e.target.closest('button'); if (!t) return;
-    S.filt[k] = t.dataset.c ? new Set() : pasirinkta; uzdarytiLapa(); piesti();
+    setas[k] = t.dataset.c ? new Set() : pasirinkta; uzdarytiLapa(); piesti();
   };
 }
 
 function skenerioLapas() {
   const dezes = S.kodai.map(k => ({kodas: k.kodas, f: fil(k.filamentas)}));
-  const turinys = `<p style="color:var(--lo);font-size:13.5px;margin:6px 2px">In the app the camera reads the barcode on a filament box (5,600+ barcodes are known). Pick a box to “scan”:</p>` +
+  const turinys = `<p class="lo">In the app the camera reads the barcode on a filament box (5,600+ barcodes are known). Pick a box to “scan”:</p>` +
     dezes.map((x, i) => `<div class="opt" data-i="${i}"><span class="dot" style="width:20px;height:20px;background:${x.f.hex}"></span>${esc(pilnasVardas(x.f))}<span class="c">${x.kodas}</span></div>`).join('');
   const d = lapas('Scan', 'Box barcode or a TinySpools QR label', null, turinys, null);
   d.querySelector('.sbody').onclick = e => {
@@ -475,7 +726,7 @@ function kortele(zenklas, antraste, tekstas, mygtukas, veiksmas) {
   clearTimeout(korteleLaikas);
   const c = document.createElement('div');
   c.className = 'card';
-  const spalva = zenklas === 'ok' ? '#3fa37a' : zenklas === 'start' ? 'var(--acc)' : '#6b6b70';
+  const spalva = zenklas === 'ok' ? 'var(--green)' : zenklas === 'start' ? 'var(--acc)' : '#6b6b70';
   c.innerHTML = `<div class="z" style="background:${spalva}">${zenklas === 'ok' ? '✓' : zenklas === 'start' ? '▶' : '?'}</div><b>${esc(antraste)}</b>${tekstas ? `<p>${esc(tekstas)}</p>` : ''}${mygtukas ? `<button class="btn">${esc(mygtukas)}</button>` : ''}`;
   c.onclick = e => { if (e.target.closest('.btn')) { c.remove(); veiksmas(); } else c.remove(); };
   PS.appendChild(c);
@@ -508,14 +759,15 @@ function bambuRite() {
 
 // ---- Įvykiai ----
 BODY.onclick = e => {
-  const t = e.target.closest('[data-tab],[data-filt],[data-pradetos],[data-likutis],[data-pagalfil],[data-vieta],[data-vietos],[data-fil],[data-rite],[data-prideti],[data-naujas],[data-naujam],[data-scan]');
+  const t = e.target.closest('[data-tab],[data-filt],[data-pfilt],[data-pradetos],[data-likutis],[data-pagalfil],[data-vieta],[data-vietos],[data-fil],[data-rite],[data-prideti],[data-naujas],[data-naujam],[data-scan],[data-pscan],[data-pradeti],[data-baigti],[data-ras],[data-ner],[data-uas],[data-ilentyna],[data-nust]');
   if (!t) return;
   const d = t.dataset;
   if (d.tab) { S.tab = d.tab; S.vieta = null; }
-  else if (d.filt) return filtroLapas(d.filt);
+  else if (d.filt) return filtroLapas(d.filt, false);
+  else if (d.pfilt) return filtroLapas(d.pfilt, true);
   else if (d.pradetos !== undefined) S.pradetos = d.pradetos === '1';
-  else if (d.likutis) S.likutis = !S.likutis;
-  else if (d.pagalfil) S.pagalFil = !S.pagalFil;
+  else if (d.likutis) S.nust.likutis = !S.nust.likutis;
+  else if (d.pagalfil) S.nust.pagalFil = !S.nust.pagalFil;
   else if (d.vieta !== undefined) S.vieta = +d.vieta;
   else if (d.vietos) S.vieta = null;
   else if (d.fil) return atidarytiFilamenta(+d.fil);
@@ -524,8 +776,29 @@ BODY.onclick = e => {
   else if (d.naujas) { S.q2 = ''; S.langai.push({tipas: 'naujas'}); }
   else if (d.naujam) return ritesLapas(fil(+d.naujam), null);
   else if (d.scan) return skenerioLapas();
+  else if (d.pscan) return patikrosSkeneris();
+  else if (d.pradeti) Object.assign(S.patikra, {vyksta: true, pradzia: Date.now()});
+  else if (d.baigti) return baigtiPatikra();
+  else if (d.ras) return pazymeti(+d.ras, 'ras');
+  else if (d.ner) return pazymeti(+d.ner, 'ner');
+  else if (d.uas) { const id = +d.uas; S.ua.has(id) ? S.ua.delete(id) : S.ua.add(id); }
+  else if (d.ilentyna) return ilentyna();
+  else if (d.nust) S.nust[d.nust] = NUST[d.nust][+d.v];
+  const virsus = document.getElementById('scr')?.scrollTop || 0;
   piesti();
+  // Žymint patikroje ar keičiant nustatymą sąrašas lieka toje pačioje vietoje.
+  if (d.ras || d.ner || d.uas || d.nust) document.getElementById('scr').scrollTop = virsus;
 };
+document.getElementById('mbtn').onclick = e => {
+  e.stopPropagation();
+  if (PS.querySelector('.menu')) return PS.querySelector('.menu').remove();
+  const m = document.createElement('div');
+  m.className = 'menu';
+  m.innerHTML = [['patikra', 'Check spools'], ['nustatymai', 'Settings'], ['apie', 'About']].map(([k, t]) => `<button data-l="${k}">${t}</button>`).join('');
+  m.onclick = ev => { const b = ev.target.closest('button'); if (!b) return; S.langai.push({tipas: b.dataset.l}); piesti(); document.getElementById('scr').scrollTop = 0; };
+  PS.appendChild(m);
+};
+PS.addEventListener('click', e => { if (!e.target.closest('.menu,#mbtn')) PS.querySelectorAll('.menu').forEach(x => x.remove()); });
 document.getElementById('back').onclick = () => {
   if (PS.querySelector('.dim')) return uzdarytiLapa();
   if (S.langai.length) S.langai.pop();
