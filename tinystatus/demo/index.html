@@ -8,15 +8,16 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <script>try{var q=new URLSearchParams(location.search).get("theme");if(q==="light"||q==="dark")localStorage.setItem("tema",q);var m=localStorage.getItem("tema");if(m==="light"||m==="dark")document.documentElement.dataset.theme=m;}catch(e){}</script>
 <style>
-/* Spalvos - is programeles: laikrodis res/values/colors.xml, telefonas Pagrindinis.java. */
+/* Puslapio spalvos - TinyOwl /style.css (--bg, --fg, --accent); laikrodzio ir telefono viduje - programeles:
+   laikrodis res/values/colors.xml, telefonas Pagrindinis.java. */
 :root{
-  --bg:#f2f4f8; --page:#14161c; --muted:#5a6378; --line:#d5dae4; --link:#2f6fd0; --soft:#e3e7ef;
+  --bg:#fff; --page:#0e1a33; --muted:#5c667a; --line:#e3e8f1; --link:#e8720c; --soft:#f3f5f9;
   --orange:#e8720c; --blue:#4da3ff; --bluel:#84bcf8; --btn:#2e2e33; --text:#eeeeee; --mut:#8a8a92;
   --latte:#cbbfae; --faint:#55555c; --ok:#2fbf4f; --warn:#ffb15f; --danger:#ff6b5a; --track:#26262a;
   --f:#0e1016; --card:#1c1f2a; --field:#262a37; --hi:#e8ecf5; --lo:#8c96b2; --green:#66bb6a;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0d12; --page:#e6e9ef; --muted:#9aa3b4; --line:#2a313d; --link:#84bcf8; --soft:#1c222c}}
-:root[data-theme="dark"]{--bg:#0b0d12; --page:#e6e9ef; --muted:#9aa3b4; --line:#2a313d; --link:#84bcf8; --soft:#1c222c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0e1a33; --page:#f2f4f8; --muted:#9fb0cc; --line:#22304f; --link:#f08a2c; --soft:#16244a}}
+:root[data-theme="dark"]{--bg:#0e1a33; --page:#f2f4f8; --muted:#9fb0cc; --line:#22304f; --link:#f08a2c; --soft:#16244a}
 /* Virsutine eilute kaip kituose TinyOwl puslapiuose: kelias kaireje, temos jungiklis desineje (/tema.js). */
 .virsus{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px}
 .crumb{margin:0;font-size:12px;color:var(--muted)}
