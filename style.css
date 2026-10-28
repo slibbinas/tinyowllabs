@@ -1,8 +1,8 @@
 :root { --bg: #fff; --fg: #0e1a33; --muted: #5c667a; --accent: #e8720c; --line: #e3e8f1; --soft: #f3f5f9; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --bg: #141416; --fg: #eee; --muted: #aaa; --accent: #f08a2c; --line: #26262a; --soft: #1d1d20; }
+  :root:not([data-theme="light"]) { --bg: #141416; --fg: #eee; --muted: #aaa; --accent: #f08a2c; --line: #2e2e33; --soft: #26262b; }
 }
-:root[data-theme="dark"] { --bg: #141416; --fg: #eee; --muted: #aaa; --accent: #f08a2c; --line: #26262a; --soft: #1d1d20; }
+:root[data-theme="dark"] { --bg: #141416; --fg: #eee; --muted: #aaa; --accent: #f08a2c; --line: #2e2e33; --soft: #26262b; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
@@ -59,3 +59,6 @@ footer p { margin: 0 0 6px; }
 .products .eil { display: flex; justify-content: space-between; align-items: center; gap: 6px 12px; flex-wrap: wrap; }
 .testui { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
 .testui a { font-weight: 600; text-decoration: none; border: 1px solid var(--accent); border-radius: 99px; padding: 1px 10px; }
+/* Kilmes eilute apacioje (V 2026-10-29: ES duoda pasitikejimo). */
+.madein { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.madein .eu { width: 24px; height: 16px; flex: none; }
