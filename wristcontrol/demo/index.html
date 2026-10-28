@@ -855,15 +855,15 @@ function placeTour(){
   else{x=Math.max(10,Math.min(vw-tw-10,r.left));y=r.bottom+16+th<vh?r.bottom+16:Math.max(10,r.top-th-16);}
   t.style.left=x+"px";t.style.top=y+"px";
 }
-function endTour(){clearInterval(sukimas);sukimas=null;tourI=-1;if(tourEls){tourEls.h.remove();tourEls.t.remove();tourEls=null;}try{localStorage.setItem("wc-demo-turas","1");}catch(e){}}
+function endTour(){clearInterval(sukimas);sukimas=null;tourI=-1;if(tourEls){tourEls.h.remove();tourEls.t.remove();tourEls=null;}}
 addEventListener("scroll",placeTour,{passive:true}); addEventListener("resize",placeTour);
 document.getElementById("tourBtn").addEventListener("click",function(){tour(0);});
 document.getElementById("scen").addEventListener("click",function(e){var b=e.target.closest("[data-scen]");if(b)startScen(b.dataset.scen);});
 document.getElementById("reset").addEventListener("click",function(){fresh();document.getElementById("banner").classList.remove("on");draw();});
 
 fresh(); draw(); clearInterval(timer); timer=setInterval(tick,1000);
-var matytas=false; try{matytas=localStorage.getItem("wc-demo-turas")==="1";}catch(e){}
-if(!matytas) setTimeout(function(){tour(0);},700);
+/* Turas - kiekviena karta atidarius puslapi (V 2026-10-29); Skip ji uzdaro. */
+setTimeout(function(){tour(0);},700);
 })();
 </script>
 </body>
