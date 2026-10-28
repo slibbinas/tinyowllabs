@@ -52,9 +52,10 @@ img.w { display: block; }
 @media screen {
   body { background: #F3F5F9; }
   .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
-  /* Juosta ir grizimo eilute - kaip Wrist Control vadove; eilute visada smulkesne uz vadovo teksta. */
+  /* Juosta ir grizimo eilute - kaip Wrist Control vadove; eilute visada smulkesne uz vadovo teksta.
+     Turinys lapo plociu (800px): kelias nuo lapo kairio krasto, PDF iki desinio (V 2026-10-29). */
   .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; padding: 10px 16px; background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
+    gap: 12px; padding: 10px max(16px, calc((100% - 800px) / 2)); background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
   .webbar a { color: #E8720C; text-decoration: none; }
   .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
   /* Trys laikrodziai vienoje eileje kaip Wrist Control vadove: A4 plociai (mm) ekrane pakeiciami procentais. */
