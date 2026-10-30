@@ -148,8 +148,6 @@ hr.l{border:0;border-top:1px solid var(--track);margin:12px 0 2px}
 .opt.on{background:var(--btn);color:var(--onbtn)}
 .opt.on .sub{color:var(--onbtn)}
 .opt b{display:block}
-.prog{height:4px;background:var(--track);border-radius:2px;margin:6px 4px 0}
-.prog i{display:block;height:100%;background:var(--blue);border-radius:2px}
 .home{position:absolute;inset:28px 0 34px;padding:14px;background:linear-gradient(160deg,#1c2b4a,#0e1016 70%)}
 .wg{background:rgba(28,31,42,.94);border-radius:20px;padding:11px 14px;cursor:pointer;color:#e8ecf5}
 .wg .h{display:flex;justify-content:space-between;font-size:12px;font-weight:600;letter-spacing:.05em}
@@ -160,8 +158,8 @@ hr.l{border:0;border-top:1px solid var(--track);margin:12px 0 2px}
 .icons{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:22px}
 .icons div{width:52px;height:52px;border-radius:14px;background:#2a2e3b;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#8c96b2}
 .icons img{width:52px;height:52px;border-radius:14px}
-.banner{position:absolute;top:32px;left:10px;right:10px;background:var(--card);border:1px solid var(--track);border-radius:16px;padding:10px 12px;box-shadow:0 6px 20px rgba(0,0,0,.4);transform:translateY(-140%);transition:transform .3s;z-index:5}
-.banner.on{transform:none}
+.banner{position:absolute;top:32px;left:10px;right:10px;background:var(--card);border:1px solid var(--track);border-radius:16px;padding:10px 12px;box-shadow:0 6px 20px rgba(0,0,0,.4);transform:translateY(-140%);visibility:hidden;transition:transform .3s;z-index:5}
+.banner.on{transform:none;visibility:visible}
 .banner .t{font-size:11.5px;color:var(--lo)}
 .banner b{display:block;font-size:14.5px;margin-top:2px}
 .banner .a{color:var(--blue);font-size:14px;margin-top:6px;cursor:pointer;font-weight:600}
@@ -313,9 +311,10 @@ var P={
 };
 function ic(n,cls){return '<svg viewBox="0 0 100 100"'+(cls?' class="'+cls+'"':'')+'>'+P[n]+'</svg>';}
 
-/* Rinkiklio mygtukai (m_*) ir profilio vardai pulte (prof_*: Custom - "Fireplace", Auto - "Automatic"). */
+/* Rinkiklio mygtukai (m_*) ir profiliu vardai (prof_*) - nuo apzvalgos 11 vienodi: Custom, Auto. */
 var MODES=[["optimized","Optimized"],["boost","Boost"],["away","Away"],["home","At home"],["custom","Custom"],["auto","Auto"]];
-var NAME={optimized:"Optimized",boost:"Boost",away:"Away",home:"At home",custom:"Fireplace",auto:"Automatic"};
+var NAME={optimized:"Optimized",boost:"Boost",away:"Away",home:"At home",custom:"Custom",auto:"Auto"};
+var APP_VER="Watch 0.1.1002 · Phone 0.1.1002";
 var G, U, S, timer, ui;
 /* Kokybes ribos (VlxJuosta): {gerasNuo, gerasIki, pakenciamaNuo, pakenciamaIki}. */
 var R_CO2=[0,800,0,1200], R_T=[20,25,18,27], R_RH=[30,50,25,60];
@@ -328,7 +327,7 @@ var GOALS={clean:{n:"Clean air",a:"CO2 ~620",rest:55,limit:500},balance:{n:"Bala
 /* ---- Busena: G - programele, U - rekuperatoriai, S - pasirinktas ---- */
 function unit(name,co2,temp,out,filt){
   var u={name:name,mode:"optimized",prev:"optimized",left:0,co2:co2,temp:temp,rh:52,out:out,fan:52,filt:filt,
-    people:2,shower:0,scen:null,scenLeft:0,peak:0,age:0,plan:{rest:45,limit:500},hist:[],week:[],rhH:[]};
+    people:2,shower:0,scen:null,scenLeft:0,peak:0,age:0,plan:{rest:45,limit:500},clock:false,hist:[],week:[],rhH:[]};
   for(var i=0;i<144;i++){var t=i/144*24;u.hist.push({co2:co2-80+260*Math.max(0,Math.sin((t-7)/24*2*Math.PI))+40*Math.sin(t*1.7),
     tin:temp-0.7+0.8*Math.sin((t-9)/24*2*Math.PI),tout:out-3+5*Math.sin((t-9)/24*2*Math.PI)});}
   var d=["M","T","W","T","F","S","S"];
@@ -359,7 +358,7 @@ function galutinis(u){
 function story1(){
   var u=S, auto=u.mode==="optimized"||u.mode==="auto", tg=galutinis(u), f0=Math.round(u.fan),
       f=Math.abs(tg-f0)>=2?f0+' % → '+tg:''+f0;
-  if(u.scen==="guests") return '<b>Guests: 8 people at home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' turns it up by itself.':' - the fan stays where you set it ('+NAME[u.mode]+').')+'<small>'+u.scenLeft+' min until they leave. Above 800 ppm both devices show a CO2 alert; tapping it opens VENTILATION.</small>';
+  if(u.scen==="guests") return '<b>Guests: 8 people at home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' turns it up by itself.':' - the fan stays where you set it ('+NAME[u.mode]+').')+'<small>'+u.scenLeft+' min until they leave. Above 800 ppm both devices show a CO2 alert; tapping it '+(G.view==="auto"?'takes you to Boost.':'opens the mode list.')+'</small>';
   if(u.scen==="away") return '<b>Nobody home.</b> CO2 '+Math.round(u.co2)+' ppm, fan '+f+' %'+(auto?' - '+NAME[u.mode]+' slows it down by itself.':'.')+'<small>Coming back in '+u.scenLeft+' min. Leaving for longer? Tap Away on the watch on your way out.</small>';
   if(u.scen==="shower") return '<b>Shower running.</b> Humidity '+Math.round(u.rh)+' %, fan '+f+' %'+(auto?' - the unit speeds up for the moisture.':'.')+'<small>'+u.scenLeft+' min left. When humidity jumps, Optimized suggests Boost - tap it on the watch. Above 60 % you also get a humidity alert.</small>';
   if(u.done&&G.min-u.done.t<30){var d=u.done;
@@ -368,24 +367,26 @@ function story1(){
   return '<small>Pick a situation above. In SETTINGS switch to Semi-automatic to see every window, or pick Away or Custom in VENTILATION to compare with Optimized.</small>';
 }
 function fresh(){
-  G={view:"auto",ctrl:"phone",theme:"dark",from:22.5,to:23.5,alerts:{temp:true,rh:true,co2:true,filt:true},
-     refresh:"Auto",clock:"Auto fix",conn:"Auto",cloud:true,lang:"Auto",waiting:false,
+  G={view:"auto",ctrl:"phone",theme:"system",from:22.5,to:23.5,alerts:{temp:true,rh:true,co2:true,filt:true},
+     refresh:"Adaptive",clock:"Fix itself",conn:"Best",cloud:true,lang:"System",waiting:false,tempOn:true,qAsked:false,
      orig:{rest:30,limit:800},canRestore:true,work:{nobody:3,nobodyH:14,cooled:0,heat:96,boost:2},
      pages:{sens:true,temps:true,unit:true,filt:true,stats:true,opt:true},min:18*60,writing:null,log:[],upd:null};
   U=[unit("Home ventilation",640,24.3,10.4,107),unit("Summer house",520,21.8,9.6,32)];
-  U[1].mode="away"; U[1].fan=45;
+  /* Antras rekuperatorius seka savo savaites grafika: taip matyti WEEK CLOCK blokai ir vedlio zingsnis. */
+  U[1].mode="away"; U[1].prev="away"; U[1].fan=45; U[1].clock=true;
   S=U[0];
-  ui={phone:"pultas",layer:"app",wpage:0,wwin:null,wface:false,wnote:false,note:null,opt:"idle",prop:null,wiz:0,wizA:[],
-      fsure:0,wfsure:0,wfsaved:0,co2L:0,rhL:0,boostSug:false,pulling:false};
-  logAdd("App","Mode: Automatic → Optimized","Optimized started");
+  ui={phone:"pultas",layer:"app",wpage:0,wwin:null,wface:false,wnote:false,note:null,opt:"idle",prop:null,wiz:"who",wizA:{},
+      fsure:0,wfsure:0,wfsaved:0,wfbusy:0,wopt:"idle",wprop:null,wq:null,wbusy:null,co2L:0,rhL:0,boostSug:false,pulling:false};
+  logAdd("App","Keeping the heat in","Optimized started");
 }
 function hhmm(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");}
 function dayName(m){return ["Wed","Thu","Fri","Sat","Sun","Mon","Tue"][Math.floor(m/1440)%7];}
 function logAdd(who,what,why){G.log.unshift({t:G.min,who:who,what:what,why:why||""}); if(G.log.length>12) G.log.pop();}
 /* Demo diena - 2026-10-28 (trečiadienis). */
 function dateAdd(days){var d=new Date(2026,9,28);d.setDate(d.getDate()+Math.floor(G.min/1440)+days);return d;}
-function md(d){return String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
-function ymd(d){return d.getFullYear()+"-"+md(d);}
+/* VlxTelefonas.diena - angliskai „28 Oct“. */
+function md(d){return d.getDate()+" "+["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()];}
+function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 
 /* Rekuperatorius: ventiliatorius pagal rezima, CO2 seka ventiliatoriu ir svecius. */
 function fanTarget(u){
@@ -394,7 +395,7 @@ function fanTarget(u){
     case "auto":return Math.min(90,50+Math.max(0,(u.co2-800)/8)+Math.max(0,(u.rh-60)*2.5));
     default:return Math.min(100,u.plan.rest+Math.max(0,(u.co2-u.plan.limit)/8)+Math.max(0,(u.rh-60)*3));}
 }
-var READ={"Auto":30,"20 min":20,"30 min":30,"1 h":60,"Only in app":60};
+var READ={"Adaptive":30,"20 min":20,"30 min":30,"1 h":60,"Only in app":60};
 function tick(){
   G.min++;
   U.forEach(function(u){
@@ -449,13 +450,15 @@ function undoAuto(){
 /* Rasymas: suktukas ~1,6 s; rasys valdantis; vibracija abiejuose (V 2026-10-28). */
 function write(mode,from,done){
   if(G.writing) return;
-  G.writing={mode:mode,from:from}; draw();
+  var stop=mode==="boost_stop";
+  G.writing={mode:stop?"boost":mode,from:from}; draw();
   setTimeout(function(){
-    var was=S.mode;
-    if(mode==="boost"||mode==="custom"){ if(S.mode!=="boost"&&S.mode!=="custom") S.prev=S.mode; S.left=60; }
+    var was=S.mode, to=stop?S.prev:mode;
+    if(to==="boost"||to==="custom"){ if(S.mode!=="boost"&&S.mode!=="custom") S.prev=S.mode; S.left=60; }
     else S.left=0;
-    S.mode=mode; G.writing=null; S.age=0;
-    if(was!==mode) logAdd("You","Mode: "+NAME[was]+" → "+NAME[mode]);
+    if(to==="optimized") S.clock=false;
+    S.mode=to; G.writing=null; S.age=0;
+    if(was!==to) logAdd("You","Mode: "+NAME[was]+" → "+NAME[to]);
     buzz(); if(done) done(); draw();
   },1600);
 }
@@ -463,6 +466,19 @@ function writingMsg(dev){
   if(!G.writing||G.writing.from!==dev) return "";
   if(G.ctrl===dev) return "Writing to the unit…";
   return dev==="phone"?"Sent to Galaxy Watch - waiting for the unit…":"Sent to the phone - waiting for the unit…";
+}
+/* Ijungiant Optimized valdanciajame - viena karta klausiam apie Adaptive (VlxRezimai.siulytiAuto). */
+function askRefresh(dev){return G.ctrl===dev&&G.refresh!=="Adaptive"&&!G.qAsked;}
+function keepLabel(){return G.refresh==="Only in app"?"Keep":"Keep "+G.refresh;}
+function qPhone(go){
+  ui.qGo=go;
+  document.getElementById("sheet").innerHTML='<div class="list"><div><div class="kt">DATA REFRESH</div><div style="margin-top:8px;font-size:15px">Optimized reacts faster with Adaptive refresh: every 15-60 min, more often when the air changes.</div><div class="sub" style="margin-top:6px">Drains battery faster</div><div class="seg"><div data-qk="keep">'+keepLabel()+'</div><div data-qk="auto" class="on">Switch to Adaptive</div></div></div></div>';
+}
+function phoneMode(mode){
+  if(G.writing) return;
+  if(mode==="optimized"&&askRefresh("phone")){qPhone(function(){phoneMode(mode);});return;}
+  if(mode==="optimized"&&S.clock&&G.ctrl==="phone") toast("Week clock off: Optimized runs the unit.");
+  write(mode,"phone");
 }
 function buzz(){["ps","ws"].forEach(function(id){var e=document.getElementById(id);e.classList.remove("buzz");void e.offsetWidth;e.classList.add("buzz");});}
 var tt; function toast(t){var e=document.getElementById("toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on");},2600);}
@@ -474,19 +490,19 @@ function notify(kind,title,text){
   b.classList.add("on"); clearTimeout(nt); nt=setTimeout(function(){b.classList.remove("on");},8000);
   ui.wnote=true; buzz(); draw();
 }
-/* Pranesimo bakstelejimas telefone: CO2, dregme ir Boost pasiulymas atidaro VENTILATION (telefonas be
-   zmogaus paspaudimo nieko nerasys); planas - prognoze; autopilotas - pultas. */
+/* Pranesimo bakstelejimas telefone: CO2, dregme ir Boost pasiulymas - VENTILATION (telefonas be zmogaus
+   paspaudimo nieko nerasys), Automatic vaizde - pultas su Boost; planas - prognoze; autopilotas - pultas. */
 function notePhone(){
   var n=ui.note; document.getElementById("banner").classList.remove("on"); ui.wnote=false; if(!n) return;
   if(n.kind==="plan"){openOpt(ui.planProp);return;}
-  openPhone(n.kind==="auto"?"pultas":"vent");
+  openPhone(n.kind==="auto"||G.view==="auto"?"pultas":"vent");
 }
-/* Laikrodyje: Boost pasiulymas - Boost; CO2 ir dregme - rezimu rinkiklis; planas - OPTIMIZE. */
+/* Laikrodyje: Boost pasiulymas - Boost; CO2 ir dregme - rinkiklis, Automatic vaizde - oro ekranas su Boost; planas - prognoze. */
 function noteWatch(){
   var n=ui.note; ui.wnote=false; document.getElementById("banner").classList.remove("on"); if(!n){draw();return;}
   if(n.kind==="boost"){ui.wwin=null;goVent();if(!G.writing&&S.mode!=="boost")write("boost","watch");else draw();return;}
-  if(n.kind==="co2"||n.kind==="rh"){goVent();ui.wwin="pick";}
-  else if(n.kind==="plan"){ui.wwin="opt";}
+  if(n.kind==="co2"||n.kind==="rh"){if(G.view==="auto"){ui.wwin=null;ui.wpage=0;}else{goVent();ui.wwin="pick";}}
+  else if(n.kind==="plan"){ui.wwin="opt";ui.wopt="result";ui.wprop=prog(ui.planProp.rest,ui.planProp.limit);}
   draw();
 }
 function goVent(){var i=wpages().indexOf("vent");if(i>=0)ui.wpage=i;}
@@ -501,12 +517,23 @@ function wcol(n){return ["var(--wgreen)","var(--wyellow)","var(--wred)"][n];}
 function f1(x){return x.toFixed(1);}
 function deg(x,comma){return x%1===0?x+"°":(comma?f1(x):x.toFixed(1))+"°";}
 function rangeTxt(comma){return deg(G.from,comma)+"-"+deg(G.to,comma);}
+/* u_hmin: „1 h 00 min“. */
+function hmin(m){return Math.floor(m/60)+" h "+String(m%60).padStart(2,"0")+" min";}
+/* Pultas, MainActivity.minutes: iki valandos imtinai - minutemis. */
+function minTxt(m){return m>60?hmin(m):m+" min";}
+/* VlxAutomatika.rezis: „22.5-23.5°“ (pirmas skaicius be laipsnio). */
+function rezis(){return String(G.from)+"-"+deg(G.to,false);}
 function fanSet(){
   if(S.mode==="optimized") return "Fan at rest "+S.plan.rest+" % · CO2 limit "+S.plan.limit;
-  return "Fan "+Math.round(S.fan)+" %"+(S.left>0?" · "+S.left+" min":"");
+  return "Fan "+Math.round(S.fan)+" %"+(S.left>0?" · "+(S.left>=60?hmin(S.left):S.left+" min"):"");
 }
+/* Pokytis procentais: 81 → 91 = +12 %. */
+function pctv(a){return Math.round((a[1]/a[0]-1)*100);}
+function pcs(a){var x=pctv(a);return (x>0?"+":"")+x+" %";}
+/* Laukimo eilutes po mygtuku (Langas.laukimas). */
+var HIST="Reading history from the VALLOX cloud…";
+function rasTxt(){return G.ctrl==="phone"?"Writing to the unit…":"Sent to Galaxy Watch - waiting for the unit…";}
 function ageTxt(){return S.age<1?"10 s ago":S.age+" min ago";}
-function wageTxt(){return S.age<1?"10s ago":S.age+"min ago";}
 function boostOn(){return S.mode==="boost";}
 function ctrlName(){return G.ctrl==="phone"?"this phone":"Galaxy Watch";}
 function isLight(){
@@ -516,7 +543,7 @@ function isLight(){
 }
 /* Optimized temperaturos automatika: sildymo sezone saugo siluma, kitaip virs rezio vesina lauko oru. */
 function tempMode(){
-  if(S.mode!=="optimized") return "";
+  if(S.mode!=="optimized"||!G.tempOn) return "";
   if(S.out<12) return "keep";
   return S.temp>G.to&&S.out<S.temp-2?"cool":"";
 }
@@ -549,7 +576,7 @@ function airCard(){
   var m=S.mode!=="optimized"&&S.mode!=="boost";
   return '<div class="k st"><div class="kt">AIR</div><div class="big" style="color:'+col(co2Lvl())+'">'+airWord()+'</div>'+scales()+
   '<hr class="l">'+row("Outdoor",f1(S.out)+"°")+row("Fan",Math.round(S.fan)+" %")+row("Heater","OFF","var(--lo)")+
-  (m?row(NAME[S.mode]+" fan",Math.round(S.fan)+" %"+(S.mode==="custom"&&S.left>0?" · "+S.left+" min":"")):'')+'</div>';
+  (m?row("Mode",NAME[S.mode]+(S.mode==="custom"&&S.left>0?" · "+minTxt(S.left):"")):'')+'</div>';
 }
 /* Rezimo mygtukas - Stilius.rezimoMygtukas: piktograma, teksto stulpelis, ventiliatoriaus vieta. */
 function modeBtn(key,label,on,second,centre,attr){
@@ -565,28 +592,47 @@ function tile(t,v,s,open,c){return '<div class="k" data-open="'+open+'"><div cla
 function kt(t){return '<div class="kt" style="margin:14px 4px 0">'+t+'</div>';}
 function anyAlert(){return G.alerts.temp||G.alerts.rh||G.alerts.co2||G.alerts.filt;}
 function alertsOn(){return ["temp","rh","co2","filt"].filter(function(a){return G.alerts[a];}).length;}
-var REF_SHORT={"Auto":"Auto","20 min":"20 min","30 min":"30 min","1 h":"1 h","Only in app":"in app"};
-var REF_LONG={"Auto":"Auto 15-60 min","20 min":"20 min","30 min":"30 min","1 h":"1 h","Only in app":"Only in app"};
-function setSub(){return G.refresh==="Only in app"?"Only in app · no alerts":"Refresh "+REF_SHORT[G.refresh]+" · alerts "+(anyAlert()?"on":"off");}
+var REF_SHORT={"Adaptive":"Adaptive","20 min":"20 min","30 min":"30 min","1 h":"1 h","Only in app":"in app"};
+var REF_LONG={"Adaptive":"Adaptive 15-60 min","20 min":"20 min","30 min":"30 min","1 h":"1 h","Only in app":"Only in app"};
+var CONN={"Best":["Best available","Best"],"Local":["Local only","Local only"],"Cloud":["Cloud only","Cloud only"]};
+function setSub(){return G.refresh==="Only in app"?"Only in app · no alerts":"Refresh "+G.refresh+" · alerts "+(anyAlert()?"on":"off");}
 function settingsCard(){return card("SETTINGS",'<div style="font-size:18px;font-weight:600">Controlled by '+ctrlName()+'</div><div class="sub">'+setSub()+'</div>',"settings");}
 function wAlerts(){return G.refresh==="Only in app"||!alertsOn()?"none":alertsOn()+" on";}
 
+/* Automatic pulte: savaites laikrodis ijungtas (Pultas.savaitesLaikrodis); skaitantis mygtuko neturi. */
+function wcCard(){
+  if(!S.clock) return "";
+  var h='<div class="k st"><div class="kt">WEEK CLOCK</div><div style="font-size:16px;margin-top:4px">Week clock on: the unit follows the schedule.</div>';
+  if(G.ctrl==="phone") h+='<div class="btn" id="wcApp">Let the app run the air</div><div class="sub" style="margin-top:8px">'+(G.writing&&G.writing.mode==="optimized"?rasTxt():'Week clock off, Optimized on: the fan follows what happens at home. The schedule stays saved on the unit.')+'</div>';
+  return h+'</div>';
+}
+/* VENTILATION lange (Langas.savaitesLaikrodis). */
+function wcBlock(reader){
+  var h=kt("WEEK CLOCK"+(reader?" · Changed on Galaxy Watch":""));
+  if(S.clock){
+    h+='<div class="k st"><div>Week clock on: the unit follows the schedule.</div><div class="sub">Events are read at home, over Wi-Fi.</div></div>';
+    if(!reader) h+='<div class="btn g" id="wcOpt">Optimized on</div><div class="sub" style="text-align:center">Week clock off</div>';
+  } else {
+    h+='<div class="k st"><div>Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="sub">No events: set them on the unit\'s panel.</div></div>';
+  }
+  return h+'<div class="hint" style="margin-top:12px">Wrist Control has no week clock of its own: Optimized follows what actually happens at home - CO2, humidity, temperature - so the fans do not need a clock.</div>';
+}
 function pultas(){
   var h='<div class="hd"><b data-units="1">'+S.name+' ▾</b><span class="age">'+ageTxt()+'</span></div>';
   if(G.view==="auto"){
-    h+=airCard();
+    h+=airCard()+wcCard();
     var on=boostOn();
     h+='<div style="margin-top:9px">'+modeBtn("boost",on?"Stop Boost":"Boost",on,on?S.left+" min left":"1 h",true,'data-boost="1"')+'</div>';
-    h+=card("STATISTICS",'<div class="two" style="margin-top:2px"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">'+ST.year.e+' %</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">+30 %</div></div></div><div class="sub">Same week last year</div>',"stats");
+    h+=card("STATISTICS",'<div style="font-size:17px;font-weight:700;color:var(--green)">Better week</div><div class="two" style="margin-top:2px"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">'+ST.prev.e+' %</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">'+pcs(ST.prev.fresh)+'</div></div></div><div class="sub">Previous week</div><div class="sub">Same week last year: Energy '+ST.year.e+' %</div>',"stats");
     h+=settingsCard();
     h+=card("SETUP",'<div style="font-size:18px;font-weight:600">'+S.name+'</div><div class="sub">Run setup again</div>',"setup");
     return h;
   }
   h+='<div class="k" data-open="vent"><div class="kt">VENTILATION</div><div style="display:flex;align-items:center;gap:10px;margin-top:4px">'+
      '<span style="width:26px;height:26px;display:block">'+ic(S.mode)+'</span><span class="big" style="flex:1">'+NAME[S.mode]+'</span><span style="width:24px;height:24px;display:block">'+ic("fan","fan")+'</span></div>'+
-     '<div class="sub">'+fanSet()+'</div></div>';
+     '<div class="sub">'+fanSet()+'</div>'+(S.clock&&S.mode!=="optimized"?'<div class="sub">Week clock on</div>':'')+'</div>';
   h+='<div class="two">'+tile("SENSORS",Math.round(S.co2),"Humidity "+Math.round(S.rh)+" %","sens",col(co2Lvl()))+tile("TEMPERATURES",f1(S.temp)+"°","Outdoor "+f1(S.out)+"° · Heater off","temps")+'</div>';
-  h+='<div class="two">'+tile("OPTIMIZE","713","goal 738","opt","var(--green)")+tile("STATISTICS",ST.year.e+" %","Energy Same week last year","stats","var(--green)")+'</div>';
+  h+='<div class="two">'+tile("OPTIMIZE","713","goal 738","opt","var(--green)")+tile("STATISTICS",ST.prev.e+" %","Energy Previous week","stats","var(--green)")+'</div>';
   h+='<div class="two">'+tile("FILTERS",S.filt,S.filt+" d left","filt",null)+tile("SETUP","",S.name,"setup")+'</div>';
   h+=settingsCard();
   return h;
@@ -595,7 +641,7 @@ function pultas(){
 /* Grafiko kortele: legenda virs grafiko (Langas.legenda). */
 function gcard(id,h,l,lc,r,rc){return '<div class="k st"><div class="lgd"><span style="color:'+lc+'">'+l+'</span>'+(r?'<span style="color:'+rc+'">'+r+'</span>':'')+'</div><canvas id="'+id+'" height="'+h+'"></canvas></div>';}
 function avg(a){return a.reduce(function(s,x){return s+x;},0)/a.length;}
-function updLine(){return 'Updated '+(G.upd===null?"10-28 08:39":md(dateAdd(0))+" "+hhmm(G.upd));}
+function updLine(){return 'Updated '+(G.upd===null?"28 Oct 08:39":md(dateAdd(0))+" "+hhmm(G.upd));}
 function pokytis(l,a,b,unit,lessBetter){
   var k=Math.round((b/a-1)*100), good=lessBetter?k:-k;
   return '<div class="row"><span>'+l+'</span><span><span style="color:var(--lo);font-size:14px;margin-right:12px">'+a+' → '+b+unit+'</span><span style="color:'+(good>2?"var(--yellow)":good<-2?"var(--green)":"var(--hi)")+'">'+(k>0?"+":"")+k+' %</span></span></div>';
@@ -606,7 +652,7 @@ function logRows(){
   if(!G.log.length) return '<div class="sub" style="margin-top:8px">No changes yet. They are recorded from this version on.</div>';
   return G.log.map(function(e){return '<div class="zl"><div class="w">'+dayName(e.t)+' '+hhmm(e.t)+'<b style="color:'+c[e.who]+'">'+e.who+'</b></div><div class="x">'+e.what+(e.why?'<small>'+e.why+'</small>':'')+'</div></div>';}).join("");
 }
-function busyBtn(id,label,busy){return '<div class="btn" id="'+id+'">'+(busy?'<span class="spin" style="display:inline-block;width:16px;height:16px;vertical-align:-3px"></span>':label)+'</div>';}
+function busyBtn(id,label,busy,msg){return '<div class="btn" id="'+id+'">'+(busy?'<span class="spin" style="display:inline-block;width:16px;height:16px;vertical-align:-3px"></span>':label)+'</div>'+(busy&&msg?'<div class="wst">'+msg+'</div>':'');}
 function prog(rest,limit){
   var p=S.plan, m0=640, d0=700, f0=48;
   var m1=Math.round(m0+(limit-p.limit)*0.35-(rest-p.rest)*4), d1=Math.round(d0+(limit-p.limit)*0.4-(rest-p.rest)*5),
@@ -621,13 +667,11 @@ function langas(w){
   if(w==="vent"){
     h+='<div class="wt">VENTILATION</div><div style="font-size:17px;margin-left:4px">'+NAME[S.mode]+'</div><div class="sub" style="margin-left:4px">'+fanSet()+'</div>';
     MODES.forEach(function(m){var on=S.mode===m[0];h+=modeBtn(m[0],m[1],on,on&&S.left>0&&(m[0]==="boost"||m[0]==="custom")?S.left+" min left":null,false);});
-    h+='<div class="hint">Switch modes here: the panel skips tuned settings</div>';
-    h+=kt("WEEK CLOCK")+'<div class="k st"><div>Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="sub">No events: set them on the unit\'s panel.</div></div>'+
-      '<div class="hint" style="margin-top:12px">Wrist Control has no week clock of its own: Optimized follows what actually happens at home - CO2, humidity, temperature - so the fans do not need a clock.</div>';
+    h+='<div class="hint">Switch modes here - the unit\'s panel skips app settings</div>'+wcBlock(reader);
   } else if(w==="sens"){
     h+='<div class="wt">SENSORS</div><div class="age" style="margin-left:4px">'+ageTxt()+'</div><div class="k st">'+
       row("Fan",Math.round(S.fan)+" %")+qrow("Indoor",f1(S.temp)+"°",S.temp,R_T)+qrow("Humidity",Math.round(S.rh)+" %",Math.round(S.rh),R_RH)+
-      qrow("CO2",Math.round(S.co2),S.co2,R_CO2)+row("Outdoor",f1(S.out)+"°")+row("Supply","22,1°")+'</div>'+kt("COMFORT ZONE")+
+      qrow("CO2",Math.round(S.co2),S.co2,R_CO2)+row("Outdoor",f1(S.out)+"°")+row("Supply","22.1°")+'</div>'+kt("COMFORT ZONE")+
       [["Temp",S.temp.toFixed(1)+"°C","t",S.temp],["Humidity",Math.round(S.rh)+"%","rh",S.rh],["CO2",Math.round(S.co2)+" ppm","co2",S.co2]].map(function(x){
         return '<div class="k st"><div class="lgd"><span style="color:var(--lo)">'+x[0]+'</span><b>'+x[1]+'</b></div>'+sc(x[2],x[3],ZC)+'</div>';}).join("");
   } else if(w==="temps"){
@@ -637,7 +681,7 @@ function langas(w){
       kt("7 DAYS")+gcard("cvw1",120,"Indoor "+f1(avg(tin))+"°","var(--hi)","Outdoor "+Math.round(avg(tout))+"°","var(--blue)")+
       gcard("cvw2",100,"CO2 "+Math.round(avg(wc)),"var(--hi)","peak "+Math.round(Math.max.apply(null,wc)),"var(--lo)")+
       kt("LAST YEAR")+'<div class="lgd" style="margin:6px 4px 0;color:var(--lo)"><span>Outdoor '+ST.year.out+'°</span><span>CO2 624</span></div><div class="sub" style="margin:2px 4px 0">dashed = same week last year</div>'+
-      busyBtn("tUpd","Update",ui.busy==="tUpd")+'<div class="sub" style="margin:6px 4px">'+updLine()+'</div>';
+      busyBtn("tUpd","Update",ui.busy==="tUpd",HIST)+'<div class="sub" style="margin:6px 4px">'+updLine()+'</div>';
   } else if(w==="opt"){
     h+='<div class="wt">OPTIMIZE</div>';
     if(ui.opt==="goal"){
@@ -650,14 +694,14 @@ function langas(w){
       var r=ui.prop;
       h+=kt("FORECAST")+'<div class="k st">'+row("Morning",r.m[0]+"›"+r.m[1],col(co2Lvl(r.m[1])))+row("Day",r.d[0]+"›"+r.d[1],col(co2Lvl(r.d[1])))+
         row("Fan",r.f[0]+"›"+r.f[1]+" %")+row("Energy",(r.e>0?"+":"")+r.e+" %",ecol(r.e))+'</div><div class="hint">'+changesTxt(r.rest,r.limit)+'</div>';
-      h+=reader?'<div class="hint">'+CTRL_OTHER.phone+'</div>':busyBtn("oApply","Apply",ui.busy==="oApply")+'<div class="hint">original values saved</div>';
+      h+=reader?'<div class="hint">'+CTRL_OTHER.phone+'</div>':busyBtn("oApply","Apply",ui.busy==="oApply",rasTxt())+'<div class="hint">original values saved</div>';
     } else {
       h+=kt("CO2")+'<div class="k st"><div class="sub">Result</div><div class="big" style="color:var(--green);font-size:24px">713 ppm</div><div class="sub">goal 738</div>'+
-        row("Fan at rest",S.plan.rest+" %")+row("CO2 limit",S.plan.limit)+'</div>'+busyBtn("oCheck","Check again",ui.busy==="oCheck")+kt("CHANGE");
+        row("Fan at rest",S.plan.rest+" %")+row("CO2 limit",S.plan.limit)+'</div>'+busyBtn("oCheck","Check again",ui.busy==="oCheck",HIST)+kt("CHANGE");
       if(reader) h+='<div class="hint">'+CTRL_OTHER.phone+'</div>';
       else {
         h+='<div class="hint">'+(G.canRestore?'New plan measures the home again and lets you pick a goal. Restore puts back fan '+G.orig.rest+' % and CO2 limit '+G.orig.limit+' from before Optimize.':'New plan measures the home again and lets you pick a goal. Values from before Optimize were not saved.')+'</div>'+
-          '<div class="btn g" id="oNew">New plan</div>'+(G.canRestore?busyBtn("oRestore","Restore",ui.busy==="oRestore").replace('class="btn"','class="btn g"'):'');
+          '<div class="btn g" id="oNew">New plan</div>'+(G.canRestore?busyBtn("oRestore","Restore",ui.busy==="oRestore",rasTxt()).replace('class="btn"','class="btn g"'):'');
       }
     }
   } else if(w==="stats"){
@@ -668,19 +712,20 @@ function langas(w){
       kt("SAME WEEK LAST YEAR")+'<div class="k st"><div class="big" style="color:var(--green);font-size:24px">Better than last year</div>'+
       pokytis("Fresh air",yr.fresh[0],yr.fresh[1]," %",false)+pokytis("CO2 avg",yr.co2[0],yr.co2[1],"",true)+pokytis("Fan avg",yr.fan[0],yr.fan[1]," %",true)+
       row("Energy",yr.e+" %",ecol(yr.e))+'<div class="sub" style="margin-top:6px">Weather taken out · with it '+yr.total+'</div><div class="sub">Outdoor last year '+yr.out+'°</div></div>'+
-      busyBtn("sUpd","Update",ui.busy==="sUpd")+'<div class="sub" style="margin:6px 4px">'+updLine()+'</div>'+
+      busyBtn("sUpd","Update",ui.busy==="sUpd",HIST)+'<div class="sub" style="margin:6px 4px">'+updLine()+'</div>'+
       kt("APP AT WORK · 7 DAYS")+'<div class="k st">'+row("Fan lowered - nobody home",G.work.nobody+" × · "+G.work.nobodyH+" h")+row("Cooled with outdoor air",G.work.cooled+" h")+
-      row("Heat kept - bypass closed",G.work.heat+" h")+row("Boost suggested",G.work.boost+" ×")+'</div>'+
+      row("Heat kept in",G.work.heat+" h")+row("Boost suggested",G.work.boost+" ×")+'</div>'+
       kt("CHANGE LOG · 7 DAYS")+'<div class="k st">'+logRows()+'</div>';
   } else if(w==="filt"){
     h+='<div class="wt">FILTERS</div><div class="k st">'+row("Next",S.filt+" d left")+row("Replaced",ymd(dateAdd(S.filt-180)))+'</div>'+
-      '<div class="btn'+(ui.fsure?'':' g')+'" id="fchg">'+(ui.fsure?"Confirm: changed today":"Mark as changed")+'</div><div class="age" style="margin:8px 4px">'+ageTxt()+'</div>';
+      busyBtn("fchg",ui.fsure?"Confirm: changed today":"Mark as changed",ui.busy==="fchg",rasTxt()).replace('class="btn"','class="btn'+(ui.fsure?'':' g')+'"')+'<div class="age" style="margin:8px 4px">'+ageTxt()+'</div>';
   } else if(w==="settings"){
-    h+='<div class="wt">SETTINGS</div><div class="k st"><div class="kt">VALLOX UNIT CONTROLLED BY</div><div class="seg"><div data-ctrl="phone" class="'+(G.ctrl==="phone"&&!G.waiting?"on":"")+'">This phone</div><div data-ctrl="watch" class="'+(G.ctrl==="watch"?"on":"")+'">The watch</div></div>'+
+    h+='<div class="wt">SETTINGS</div><div class="k st"><div class="kt">VALLOX UNIT CONTROLLED BY</div><div class="seg"><div data-ctrl="phone" class="'+(G.ctrl==="phone"||G.waiting?"on":"")+'">This phone</div><div data-ctrl="watch" class="'+(G.ctrl==="watch"&&!G.waiting?"on":"")+'">The watch</div></div>'+
       (G.waiting?'<div class="sub" style="margin-top:10px;color:var(--yellow)">Waiting for the watch to confirm…</div>':'')+
-      '<div class="sub" style="margin-top:6px">Watch 0.1.976 · Phone 0.1.976</div></div>'+
+      '<div class="sub" style="margin-top:6px">'+APP_VER+'</div></div>'+
       '<div class="k st"><div class="kt">AUTOMATION <i>·  tap a card to switch</i></div>'+
       '<div class="vc'+(G.view==="auto"?" on":"")+'" data-view="auto"><b>Automatic</b><div class="sub">The app runs the air for you</div><ul><li>One card: how fresh the air is, temperatures</li><li>One button: Boost for an hour</li><li>The app runs the air and adjusts it weekly - you can undo any change</li><li>Weekly summary: air and energy</li><li>Few notifications - only when something needs you</li></ul></div>'+
+      (G.view==="auto"&&reader?'<div class="sub" style="margin:6px 4px 4px">The watch will read the unit every 15-60 min - uses more battery.</div>':'')+
       '<div class="vc'+(G.view==="semi"?" on":"")+'" data-view="semi"><b>Semi-automatic</b><div class="sub">All windows and settings</div><ul><li>Modes, Optimize plan, sensors, graphs, statistics</li><li>Temperature range, notifications, refresh rate</li><li>Every change - you decide</li></ul></div></div>'+
       '<div class="k st"><div class="kt">THEME</div><div class="seg">'+[["system","System"],["dark","Dark"],["light","Light"]].map(function(t){return '<div data-theme="'+t[0]+'" class="'+(G.theme===t[0]?"on":"")+'">'+t[1]+'</div>';}).join("")+'</div><div class="sub" style="margin-top:6px">System follows the phone\'s dark mode.</div></div>';
     if(reader){
@@ -688,53 +733,58 @@ function langas(w){
         row("Alerts",[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].filter(function(a){return G.alerts[a[0]];}).map(function(a){return a[1];}).join(", ")||"none")+
         row("Refresh",REF_LONG[G.refresh])+row("Clock",G.clock)+'</div>';
     } else {
-      h+='<div class="k st"><div class="kt">UNIT · TEMPERATURE</div><div class="pm"><span data-t="from-">-</span><div><small>From</small><b>'+deg(G.from,true)+'</b></div><span data-t="from+">+</span></div><div class="pm"><span data-t="to-">-</span><div><small>To</small><b>'+deg(G.to,true)+'</b></div><span data-t="to+">+</span></div>'+
-        '<div class="sub" style="margin-top:8px">Below '+deg(G.from,true)+' the bypass closes to keep heat, above '+deg(G.to,true)+' it cools with outdoor air.</div></div>'+
+      var pmb=function(t,g,ok){return '<span data-t="'+t+'"'+(ok?'':' style="color:var(--lo)"')+'>'+g+'</span>';};
+      h+='<div class="k st"><div class="kt">UNIT · TEMPERATURE</div><div class="pm">'+pmb("from-","-",G.from>20)+'<div><small>From</small><b>'+deg(G.from,true)+'</b></div>'+pmb("from+","+",G.from<24)+'</div><div class="pm">'+pmb("to-","-",G.to>G.from+0.5)+'<div><small>To</small><b>'+deg(G.to,true)+'</b></div>'+pmb("to+","+",G.to<G.from+2)+'</div>'+
+        '<div class="sub" style="margin-top:8px">Below '+deg(G.from,true)+' the heat is kept in, above '+deg(G.to,true)+' the home is cooled with outdoor air.</div></div>'+
         '<div class="k st"><div class="kt">UNIT · ALERTS</div>'+[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="row"><span style="color:var(--hi)">'+a[1]+'</span><span class="sw'+(G.alerts[a[0]]?' on':'')+'" data-al="'+a[0]+'"></span></div>';}).join("")+'</div>';
       if(G.view==="auto"){
-        h+='<div class="k st"><div class="kt">UNIT</div>'+row("Refresh","Automatic")+row("Clock","Fixed automatically")+'</div>';
+        h+='<div class="k st"><div class="kt">UNIT</div>'+row("Refresh","Adaptive")+row("Clock","Fixes itself")+'</div>';
       } else {
         var rb=function(k){return '<div data-ref="'+k+'" class="'+(G.refresh===k?"on":"")+'">'+REF_LONG[k]+'</div>';};
-        h+='<div class="k st"><div class="kt">UNIT · DATA REFRESH</div><div class="seg">'+rb("Auto")+'</div><div class="seg">'+rb("20 min")+rb("30 min")+rb("1 h")+'</div><div class="seg">'+rb("Only in app")+'</div></div>'+
-          '<div class="k st"><div class="kt">UNIT · CLOCK</div><div class="seg">'+["Ask to fix","Auto fix","Off"].map(function(k){return '<div data-clk="'+k+'" class="'+(G.clock===k?"on":"")+'">'+k+'</div>';}).join("")+'</div></div>';
+        h+='<div class="k st"><div class="kt">UNIT · DATA REFRESH</div><div class="seg">'+rb("Adaptive")+'</div><div class="seg">'+rb("20 min")+rb("30 min")+rb("1 h")+'</div><div class="seg">'+rb("Only in app")+'</div></div>'+
+          '<div class="k st"><div class="kt">UNIT · CLOCK</div><div class="seg">'+["Ask to fix","Fix itself","Off"].map(function(k){return '<div data-clk="'+k+'" class="'+(G.clock===k?"on":"")+'">'+k+'</div>';}).join("")+'</div></div>';
       }
     }
-    h+='<div class="k st"><div class="kt">PRO</div>'+row("PRO","Unlocked","var(--hi)")+'</div>'+
+    h+='<div class="k st"><div class="kt">PRO</div>'+row("PRO","Pro · Unlocked","var(--hi)")+'</div>'+
       '<div class="k st"><div class="kt">ABOUT</div><div style="display:flex;gap:12px;align-items:center;margin-top:6px"><img src="/wristcontrol/icon.png" alt="" style="width:46px;height:46px;border-radius:10px"><div><div style="font-size:18px;font-weight:600">Wrist Control</div><div class="sub">for Vallox</div></div></div>'+
       '<div class="lnk"><a href="/wristcontrol/guide/" target="_blank" rel="noopener">User guide</a><a href="/wristcontrol/privacy/" target="_blank" rel="noopener">Privacy</a><a href="#" data-toast="Contact: e-mail to hello@tinyowllabs.com">Contact</a></div>'+
-      '<div class="sub" style="margin-top:8px">Independent app, not made by Vallox Oy.<br>Watch 0.1.976 · Phone 0.1.976</div></div>';
+      '<div class="sub" style="margin-top:8px">Independent app, not made by Vallox Oy.<br>'+APP_VER+'</div></div>';
   } else if(w==="setup"){
-    h+='<div class="wt">SETUP</div><div class="k st"><div class="btn" id="wizGo" style="margin-top:0">Run setup again</div><div class="sub" style="margin-top:8px">7 short questions, about 2 minutes: who controls the unit, what matters most, how warm you like it, the week schedule and alerts. Then a new plan. Your account stays signed in.</div></div>'+
-      '<div class="k st"><div class="kt" style="color:var(--lo)">GALAXY WATCH</div><div style="font-size:16px;margin-top:4px"><span style="color:var(--green)">✔</span> Wrist Control is on your watch</div><div class="sub">Shows your air and Boost on the wrist, and complications for the watch face.</div><div class="btn" id="openWatch">Open on watch</div><div class="sub" style="text-align:center;margin-top:6px">Watch 0.1.976 · Phone 0.1.976</div></div>'+
+    h+='<div class="wt">SETUP</div><div class="k st"><div class="btn" id="wizGo" style="margin-top:0">Run setup again</div><div class="sub" style="margin-top:8px">A few short questions, about 2 minutes: who controls the unit, the week schedule, what matters most, how warm you like it and alerts. Then a new plan. Your account stays signed in.</div></div>'+
+      '<div class="k st"><div class="kt" style="color:var(--lo)">GALAXY WATCH</div><div style="font-size:16px;margin-top:4px"><span style="display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--green);color:var(--f);align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-right:6px">✓</span>Wrist Control is on your watch</div><div class="sub">Shows your air and Boost on the wrist, and complications for the watch face.</div><div class="btn" id="openWatch">Open on watch</div><div class="sub" style="text-align:center;margin-top:6px">'+APP_VER+'</div></div>'+
       '<div class="k st"><div style="font-size:16px;font-weight:600">Vallox account</div><div style="margin-top:6px">Signed in as demo@example.com</div>'+kt("UNIT").replace("margin:14px 4px 0","margin:10px 0 0")+
       U.map(function(u,i){return '<div class="opt'+(u===S?' on':'')+'" data-unit="'+i+'"><b>'+u.name+'</b></div>';}).join("")+
+      '<div class="sub" style="margin-top:8px">Pro: up to 3 units · Installer: unlimited</div>'+
       '<div class="btn g" data-toast="Account change - not in the demo">Change account or password</div></div>'+
       '<div class="kt" style="margin:18px 4px 0;color:var(--lo)">GETTING STARTED</div><ul class="steps">'+
       ["Run setup above: sign in with your MyVallox account, answer 7 short questions and get a plan.",
        "Choose who runs the unit: this phone or the watch. Without a watch the phone does it all.",
        "Add widgets: long-press the home screen, Widgets, Wrist Control.",
        "On the watch, add complications: long-press the watch face, Customize, pick a slot, Wrist Control.",
-       "Pro (smart modes, Optimize, Statistics) is free for 14 days, then you buy it in setup or on the watch."].map(function(s,i){return '<li><b>'+(i+1)+'</b><span>'+s+'</span></li>';}).join("")+'</ul>';
+       "Pro (smart modes, Optimize, Statistics) is free for 14 days, then you buy it in SETTINGS or on the watch."].map(function(s,i){return '<li><b>'+(i+1)+'</b><span>'+s+'</span></li>';}).join("")+'</ul>';
   } else if(w==="wiz"){
     h+=wizard();
   }
   return h;
 }
 
-/* Vedlys (telefonas/Vedlys.java), „Run setup again“: paskyra jau yra, pirmo ekrano nera. */
-var WIZ=[
- {t:"Do you wear the watch most of the day?",s:"One device reads the unit and runs it; the other shows the same.",o:[["Yes - let the watch run it"],["No - let this phone run it"]],d:1},
- {t:"What matters most?",s:"You can change it later.",o:[["Fresh air","For kids, allergies, working from home"],["Balanced","Fresh air without wasting heat"],["Quiet & thrifty","Less fan noise and lower bills"]],d:1},
- {t:"How do you feel at home?",s:"Above this we cool the rooms with outdoor air.",o:[["I get warm easily","21,5-22,5°"],["Neither","22,5-23°"],["I get cold easily","23-24°"]],d:1},
- {t:"Your unit follows a week schedule",s:"The app can run the air instead - by what actually happens at home.",o:[["Let the app run the air","Week clock off, Optimized on"],["Keep the schedule","The app only shows the air"]],d:0},
- {t:"When should we tell you?",o:[["Only when you need to act","Filters to change"],["Also when something changes","Air got stale, too warm, too humid"]],d:0},
- {t:"Your plan",s:"From the last 14 days at home:",plan:true}];
-var WIZ_GOAL=["clean","balance","quiet"], WIZ_RANGE=[[21.5,22.5],[22.5,23],[23,24]];
-function wizPlan(){var g=GOALS[WIZ_GOAL[ui.wizA[1]]];return {rest:g.rest,limit:g.limit};}
+/* Vedlys (telefonas/Vedlys.java), „Run setup again“: paskyra jau yra, pirmo ekrano nera. Tvarka - Vedlys.TVARKA. */
+var WIZ={
+ who:{t:"Do you wear the watch most of the day?",s:"One device reads the unit and runs it; the other shows the same.",o:[["Yes - let the watch run it","The watch will read the unit every 15-60 min - uses more battery."],["No - let this phone run it"]],d:1},
+ sched:{t:"Your unit follows a week schedule",s:"The app can run the air instead - by what actually happens at home. With the schedule on, it cannot adjust the fan for you.",o:[["Let the app run the air","Recommended: week clock off, Optimized on"],["Keep the schedule","Your schedule sets the fan. Optimized and the Optimize plan stay off - you can switch later in VENTILATION."]],d:0},
+ goal:{t:"What matters most?",s:"You can change it later.",o:[["Fresh air","For kids, allergies, working from home"],["Balanced","Fresh air without wasting heat"],["Quiet & thrifty","Less fan noise and lower bills"]],d:1},
+ warm:{t:"How do you feel at home?",s:"Above this we cool the rooms with outdoor air.",o:[["I get warm easily","21.5°-22.5°"],["Neither","22.5°-23°"],["I get cold easily","23°-24°"]],d:1},
+ alerts:{t:"When should we tell you?",o:[["Only when you need to act","Filters to change"],["Also when something changes","Air got stale, too warm, too humid"]],d:0},
+ plan:{t:"Your plan",s:"From the last 14 days at home:",plan:true}};
+var WIZ_ORDER=["who","sched","goal","warm","alerts","plan"], WIZ_GOAL=["clean","balance","quiet"], WIZ_RANGE=[[21.5,22.5],[22.5,23],[23,24]];
+/* Vedlys.rodomas: be savaites laikrodzio grafiko klausimo nera; „Keep the schedule“ - nei tikslo, nei plano. */
+function wizShown(k){if(k==="sched") return S.clock; if(k==="goal"||k==="plan") return ui.wizA.sched!==1; return true;}
+function wizSteps(){return WIZ_ORDER.filter(wizShown);}
+function wizPlan(){var g=GOALS[WIZ_GOAL[ui.wizA.goal]];return {rest:g.rest,limit:g.limit};}
 function wizard(){
-  if(ui.wiz<0) return '<div class="q">Getting ready</div><div class="sub" style="margin:0 4px">While you answer, this phone runs the unit. At the end you choose which device keeps it.</div><div class="spin" style="margin:24px auto"></div>';
-  if(ui.wiz>=WIZ.length) return '<div class="q">Your plan</div><div class="sub" style="margin:0 4px">Writing to the unit…</div><div class="spin" style="margin:24px auto"></div>';
-  var q=WIZ[ui.wiz], h='<div class="prog"><i style="width:'+((ui.wiz+1)/WIZ.length*100)+'%"></i></div><div class="sub" style="margin:8px 4px 0">Step '+(ui.wiz+1)+' of '+WIZ.length+'</div><div class="q">'+q.t+'</div>'+(q.s?'<div class="sub" style="margin:0 4px">'+q.s+'</div>':'');
+  if(ui.wiz==="ready") return '<div class="q">Getting ready</div><div class="sub" style="margin:0 4px">While you answer, this phone runs the unit. At the end you choose which device keeps it.</div><div class="spin" style="margin:24px auto"></div>';
+  if(ui.wiz==="write") return '<div class="q">Your plan</div><div class="sub" style="margin:0 4px">Writing to the unit…</div><div class="spin" style="margin:24px auto"></div>';
+  var q=WIZ[ui.wiz], st=wizSteps(), h='<div class="sub" style="margin:8px 4px 0">Step '+(st.indexOf(ui.wiz)+1)+' of '+st.length+'</div><div class="q">'+q.t+'</div>'+(q.s?'<div class="sub" style="margin:0 4px">'+q.s+'</div>':'');
   if(q.plan){
     if(ui.wizBusy) return h+'<div class="hint">Reading 14 days of history…</div><div class="spin" style="margin:24px auto"></div>';
     var p=wizPlan();
@@ -745,31 +795,28 @@ function wizard(){
   return h+'<div class="btn" id="wizNext">Next</div>';
 }
 function wizStart(){
-  ui.wiz=0; ui.wizA=[]; ui.wizBusy=false; ui.wizTook=false; openPhone("wiz");
-  if(G.ctrl==="watch"){ui.wiz=-1;draw();setTimeout(function(){G.ctrl="phone";ui.wizTook=true;ui.wiz=0;draw();},1600);}
+  ui.wiz="who"; ui.wizA={}; ui.wizBusy=false; openPhone("wiz");
+  if(G.ctrl==="watch"){ui.wiz="ready";draw();setTimeout(function(){G.ctrl="phone";ui.wiz="who";draw();},1600);}
 }
 function wizNext(){
   var q=WIZ[ui.wiz];
-  if(!q.plan){
-    if(ui.wizA[ui.wiz]===undefined) ui.wizA[ui.wiz]=q.d;
-    ui.wiz++;
-    if(WIZ[ui.wiz].plan&&ui.wizA[3]===1){wizFinish();return;}
-    if(WIZ[ui.wiz].plan){ui.wizBusy=true;setTimeout(function(){ui.wizBusy=false;draw();},1500);}
-    draw(); return;
-  }
-  wizFinish();
+  if(q.plan){wizFinish();return;}
+  if(ui.wizA[ui.wiz]===undefined) ui.wizA[ui.wiz]=q.d;
+  var st=wizSteps(), k=st[st.indexOf(ui.wiz)+1];
+  if(!k){wizFinish();return;}
+  ui.wiz=k;
+  if(WIZ[k].plan){ui.wizBusy=true;setTimeout(function(){ui.wizBusy=false;draw();},1500);}
+  draw();
 }
-/* Pabaiga: rezis, pranesimai, planas, Optimized, vaizdas Automatic, valdymas laikrodziui (jei pasirinkta). */
+/* Pabaiga (Vedlys.baik): rezis, pranesimai, planas, Optimized, vaizdas Automatic, valdymas laikrodziui (jei pasirinkta). */
 function wizFinish(){
-  var a=ui.wizA, r=WIZ_RANGE[a[2]], keep=a[3]===1;
+  var a=ui.wizA, r=WIZ_RANGE[a.warm], keep=a.sched===1;
   G.from=r[0]; G.to=r[1];
-  var all=a[4]===1; G.alerts={temp:all,rh:all,co2:all,filt:true};
-  var end=function(){G.view="auto";G.refresh="Auto";G.clock="Auto fix";if(a[0]===0)G.ctrl="watch";ui.phone="pultas";ui.wpage=0;ui.wwin=null;draw();};
+  var all=a.alerts===1; G.alerts={temp:all,rh:all,co2:all,filt:true};
+  var end=function(){G.view="auto";G.refresh="Adaptive";G.clock="Fix itself";if(a.who===0)G.ctrl="watch";ui.phone="pultas";ui.wpage=0;ui.wwin=null;draw();};
   if(keep){end();return;}
-  var p=wizPlan(); if(!G.canRestore){G.orig={rest:S.plan.rest,limit:S.plan.limit};G.canRestore=true;}
-  logAdd("You","Optimize plan applied","Fan "+S.plan.rest+" → "+p.rest+" %, CO2 limit "+S.plan.limit+" → "+p.limit);
-  S.plan=p; ui.wiz=WIZ.length; draw();
-  if(S.mode==="optimized") setTimeout(function(){buzz();end();},1600);
+  applyPlan(wizPlan()); ui.wiz="write"; draw();
+  if(S.mode==="optimized") setTimeout(function(){S.clock=false;buzz();end();},1600);
   else write("optimized","phone",end);
 }
 
@@ -794,10 +841,10 @@ function homeScreen(){
 }
 
 /* ---- Laikrodis ---- */
-/* Tvarka kaip V laikrodyje (keiciama ilgu paspaudimu); VENTILATION ir SETTINGS visada, kitus isjungia SETTINGS → PAGES. */
-var WORDER=["vent","sens","temps","unit","filt","stats","opt","settings"];
+/* Numatytoji tvarka (VlxTvarka.NUMATYTA); VENTILATION ir SETTINGS visada, kitus isjungia SETTINGS → PAGES. */
+var WORDER=["settings","temps","sens","unit","filt","vent","opt","stats"];
 var PNAME={sens:"Sensors",temps:"Temp.",unit:"Unit",filt:"Filters",opt:"Optimize",stats:"Stats"};
-function wpages(){return G.view==="auto"?["auto","stats"]:WORDER.filter(function(k){return G.pages[k]!==false;});}
+function wpages(){return G.view==="auto"?["auto","stats","settings"]:WORDER.filter(function(k){return G.pages[k]!==false;});}
 /* Kelio zyma (MainActivity.zymekKelia): valdo telefonas - PHONE; valdo laikrodis - LOCAL arba CLOUD su Wi-Fi zenklu. */
 function wlabel(){var t=G.ctrl==="phone";return '<div class="wlab"><svg viewBox="0 0 100 100">'+(t?P.phone:P.wifi)+'</svg>'+(t?"PHONE":(G.conn==="Cloud"&&G.cloud?"CLOUD":"LOCAL"))+'</div>';}
 function wrow(pairs,lft){return '<div class="wr'+(lft?' lft':'')+'">'+pairs.map(function(p){return '<span>'+p[0]+'</span><span'+(p[2]?' style="color:'+p[2]+'"':'')+'>'+p[1]+'</span>';}).join("")+'</div>';}
@@ -808,89 +855,150 @@ function wpage(k){
   if(k==="auto"){
     var on=boostOn(), showMode=!on&&S.mode!=="optimized"&&S.mode!=="auto";
     h+='<div class="wzod" style="color:'+c+'">'+airWord()+'</div>'+wrow([["CO2",Math.round(S.co2)+" "+(co2Lvl()?arrow(S.co2,R_CO2):"· ok"),c],["Indoor",S.temp.toFixed(1)+"°C "+(lvl(S.temp,R_T)?arrow(S.temp,R_T):"· ok"),wq(S.temp,R_T)],["Humidity",Math.round(S.rh)+" % "+(lvl(Math.round(S.rh),R_RH)?arrow(Math.round(S.rh),R_RH):"· ok"),wq(Math.round(S.rh),R_RH)]],true);
-    if(showMode) h+='<div class="wsub" style="margin-top:2px">'+NAME[S.mode]+(S.left>0?" · "+S.left+" min":"")+'</div>';
+    if(showMode) h+='<div class="wsub" style="margin-top:2px">'+NAME[S.mode]+(S.left>0?" · "+minTxt(S.left):"")+'</div>';
     h+='<div class="wpill" id="wboost">'+ic("boost")+'<div class="tx">'+(on?"Stop Boost":"Boost")+'<small>'+(on?S.left+" min left":"1 h")+'</small></div><div class="sl">'+(G.writing?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</div></div>';
     m=writingMsg("watch");
-    h+=m?'<div class="wmsg">'+m+'</div>':'<div class="wage">'+wageTxt()+'</div>';
+    h+=m?'<div class="wmsg">'+m+'</div>':'<div class="wage">'+ageTxt()+'</div>';
     return {h:h,dots:!m};
   }
   if(k==="vent"){
-    h+='<div class="wttl">VENTILATION</div><div class="wmode">'+ic(S.mode)+NAME[S.mode]+(S.left>0?' · '+S.left+'m':'')+'</div>'+
-      wrow([["Target","18.0°C"],["Home","70%"],["Away",S.plan.rest+"%"],["Boost","90%"]]);
+    /* MainActivity.likutis: nuo 60 min „1:00“, maziau - „59 min“; tik rezimu greiciai ir „Open“ (V 2026-10-30). */
+    h+='<div class="wttl">VENTILATION</div><div class="wmode">'+(S.mode==="optimized"?ic("optimized"):'')+NAME[S.mode]+(S.left>0?'<span style="color:var(--wlo);font-weight:400;font-size:22px">&nbsp;'+(S.left>=60?Math.floor(S.left/60)+":"+String(S.left%60).padStart(2,"0"):S.left+" min")+'</span>':'')+'</div>'+
+      wrow([["Home","70%"],["Away",S.plan.rest+"%"],["Boost","90%"]])+'<div class="wopen">Open</div>';
   } else if(k==="sens"){
     var tm=tempMode();
-    h+='<div class="wttl">SENSORS</div>'+wrow([["Fan",Math.round(S.fan)+"%"],[tm==="keep"?'<span style="color:#f28c38">Recovers</span>':tm==="cool"?'<span style="color:#5b9bf3">Cooling</span>':"Indoor",S.temp.toFixed(1)+"°C",wq(S.temp,R_T)],["Humidity",Math.round(S.rh)+"%"+(arrow(Math.round(S.rh),R_RH)?" "+arrow(Math.round(S.rh),R_RH):""),wq(Math.round(S.rh),R_RH)],["CO2",Math.round(S.co2)+" ppm",c]])+'<div class="wage">'+wageTxt()+'</div>';
+    h+='<div class="wttl">SENSORS</div>'+wrow([["Fan",Math.round(S.fan)+"%"],[tm==="keep"?'<span style="color:#f28c38">Recovers</span>':tm==="cool"?'<span style="color:#5b9bf3">Cooling</span>':"Indoor",S.temp.toFixed(1)+"°C"+(arrow(S.temp,R_T)?" "+arrow(S.temp,R_T):""),wq(S.temp,R_T)],["Humidity",Math.round(S.rh)+"%"+(arrow(Math.round(S.rh),R_RH)?" "+arrow(Math.round(S.rh),R_RH):""),wq(Math.round(S.rh),R_RH)],["CO2",Math.round(S.co2)+" ppm"+(arrow(S.co2,R_CO2)?" "+arrow(S.co2,R_CO2):""),c]])+'<div class="wage">'+ageTxt()+'</div>';
   } else if(k==="temps"){
-    h+='<div class="wttl">TEMPERATURES</div>'+wrow([["Extract",S.temp.toFixed(1)+"°C"],["Supply","22.1°C"],["Outdoor",S.out.toFixed(1)+"°C"],["Exhaust","14.5°C"],["Heater","OFF","var(--wlo)"]])+'<div class="wage">'+wageTxt()+'</div>';
+    h+='<div class="wttl">TEMPERATURES</div>'+wrow([["Extract",S.temp.toFixed(1)+"°C"],["Supply","22.1°C"],["Outdoor",S.out.toFixed(1)+"°C"],["Exhaust","14.5°C"],["Heater","OFF","var(--wlo)"]])+'<div class="wage">'+ageTxt()+'</div>';
   } else if(k==="opt"){
     var t2=tempMode();
-    h+='<div class="wttl">OPTIMIZE</div><div style="display:flex;gap:26px;margin-top:6px;text-align:center"><div><div style="color:var(--wlo);font-size:20px">CO2</div><div class="wbig" style="color:var(--wgreen)">713</div><div style="color:var(--wlo);font-size:15px">goal 738</div></div><div><div style="color:var(--wlo);font-size:20px">Indoor</div><div class="wbig">'+S.temp.toFixed(1)+'°</div><div style="color:'+(t2==="cool"?"#5b9bf3":"#f28c38")+';font-size:15px">'+(t2==="keep"?"Recovers":t2==="cool"?"Cooling":"&nbsp;")+'</div></div></div><div class="wopen">Open</div>';
+    h+='<div class="wttl">OPTIMIZE</div><div style="display:flex;gap:26px;margin-top:6px;text-align:center"><div><div style="color:var(--wlo);font-size:20px">CO2</div><div class="wbig" style="color:var(--wgreen)">713</div><div style="color:var(--wlo);font-size:15px">goal 738</div></div><div><div style="color:var(--wlo);font-size:20px">Indoor</div><div class="wbig">'+S.temp.toFixed(1)+'°</div><div style="color:'+(t2==="cool"?"#5b9bf3":t2==="keep"?"#f28c38":"var(--wlo)")+';font-size:15px">'+(t2==="keep"?"Recovers":t2==="cool"?"Cooling":S.mode==="optimized"&&G.tempOn?rezis():"Vallox decides")+'</div></div></div><div class="wopen">Open</div>';
   } else if(k==="stats"){
-    h+='<div class="wttl">STATISTICS</div><div style="display:flex;gap:22px;margin-top:6px;text-align:center;font-size:20px"><div><div style="color:var(--wlo)">Energy</div><div class="wbig" style="color:var(--wgreen)">'+ST.year.e+' %</div></div><div><div style="color:var(--wlo)">Fresh air</div><div class="wbig" style="color:var(--wgreen)">+30 %</div></div></div><div style="color:var(--wlo);font-size:17px">vs same week last year</div><div class="wopen">Open</div>';
+    h+='<div class="wttl">STATISTICS</div><div style="display:flex;gap:22px;margin-top:6px;text-align:center;font-size:20px"><div><div style="color:var(--wlo)">Energy</div><div class="wbig" style="color:var(--wgreen)">'+ST.prev.e+' %</div></div><div><div style="color:var(--wlo)">Fresh air</div><div class="wbig" style="color:var(--wgreen)">'+pcs(ST.prev.fresh)+'</div></div></div><div style="color:var(--wlo);font-size:17px">Previous week</div><div class="wopen">Open</div>';
   } else if(k==="unit"){
-    var rec=S.out<S.temp-1;
-    h+='<div class="wttl">UNIT</div><div class="wsub" style="margin-top:0">'+S.name+'</div>'+wrow([["Supply",Math.round(900+S.fan*15)+" rpm"],["Extract",Math.round(820+S.fan*14)+" rpm"],["HR cell",rec?"heat rec.":"bypass"]])+
-      '<div class="wage">'+hhmm(G.min-S.age)+'</div>';
+    var cell=tempMode()==="cool"?"cooling":S.out<S.temp-1?"recovering":"bypassed";
+    h+='<div class="wttl">UNIT</div><div class="wsub" style="margin-top:0">'+S.name+'</div>'+wrow([["Supply",Math.round((900+S.fan*15)/10)*10+" rpm"],["Extract",Math.round((820+S.fan*14)/10)*10+" rpm"],["Exchanger",cell]])+
+      '<div class="wage" style="font-size:15px;line-height:1.1">'+ymd(dateAdd(0))+'<br>'+hhmm(G.min-S.age)+'</div>';
   } else if(k==="filt"){
-    h+='<div class="wttl">FILTERS</div>'+wrow([["Replaced",md(dateAdd(S.filt-180))],["Interval","180 d"],["Next",md(dateAdd(S.filt))]])+'<div class="wage" style="color:'+(S.filt<=7?"var(--wyellow)":"var(--wlo)")+'">'+S.filt+' d left</div>';
+    h+='<div class="wttl">FILTERS</div>'+wrow([["Replaced",md(dateAdd(S.filt-180))],["Interval","180 d"],["Next",md(dateAdd(S.filt))]])+'<div class="wage" style="color:'+(S.filt<=0?"var(--wyellow)":"var(--wlo)")+'">'+S.filt+' d left</div>';
   } else if(k==="settings"){
-    h+='<div class="wttl">SETTINGS</div>'+wrow([["Path",G.conn],["Refresh",REF_SHORT[G.refresh]],["Alerts",wAlerts()],["Pages",wpages().length+" of 8"]])+'<div class="wopen">Open</div>';
+    h+='<div class="wttl">SETTINGS</div>'+wrow([["Path",CONN[G.conn][1]],["Refresh",REF_SHORT[G.refresh]],["Alerts",wAlerts()]].concat(G.view==="auto"?[]:[["Pages",wpages().length+" of 8"]]))+'<div class="wopen">Open</div>';
   }
   return {h:h,dots:true};
 }
 function wsec(t){return '<div class="wsec" style="font-size:22px;font-weight:700">'+t+'</div>';}
 function wsec2(t){return '<div class="wsec">'+t+'</div>';}
 function wsw(on,attr){return '<span class="wsw'+(on?' on':'')+'" '+attr+'></span>';}
-function wscale(l,t,k,v){return '<div class="wsl"><span style="color:var(--whi)">'+l+'</span><b>'+t+'</b></div>'+sc(k,v,WZC);}
+function wscale(l,t,k,v,col){return '<div class="wsl"><span style="color:var(--whi)">'+l+'</span><b'+(col?' style="color:'+col+'"':'')+'>'+t+'</b></div>'+sc(k,v,WZC);}
+/* Oro lango reiksme (oroReiksme): „· ok“ arba rodykle, spalva pagal kokybe. */
+function woro(l,t,k,v,r){var n=lvl(v,r);return wscale(l,t+" "+(n?arrow(v,r):"· ok"),k,v,wcol(n));}
+function wchg(v){return v>2?"var(--wyellow)":v<-2?"var(--wgreen)":"var(--whi)";}
+/* Pokytis ir po juo „buvo → dabar“ (lentelesPokytis, apzvalga 36). */
+function wpok(l,a,u,col){return [[l,pcs(a),col],["",'<small style="color:var(--wlo);font-size:14px;font-weight:400">'+a[0]+" → "+a[1]+u+"</small>"]];}
+function wbtn(attr,t,on){return '<div class="wm'+(on?' on':'')+'" style="justify-content:center" '+attr+'>'+t+'</div>';}
+function wupd(){return (ui.wbusy==="upd"?'<div class="spin" style="margin:12px auto"></div><div class="wmsg">'+HIST+'</div>':wbtn('data-wupd="1"',"Update",true))+'<div class="wsub">'+updLine()+'</div>';}
+/* Optimize langas: temperaturos skyrius (temperaturosSkyrius). */
+function wTempSec(tel){
+  var t=tempMode(), now=!G.tempOn?["Off","var(--wlo)"]:S.mode!=="optimized"?["Paused","var(--wlo)"]:t==="keep"?["Recovers","#f28c38"]:t==="cool"?["Cooling","#5b9bf3"]:["Waiting","var(--whi)"];
+  var h=wsec("TEMPERATURE")+'<div style="display:flex;justify-content:center;gap:22px;margin-top:6px;font-size:19px"><div><div style="color:var(--wlo)">Indoor</div><b>'+S.temp.toFixed(1)+'°</b><div style="color:var(--wlo);font-size:15px">'+rezis()+'</div></div><div><div style="color:var(--wlo)">Now</div><b style="color:'+now[1]+'">'+now[0]+'</b></div></div>';
+  if(G.tempOn&&S.mode!=="optimized") h+='<div class="wsub">Works in Optimized mode only</div>';
+  h+='<div class="wsub">Heat kept in below '+deg(G.from,false)+', cooling with outdoor air above '+deg(G.to,false)+', not in the heating season. Heater off. Range in Settings.</div>';
+  if(tel) return h+'<div class="wsub">'+CTRL_OTHER.watch+'</div>';
+  return h+'<div class="wsub">'+(G.tempOn?"Off: the unit decides on cooling itself":"On: the app keeps heat and cools by indoor temperature")+'</div>'+wbtn('data-wo="temp"',G.tempOn?"Let Vallox decide":"Keep "+rezis());
+}
+/* Laikrodzio „HOW IT WORKS“ - res/values/strings.xml h_*. */
+var GUIDE=[["Modes","Optimized is the Vallox Auto mode with your tuned settings: the Away speed and CO2 limit chosen by Optimize (by default 45 percent and 600). Home sets the CO2 limit to 800. Away sets the Away speed to 30 percent and the CO2 limit to 800. Auto restores the Vallox factory values: Away speed 30 percent, CO2 limit 800. Switching modes on the unit's panel does not write these settings. Smart modes, Optimize and Statistics are Pro features."],
+ ["Auto and CO2","In Auto mode the fan starts from the Away speed. When CO2 rises above the limit, the unit adds about 0.1 percent of fan speed per ppm, up to the Boost speed. So CO2 settles above the limit: a lower limit or a higher Away speed means cleaner air and more fan."],
+ ["Optimize","Optimize reads the unit's 14-day history (from the unit at home, from the Vallox cloud when away) and measures how much CO2 your home produces at different times of day; one unusual day does not move the plan. For the chosen goal it picks the Away speed and CO2 limit with the lowest total cost: fan electricity, heat carried out with the air and CO2 above the goal. It shows a forecast with the energy change and writes the values only when you tap Apply. After 24 h, Check compares the forecast with the real morning. Restore brings back the previous values. Once a week the app recalculates the plan in the background and, if it changed, suggests it in a notification; nothing is written until you tap Apply."],
+ ["Optimized automation","While Optimized is on, the app checks four rules after every reading. Nobody home: CO2 at most 460 ppm for 90 minutes lowers the fan at rest to 30 percent until CO2 rises by 80 ppm. Dry air: below 5 degrees outdoors and humidity under 38 percent lower it to 35 percent until humidity is above 43. Humidity up 8 percent in about 30 minutes offers a Boost. Temperature: below the range in Settings (by default 22.5-23 degrees) the heat exchanger keeps the heat in; above it, when outdoors is at least 2 degrees cooler, outdoor air cools the home. Each state lasts at least an hour. If the unit's week schedule is on, the app asks once whether to pause it."],
+ ["Humidity","The unit's automatic humidity control reacts to fast rises, such as a shower or cooking, and adds a few percent of fan speed. Ventilation cannot add humidity. In autumn 60-65 percent indoors is normal: outdoor air is humid too, so more ventilation lowers it only a little. In winter humidity drops by itself."],
+ ["Statistics","Statistics use the unit's 7-day history. Fresh air is the share of time with CO2 up to 800 ppm. Electricity covers only the fans and is compared with the previous week: fan power grows roughly with the cube of speed. The change is split into settings (mode speed), people (CO2 control) and weather and other (humidity, cooling, manual changes). In the heating season heat loss per degree of cold is shown, which removes the effect of weather. With the Vallox cloud the week is also compared with the same week last year, weather excluded: Energy on the STATISTICS page."],
+ ["Data refresh","How often the watch reads the unit in the background, for the watch face, alerts and Optimized. Default: 1 h. Adaptive reads every 20 min in hours when your home is usually busy, every 30 min in other hours and every 60 min at night (1-5 h). After a change (humidity up 3 percent or CO2 up 100 ppm) it reads every 15 min for an hour. The busy hours are learned from the unit's history. Adaptive drains the battery faster. Only in app: no background readings, no alerts, no automation."]];
 function wwin(k){
   var h='', m=writingMsg("watch"), tel=G.ctrl==="phone";
   if(k==="pick"){
     h+='<div class="wttl" data-wclose="1">MODE</div>';
     MODES.forEach(function(md){var on=S.mode===md[0], w=G.writing&&G.writing.mode===md[0];
       h+='<div class="wm'+(on?' on':'')+'" data-wmode="'+md[0]+'">'+ic(md[0])+'<span class="n">'+md[1]+'</span><span class="sl">'+(w?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</span></div>';});
-    h+='<div class="wmsg">'+(m||"Switch modes here: the panel skips tuned settings")+'</div>'+wsec2("WEEK CLOCK")+'<div class="wsub">Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="wsub">Auto = Vallox factory settings</div>';
+    h+='<div class="wmsg">'+(m||"Switch modes here - the unit\'s panel skips app settings")+'</div>'+wsec2("WEEK CLOCK")+
+      (S.clock?'<div class="wsub">Week clock on: the unit follows the schedule.</div><div class="wsub">Events are read at home, over Wi-Fi.</div>'+(tel?'':wbtn('data-wmode="optimized"',"Optimized on")+'<div class="wsub">Week clock off</div>')
+      :'<div class="wsub">Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="wsub">No events: set them on the unit\'s panel.</div>')+
+      '<div class="wsub">Wrist Control has no week clock of its own: Optimized follows what actually happens at home - CO2, humidity, temperature - so the fans do not need a clock.</div><div class="wsub">Auto = Vallox factory settings</div>';
   } else if(k==="air"||k==="comfort"){
-    h+=k==="air"?'<div class="wzod" style="color:'+wcol(co2Lvl())+';font-size:24px">'+airWord()+'</div>':'<div class="wttl">COMFORT ZONE</div>';
-    var tt=[["Temp",S.temp.toFixed(1)+"°C","t",S.temp],["Humidity",Math.round(S.rh)+"%","rh",S.rh],["CO2",Math.round(S.co2)+" ppm","co2",S.co2]];
-    if(k==="air") tt=[tt[2],["Indoor",tt[0][1],"t",S.temp],tt[1]];
-    tt.forEach(function(x){h+=wscale(x[0],x[1],x[2],x[3]);});
+    if(k==="comfort"){
+      h+='<div class="wttl">COMFORT ZONE</div>'+wscale("Temp",S.temp.toFixed(1)+"°C","t",S.temp)+wscale("Humidity",Math.round(S.rh)+"%","rh",S.rh)+wscale("CO2",Math.round(S.co2)+" ppm","co2",S.co2)+'<div class="wsub" data-wclose="1" style="cursor:pointer">close</div>';
+    } else {
+      h+='<div class="wsub" style="margin-top:0;color:var(--wblue2);font-size:14px">'+S.name.toUpperCase()+'</div><div class="wzod" style="color:'+wcol(co2Lvl())+';font-size:24px">'+airWord()+'</div>'+
+        woro("CO2",Math.round(S.co2)+" ppm","co2",S.co2,R_CO2)+woro("Indoor",S.temp.toFixed(1)+"°C","t",S.temp,R_T)+woro("Humidity",Math.round(S.rh)+" %","rh",Math.round(S.rh),R_RH)+
+        '<div style="margin-top:10px">'+wrow([["Outdoor",S.out.toFixed(1)+"°C"],["Fan",Math.round(S.fan)+" %"],["Heater","OFF","var(--wlo)"]])+'</div>'+
+        (S.mode!=="optimized"?'<div class="wsub">'+NAME[S.mode]+(S.left>0?'&nbsp;&nbsp;'+(S.left>=60?Math.floor(S.left/60)+":"+String(S.left%60).padStart(2,"0"):S.left+" min"):'')+'</div>':'')+
+        '<div class="wage">'+ageTxt()+'</div>';
+    }
   } else if(k==="temps"){
-    h+='<div class="wttl">A DAY</div><div class="wsub" style="margin-top:0">last 24 hours</div><canvas id="wcv1" height="70" style="margin-top:6px"></canvas><canvas id="wcv2" height="60"></canvas><div class="wsub">Indoor · <span style="color:#5b9bf3">Outdoor</span> · CO2</div>';
+    var wk=S.week, ti=avg(wk.map(function(p){return p.tin;})), to=avg(wk.map(function(p){return p.tout;})), cs=wk.map(function(p){return p.co2;});
+    h+='<div class="wttl">A DAY</div><div class="wsub" style="margin-top:0">last 24 hours</div><div class="wsub">Indoor · <span style="color:#5b9bf3">Outdoor</span></div><canvas id="wcv1" height="70" style="margin-top:6px"></canvas><div class="wsub">CO2</div><canvas id="wcv2" height="60"></canvas>'+
+      wsec("7 DAYS")+'<div class="wsub">Indoor '+f1(ti)+'° · <span style="color:#5b9bf3">Outdoor '+Math.round(to)+'°</span></div><canvas id="wcv3" height="70" style="margin-top:6px"></canvas><div class="wsub">CO2 '+Math.round(avg(cs))+' · peak '+Math.round(Math.max.apply(null,cs))+'</div><canvas id="wcv4" height="60"></canvas>'+
+      wsec("LAST YEAR")+'<div class="wsub">Outdoor '+ST.year.out+'° · CO2 624</div><div class="wsub">dashed = same week last year</div>'+wupd();
   } else if(k==="opt"){
-    h+='<div class="wttl">OPTIMIZED</div><div class="wsub" style="margin-top:0">Settings tuned to your home, and the result</div>'+wsec("CO2")+'<div class="wsub">Result</div><div class="wbig" style="color:var(--wgreen);font-size:30px">713 ppm</div><div class="wsub" style="margin-top:0">goal 738</div>'+
-      wrow([["Fan at rest",S.plan.rest+"%"],["CO2 limit",S.plan.limit]])+'<div class="wm on" style="justify-content:center" data-wtoast="Checked: morning CO2 713, goal 738">Check again</div>'+
-      wsec("CHANGE")+'<div class="wsub">'+(tel?CTRL_OTHER.watch:"New plan and Restore work here too; in the demo, try them on the phone.")+'</div>'+
-      wsec("TEMPERATURE")+'<div class="wsub">On: the app keeps heat and cools by indoor temperature</div><div class="wsub">'+rangeTxt(false)+'</div>';
+    if(ui.wopt==="busy"||ui.wopt==="check"){
+      h+=wsec("OPTIMIZE")+'<div class="spin" style="margin:18px auto"></div><div class="wsub">Analysing…</div>';
+    } else if(ui.wopt==="start"){
+      h+=wsec("OPTIMIZE")+'<div class="wsub" style="color:var(--whi)">Picks the fan speed and CO2 limit for your home from the unit\'s 14-day history</div>'+wbtn('data-wo="analyse"',"Analyse",true)+'<div class="wsub">from the unit, or the cloud when away</div>'+wTempSec(tel);
+    } else if(ui.wopt==="goal"){
+      h+=wsec("GOAL")+["clean","balance","quiet"].map(function(g){return wbtn('data-wo="g'+g+'"',GOALS[g].n+'<br><small>'+GOALS[g].a+'</small>',g==="balance");}).join("");
+    } else if(ui.wopt==="result"){
+      var r=ui.wprop;
+      h+=wsec("FORECAST")+wrow([["Morning",r.m[0]+"›"+r.m[1],wcol(co2Lvl(r.m[1]))],["Day",r.d[0]+"›"+r.d[1],wcol(co2Lvl(r.d[1]))],["Fan",r.f[0]+"›"+r.f[1]+" %"],["Energy",(r.e>0?"+":"")+r.e+" %",wchg(r.e)]])+
+        '<div class="wsub">'+changesTxt(r.rest,r.limit)+'</div>'+(tel?'<div class="wsub">'+CTRL_OTHER.watch+'</div>':(m?'<div class="spin" style="margin:12px auto"></div><div class="wmsg">'+m+'</div>':wbtn('data-wo="apply"',"Apply",true)+'<div class="wsub">original values saved</div>'));
+    } else {
+      h+='<div class="wttl">OPTIMIZED</div><div class="wsub" style="margin-top:0">Settings tuned to your home, and the result</div>'+wsec("CO2")+'<div class="wsub">Result</div><div class="wbig" style="color:var(--wgreen);font-size:30px">713 ppm</div><div class="wsub" style="margin-top:0">goal 738</div>'+
+        '<div style="display:flex;justify-content:center;gap:18px;margin-top:6px;font-size:18px"><div><div style="color:var(--wlo)">Fan at rest</div><b>'+S.plan.rest+' %</b><div style="color:var(--wlo);font-size:14px">was '+G.orig.rest+' %</div></div><div><div style="color:var(--wlo)">CO2 limit</div><b>'+S.plan.limit+'</b><div style="color:var(--wlo);font-size:14px">was '+G.orig.limit+'</div></div></div>'+
+        wbtn('data-wo="check"',"Check again",true)+wsec("CHANGE");
+      if(tel) h+='<div class="wsub">'+CTRL_OTHER.watch+'</div>';
+      else h+='<div class="wsub">'+(G.canRestore?'New plan measures the home again and lets you pick a goal. Restore puts back fan '+G.orig.rest+' % and CO2 limit '+G.orig.limit+' from before Optimize.':'New plan measures the home again and lets you pick a goal. Values from before Optimize were not saved.')+'</div>'+wbtn('data-wo="new"',"New plan")+(G.canRestore?wbtn('data-wo="restore"',"Restore"):'');
+      h+=wTempSec(tel);
+    }
   } else if(k==="stats"){
-    var pv=ST.prev, yr=ST.year, pc=function(a){var x=Math.round((a[1]/a[0]-1)*100);return (x>0?"+":"")+x+" %";};
-    h+='<div class="wttl">STATISTICS</div>'+wsec("VS LAST WEEK")+wrow([["Fresh air",pc(pv.fresh),"var(--wgreen)"],["CO2 avg",pc(pv.co2),"var(--wgreen)"],["Fan avg",pc(pv.fan)],["Energy",pv.e+" %","var(--wgreen)"]])+
-      '<div class="wsub">Now: fresh air '+pv.fresh[1]+' %, CO2 '+pv.co2[1]+', fan '+pv.fan[1]+' %.</div><div class="wsub">Week before: '+pv.fresh[0]+' %, '+pv.co2[0]+', '+pv.fan[0]+' %.</div>'+
-      wsec("VS LAST YEAR")+wrow([["Fresh air",pc(yr.fresh),"var(--wgreen)"],["CO2 avg",pc(yr.co2),"var(--wgreen)"],["Fan avg",pc(yr.fan),"var(--wgreen)"],["Energy",yr.e+" %","var(--wgreen)"]])+
-      '<div class="wsub">Energy without the weather. Total '+yr.total+', weather '+yr.weather+'</div>';
+    var pv=ST.prev, yr=ST.year;
+    h+='<div class="wttl">STATISTICS</div>'+wsec("PREVIOUS WEEK")+wrow([].concat(wpok("Fresh air",pv.fresh," %",wchg(-pctv(pv.fresh))),wpok("CO2 avg",pv.co2,"",wchg(pctv(pv.co2))),wpok("Fan avg",pv.fan," %",wchg(pctv(pv.fan))),[["Energy",pv.e+" %",wchg(pv.e)]]))+
+      '<div class="wsub">Energy: settings '+pv.parts[0]+', people '+pv.parts[1]+', weather '+pv.parts[2]+'</div>'+
+      wsec("SAME WEEK LAST YEAR")+wrow([].concat(wpok("Fresh air",yr.fresh," %",wchg(-pctv(yr.fresh))),wpok("CO2 avg",yr.co2,"",wchg(pctv(yr.co2))),wpok("Fan avg",yr.fan," %",wchg(pctv(yr.fan))),[["Energy",yr.e+" %",wchg(yr.e)]]))+
+      '<div class="wsub">Energy without the weather. Total '+yr.total+', weather '+yr.weather+'</div>'+wupd()+
+      wsec("APP AT WORK")+'<div class="wsub" style="margin-top:0">7 days</div>'+wrow([["Nobody home",G.work.nobody+" × · "+G.work.nobodyH+" h"],["Cooled",G.work.cooled+" h"],["Heat kept",G.work.heat+" h"],["Boost suggested",G.work.boost+" ×"]])+
+      wsec("CHANGE LOG")+'<div class="wsub" style="margin-top:0">7 days</div>'+
+      (G.log.length?G.log.map(function(e){return '<div class="wsub" style="margin-top:10px;font-size:15px">'+dayName(e.t)+' '+hhmm(e.t)+' · <b style="color:'+({App:"var(--wblue2)",You:"var(--wgreen)",Other:"var(--wyellow)"})[e.who]+'">'+e.who+'</b></div><div style="font-size:18px">'+e.what+'</div>'+(e.why?'<div class="wsub" style="margin-top:0;font-size:15px">'+e.why+'</div>':'');}).join(""):'<div class="wsub">No changes yet. They are recorded from this version on.</div>');
   } else if(k==="filt"){
-    h+='<div class="wttl">FILTERS</div>'+wrow([["Replaced",md(dateAdd(S.filt-180))],["Interval","180 d"],["Next",md(dateAdd(S.filt))]])+
-      '<div class="wm'+(ui.wfsure?' on':'')+'" id="wfchg" style="justify-content:center">'+(ui.wfsure?"Confirm today":"Mark changed")+'</div>'+(ui.wfsaved?'<div class="wmsg">Saved</div>':'');
+    h+='<div class="wttl">FILTERS</div>'+wrow([["Replaced",md(dateAdd(S.filt-180))],["Next",md(dateAdd(S.filt))]])+
+      '<div class="wsub" style="margin-top:2px;color:'+(S.filt<=0?"var(--wyellow)":"var(--wlo)")+'">'+S.filt+' d left</div>'+
+      '<div class="wm'+(ui.wfsure?' on':'')+'" id="wfchg" style="justify-content:center">'+(ui.wfsure?"Confirm today":"Mark changed")+'</div>'+(ui.wfbusy?'<div class="wmsg">'+(tel?"Sent to the phone - waiting for the unit…":"Writing to the unit…")+'</div>':ui.wfsaved?'<div class="wmsg">Saved</div>':'');
+  } else if(k==="pro"){
+    h+=wsec("PRO")+["Smart modes: each mode sets its own fan speed and CO2 limit","Optimize: settings tuned to your home","Statistics: your week, electricity and why","Up to 3 units"].map(function(t){return '<div class="wsub" style="color:var(--whi)">'+t+'</div>';}).join("")+
+      '<div class="wsub" style="color:var(--wgreen);font-weight:700">Unlocked</div>'+wsec("INSTALLER")+'<div class="wsub" style="color:var(--whi)">Unlimited units, for installers and service</div>'+wbtn('data-wtoast="Opening Google Play…"',"Unlock",true)+'<div class="wsub">One-time purchase</div>';
+  } else if(k==="guide"){
+    h+=wsec("HOW IT WORKS")+GUIDE.map(function(g){return '<div class="wsub" style="color:var(--whi);font-weight:700;margin-top:12px">'+g[0]+'</div><div class="wsub" style="margin-top:2px">'+g[1]+'</div>';}).join("");
   } else if(k==="settings"){
-    h+='<div class="wttl">SETTINGS</div>';
-    if(tel) h+=wsec("VALLOX UNIT CONTROLLED BY")+'<div class="wsub" style="color:var(--wyellow);font-size:19px">The phone controls the VALLOX unit. Changes are made on it.</div>';
+    h+='<div class="wttl">SETTINGS</div><div class="wsub">Vallox unit controlled by</div><div style="font-size:22px;font-weight:700">'+(tel?"The phone":"The watch")+'</div>';
     h+=wsec("UNIT");
     if(tel){
       h+='<div class="wsub" style="margin-top:0">Changed on the phone</div>'+wrow([["Temp.",rangeTxt(false)],["Alerts",wAlerts()],["Refresh",REF_SHORT[G.refresh]],["Clock",G.clock]]);
     } else {
       var wb=function(attr,v,on){return '<div class="wm'+(on?' on':'')+'" '+attr+'="'+v+'">'+v+'</div>';};
-      h+=wsec2("TEMPERATURE")+[["from","From"],["to","To"]].map(function(x){return '<div class="wpm"><span data-wt="'+x[0]+'-">-</span><div><small>'+x[1]+'</small>'+deg(G[x[0]],false)+'</div><span data-wt="'+x[0]+'+">+</span></div>';}).join("")+
+      var wok={"from-":G.from>20,"from+":G.from<24,"to-":G.to>G.from+0.5,"to+":G.to<G.from+2};
+      var wpb=function(t,g){return '<span data-wt="'+t+'"'+(wok[t]?'':' style="color:var(--wlo)"')+'>'+g+'</span>';};
+      h+=wsec2("TEMPERATURE")+[["from","From"],["to","To"]].map(function(x){return '<div class="wpm">'+wpb(x[0]+"-","-")+'<div><small>'+x[1]+'</small>'+deg(G[x[0]],false)+'</div>'+wpb(x[0]+"+","+")+'</div>';}).join("")+
+        '<div class="wsub">Below '+deg(G.from,false)+' the heat is kept in, above '+deg(G.to,false)+' the home is cooled with outdoor air.</div>'+
         wsec2("ALERTS")+[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="wrow2"><span>'+a[1]+'</span>'+wsw(G.alerts[a[0]],'data-wal="'+a[0]+'"')+'</div>';}).join("")+
-        wsec2("DATA REFRESH")+'<div class="wseg">'+wb("data-wref","Auto",G.refresh==="Auto").replace(">Auto<",">Auto 15-60 min<")+'</div><div class="wsub" style="margin-top:2px">Drains battery faster</div>'+
+        wsec2("DATA REFRESH")+'<div class="wseg">'+'<div class="wm'+(G.refresh==="Adaptive"?' on':'')+'" data-wref="Adaptive">Adaptive 15-60 min</div>'+'</div><div class="wsub" style="margin-top:2px">Drains battery faster</div>'+
         '<div class="wseg">'+wb("data-wref","20 min",G.refresh==="20 min")+wb("data-wref","30 min",G.refresh==="30 min")+wb("data-wref","1 h",G.refresh==="1 h")+'</div><div class="wseg">'+wb("data-wref","Only in app",G.refresh==="Only in app")+'</div>'+
-        wsec2("UNIT CLOCK")+'<div class="wseg">'+["Ask to fix","Auto fix","Off"].map(function(v){return wb("data-wclk",v,G.clock===v);}).join("")+'</div>';
+        wsec2("UNIT CLOCK")+'<div class="wseg">'+["Ask to fix","Fix itself","Off"].map(function(v){return wb("data-wclk",v,G.clock===v);}).join("")+'</div>';
     }
-    h+=wsec("PRO")+'<div class="wrow2"><span>Pro</span><span>Unlocked</span></div>'+
+    h+=wsec("PRO")+wbtn('data-wwinopen="pro"',"Unlock unlimited units",true)+'<div class="wsub" data-wwinopen="pro" style="cursor:pointer">Pro · Unlocked</div>'+
       wsec("THIS WATCH")+'<div class="wrow2"><span>Cloud</span>'+wsw(G.cloud,'data-wcloud="1"')+'</div>'+
-      '<div class="wm on" style="justify-content:center" data-wtoast="Account: demo@example.com">My account</div><div class="wsub" style="color:var(--whi)">demo@example.com</div>';
-    if(!tel) h+=wsec("CONNECTION")+'<div class="wseg">'+["Auto","Local","Cloud"].map(function(v){return '<div class="wm'+(G.conn===v?' on':'')+'" data-wconn="'+v+'">'+v+'</div>';}).join("")+'</div><div class="wsub">Local: more battery</div>';
-    h+=wsec("PAGES")+WORDER.filter(function(p){return PNAME[p];}).map(function(pg){return '<div class="wrow2"><span>'+PNAME[pg]+'</span>'+wsw(G.pages[pg],'data-wpg="'+pg+'"')+'</div>';}).join("")+
-      wsec("HOW IT WORKS")+'<div class="wm" style="justify-content:center" data-wtoast="On the real watch: a short guide to modes, Optimize, automation, humidity and statistics">Open</div>'+
-      wsec("LANGUAGE")+'<div class="wm" style="justify-content:center" data-wtoast="English, Suomi, Lietuvių, Polski - Auto follows the watch">'+G.lang+'</div>'+
+      (G.cloud?'<div class="wm on" style="justify-content:center" data-wtoast="Account: demo@example.com">My account</div><div class="wsub" style="color:var(--whi)">demo@example.com</div>':'');
+    if(!tel&&G.cloud) h+=wsec("CONNECTION")+["Best","Local","Cloud"].map(function(v){return '<div class="wm'+(G.conn===v?' on':'')+'" style="justify-content:center" data-wconn="'+v+'">'+CONN[v][0]+'</div>';}).join("")+'<div class="wsub">Local: drains battery</div>';
+    if(G.view!=="auto") h+=wsec("PAGES")+WORDER.filter(function(p){return PNAME[p];}).map(function(pg){return '<div class="wrow2"><span>'+PNAME[pg]+'</span>'+wsw(G.pages[pg],'data-wpg="'+pg+'"')+'</div>';}).join("");
+    h+=wsec("HOW IT WORKS")+wbtn('data-wwinopen="guide"',"Open")+
+      wsec("LANGUAGE")+'<div class="wm" style="justify-content:center" data-wtoast="English, Suomi, Lietuvių, Polski - System follows the watch">'+G.lang+'</div>'+
       '<div class="wm" style="justify-content:center;margin-top:14px" data-wtoast="5 test alerts sent">Send test alerts</div>';
   }
   return h;
@@ -918,13 +1026,16 @@ function draw(){
   var pages=wpages(); if(ui.wpage>=pages.length) ui.wpage=0;
   var pk=pages[ui.wpage], r=wpage(pk);
   var dots=""; if(pages.length>1) for(var i=0;i<pages.length;i++) dots+=i===ui.wpage?"●":"·";
-  var over="", n=ui.note;
-  if(ui.wface) over='<div style="position:absolute;inset:0" data-wfaceopen="1">'+faceHtml()+'</div>';
+  var over="", n=ui.note, ow=document.querySelector("#ws .wwin"), wy=ow&&ui.wwShown===ui.wwin?ow.scrollTop:0;
+  ui.wwShown=ui.wwin;
+  if(ui.wq) over='<div class="wwin"><div class="wsec">DATA REFRESH</div><div class="wsub" style="color:var(--whi)">Optimized reacts faster with Adaptive refresh: every 15-60 min, more often when the air changes.</div><div class="wsub">Drains battery faster</div>'+wbtn('data-wq="auto"',"Switch to Adaptive",true)+wbtn('data-wq="keep"',keepLabel())+'</div>';
+  else if(ui.wface) over='<div style="position:absolute;inset:0" data-wfaceopen="1">'+faceHtml()+'</div>';
   else if(ui.wnote&&n) over='<div class="wnote"><div class="act" id="wnAct"><b>'+n.title+'</b><div>'+n.text+'</div></div>'+(n.kind==="auto"?'<div class="wm on" id="wnUndo" style="justify-content:center">Undo</div>':'')+'<div class="wsub" id="wnClose" style="cursor:pointer;margin-top:10px">Dismiss</div></div>';
   else if(ui.wwin) over='<div class="wwin">'+wwin(ui.wwin)+'</div>';
   var act=pk==="unit"?' data-wread="1"':(PWIN[pk]?' data-wwin="'+PWIN[pk]+'"':'');
   document.getElementById("ws").innerHTML='<div class="wp"'+act+'>'+r.h+'</div><div class="wdots">'+(r.dots?dots:"")+'</div>'+over;
-  if(ui.wwin==="temps"&&!ui.wface&&!ui.wnote) wgraphsWatch();
+  var nw=document.querySelector("#ws .wwin"); if(nw) nw.scrollTop=wy;
+  if(ui.wwin==="temps"&&!ui.wface&&!ui.wnote&&!ui.wq) wgraphsWatch();
   var w=widgets(); document.getElementById("wgs").innerHTML=w.air+w.g;
   wgraphs();
 }
@@ -966,13 +1077,28 @@ function wgraphsWatch(){
   var h=S.hist;
   plot(document.getElementById("wcv1"),[{v:h.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:degf},{v:h.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:degf}]);
   plot(document.getElementById("wcv2"),[{v:h.map(function(p){return p.co2;}),c:"#e8ecf5",fmt:ppm}],800,{refCol:"#f5c542"});
+  var wk=S.week, D=wk.map(function(d){return d.d;});
+  plot(document.getElementById("wcv3"),[{v:wk.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:degf},{v:wk.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:degf},{v:flat(7,ST.year.out),c:"#8c96b2",dash:true}],null,{labels:D});
+  plot(document.getElementById("wcv4"),[{v:wk.map(function(p){return p.co2;}),c:"#e8ecf5",fmt:ppm},{v:flat(7,624),c:"#8c96b2",dash:true}],800,{labels:D,refCol:"#f5c542"});
 }
 
 /* ---- Valdymas: telefonas ---- */
 function openPhone(w){ui.phone=w;ui.layer="app";document.getElementById("scr").scrollTop=0;if(w==="opt"){ui.opt="idle";ui.prop=null;}draw();}
 function openOpt(p){openPhone("opt");ui.prop=prog(p.rest,p.limit);ui.opt="result";draw();}
 function busy(id,ms,done){ui.busy=id;draw();setTimeout(function(){ui.busy=null;if(done)done();draw();},ms);}
-function setView(v){G.view=v;ui.wpage=0;ui.wwin=null;if(v==="auto"){G.refresh="Auto";G.clock="Auto fix";}draw();}
+function setView(v){G.view=v;ui.wpage=0;ui.wwin=null;if(v==="auto"){G.refresh="Adaptive";G.clock="Fix itself";}draw();}
+/* Planas pazymimas pritaikytu tik irasius (apzvalga 9) - abiejuose irenginiuose vienodai. */
+function applyPlan(r){
+  var p0=S.plan; if(!G.canRestore){G.orig={rest:p0.rest,limit:p0.limit};G.canRestore=true;}
+  logAdd("You","Optimize plan applied","Fan "+p0.rest+" → "+r.rest+" %, CO2 limit "+p0.limit+" → "+r.limit);
+  S.plan={rest:r.rest,limit:r.limit};
+}
+function restorePlan(){
+  var p=S.plan;S.plan={rest:G.orig.rest,limit:G.orig.limit};G.canRestore=false;
+  logAdd("You","Settings restored","Fan "+p.rest+" → "+S.plan.rest+" %, CO2 limit "+p.limit+" → "+S.plan.limit);buzz();
+}
+/* Braukimo atnaujinimas ir kito rekuperatoriaus pasirinkimas - tas pats perskaitymas su suktuku. */
+function readNow(){ui.pulling=true;draw();setTimeout(function(){ui.pulling=false;S.age=0;draw();},1200);}
 /* Rezis kaip VlxAutomatika: From 20-24°, To From+0,5..From+2, zingsnis 0,5. */
 function stepRange(k,s){
   if(k==="from"){G.from=Math.max(20,Math.min(24,G.from+s));G.to=Math.max(G.from+0.5,Math.min(G.from+2,G.to));}
@@ -980,19 +1106,20 @@ function stepRange(k,s){
 }
 document.getElementById("ps").addEventListener("click",function(e){
   if(ui.pulled){ui.pulled=false;return;}
-  var t=e.target.closest("[data-open],[data-mode],[data-boost],[data-ctrl],[data-view],[data-toast],[data-theme],[data-t],[data-al],[data-ref],[data-clk],[data-ogoal],[data-wsel],[data-units],[data-unit],[data-wopen],#fchg,#oNew,#oRestore,#oApply,#oCheck,#tUpd,#sUpd,#wizGo,#wizNext,#openWatch,#nUndo,#banner,.list");
+  var t=e.target.closest("[data-open],[data-mode],[data-boost],[data-ctrl],[data-view],[data-toast],[data-theme],[data-t],[data-al],[data-ref],[data-clk],[data-ogoal],[data-wsel],[data-units],[data-unit],[data-wopen],[data-qk],#fchg,#oNew,#oRestore,#oApply,#oCheck,#tUpd,#sUpd,#wizGo,#wizNext,#openWatch,#nUndo,#wcApp,#wcOpt,#banner,.list");
   if(!t) return;
   var d=t.dataset;
   if(t.id==="nUndo"){undoAuto();return;}
   if(t.id==="banner"){notePhone();return;}
   if(d.wopen){openPhone(d.wopen);return;}
   if(d.open){openPhone(d.open);return;}
-  if(d.boost){ if(!G.writing) write(boostOn()?"optimized":"boost","phone"); return;}
-  if(d.mode){ if(!G.writing&&d.mode!==S.mode) write(d.mode,"phone"); return;}
+  if(d.qk){var go=ui.qGo;G.qAsked=true;if(d.qk==="auto")G.refresh="Adaptive";document.getElementById("sheet").innerHTML="";draw();go();return;}
+  if(d.boost){ if(!G.writing) write(boostOn()?"boost_stop":"boost","phone"); return;}
+  if(d.mode){ if(d.mode!==S.mode) phoneMode(d.mode); return;}
   if(d.ctrl){
     if(G.waiting) return;
-    if(d.ctrl==="watch"&&G.ctrl==="phone"){G.waiting=true;draw();setTimeout(function(){G.waiting=false;G.ctrl="watch";draw();},1800);}
-    else if(d.ctrl==="phone"&&G.ctrl==="watch"){G.ctrl="phone";draw();}
+    if(d.ctrl==="watch"&&G.ctrl==="phone"){G.ctrl="watch";draw();}
+    else if(d.ctrl==="phone"&&G.ctrl==="watch"){G.waiting=true;draw();setTimeout(function(){G.waiting=false;G.ctrl="phone";draw();},1800);}
     return;}
   if(d.view){setView(d.view);return;}
   if(d.theme){G.theme=d.theme;draw();return;}
@@ -1003,7 +1130,7 @@ document.getElementById("ps").addEventListener("click",function(e){
   if(d.ogoal){var g=GOALS[d.ogoal];ui.opt="busy";draw();setTimeout(function(){ui.prop=prog(g.rest,g.limit);ui.opt="result";draw();},1800);return;}
   if(d.wsel){ui.wizA[ui.wiz]=+d.wsel;draw();return;}
   if(d.units){sheet();return;}
-  if(d.unit!==undefined){S=U[+d.unit];document.getElementById("sheet").innerHTML="";S.age=0;draw();return;}
+  if(d.unit!==undefined){var fromSheet=!!document.getElementById("sheet").innerHTML;S=U[+d.unit];document.getElementById("sheet").innerHTML="";if(fromSheet)readNow();else{S.age=0;draw();}return;}
   if(d.toast){e.preventDefault();toast(d.toast);return;}
   if(t.classList.contains("list")){if(e.target===t)document.getElementById("sheet").innerHTML="";return;}
   switch(t.id){
@@ -1011,13 +1138,13 @@ document.getElementById("ps").addEventListener("click",function(e){
     case "oNew": ui.opt="goal";draw();return;
     case "oCheck": busy("oCheck",1500);return;
     case "tUpd": case "sUpd": busy(t.id,1500,function(){G.upd=G.min;});return;
-    case "oRestore": busy("oRestore",1600,function(){var p=S.plan;S.plan={rest:G.orig.rest,limit:G.orig.limit};G.canRestore=false;
-      logAdd("You","Settings restored","Fan "+p.rest+" → "+S.plan.rest+" %, CO2 limit "+p.limit+" → "+S.plan.limit);buzz();});return;
-    case "oApply": var r=ui.prop, p0=S.plan; if(!G.canRestore){G.orig={rest:p0.rest,limit:p0.limit};G.canRestore=true;}
-      logAdd("You","Optimize plan applied","Fan "+p0.rest+" → "+r.rest+" %, CO2 limit "+p0.limit+" → "+r.limit);
-      S.plan={rest:r.rest,limit:r.limit};ui.opt="idle";ui.prop=null;
-      if(S.mode==="optimized") busy("oApply",1600,buzz); else write("optimized","phone");
+    case "oRestore": busy("oRestore",1600,restorePlan);return;
+    case "oApply": if(ui.busy||G.writing) return; var r=ui.prop, fin=function(){applyPlan(r);ui.busy=null;ui.opt="idle";ui.prop=null;};
+      if(S.mode==="optimized") busy("oApply",1600,function(){fin();buzz();});
+      else {ui.busy="oApply";write("optimized","phone",fin);}
       return;
+    case "wcApp": write("optimized","phone");return;
+    case "wcOpt": phoneMode("optimized");return;
     case "wizGo": wizStart();return;
     case "wizNext": wizNext();return;
     case "openWatch": ui.wface=false;ui.wwin=null;ui.wnote=false;ui.wpage=0;buzz();toast("Look at your watch");draw();return;
@@ -1025,14 +1152,14 @@ document.getElementById("ps").addEventListener("click",function(e){
 });
 function sheet(){
   var h='<div class="list"><div><div class="kt">UNIT</div>';
-  U.forEach(function(u,i){h+='<div class="opt'+(u===S?' on':'')+'" data-unit="'+i+'"><b>'+u.name+'</b><span class="sub">'+NAME[u.mode]+' · CO2 '+Math.round(u.co2)+'</span></div>';});
-  h+='<div class="sub" style="margin-top:10px">Pro: up to 3 units · Installer: unlimited</div></div></div>';
+  U.forEach(function(u,i){h+='<div class="opt'+(u===S?' on':'')+'" data-unit="'+i+'"><b>'+u.name+'</b></div>';});
+  h+='<div class="sub" style="margin-top:8px">Pro: up to 3 units · Installer: unlimited</div></div></div>';
   document.getElementById("sheet").innerHTML=h;
 }
 document.getElementById("back").addEventListener("click",function(){
   if(document.getElementById("sheet").innerHTML){document.getElementById("sheet").innerHTML="";return;}
   if(ui.layer==="home"){ui.layer="app";draw();return;}
-  if(ui.phone==="wiz"&&ui.wiz>0&&ui.wiz<WIZ.length){ui.wiz--;ui.wizBusy=false;draw();return;}
+  if(ui.phone==="wiz"&&WIZ[ui.wiz]){var wst=wizSteps(), wi=wst.indexOf(ui.wiz); if(wi>0){ui.wiz=wst[wi-1];ui.wizBusy=false;draw();return;}}
   if(ui.phone==="opt"&&ui.opt!=="idle"){ui.opt="idle";ui.prop=null;draw();return;}
   if(ui.phone!=="pultas"){ui.phone="pultas";draw();}
 });
@@ -1044,39 +1171,62 @@ var py=null, scrEl=document.getElementById("scr");
 scrEl.addEventListener("pointerdown",function(e){py=(ui.phone==="pultas"&&ui.layer==="app"&&scrEl.scrollTop===0)?e.clientY:null;});
 scrEl.addEventListener("pointerup",function(e){
   if(py===null) return; var d=e.clientY-py; py=null;
-  if(d>70&&!ui.pulling){ui.pulled=true;setTimeout(function(){ui.pulled=false;},50);ui.pulling=true;draw();setTimeout(function(){ui.pulling=false;S.age=0;draw();},1200);}
+  if(d>70&&!ui.pulling){ui.pulled=true;setTimeout(function(){ui.pulled=false;},50);readNow();}
 });
 
 /* ---- Valdymas: laikrodis ---- */
 var ws=document.getElementById("ws");
 ws.addEventListener("click",function(e){
   if(ui.swiped){ui.swiped=false;return;}
-  var t=e.target.closest("#wboost,#wnAct,#wnUndo,#wnClose,#wfchg,[data-wmode],[data-wclose],[data-wal],[data-wpg],[data-wcloud],[data-wtoast],[data-wt],[data-wref],[data-wclk],[data-wconn],[data-wfaceopen],[data-wwin],[data-wread]");
+  var t=e.target.closest("#wboost,#wnAct,#wnUndo,#wnClose,#wfchg,[data-wq],[data-wo],[data-wupd],[data-wwinopen],[data-wmode],[data-wclose],[data-wal],[data-wpg],[data-wcloud],[data-wtoast],[data-wt],[data-wref],[data-wclk],[data-wconn],[data-wfaceopen],[data-wwin],[data-wread]");
   if(!t) return;
   var d=t.dataset;
   if(d.wfaceopen){ui.wface=false;draw();return;}
   if(t.id==="wnUndo"){undoAuto();return;}
   if(t.id==="wnAct"){noteWatch();return;}
   if(t.id==="wnClose"){ui.wnote=false;draw();return;}
-  if(t.id==="wboost"){ if(!G.writing) write(boostOn()?"optimized":"boost","watch"); return;}
+  if(d.wq){var wgo=ui.wq.go;ui.wq=null;G.qAsked=true;if(d.wq==="auto")G.refresh="Adaptive";draw();wgo();return;}
+  if(t.id==="wboost"){ if(!G.writing) write(boostOn()?"boost_stop":"boost","watch"); return;}
+  if(d.wwinopen){ui.wwin=d.wwinopen;draw();return;}
+  if(d.wupd){ui.wbusy="upd";draw();setTimeout(function(){ui.wbusy=null;G.upd=G.min;draw();},1500);return;}
+  if(d.wo){watchOpt(d.wo);return;}
   if(d.wread){S.age=0;draw();return;}
-  if(d.wwin){ui.wwin=d.wwin;ui.wfsaved=0;draw();return;}
+  if(d.wwin){ui.wwin=d.wwin;ui.wfsaved=0;ui.wopt="idle";draw();return;}
   if(d.wclose){ui.wwin=null;draw();return;}
-  if(d.wmode){ if(!G.writing&&d.wmode!==S.mode){write(d.wmode,"watch");setTimeout(function(){ui.wwin=null;draw();},2300);} return;}
-  var keep=function(){var sc=t.closest(".wwin")?t.closest(".wwin").scrollTop:0;draw();var nw=document.querySelector("#ws .wwin");if(nw)nw.scrollTop=sc;};
-  if(d.wal){G.alerts[d.wal]=!G.alerts[d.wal];keep();return;}
-  if(d.wpg){G.pages[d.wpg]=!G.pages[d.wpg];keep();return;}
-  if(d.wt){stepRange(d.wt.slice(0,-1),d.wt.slice(-1)==="+"?0.5:-0.5);keep();return;}
-  if(d.wref){G.refresh=d.wref;keep();return;}
-  if(d.wclk){G.clock=d.wclk;keep();return;}
-  if(d.wconn){G.conn=d.wconn;keep();return;}
-  if(d.wcloud){G.cloud=!G.cloud;keep();return;}
+  if(d.wmode){ if(!G.writing&&d.wmode!==S.mode) watchMode(d.wmode); return;}
+  if(d.wal){G.alerts[d.wal]=!G.alerts[d.wal];draw();return;}
+  if(d.wpg){G.pages[d.wpg]=!G.pages[d.wpg];draw();return;}
+  if(d.wt){stepRange(d.wt.slice(0,-1),d.wt.slice(-1)==="+"?0.5:-0.5);draw();return;}
+  if(d.wref){G.refresh=d.wref;draw();return;}
+  if(d.wclk){G.clock=d.wclk;draw();return;}
+  if(d.wconn){G.conn=d.wconn;draw();return;}
+  if(d.wcloud){G.cloud=!G.cloud;draw();return;}
   if(d.wtoast){toast(d.wtoast);return;}
   if(t.id==="wfchg"){
     if(!ui.wfsure){ui.wfsure=1;ui.wfsaved=0;draw();clearTimeout(ui.wfT);ui.wfT=setTimeout(function(){ui.wfsure=0;draw();},4000);}
-    else {clearTimeout(ui.wfT);ui.wfsure=0;S.filt=180;ui.wfsaved=1;buzz();draw();}
+    else {clearTimeout(ui.wfT);ui.wfsure=0;ui.wfbusy=1;draw();
+      /* Data ir „Saved“ - tik irasius, po 1,5 s langas uzsidaro (filtruMygtukas, apzvalga 19). */
+      setTimeout(function(){ui.wfbusy=0;S.filt=180;ui.wfsaved=1;buzz();draw();setTimeout(function(){if(ui.wwin==="filt"){ui.wwin=null;ui.wfsaved=0;draw();}},1500);},1200);}
     return;}
 });
+function watchMode(mode,done){
+  if(mode==="optimized"&&askRefresh("watch")){ui.wq={go:function(){watchMode(mode,done);}};draw();return;}
+  write(mode,"watch",done);
+  if(!done) setTimeout(function(){ui.wwin=null;draw();},2300);
+}
+/* Optimize lango mygtukai (pieskOpt). */
+function watchOpt(k){
+  if(k==="new"){ui.wopt="start";draw();return;}
+  if(k==="analyse"){ui.wopt="busy";draw();setTimeout(function(){ui.wopt="goal";draw();},1800);return;}
+  if(k==="check"){ui.wopt="check";draw();setTimeout(function(){ui.wopt="idle";draw();},1500);return;}
+  if(k==="restore"){restorePlan();draw();return;}
+  if(k==="temp"){G.tempOn=!G.tempOn;draw();return;}
+  if(k==="apply"){
+    var r=ui.wprop;
+    watchMode("optimized",function(){applyPlan(r);ui.wopt="idle";ui.wprop=null;});
+    return;}
+  var g=GOALS[k.slice(1)]; ui.wprop=prog(g.rest,g.limit); ui.wopt="result"; draw();
+}
 var sx=null;
 ws.addEventListener("pointerdown",function(e){sx=e.clientX;});
 ws.addEventListener("pointerup",function(e){ if(sx===null) return; var d=e.clientX-sx; sx=null;
@@ -1084,28 +1234,28 @@ ws.addEventListener("pointerup",function(e){ if(sx===null) return; var d=e.clien
 function page(d){var n=wpages().length;if(n<2)return;ui.wpage=(ui.wpage+d+n)%n;draw();}
 document.getElementById("wl").addEventListener("click",function(){ui.wwin=null;ui.wface=false;page(-1);});
 document.getElementById("wr").addEventListener("click",function(){ui.wwin=null;ui.wface=false;page(1);});
-document.getElementById("wback").addEventListener("click",function(){if(ui.wnote)ui.wnote=false;else if(ui.wwin)ui.wwin=null;else if(ui.wface)ui.wface=false;draw();});
+document.getElementById("wback").addEventListener("click",function(){if(ui.wq)ui.wq=null;else if(ui.wnote)ui.wnote=false;else if(ui.wwin)ui.wwin=null;else if(ui.wface)ui.wface=false;draw();});
 document.getElementById("wfaceBtn").addEventListener("click",function(){ui.wface=!ui.wface;ui.wwin=null;draw();});
 
 /* ---- Ivadinis turas ---- */
 /* Kiekvienas zingsnis: ka parysinti, antraste, tekstas ir (nebutinai) ka parodyti pries tai. */
 function vaizdas(v,langas,wp,ww){return function(){G.view=v;ui.phone=langas||"pultas";ui.layer="app";ui.wwin=ww||null;
-  if(v==="auto"){G.refresh="Auto";G.clock="Auto fix";}
+  if(v==="auto"){G.refresh="Adaptive";G.clock="Fix itself";}
   ui.wpage=Math.max(0,wpages().indexOf(wp||""));if(langas==="opt"){ui.opt="idle";ui.prop=null;}document.getElementById("scr").scrollTop=0;draw();};}
 /* Laikrodzio puslapiai sukasi patys, kol rodomas zingsnis apie laikrodi. */
 var sukimas=null;
 function sukis(){vaizdas("semi")();sukimas=setInterval(function(){ui.wwin=null;ui.wpage=(ui.wpage+1)%wpages().length;draw();},1500);}
 var TOUR=[
  ["#scen","Start here","Pick a situation - guests, an empty house or a shower. Then wait a minute or two: the phone and the watch react on their own.",vaizdas("auto")],
- ["[data-boost]","Tap Boost","The unit runs at Boost speed for an hour. Watch the spinner, the vibration, and the watch showing the same Boost. Tap again to stop it.",vaizdas("auto")],
- ["#ps","Automatic view","One card with the air and one button. The app runs the ventilation for you. Tap a card to open its window.",vaizdas("auto")],
+ ["[data-boost]","Tap Boost","The unit runs at Boost speed for an hour. Watch the spinner, the vibration, and the watch showing the same Boost. Tap again to stop it: the unit goes back to the mode it was in.",vaizdas("auto")],
+ ["#ps","Automatic view","One card with the air and one button. The app runs the ventilation for you. Tap a card to open its window. The watch has three pages: air, STATISTICS and SETTINGS.",vaizdas("auto")],
  ["#ps","The phone buttons work","The buttons at the bottom work like on a real Android phone: ○ opens the home screen - here it is, with the app's widgets. ◁ goes back one step, ▢ returns to the app.",function(){vaizdas("auto")();ui.layer="home";draw();}],
  ["[data-open=settings]","Two ways to use it","In SETTINGS you pick Automatic or Semi-automatic. Next, let's switch to Semi-automatic and see what changes.",vaizdas("auto")],
- ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS. The watch followed by itself: 8 pages instead of 2 (pick which ones in its SETTINGS → PAGES).",vaizdas("semi","pultas","vent"),false,".watch"],
- ["#ps,.watch","VENTILATION: all modes","Optimized is the unit's Automatic with settings tuned to your home. Boost runs an hour, Custom is the unit's Fireplace timer, Away and At home are fixed speeds, Auto puts back the Vallox factory settings. The same list opens on the watch. Tap one: a spinner, then both devices switch and buzz.",vaizdas("semi","vent","vent","pick"),false,".watch"],
- ["#ps,.watch","TEMPERATURES","Indoor and outdoor, and CO2 against 800 ppm - for a day, for 7 days, and the same week last year. The watch has the day graph.",vaizdas("semi","temps","temps","temps"),false,".watch"],
+ ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS. The watch followed by itself: 8 pages instead of 3 (pick which ones in its SETTINGS → PAGES).",vaizdas("semi","pultas","vent"),false,".watch"],
+ ["#ps,.watch","VENTILATION: all modes","Optimized is the Vallox Auto mode with settings tuned to your home. Boost runs an hour, Custom runs on the unit's own timer, Away and At home are fixed speeds, Auto puts back the Vallox factory settings. The same list opens on the watch. Tap one: a spinner, then both devices switch and buzz.",vaizdas("semi","vent","vent","pick"),false,".watch"],
+ ["#ps,.watch","TEMPERATURES","Indoor and outdoor, and CO2 against 800 ppm - for a day, for 7 days, and the same week last year. The watch has the same graphs.",vaizdas("semi","temps","temps","temps"),false,".watch"],
  ["#ps,.watch","OPTIMIZE","New plan asks for a goal - clean air, balance or quiet - then reads two weeks of your unit's history. You see the forecast before you Apply; Restore puts back the settings from before Optimize.",vaizdas("semi","opt","opt","opt"),false,".watch"],
- ["#ps,.watch","Who controls the unit","The phone or the watch - only one writes to the unit, so they never fight. Pick The watch: the watch confirms, its label turns from PHONE to LOCAL (it now reads the unit itself), and the phone sends its taps to the watch.",vaizdas("semi","settings","settings","settings"),false,".watch"],
+ ["#ps,.watch","Who controls the unit","The phone or the watch - only one writes to the unit, so they never fight. Pick The watch: its label turns from PHONE to LOCAL (it now reads the unit itself), and the phone sends its taps to the watch. Statistics are calculated by the controlling device too; the other one asks and gets the result. Taking control back, the phone waits for the watch to confirm.",vaizdas("semi","settings","settings","settings"),false,".watch"],
  [".watch","The watch app","Its pages go by on their own now. Swipe sideways or use the Page buttons to browse; tap a page to open it - on VENTILATION the tap opens the mode list.",sukis],
  ["#wfaceBtn","Watch face","Your air on any watch face: CO2, fan and temperatures as complications.",null],
  ["#wgs","Phone widgets","They only show the air. Tap one to jump into the app.",null],
