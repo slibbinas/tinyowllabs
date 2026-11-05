@@ -122,6 +122,15 @@ h2.try button{font:inherit;font-size:13px;font-weight:600;padding:5px 12px;borde
 .loc.none .lh b{color:var(--lo)}
 .dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;align-items:center;color:var(--lo);font-size:13px}
 .dots i{width:17px;height:17px;border-radius:50%;border:1px solid var(--dotl);flex:none}
+.ps.bambu{--acc:#00AE42}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}
+.slot{display:flex;flex-direction:column;align-items:center;cursor:pointer}
+.slot svg{width:50px;height:50px}
+.slot small{font-size:13px;color:var(--hi);margin-top:2px}.slot small.lo{color:var(--lo)}
+.synl{display:flex;align-items:center;justify-content:space-between;color:var(--lo);font-size:13px;margin-top:6px}
+.syncb{background:none;border:0;color:var(--acc);font-size:19px;cursor:pointer;padding:0 4px}
+.nr{flex:none;width:22px;height:22px;border:1.5px solid var(--acc);border-radius:6px;color:var(--acc);font-size:13px;font-weight:700;display:grid;place-items:center}
+.card p{white-space:pre-line}
 .back{display:flex;align-items:center;gap:6px;margin:8px 2px 2px;color:var(--hi);background:none;border:0;font:inherit;font-size:16px;font-weight:700;cursor:pointer;padding:0}
 .bottom{flex:none;display:flex;gap:6px;padding:6px 0 4px}
 .btn{border:0;border-radius:22px;background:var(--acc);color:#fff;font:inherit;font-size:16px;padding:10px;cursor:pointer}
@@ -252,9 +261,9 @@ input[type=range].gs{width:100%;accent-color:var(--acc);margin:12px 0 8px}
   </div>
 </div>
 <header class="top"><img src="/tinyspools.png" alt=""><div><b>TinySpools</b><span>Live demo · a real filament shelf, nothing leaves this page</span></div></header>
-<p class="lead">This is the author's own filament: 50 filaments, 73 spools, six locations (names translated to English). Browse the Spools list, the Palette and Locations, open a spool and change how much is left or where it is, add filaments from the catalog, scan a barcode, make a QR label, write an NFC sticker, run a Check spools round, change the settings or download a backup. Changes stay in this page until you reload it. <a href="/tinyspools/">About the app</a> · <a href="/tinyspools/guide/">User guide</a></p>
+<p class="lead">This is the author's own filament: 50 filaments, 73 spools, six locations (names translated to English). Browse the Spools list, the Palette and Locations with two Bambu Lab AMS units whose grams left follow a pretend printer, open a spool and change how much is left or where it is, add filaments from the catalog, scan a barcode, make a QR label, write an NFC sticker, run a Check spools round, change the settings or download a backup. Changes stay in this page until you reload it. <a href="/tinyspools/">About the app</a> · <a href="/tinyspools/guide/">User guide</a></p>
 
-<h2 class="try">Try it yourself <button id="tourBtn">Show me around</button></h2>
+<h2 class="try">Try it yourself <button id="tourBtn">Take a tour</button></h2>
 <div class="stage">
   <div class="dev">
     <div class="phone" id="phone"><div class="ps" id="ps">
@@ -263,7 +272,7 @@ input[type=range].gs{width:100%;accent-color:var(--acc);margin:12px 0 8px}
       <div class="body" id="body"></div>
       <div class="nav"><button id="back" aria-label="Back">◁</button><button id="home" aria-label="Home">○</button><button id="recents" aria-label="Recent apps">▢</button></div>
     </div></div>
-    <div class="cap">Tap cards to open them, long-press a location to rename it, ⋮ for Check spools and Settings. ◁ ○ ▢ work like on a phone.</div>
+    <div class="cap">Tap cards to open them, long-press a location to rename it, ⋮ for Check spools, Erase NFC sticker and Settings. ◁ ○ ▢ work like on a phone.</div>
   </div>
   <div class="side" id="side">
     <h3>Touch the phone with…</h3>
@@ -273,6 +282,10 @@ input[type=range].gs{width:100%;accent-color:var(--acc);margin:12px 0 8px}
     <button id="nfcTuscias">⬜ an empty NFC sticker</button>
     <p>A Bambu Lab spool's RFID tag gives the material, color and weight. Your own sticker opens its spool, and during Check spools marks it found. An empty sticker can be written from a spool (Label → NFC tag).</p>
     <p>For barcodes on filament boxes and QR labels, tap <b>Scan</b> in the phone.</p>
+    <h3>Bambu Lab AMS</h3>
+    <p>The app reads the AMS from Bambu Lab's cloud. Here a pretend printer prints:</p>
+    <button id="spausdinti">🖨️ print with the AMS</button>
+    <p>Then open Locations or tap ↻ under an AMS: the grams left follow the printer, with Undo.</p>
   </div>
 </div>
 <div class="tools"><button id="reset">Start over</button></div>
@@ -288,7 +301,7 @@ input[type=range].gs{width:100%;accent-color:var(--acc);margin:12px 0 8px}
 // Skaneris, Zymos, Patikra, Nustatymai, Apie) su V ričių duomenimis. Tekstai ir taisyklės - iš programėlės kodo;
 // numatytosios nustatymų reikšmės - kaip Nustatymai.java.
 const PS = document.getElementById('ps'), BODY = document.getElementById('body'), ABAR = document.getElementById('abar');
-const VERSIJA = '0.1.185';
+const VERSIJA = '0.1.319';
 const LOGO = {'Bambu Lab':'bambu_lab','SUNLU':'sunlu','Rosa3D':'rosa3d','Fiberon':'fiberon','Inslogic':'inslogic','eSUN':'esun'};
 const FILTRAI = ['Brand', 'Material', 'Type', 'Color'];
 const PFILTRAI = ['Shelf', 'Material', 'Color', 'Brand'];
@@ -310,7 +323,9 @@ function pradzia() {
        pradetos: false, vieta: null, langai: [], namai: null, kitasId: 1000, ua: new Set(), paskutineKopija: 0,
        patikra: {vyksta: false, pradzia: 0, pabaiga: 0, santrauka: null},
        nust: {tema: 'System', likutis: false, pagalFil: true, ziedai: true, blokaiPagalKieki: false, tvarka: 'Brand',
-              juostaBendra: false, eilutes: 1, dviEil: false, mifare: true}};
+              juostaBendra: false, eilutes: 1, dviEil: false, mifare: true, akcentas: 'Auto', autoSync: true}};
+  for (const r of S.rites) r.lizdas = -1;
+  amsPradzia();
   isvalyti();
   tema();
   piesti();
@@ -444,7 +459,7 @@ function tamsi() {
   const t = document.documentElement.dataset.theme;
   return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
 }
-function tema() { PS.classList.toggle('sviesi', !tamsi()); }
+function tema() { PS.classList.toggle('sviesi', !tamsi()); PS.classList.toggle('bambu', S.nust.akcentas !== 'Original'); }
 new MutationObserver(() => S && tema()).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => S && tema());
 
@@ -463,7 +478,7 @@ function piesti() {
     BODY.innerHTML = h + `<div class="scr" id="scr">${pradziosLangas()}</div>`;
     return;
   }
-  if (S.tab !== 'locations' || S.vieta !== null) h += paieska('q', 'Search spools', S.q) + piliules(FILTRAI, S.filt, 'data-filt');
+  if (S.tab !== 'locations' || (S.vieta !== null && !amsL(S.vieta))) h += paieska('q', 'Search spools', S.q) + piliules(FILTRAI, S.filt, 'data-filt');
   let sarasas, apacia = '+ New spool';
   if (S.tab === 'spools') sarasas = riciuSarasas(grupes(false));
   else if (S.tab === 'palette') {
@@ -472,7 +487,7 @@ function piesti() {
     sarasas = palete();
   } else if (S.vieta !== null) {
     const l = S.vieta === 0 ? 'No location' : lentyna(S.vieta).vardas;
-    sarasas = `<button class="back" data-vietos="1">‹ ${esc(l)}</button>` + riciuSarasas(grupes(false, S.vieta));
+    sarasas = `<button class="back" data-vietos="1">‹ ${esc(l)}</button>` + (amsL(S.vieta) ? amsSarasas(S.vieta) : riciuSarasas(grupes(false, S.vieta)));
   } else { sarasas = vietos(); apacia = '+ New location'; }
   BODY.innerHTML = h + `<div class="scr" id="scr">${sarasas}</div>` +
     `<div class="bottom"><button class="btn" style="flex:1" data-scan="1">Scan</button><button class="btn" style="flex:2" data-naujas="1">${apacia}</button></div>`;
@@ -581,7 +596,7 @@ function palete() {
 }
 
 function vietos() {
-  let h = `<div class="sum"><span>${kiek(S.lentynos.length, 'location', 'locations')} · long-press to rename or delete</span><span class="sw ${S.nust.pagalFil ? 'on' : ''}" data-pagalfil="1">Group by filaments <i></i></span></div>`;
+  let h = `<div class="sum"><span>${kiek(S.lentynos.length, 'location', 'locations')} · long-press to rename</span><span class="sw ${S.nust.pagalFil ? 'on' : ''}" data-pagalfil="1">Group by filaments <i></i></span></div>`;
   if (!S.lentynos.length) h += `<div class="empty">No locations yet. Long-press a location to rename or delete it.</div>`;
   for (const id of [...lentynosAZ().map(l => l.id), 0]) {
     const r = S.rites.filter(x => (x.l || 0) === id);
@@ -594,9 +609,154 @@ function vietos() {
     // Eilutėje telpa 12 taškelių; netilpę - „+N“ paskutinėje vietoje (Settings → Locations).
     const telpa = 12 * S.nust.eilutes, rodyti = spalvos.length > telpa ? spalvos.slice(0, telpa - 1) : spalvos;
     h += `<div class="k loc ${id ? '' : 'none'}" data-vieta="${id}"><div class="lh"><b>${esc(id ? lentyna(id).vardas : 'No location')}</b><span>${kiek(r.length, 'spool', 'spools')}${r.length ? ' · ' + svoris(g) : ''}</span></div>
-      ${spalvos.length ? `<div class="dots" style="max-width:${12 * 22}px">${rodyti.map(c => `<i style="background:${c}"></i>`).join('')}${spalvos.length > rodyti.length ? '+' + (spalvos.length - rodyti.length) : ''}</div>` : ''}</div>`;
+      ${amsL(id) ? amsKortele(id) : spalvos.length ? `<div class="dots" style="max-width:${12 * 22}px">${rodyti.map(c => `<i style="background:${c}"></i>`).join('')}${spalvos.length > rodyti.length ? '+' + (spalvos.length - rodyti.length) : ''}</div>` : ''}</div>`;
   }
   return h;
+}
+
+// ---- Bambu Lab AMS (Sinchronizacija.java, Ui.amsVaizdas): demo spausdintuvas „Printer“ su dviem AMS ----
+// Spausdintuvo „tiesa“: S.ams[lentyna].lizdai - {r: ritė} (su žyma, spausdintuvas žino likutį S.spausd[r]),
+// {u: {t, hex}} - ritė be žymos (Unknown, kol nepasirinkta; r - ranka priskirta) arba null - tuščias.
+const SYNC_MS = 15 * 60000;
+function amsPradzia() {
+  const bambu = id => bambuGamintojas(fil(S.rites.find(r => r.id === id).f).g);
+  const a = S.rites.filter(r => r.l === 5).map(r => r.id), b = S.rites.filter(r => r.l === 6).map(r => r.id);
+  // AMS B pildoma dviem Bambu Lab ritėmis nuo „Above the AMS“ - kaip įdėtos prieš spausdinant.
+  for (const r of S.rites.filter(r => r.l === 3 && bambuGamintojas(fil(r.f).g) && r.lik < fil(r.f).pilnas).slice(0, 2)) { r.l = 6; b.push(r.id); }
+  S.ams = {5: {vardas: 'A', lizdai: [{r: a[0]}, {r: a[1]}, {u: {t: 'PLA', hex: '#0086D6'}}, null]},
+           6: {vardas: 'B', lizdai: [b[0], b[1], b[2], null].map(id => id ? {r: id} : null)}};
+  S.spausd = {};
+  for (const l of Object.values(S.ams)) l.lizdai.forEach((z, i) => { if (z && z.r && bambu(z.r)) { const r = S.rites.find(x => x.id === z.r); r.lizdas = i; S.spausd[r.id] = r.lik; } });
+  // Nuo paskutinio sync spausdintuvas sunaudojo šiek tiek dviejų ričių - pirmas sync tai parodys.
+  const [x, y] = Object.keys(S.spausd).map(Number);
+  if (x) S.spausd[x] -= 37; if (y) S.spausd[y] -= 12;
+  S.sync = Date.now() - 20 * 60000; S.syncVyksta = false;
+}
+const amsL = id => S.ams && S.ams[id];
+function kadaSinchronizuota() {
+  if (S.syncVyksta) return 'Syncing…';
+  const m = Math.floor((Date.now() - S.sync) / 60000), liko = Math.max(0, Math.ceil((S.sync + SYNC_MS - Date.now()) / 60000));
+  return 'Synced ' + (m < 1 ? 'just now' : m + ' min ago') + ' · ' + (liko ? 'next in ' + liko + ' min' : 'due now');
+}
+/** Ką spausdintuvas praneša apie užimtą lizdą, kurio ritės TinySpools lentynoje nėra. */
+function nezinoma(id, i) {
+  const z = amsL(id).lizdai[i];
+  if (z.u) return z.u;
+  const r = S.rites.find(x => x.id === z.r), f = r && fil(r.f);
+  return f ? {t: f.t, hex: f.hex} : {t: 'PLA', hex: '#8a8a90'};
+}
+function nezinomosSpalva(hex) { const [r, g, b] = rgb(hex || '#8a8a90'); return `rgba(${r * 255},${g * 255},${b * 255},.45)`; }
+function tusciasLizdas(n) {
+  return `<svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="25" fill="none" style="stroke:var(--lo)" stroke-width="1.5" stroke-dasharray="4 4"/><text x="27" y="32" text-anchor="middle" style="fill:var(--lo)" font-size="14" font-weight="700">${n}</text></svg>`;
+}
+/** Lizdo vaizdas ir užrašas: ritės medžiaga, „Unknown“ ar „Empty“. */
+function lizdas(id, i) {
+  const z = amsL(id).lizdai[i];
+  if (!z) return {svg: tusciasLizdas(i + 1), tekstas: 'Empty', kas: 'empty'};
+  const r = z.r && S.rites.find(x => x.id === z.r);
+  if (r && r.l === id) { const f = fil(r.f); return {svg: langelis(f.hex, i + 1, r.lik / f.pilnas), tekstas: f.t, kas: 'rite', r, f}; }
+  return {svg: langelis(nezinomosSpalva(nezinoma(id, i).hex), '?', null), tekstas: 'Unknown', kas: 'unknown'};
+}
+function amsKortele(id) {
+  let h = `<div class="slots">`;
+  for (let i = 0; i < 4; i++) { const z = lizdas(id, i); h += `<div class="slot" data-lizdas="${id}:${i}">${z.svg}<small class="${z.kas === 'rite' ? '' : 'lo'}">${esc(z.tekstas)}</small></div>`; }
+  return h + `</div><div class="synl"><span>${kadaSinchronizuota()}</span><button class="syncb" data-sync="1" aria-label="Sync now">↻</button></div>`;
+}
+/** Atidaryta AMS lentyna: visi 4 lizdai iš eilės, tušti ir nežinomi taip pat. */
+function amsSarasas(id) {
+  const r = S.rites.filter(x => x.l === id);
+  let h = `<div class="sum"><span>${kiek(new Set(r.map(x => x.f)).size, 'filament', 'filaments')} · ${kiek(r.length, 'spool', 'spools')} · ${kadaSinchronizuota()}</span></div>`;
+  for (let i = 0; i < 4; i++) {
+    const z = lizdas(id, i), nr = `<span class="nr">${i + 1}</span>`;
+    if (z.kas === 'rite') h += `<div class="k fk" data-lizdas="${id}:${i}">${nr}<span class="dot" style="background:${z.f.hex}"></span><div class="mid"><div class="t1">${logo(z.f.g)}<span>${esc(vardas(z.f))}</span></div><div class="t2">${esc(spalvaSuKodu(z.f))}</div>${juostos(z.f, [z.r])}</div><div class="right"><div class="kg">${svoris(z.r.lik)}</div></div></div>`;
+    else {
+      const u = z.kas === 'unknown', n = u && nezinoma(id, i);
+      h += `<div class="k fk" data-lizdas="${id}:${i}">${nr}<span class="dot" style="background:${u ? nezinomosSpalva(n.hex) : 'transparent'}"></span><div class="mid"><div style="font-size:16px">${u ? 'Unknown ' + esc(n.t) : 'Empty'}</div><div class="t2" style="${u ? 'color:var(--acc)' : ''}">${u ? 'Tap to pick which spool is here' : 'The printer sees no filament here'}</div></div></div>`;
+    }
+  }
+  return h;
+}
+function lizdoPaspaudimas(id, i) {
+  const z = lizdas(id, i), l = lentyna(id);
+  if (z.kas === 'rite') return ritesLapas(z.f, z.r);
+  if (z.kas === 'empty') {
+    const d = lapas(l.vardas + ' slot ' + (i + 1) + ' is empty', 'The printer sees no filament in this slot. Load the filament, sync, then tap the slot to pick the spool.', null, '', `<span class="sp1"></span><button class="btn o">OK</button>`);
+    d.querySelector('.sfoot').onclick = () => uzdarytiLapa();
+    return;
+  }
+  riteILizda(id, i);
+}
+/** Ritė be žymos į lizdą (Pagrindinis.riteILizda): tik ne Bambu Lab ritės, tinkančios viršuje, paieška, Undo. */
+function riteILizda(id, i) {
+  const zz = amsL(id).lizdai[i], l = lentyna(id), u = nezinoma(id, i);
+  if (!zz.u) zz.u = u;
+  const tinkamumas = r => { const f = fil(r.f); return (norm(f.t) === norm(u.t) ? 2 : 0) + (atstumas(f.hex, u.hex) < 90 ? 1 : 0); };
+  const rites = S.rites.filter(r => !bambuGamintojas(fil(r.f).g)).sort((a, b) => tinkamumas(b) - tinkamumas(a));
+  const d = lapas('Which spool is in ' + l.vardas + ' slot ' + (i + 1) + '?', 'The printer says: ' + u.t + '. Bambu Lab spools are not listed: they link by their tag.', null,
+    paieska('lq', 'Search spools', '') + '<div id="lsar"></div>', `<span class="sp1"></span><button class="btn o">Close</button>`);
+  const rodyti = q => {
+    d.querySelector('#lsar').innerHTML = rites.filter(r => !q || norm(pilnasVardas(fil(r.f)) + ' ' + vietosVardas(r)).includes(norm(q))).slice(0, 60)
+      .map(r => ritesBlokas(fil(r.f), r, pavadinimas(fil(r.f)) + ' · ' + fil(r.f).s)).join('') || '<p class="lo">No spools without a Bambu Lab tag match.</p>';
+  };
+  rodyti('');
+  d.querySelector('#lq').oninput = e => rodyti(e.target.value);
+  d.querySelector('.sfoot').onclick = () => uzdarytiLapa();
+  d.querySelector('.sbody').onclick = e => {
+    const b = e.target.closest('[data-rite]'); if (!b) return;
+    e.stopPropagation();
+    const r = S.rites.find(x => x.id === +b.dataset.rite), buvo = {l: r.l, lizdas: r.lizdas, zr: zz.r};
+    uzdarytiLapa();
+    r.l = id; r.lizdas = i; zz.r = r.id;
+    piesti();
+    kortele('ok', 'In ' + l.vardas + ' · slot ' + (i + 1), pilnasVardas(fil(r.f)), 'Undo', () => { r.l = buvo.l; r.lizdas = buvo.lizdas; zz.r = buvo.zr; piesti(); });
+  };
+}
+/** Sync (Sinchronizacija.pritaikyti): AMS ritės į savo lentyną, likutis iš spausdintuvo, kortelė su Undo. */
+function sinchronizuoti(tyliai) {
+  if (S.syncVyksta) return;
+  S.syncVyksta = true; piesti();
+  setTimeout(() => {
+    S.syncVyksta = false; S.sync = Date.now();
+    const buvo = [], kas = [];
+    for (const [lid, a] of Object.entries(S.ams)) a.lizdai.forEach((z, i) => {
+      if (!z || !z.r) return;
+      const r = S.rites.find(x => x.id === z.r); if (!r) return;
+      const g = S.spausd[r.id];
+      if (g === undefined) return; // ritė be žymos: spausdintuvas jos nepažįsta, sync jos neliečia
+      if (r.l !== +lid) { buvo.push({r, lik: r.lik, l: r.l}); r.l = +lid; r.lizdas = i; kas.push(pilnasVardas(fil(r.f)) + ': to ' + lentyna(+lid).vardas); }
+      if (g !== r.lik) { buvo.push({r, lik: r.lik, l: r.l}); kas.push(pilnasVardas(fil(r.f)) + ': ' + svoris(r.lik) + ' → ' + svoris(g)); r.lik = g; }
+    });
+    piesti();
+    const atgal = () => { for (const x of buvo.reverse()) { x.r.lik = x.lik; x.r.l = x.l; } piesti(); };
+    if (kas.length) kortele('ok', 'Synced: ' + kiek(kas.length, 'change', 'changes'), kas.join('\n'), 'Undo', atgal);
+    else if (!tyliai) kortele('ok', 'Synced with Printer', 'Everything already matches.');
+  }, 1200);
+}
+/** Šoninis mygtukas: spausdintuvas sunaudoja gijos iš vienos AMS ritės - kitas sync paims likutį. */
+function spausdinti() {
+  const ids = Object.keys(S.spausd).map(Number).filter(id => S.spausd[id] > 30);
+  if (!ids.length) return;
+  const id = ids[Math.floor(Math.random() * ids.length)], g = 8 + Math.floor(Math.random() * 40), f = fil(S.rites.find(r => r.id === id).f);
+  S.spausd[id] -= g;
+  S.sync = Math.min(S.sync, Date.now() - SYNC_MS);
+  kortele('start', 'The printer used ' + g + ' g', pilnasVardas(f) + '. Open Locations or tap ↻ to sync.', 'Open Locations', () => { S.namai = null; S.langai = []; S.tab = 'locations'; S.vieta = null; piesti(); automatinisSync(); });
+}
+function automatinisSync() { if (S.nust.autoSync && S.tab === 'locations' && !S.langai.length && Date.now() - S.sync >= SYNC_MS) sinchronizuoti(true); }
+/** Lentynos meniu „Bambu AMS“: demo AMS jau nustatytos. */
+function amsMeniu(id) {
+  const a = amsL(id);
+  const d = lapas('Bambu AMS', a ? lentyna(id).vardas + ' is AMS ' + a.vardas + ' of Printer.' : 'Pick the printer and the AMS unit (A, B, C or D).', null,
+    `<p class="lo">${a ? 'In the app you can change the printer or the unit here, or turn the AMS off for this location.' : 'In this demo only AMS A and AMS B are connected to the pretend printer.'}</p>`, `<span class="sp1"></span><button class="btn o">OK</button>`);
+  d.querySelector('.sfoot').onclick = () => uzdarytiLapa();
+}
+/** Meniu „Erase NFC sticker“ (Zymos.istrintiNfc). */
+function trintiLapas() {
+  const d = lapas('Erase NFC sticker', 'Touch a TinySpools sticker to empty it, so it can be written again for another spool.', null,
+    `<div class="bl nfcz" id="nfcz">Hold the sticker to the back of the phone…</div><p class="lo">In this demo: use “a TinySpools sticker on a spool” next to the phone.</p>`,
+    `<span class="sp1"></span><button class="btn o">Close</button>`);
+  nfcRasymas = {d, trinti: true};
+  d.querySelector('.sfoot').onclick = () => { nfcRasymas = null; uzdarytiLapa(); };
+  d.kaiUzdaroma = () => { nfcRasymas = null; };
 }
 
 /** Ritės blokas (Ui.ritesBlokas): lentyna, „N g of F g“, juosta ir ▶ - visas blokas atidaro ritės lapą. */
@@ -900,14 +1060,17 @@ function patikrintaSkenuojant(r) {
 function seg(raktas, reiksmes, vardai) {
   return `<div class="seg">${reiksmes.map((v, i) => `<button class="${S.nust[raktas] === v ? 'on' : ''}" data-nust="${raktas}" data-v="${i}">${vardai[i]}</button>`).join('')}</div>`;
 }
-const NUST = {tema: ['System', 'Dark', 'Light'], ziedai: [true, false], blokaiPagalKieki: [false, true], tvarka: ['Brand', 'Material', 'Color'],
+const NUST = {akcentas: ['Auto', 'Original', 'Bambu Lab'], tema: ['System', 'Dark', 'Light'], ziedai: [true, false], blokaiPagalKieki: [false, true], tvarka: ['Brand', 'Material', 'Color'],
   juostaBendra: [false, true], eilutes: [1, 2, 3, 4], dviEil: [false, true]};
 function nustatymuLangas() {
   ABAR.textContent = 'Settings';
   const blokas = (t, p, turinys) => `<div class="k st"><div class="kh">${t}</div><div class="kp">${p}</div>${turinys}</div>`;
   const kb = window.KODU_BAZE;
   BODY.innerHTML = `<div class="scr" id="scr">` +
-    blokas('Appearance', "System follows your phone's dark mode setting. In this demo, System follows this page's theme.", seg('tema', NUST.tema, ['System', 'Dark', 'Light'])) +
+    blokas('Appearance', "Theme and accent color for the whole app. In this demo, System follows this page's theme.", seg('tema', NUST.tema, ['System', 'Dark', 'Light']) +
+      `<div class="lbl">Accent color · Auto: green with an AMS</div>` + seg('akcentas', NUST.akcentas, ['Auto', 'Original', 'Bambu Lab'])) +
+    blokas('Bambu Lab account', 'Signed in as demo@example.com · 1 printer (Printer, 2 AMS). In this demo the printer is pretend.',
+      `<div class="sum" style="margin-top:10px"><span style="color:var(--hi);font-size:15px">Sync when I open Locations</span><span class="sw ${S.nust.autoSync ? 'on' : ''}" data-autosync="1"><i></i></span></div><div class="kp">At most every 15 minutes. In the app pull the list down to sync now; here tap ↻.</div>`) +
     blokas('Palette', 'How colors are drawn on the Palette tab.', seg('ziedai', NUST.ziedai, ['Rings (spools)', 'Squares']) +
       `<div class="lbl">Material blocks</div>` + seg('blokaiPagalKieki', NUST.blokaiPagalKieki, ['A-Z', 'Most spools first'])) +
     blokas('Spools list', 'Order of the Spools tab.', seg('tvarka', NUST.tvarka, ['Brand', 'Material', 'Color']) +
@@ -1181,12 +1344,13 @@ function vietosVardas2(l, kai, atsauktas) {
 function vietosMeniu(id) {
   const l = lentyna(id), r = S.rites.filter(x => x.l === id), g = r.reduce((s, x) => s + x.lik, 0);
   const d = lapas(l.vardas, kiek(r.length, 'spool', 'spools') + (r.length ? ' · ' + svoris(g) : ''), null,
-    `<div class="opt" data-p="1">Rename<span class="ar">▶</span></div><div class="opt pav" data-t="1">Delete<span class="ar">▶</span></div>`,
+    `<div class="opt" data-p="1">Rename<span class="ar">▶</span></div><div class="opt" data-ams="1">Bambu AMS<span class="ar">▶</span></div><div class="opt pav" data-t="1">Delete<span class="ar">▶</span></div>`,
     `<span class="sp1"></span><button class="btn o" data-a="1">Close</button>`);
   d.querySelector('.sfoot').onclick = () => uzdarytiLapa();
   d.querySelector('.sbody').onclick = e => {
     const o = e.target.closest('.opt'); if (!o) return;
     if (o.dataset.p) return vietosVardas2(l);
+    if (o.dataset.ams) return amsMeniu(id);
     const z = lapas('Delete “' + l.vardas + '”?', r.length ? kiek(r.length, 'spool', 'spools') + ' will have no location. The spools stay.' : 'The location is empty.', null, '',
       `<span class="sp1"></span><button class="btn o" data-a="1">Cancel</button><button class="btn r" data-t="1">Delete</button>`);
     z.querySelector('.sfoot').onclick = ev => {
@@ -1357,6 +1521,7 @@ function savasLipdukas(id) {
 function bambuRite() {
   if (!S.nust.mifare && !skaitoPats()) return;
   virpinti();
+  if (nfcRasymas && nfcRasymas.trinti) return nfcAtsakas('This is a Bambu Lab spool tag. It is protected and cannot be erased.', 'var(--red)');
   if (nfcRasymas) return nfcAtsakas('This tag is protected (e.g. a Bambu Lab spool tag) and cannot be written. Use an empty NTAG213/215/216 sticker.', 'var(--red)');
   S.namai = null;
   const L = virsus();
@@ -1389,12 +1554,14 @@ function bambuRite() {
 function savasPriglaustas() {
   if (!S.rites.length) return;
   virpinti();
+  if (nfcRasymas && nfcRasymas.trinti) return nfcAtsakas('Sticker erased. Write it again from a spool: Label → NFC tag.', 'var(--acc)');
   if (nfcRasymas) return nfcAtsakas('This tag is locked (read-only).', 'var(--red)');
   savasLipdukas(S.rites[(7 + 11 * savasKartas++) % S.rites.length].id);
 }
 function tusciasPriglaustas() {
   if (!skaitoPats()) return;
   virpinti();
+  if (nfcRasymas && nfcRasymas.trinti) return nfcAtsakas('This sticker is already empty.', 'var(--lo)');
   if (nfcRasymas) return nfcAtsakas('Tag written. Touching it with the phone opens this spool.', 'var(--acc)');
   const L = virsus();
   if (L && L.tipas === 'patikra') kortele('?', 'Not a TinySpools tag', 'This tag was not written by TinySpools.');
@@ -1451,7 +1618,7 @@ BODY.addEventListener('contextmenu', e => {
 });
 BODY.onclick = e => {
   if (ilgasPaspaustas) { ilgasPaspaustas = false; return; }
-  const t = e.target.closest('[data-tab],[data-filt],[data-pfilt],[data-pradetos],[data-likutis],[data-pagalfil],[data-vieta],[data-vietos],[data-fil],[data-ritef],[data-rite],[data-prideti],[data-naujas],[data-naujam],[data-scan],[data-pradeti],[data-baigti],[data-ras],[data-ner],[data-uas],[data-ilentyna],[data-nust],[data-mifare],[data-spalva],[data-redaguoti],[data-trintif],[data-forma],[data-kat],[data-kopija],[data-atkurti],[data-importas],[data-privatumas],[data-grizti]');
+  const t = e.target.closest('[data-tab],[data-filt],[data-pfilt],[data-pradetos],[data-likutis],[data-pagalfil],[data-vieta],[data-vietos],[data-fil],[data-ritef],[data-rite],[data-prideti],[data-naujas],[data-naujam],[data-scan],[data-pradeti],[data-baigti],[data-ras],[data-ner],[data-uas],[data-ilentyna],[data-nust],[data-mifare],[data-spalva],[data-redaguoti],[data-trintif],[data-forma],[data-kat],[data-kopija],[data-atkurti],[data-importas],[data-privatumas],[data-grizti],[data-lizdas],[data-sync],[data-autosync]');
   if (!t) return;
   const d = t.dataset, L = virsus();
   if (d.grizti) S.namai = null;
@@ -1462,6 +1629,9 @@ BODY.onclick = e => {
   else if (d.likutis) S.nust.likutis = !S.nust.likutis;
   else if (d.pagalfil) S.nust.pagalFil = !S.nust.pagalFil;
   else if (d.mifare) S.nust.mifare = !S.nust.mifare;
+  else if (d.autosync) S.nust.autoSync = !S.nust.autoSync;
+  else if (d.lizdas) { const [l, i] = d.lizdas.split(':').map(Number); return lizdoPaspaudimas(l, i); }
+  else if (d.sync) return sinchronizuoti(false);
   else if (d.vieta !== undefined) S.vieta = +d.vieta;
   else if (d.vietos) S.vieta = null;
   else if (d.fil) return atidarytiFilamenta(+d.fil);
@@ -1497,15 +1667,22 @@ BODY.onclick = e => {
   const sv = document.getElementById('scr')?.scrollTop || 0;
   piesti();
   // Žymint patikroje ar keičiant nustatymą sąrašas lieka toje pačioje vietoje.
-  if (d.ras || d.ner || d.uas || d.nust || d.mifare || d.redaguoti) document.getElementById('scr').scrollTop = sv;
+  if (d.ras || d.ner || d.uas || d.nust || d.mifare || d.autosync || d.redaguoti) document.getElementById('scr').scrollTop = sv;
+  if (d.tab || d.vietos) automatinisSync();
 };
 document.getElementById('mbtn').onclick = e => {
   e.stopPropagation();
   if (PS.querySelector('.menu')) return PS.querySelector('.menu').remove();
   const m = document.createElement('div');
   m.className = 'menu';
-  m.innerHTML = [['patikra', 'Check spools'], ['nustatymai', 'Settings'], ['apie', 'About']].map(([k, t]) => `<button data-l="${k}">${t}</button>`).join('');
-  m.onclick = ev => { const b = ev.target.closest('button'); if (b) atidaryti({tipas: b.dataset.l}); };
+  m.innerHTML = [['patikra', 'Check spools'], ['trinti', 'Erase NFC sticker'], ['turas', 'Take a tour'], ['nustatymai', 'Settings'], ['apie', 'About']].map(([k, t]) => `<button data-l="${k}">${t}</button>`).join('');
+  m.onclick = ev => {
+    const b = ev.target.closest('button'); if (!b) return;
+    m.remove();
+    if (b.dataset.l === 'trinti') return trintiLapas();
+    if (b.dataset.l === 'turas') return turas(0);
+    atidaryti({tipas: b.dataset.l});
+  };
   PS.appendChild(m);
 };
 PS.addEventListener('click', e => { if (!e.target.closest('.menu,#mbtn')) PS.querySelectorAll('.menu').forEach(x => x.remove()); });
@@ -1528,6 +1705,7 @@ document.getElementById('recents').onclick = () => { isvalyti(); S.namai = S.nam
 document.getElementById('nfcBambu').onclick = bambuRite;
 document.getElementById('nfcSavas').onclick = savasPriglaustas;
 document.getElementById('nfcTuscias').onclick = tusciasPriglaustas;
+document.getElementById('spausdinti').onclick = spausdinti;
 document.getElementById('reset').onclick = pradzia;
 
 // ---- Įvadinis turas (kaip Wrist Control demo): [elementas, antraštė, tekstas, ką atidaryti, paskutinis] ----
@@ -1541,14 +1719,16 @@ const TURAS = [
   ['#ps', 'A filament', 'Tap a card: its spools with how much is left and where, the filament details with Edit, and Delete.', () => { skirtukas('spools')(); atidarytiFilamenta(pirmasF().id); }],
   ['#ps', 'A spool', 'Tap a spool: set the grams left, Spool or Refill, where it is - or make a QR label or write an NFC sticker for it.', () => { const f = pirmasF(); skirtukas('spools')(); atidarytiFilamenta(f.id); ritesLapas(f, ritesOf(f.id)[0]); }],
   ['#ps', 'The palette', 'One ring per color, the number is how many spools. Total remaining shows how much is left; Opened shows only started spools. Tap a color to see its spools.', () => { skirtukas('palette')(); S.nust.likutis = true; piesti(); }],
-  ['#ps', 'Locations', 'A dot for each filament on the shelf. Tap a shelf to see its spools, long-press to rename it.', skirtukas('locations')],
+  ['#ps', 'Locations', 'A dot for each filament on the shelf. Tap a shelf to see its spools, long-press to rename it.', () => { skirtukas('locations')(); document.getElementById('scr').scrollTop = 9999; }],
+  ['.slots', 'Bambu Lab AMS', 'A location set as an AMS shows its four slots: color, material and how much is left. The grams left come from the printer, so AMS spools need no weighing. A spool without a Bambu Lab tag shows as Unknown - tap it and pick the spool.', skirtukas('locations')],
+  ['#spausdinti', 'Print something', 'A pretend printer uses filament from the AMS. Open Locations or tap ↻ and the grams left follow, with Undo.', skirtukas('locations')],
   ['#ps', 'New filament from the catalog', 'Scan a box, touch a Bambu Lab spool or pick one of 4,700+ colors from the catalog - the fields fill in by themselves.', () => {
     const F = formaIs(null); S.namai = null; S.langai = [{tipas: 'forma', forma: F}, {tipas: 'katalogas', q: 'bambu pla matte', forma: F}]; piesti(); }],
   ['#ps', 'Check spools', 'Lost track of what is where? Start a check, go shelf by shelf and mark each spool found ✓ or not found ✕. Your own stickers mark themselves.', langas('patikra')],
   ['#ps', 'Settings', 'Dark or light, rings or squares, list order, backups to a file and import from 3D Filament Profiles.', langas('nustatymai')],
   ['#ps', 'The phone buttons work', 'Like on a real Android phone: ○ opens the home screen - here it is. ◁ goes back one step, ▢ shows the recent apps. Tap TinySpools to come back.', () => { skirtukas('spools')(); S.namai = 'home'; piesti(); }],
   ['#side', 'Touch the phone', 'These pretend to be NFC: a Bambu Lab spool, your own sticker, or an empty sticker to write. They work on any screen - try one on the home screen.', null],
-  ['.stage', 'Now explore on your own', 'Ideas: touch a Bambu Lab spool twice - the second one is new and asks “Is it one of these?”. Run a Check spools round. Make a QR label. Add a filament from the catalog. Download a backup in Settings. Start over any time.', null, true]];
+  ['.stage', 'Now explore on your own', 'Ideas: print with the AMS and sync. Tap the Unknown slot in AMS A. Touch a Bambu Lab spool twice - the second one is new and asks “Is it one of these?”. Run a Check spools round. Make a QR label. Add a filament from the catalog. Download a backup in Settings. Start over any time.', null, true]];
 let turoI = -1, turoEl = null;
 function turas(i) {
   if (i < 0 || i >= TURAS.length) return baigtiTura();

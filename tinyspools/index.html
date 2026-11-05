@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TinySpools - your filament, sorted</title>
-<meta name="description" content="TinySpools keeps track of the 3D printer filament you own: brands, colors, grams left and shelves. Scan box barcodes, print QR labels, use NFC stickers. Android, no account.">
+<meta name="description" content="TinySpools keeps track of the 3D printer filament you own: brands, colors, grams left and shelves. Scan box barcodes, print QR labels, use NFC stickers, see your Bambu Lab AMS. Android.">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/style.css?v=20261029b">
@@ -23,18 +23,20 @@
 <header class="top"><a class="brand" href="/"><img src="/tinyspools.png?v=2" alt=""><div><b>TinySpools</b><span class="motto">by TinyOwl</span></div></a></header>
 
 <h1>Your filament, sorted.</h1>
-<p class="lead">For people who just want to know what filament they have, where it is and how much is left - no spreadsheets, no print farm software. Adding a spool takes seconds, and the palette shows every color you own at a glance.</p>
+<p class="lead">For people who just want to know what filament they have, where it is and how much is left - no spreadsheets, no print farm software. Adding a spool takes seconds, the palette shows every color you own at a glance, and with a Bambu Lab AMS the grams left follow your prints by themselves.</p>
 
-<div class="ekranai"><img src="img/palete.png?v=2" alt="Palette: every PLA color you own, drawn as spools with the number of spools" loading="lazy"><img class="vidurys" src="img/sarasas.png" alt="Spools list with brand logos, colors and shelves" loading="lazy"><img src="img/rite.png?v=2" alt="Spool: grams left with a slider, shelf, QR label and NFC tag" loading="lazy"></div>
+<div class="ekranai"><img src="img/palete.png?v=2" alt="Palette: every PLA color you own, drawn as spools with the number of spools" loading="lazy"><img class="vidurys" src="img/ams.png" alt="Locations: two Bambu Lab AMS units with the color, material and grams left in each slot" loading="lazy"><img src="img/rite.png?v=3" alt="Spool: grams left with a slider, shelf, QR label and NFC tag" loading="lazy"></div>
 
 <ul class="products">
+<li><div><h2>Bambu Lab AMS keeps the count</h2><p>Sign in with your Bambu Lab account and set a location as an AMS. Each slot shows its color, material and how much is left. Spools in the AMS move to their AMS location, and the grams left are taken from the printer, so the inventory follows your prints without weighing or typing. Syncs by itself when you open Locations, or pull the list down. A spool without a Bambu Lab tag shows as Unknown: tap the slot and pick it. Several printers and AMS units are fine.</p></div></li>
+<li><div><h2>Bambu Lab spools by NFC</h2><p>Touch a Bambu Lab spool to the phone, even with the app closed: its filament opens, or it is offered with the material, color and weight filled in. The tag is only read, never written.</p></div></li>
 <li><div><h2>Add a spool in seconds</h2><p>Scan the barcode on the filament box: 5,600+ barcodes from 41 brands are recognized right away. Or pick the color from a catalog of 4,700+ colors from 67 brands, and the brand, color, RGB value and spool weight fill in for you. A Bambu Lab spool fills in when you touch it to the phone.</p></div></li>
 <li><div><h2>Pick from the palette</h2><p>Every color you own, grouped by material. <b>Total remaining</b> fills each color by how much is left, and <b>Opened</b> shows only the spools you have started. Tap a color to see its spools from every brand.</p></div></li>
 <li><div><h2>Find any spool fast</h2><p>Search brand, material, type, color, color code and shelf at once. Filters show how many spools match. Order the list by brand, material or color.</p></div></li>
-<li><div><h2>Grams left and shelves</h2><p>Set what is left with a slider, mark a spool Spool or Refill and move it to another shelf in one tap. Each shelf shows its spools, the grams left on it and its colors.</p></div></li>
+<li><div><h2>Grams left and shelves</h2><p>Set what is left with a slider, or type what a print used and let the app subtract it. Mark a spool Spool or Refill and move it to another shelf in one tap. Each shelf shows its spools, the grams left on it and its colors.</p></div></li>
 <li><div><h2>Check what you have</h2><p>Start a check and mark every spool found or not found, shelf by shelf if you like. When you finish, the ones you cannot find wait in Unassigned until they turn up, then go back to a shelf in one tap.</p></div></li>
-<li><div><h2>Labels and NFC</h2><p>Print a QR label or write an NFC sticker: scanning or touching it opens that spool, and one tap moves it to another shelf.</p></div></li>
-<li><div><h2>Your data stays yours</h2><p>No account. Backups go to a folder you choose, for example Google Drive, and you can restore any earlier point. The app goes online only when you ask it to update the barcode database.</p></div></li>
+<li><div><h2>Your own labels and NFC stickers</h2><p>Print a QR label or write an NFC sticker for any spool: scanning or touching it opens that spool, even with the app closed, and one tap moves it to another shelf. A sticker can be erased and used again.</p></div></li>
+<li><div><h2>Your data stays yours</h2><p>No TinySpools account, and nothing is sent to us. Backups go to a folder you choose, for example Google Drive, and you can restore any earlier point. The app goes online only to update the barcode database when you ask, and to read your AMS from Bambu Lab's cloud if you sign in.</p></div></li>
 </ul>
 
 <p class="lead" style="margin-top:28px">Free during testing, and testers keep the full app for free. No ads, no tracking. Android 10 or newer. Coming to Google Play.</p>
@@ -47,7 +49,7 @@
 
 <footer>
 <p><a href="/tinyspools/guide/">User guide</a> · <a href="/tinyspools/demo/">Live demo</a> · <a href="/tinyspools/privacy/">Privacy Policy</a> · <a href="mailto:hello@tinyowllabs.com" target="_blank" rel="noopener">hello@tinyowllabs.com</a></p>
-<p class="muted">TinySpools is an independent app by TinyOwl. It is not made, endorsed or supported by any filament manufacturer; brand names and logos are trademarks of their respective owners. Filament catalog: SpoolmanDB (MIT License). Barcodes: Open Filament Database (MIT License).</p>
+<p class="muted">TinySpools is an independent app by TinyOwl. It is not made, endorsed or supported by any filament manufacturer or by Bambu Lab; brand names and logos are trademarks of their respective owners. Filament catalog: SpoolmanDB (MIT License). Barcodes: Open Filament Database (MIT License).</p>
 </footer>
 </main>
 <script src="/tema.js?v=2"></script>

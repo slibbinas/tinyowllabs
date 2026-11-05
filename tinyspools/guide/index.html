@@ -39,6 +39,7 @@ img.w { display: block; border-radius: 3mm; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm 8mm; }
 .card { display: grid; grid-template-columns: 30mm 1fr; gap: 4mm; align-items: center; }
 .card .w.sm { width: 30mm; }
+.card.tik { grid-template-columns: 1fr; align-self: start; border-left: 2px solid #E8720C; padding-left: 4mm; }
 .card p { font-size: 9pt; color: #3A4458; margin: 0; }
 .kontaktai { position: absolute; left: 17mm; right: 17mm; bottom: 14mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; border-top: 1px solid #E3E8F1; padding-top: 4mm; }
 .kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
@@ -62,6 +63,7 @@ img.w { display: block; border-radius: 3mm; }
   .cover .foot { position: static; margin-top: 18px; }
   .grid { grid-template-columns: 1fr; }
   .card { grid-template-columns: 30mm 1fr; }
+  .card.tik { grid-template-columns: 1fr; }
 }
 @media print { .webbar { display: none; } }
 @media screen and (max-width: 760px) {
@@ -73,11 +75,11 @@ img.w { display: block; border-radius: 3mm; }
   <h1>Your filament,<br>sorted.</h1>
   <p class="lead">For people who just want to know what filament they have, where it is and how much is left.
   Adding a spool takes seconds, and the palette shows every color you own at a glance.</p>
-  <div class="hero"><img class="w h1" src="img/palete.png?v=2" alt="Palette"><img class="w h2" src="img/sarasas.png?v=2" alt="Spools list"><img class="w h3" src="img/rite.png?v=4" alt="Spool"></div>
+  <div class="hero"><img class="w h1" src="img/palete.png?v=2" alt="Palette"><img class="w h2" src="img/sarasas.png?v=2" alt="Spools list"><img class="w h3" src="img/rite.png?v=5" alt="Spool"></div>
   <div class="benefits">
     <div><b>Add in seconds</b><p>Scan the box barcode, touch a Bambu Lab spool or pick the color from the catalog.</p></div>
     <div><b>Pick from the palette</b><p>Every color you own, with the grams left.</p></div>
-    <div><b>Know where</b><p>Grams left on every spool and shelf, and where it is.</p></div>
+    <div><b>AMS keeps the count</b><p>What is in your Bambu Lab AMS, with the grams left taken from the printer.</p></div>
   </div>
   <div class="foot">Independent app. Not made, endorsed or supported by any filament manufacturer.</div>
 </section>
@@ -98,15 +100,17 @@ img.w { display: block; border-radius: 3mm; }
     </div>
     <div class="card">
       <img class="w sm" src="img/lentyna.png?v=2" alt="Spools on one shelf">
-      <div><h4>Locations</h4><p>Your shelves, dryers or boxes, each with its number of spools, the grams left on it and a dot for every filament on it. Turn off <b>Group by filaments</b> to see a dot for every spool. Tap one to see only its spools; long-press to rename or delete. <b>+ New location</b> adds one.</p></div>
+      <div><h4>Locations</h4><p>Your shelves, dryers or boxes, each with its number of spools, the grams left on it and a dot for every filament on it. Turn off <b>Group by filaments</b> to see a dot for every spool. Tap one to see only its spools; long-press to rename it, delete it or set it as a Bambu AMS (page 4). Long-press a filament to edit its spool right away. <b>+ New location</b> adds one.</p></div>
     </div>
     <div class="card">
-      <img class="w sm" src="img/rite.png?v=4" alt="Spool dialog">
-      <div><h4>A spool</h4><p>Tap a spool card. The big number is the grams left: tap it to type, or use the slider and -50 / -10 / +10 / +50 / <b>Empty</b>. Mark it <b>Spool</b> or <b>Refill</b>, tap a shelf to move it there, and make its QR label or NFC sticker. When adding, <b>- 1 spool +</b> adds several at once. <b>Delete</b> asks first, because the spool's labels stop working.</p></div>
+      <img class="w sm" src="img/rite.png?v=5" alt="Spool dialog">
+      <div><h4>A spool</h4><p>Tap a spool card. The big number is the grams left: tap it to type, or use the slider and -50 / -10 / +10 / +50 / <b>Empty</b>. Turn on <b>Subtract used</b> to type what a print used instead: the grams left are worked out, and the switch is remembered. Mark it <b>Spool</b> or <b>Refill</b>, tap a shelf to move it there, and make its QR label or NFC sticker. When adding, <b>- 1 spool +</b> adds several at once. <b>Delete</b> asks first, because the spool's labels stop working.</p></div>
     </div>
   </div>
   <p class="fine">The theme (System, Dark, Light), the palette style and block order, the Spools list order, the filter
-  layout (one row or two rows) and how many rows of color dots a location shows (1 to 4) are in the menu &rarr; <b>Settings</b>.</p>
+  layout (one row or two rows) and how many rows of color dots a location shows (1 to 4) are in the menu &rarr; <b>Settings</b>.
+  Menu &rarr; <b>Take a tour</b> shows the main features again. When Google Play has a newer version, the app asks to
+  update; it can also be done in Settings &rarr; <b>App updates</b>.</p>
 </section>
 <section class="page">
   <header class="run"><span class="rl"><img src="ikona.png" alt="">TinySpools</span><span>3</span></header>
@@ -137,6 +141,42 @@ img.w { display: block; border-radius: 3mm; }
 </section>
 <section class="page">
   <header class="run"><span class="rl"><img src="ikona.png" alt="">TinySpools</span><span>4</span></header>
+  <div class="kicker">Bambu Lab AMS</div>
+  <h2>What is in the AMS, and how much is left.</h2>
+  <p class="intro">Sign in with your Bambu Lab account and set a location as an AMS. TinySpools then shows each slot
+  and keeps your spools in step with what the printer sees: the grams left on AMS spools follow your prints, with no
+  weighing and no typing.</p>
+  <div class="grid">
+    <div class="card">
+      <img class="w sm" src="img/bambu.png?v=1" alt="Bambu Lab account in Settings">
+      <div><h4>1. Sign in</h4><p>Settings &rarr; <b>Bambu Lab account</b> &rarr; <b>Sign in</b>, with the same e-mail and password as in Bambu Handy. If Bambu Lab sends a code by e-mail, type it in. The password is not stored; the sign-in is kept encrypted on the phone for about a year.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/ams_vietos.png?v=2" alt="AMS locations">
+      <div><h4>2. A location as an AMS</h4><p>In Locations, long-press a location &rarr; <b>Bambu AMS</b> and pick the printer and the AMS unit (A, B, C or D). Its card now shows the AMS name and four slots: the color of each spool, its material and how much is left, the used part striped. An empty slot says <b>Empty</b>, a spool TinySpools does not know says <b>Unknown</b>. With several printers, each AMS is its own location.</p></div>
+    </div>
+    <div class="card tik">
+      <div><h4>3. Sync</h4><p>TinySpools syncs by itself when you open Locations or an AMS location and the last sync is older than 15 minutes (Settings &rarr; <b>Sync when I open Locations</b>). To sync right now, pull the list down or tap &#8635; under the AMS. The line under the AMS tells when it last synced and when the next sync is due. A <b>Sync with printers</b> button shows up below only when something needs you: not synced yet, or the last sync failed.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/ams_lentyna.png?v=2" alt="An AMS location with its slots">
+      <div><h4>4. Tap a slot</h4><p>Tap a slot to open its spool, or an <b>Unknown</b> slot to pick its spool. Long-press a filament to edit its spool right away. <b>? How locations work</b> at the bottom of Locations sums it all up.</p></div>
+    </div>
+  </div>
+  <h3>What a sync changes</h3>
+  <p>A spool found in the AMS moves to that AMS location. Its grams left follow the printer when it shows less than
+  100 % (an unmeasured spool shows 100 %). A card tells what changed, with <b>Undo</b>. A spool taken out of the AMS
+  goes to <b>No location</b>.</p>
+  <h3>Which spool is which</h3>
+  <p>A Bambu Lab spool is known by its tag: touch it to the phone once and it is linked. Another spool of the same
+  filament is then linked by itself when it is the only unlinked one; colors are not guessed. A spool without a tag shows
+  as <b>Unknown</b>: tap the slot and pick it. It stays there until it is taken out, a Bambu Lab spool goes in, or the
+  slot is changed in Bambu Studio.</p>
+  <p class="fine">TinySpools only reads from Bambu Lab's cloud; it sends nothing to the printer. TinySpools is not
+  affiliated with Bambu Lab.</p>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinySpools</span><span>5</span></header>
   <div class="kicker">Labels, checks and backups</div>
   <h2>A label on the spool, a check on the shelf.</h2>
   <div class="grid">
@@ -146,7 +186,8 @@ img.w { display: block; border-radius: 3mm; }
     </div>
     <div class="card">
       <img class="w sm" src="img/nfc.png?v=2" alt="NFC tag">
-      <div><h4>NFC sticker</h4><p><b>NFC tag</b> writes the spool to an empty NFC sticker (NTAG213, 215 or 216). Touching the sticker with the phone opens that spool, even when the app is closed. The phone vibrates and shows what it read. A spool opened from its QR label or NFC sticker is ready to move: tap a location and it moves there at once, with <b>Undo</b>. Closing it takes you back to where you were; tap the filament name under the title to see all its spools.</p></div>
+      <div><h4>NFC sticker</h4><p><b>NFC tag</b> writes the spool to an empty NFC sticker (NTAG213, 215 or 216). Touching the sticker with the phone opens that spool, even when the app is closed. A sticker of another spool is
+  simply written over; menu &rarr; <b>Erase NFC sticker</b> empties one. The phone vibrates and shows what it read. A spool opened from its QR label or NFC sticker is ready to move: tap a location and it moves there at once, with <b>Undo</b>. Closing it takes you back to where you were; tap the filament name under the title to see all its spools.</p></div>
     </div>
     <div class="card">
       <img class="w sm" src="img/patikra.png?v=2" alt="Check spools">
@@ -161,9 +202,10 @@ img.w { display: block; border-radius: 3mm; }
   <p>On the old phone make a backup to Google Drive. On the new one install TinySpools, choose the same folder and tap
   <b>Restore</b>: spools, shelves, your barcodes and settings come back.</p>
   <h3>Privacy</h3>
-  <p>No account, no ads, no analytics, no tracking, and no server of ours. Everything stays on the phone, except the
-  backup files you save to a folder of your choice. The app goes online only when you ask it to update the barcode
-  database. The full policy: <b>tinyowllabs.com/tinyspools/privacy</b></p>
+  <p>No TinySpools account, no ads, no analytics, no tracking, and no server of ours; nothing is sent to us. Everything
+  stays on the phone, except the backup files you save to a folder of your choice. The app goes online only to update
+  the barcode database when you ask, and, if you sign in to Bambu Lab, to read your AMS from Bambu Lab's cloud. The full
+  policy: <b>tinyowllabs.com/tinyspools/privacy</b></p>
   <div class="kontaktai">
     <div><b>Questions, ideas, a photo of something wrong</b>
       <span>hello@tinyowllabs.com</span></div>
