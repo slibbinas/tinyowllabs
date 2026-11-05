@@ -21,16 +21,17 @@
 </div>
 <header class="top"><div class="brand"><img src="/tinyspools.png?v=2" alt=""><div><b>TinySpools</b><span class="motto">by TinyOwl</span></div></div></header>
 <h1>Privacy Policy</h1>
-<p class="muted">Last updated: 21 October 2026</p>
+<p class="muted">Last updated: 5 November 2026</p>
 
 <p>TinySpools ("the app") is an Android app for keeping track of your 3D printer filament: which
 brands, materials and colors you have, how much is left on each spool and on which shelf it is.
 It is developed by TinyOwl, the developer name of Viktoras Šidlauskas, an individual developer.</p>
 
 <p><b>In short:</b> the app has no server of its own, no analytics, no advertising and no tracking.
-Everything you enter stays on your phone, except backup files that you choose to save to a folder
-of your choice. The app goes online only when you ask it to update its barcode database, and then
-only downloads a public file; nothing about you is sent.</p>
+Nothing is ever sent to the developer. Everything you enter stays on your phone, except backup files
+that you choose to save to a folder of your choice. The app goes online only for two things: to
+download the public barcode database when you ask for it, and - only if you sign in to your Bambu Lab
+account - to read your printers' AMS from Bambu Lab's cloud.</p>
 
 <h2>What the app handles</h2>
 <div class="table">
@@ -42,16 +43,23 @@ only downloads a public file; nothing about you is sent.</p>
 <tr><td>Barcodes you link to a filament</td><td>So scanning the same box again finds the filament</td><td>On the phone only; included in your backup files</td><td>Not sent anywhere</td></tr>
 <tr><td>Camera image while scanning</td><td>To read a barcode or QR code</td><td>Not stored: each frame is checked on the phone and discarded</td><td>Not sent anywhere</td></tr>
 <tr><td>NFC sticker contents</td><td>To open a spool when you touch its sticker</td><td>Only a link to the spool number (tinyspools://spool/N) is written to your sticker</td><td>Not sent anywhere</td></tr>
+<tr><td>Bambu Lab account e-mail and password (optional)</td><td>To sign in to your Bambu Lab account, so the app can read your printers' AMS</td><td>The password is not stored. The e-mail address is kept on the phone to fill in the sign-in form. Bambu Lab's sign-in (an access token, valid about a year) is kept on the phone, encrypted with a key in the Android Keystore</td><td>Only to Bambu Lab (api.bambulab.com, over HTTPS), when you sign in in Settings → Bambu Lab account. If Bambu Lab asks for a code from its e-mail, that code is sent to Bambu Lab too</td></tr>
+<tr><td>Your printers and their AMS contents (optional, with a Bambu Lab account)</td><td>To show what is in each AMS slot and how much is left, and to move your spools to their AMS location</td><td>Printer names, models and serial numbers, each spool's AMS slot and Bambu Lab tag ID, and the remaining amount taken from the printer are kept on the phone and included in your backup files</td><td>The app only reads them from Bambu Lab's cloud (api.bambulab.com and us.mqtt.bambulab.com, encrypted), signed in with your access token. This happens when you sync - pull the Locations list down, tap ↻ or Sync - and, if “Sync when I open Locations” is on (it is by default), when you open Locations or an AMS location and the last sync is older than 15 minutes. Only while the app is open, never in the background</td></tr>
+<tr><td>Bambu Lab spool tags</td><td>To fill in a spool from its tag and to know which spool is in which AMS slot</td><td>The tag is only read, never written. Its ID is kept with your spool and included in your backup files</td><td>Not sent anywhere</td></tr>
 <tr><td>Barcode database update (optional)</td><td>To recognize filament boxes by their barcode</td><td>The public Open Filament Database file is downloaded from api.openfilamentdatabase.org and stored on the phone; included in your backup files</td><td>Nothing is sent except the download request itself. It happens only when you tap “Update barcode database” in Settings or confirm the update after scanning an unknown barcode</td></tr>
 </table>
 </div>
 
 <p>If you pick a cloud folder such as Google Drive for backups, the files are stored by that
-service under its own privacy policy.</p>
+service under its own privacy policy. Your Bambu Lab account and printer data on Bambu Lab's servers
+are handled by Bambu Lab under its own privacy policy; TinySpools only reads them.</p>
+<p>Android may also include the app's data in your phone's own backup to your Google account, as it does
+for most apps. The encrypted Bambu Lab sign-in cannot be used from such a backup, because its key never
+leaves the phone.</p>
 
 <h2>What the app does not do</h2>
 <ul>
-<li>It does not collect or share personal data with the developer or any third party.</li>
+<li>It does not collect personal data for the developer, and it does not share your data with anyone. The only third party it talks to with your data is Bambu Lab, and only if you sign in to your Bambu Lab account.</li>
 <li>It does not use analytics, crash reporting, advertising or tracking SDKs.</li>
 <li>It does not go online in the background, and it does not request location, contacts or microphone.</li>
 <li>It does not sell data. There is no data to sell.</li>
@@ -61,8 +69,9 @@ service under its own privacy policy.</p>
 <ul>
 <li><b>Camera</b> (asked when you first scan): only to read barcodes and QR codes. Images are processed on the phone and never saved or sent.</li>
 <li><b>NFC</b>: to write a spool link to your own NFC sticker and to open that spool when you touch it.</li>
-<li><b>Internet</b>: only to download the Open Filament Database barcode file from api.openfilamentdatabase.org, and only when you ask for it.
-That server, like any web server, sees the download request (your IP address) under its own policy; the app sends no other data.</li>
+<li><b>Internet</b>: to download the Open Filament Database barcode file from api.openfilamentdatabase.org when you ask for it,
+and, if you sign in to a Bambu Lab account, to sign in to Bambu Lab and read your printers' AMS from its cloud as described above.
+These servers, like any web server, see the request (your IP address) under their own policies; the app sends no other data.</li>
 </ul>
 <p>Access to a backup folder is granted by you in the Android file picker and can be removed by
 choosing another folder or uninstalling the app.</p>
@@ -70,13 +79,14 @@ choosing another folder or uninstalling the app.</p>
 <h2>Your control over the data</h2>
 <ul>
 <li>Uninstalling the app, or clearing its storage in the phone settings, removes everything it stored on the phone.</li>
+<li>Settings → Bambu Lab account → Sign out removes the Bambu Lab sign-in and printer list from the phone.</li>
 <li>Backup files stay in the folder you chose until you delete them there.</li>
 </ul>
 
 <h2>Third-party content</h2>
 <p>The built-in filament catalog comes from SpoolmanDB (MIT License). Box barcodes come from the Open Filament Database (MIT License). Codes are read with ZXing (Apache License 2.0). Brand names and logos are
 trademarks of their respective owners and are shown only to identify a filament's manufacturer.
-TinySpools is not affiliated with or endorsed by any filament manufacturer.</p>
+TinySpools is not affiliated with or endorsed by any filament manufacturer, or by Bambu Lab.</p>
 
 <h2>Children</h2>
 <p>The app is not directed at children and does not knowingly handle data from children.</p>
