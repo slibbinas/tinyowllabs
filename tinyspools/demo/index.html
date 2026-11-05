@@ -337,7 +337,8 @@ function isvalyti() { uzdarytiLapa(); nfcRasymas = null; PS.querySelectorAll('.c
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fil = id => S.fil.find(f => f.id === id);
 const lentyna = id => S.lentynos.find(l => l.id === id);
-const lentynosAZ = () => [...S.lentynos].sort((a, b) => a.vardas.localeCompare(b.vardas));
+// Kaip Db.lentynos: pirma AMS, toliau pagal vardą (V 2026-11-06).
+const lentynosAZ = () => [...S.lentynos].sort((a, b) => (amsL(b.id) ? 1 : 0) - (amsL(a.id) ? 1 : 0) || a.vardas.localeCompare(b.vardas));
 const vietosVardas = r => r.l ? lentyna(r.l).vardas : 'No location';
 const vardas = f => [f.t, f.p].filter(Boolean).join(' ');
 const pavadinimas = f => (f.g + ' ' + vardas(f)).trim();
