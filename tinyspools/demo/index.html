@@ -1723,7 +1723,7 @@ const TURAS = [
   ['#ps', 'Locations', 'A dot for each filament on the shelf. Tap a shelf to see its spools, long-press to rename it.', () => { skirtukas('locations')(); document.getElementById('scr').scrollTop = 9999; }],
   ['.slots', 'Bambu Lab AMS', 'A location set as an AMS shows its four slots: color, material and how much is left. The grams left come from the printer, so AMS spools need no weighing. A spool without a Bambu Lab tag shows as Unknown - tap it and pick the spool.', skirtukas('locations')],
   ['#spausdinti', 'Print something', 'A pretend printer uses filament from the AMS. Open Locations or tap ↻ and the grams left follow, with Undo.', skirtukas('locations')],
-  ['#ps', 'New filament from the catalog', 'Scan a box, touch a Bambu Lab spool or pick one of 4,700+ colors from the catalog - the fields fill in by themselves.', () => {
+  ['#ps', 'New filament from the catalog', 'Scan a box, touch a Bambu Lab spool or pick one of 6,000+ colors from the catalog - the fields fill in by themselves.', () => {
     const F = formaIs(null); S.namai = null; S.langai = [{tipas: 'forma', forma: F}, {tipas: 'katalogas', q: 'bambu pla matte', forma: F}]; piesti(); }],
   ['#ps', 'Check spools', 'Lost track of what is where? Start a check, go shelf by shelf and mark each spool found ✓ or not found ✕. Your own stickers mark themselves.', langas('patikra')],
   ['#ps', 'Settings', 'Dark or light, rings or squares, list order, backups to a file and import from 3D Filament Profiles.', langas('nustatymai')],
