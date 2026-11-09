@@ -488,7 +488,7 @@ function piesti() {
     sarasas = palete();
   } else if (S.vieta !== null) {
     const l = S.vieta === 0 ? 'No location' : lentyna(S.vieta).vardas;
-    sarasas = `<button class="back" data-vietos="1">‹ ${esc(l)}</button>` + (amsL(S.vieta) ? amsSarasas(S.vieta) : riciuSarasas(grupes(false, S.vieta)));
+    sarasas = `<button class="back" data-vietos="1">‹ ${esc(l)}</button>` + (amsL(S.vieta) ? amsSarasas(S.vieta) : vietosSarasas(S.vieta));
   } else { sarasas = vietos(); apacia = '+ New location'; }
   BODY.innerHTML = h + `<div class="scr" id="scr">${sarasas}</div>` +
     `<div class="bottom"><button class="btn" style="flex:1" data-scan="1">Scan</button><button class="btn" style="flex:2" data-naujas="1">${apacia}</button></div>`;
@@ -517,6 +517,36 @@ function riciuSarasas(gr) {
   return h;
 }
 
+/**
+ * Atidaryta vieta (ne AMS): „Group by filaments“ - eilutė filamentui (paspaudus filamentas, ilgai - jo ritė čia),
+ * išjungus - eilutė ritei (paspaudus ritė, ilgai - filamentas). Vietos vardo eilutėse nėra - jis viršuje (0.1.341-343).
+ */
+function vietosSarasas(id) {
+  const gr = grupes(false, id), riciu = gr.reduce((s, x) => s + x.r.length, 0);
+  let h = `<div class="sum"><span>${kiek(gr.length, 'filament', 'filaments')} · ${kiek(riciu, 'spool', 'spools')}</span><span class="sw ${S.nust.pagalFil ? 'on' : ''}" data-pagalfil="1">Group by filaments <i></i></span></div>`;
+  if (!gr.length) return h + `<div class="empty">Nothing matches${S.q ? ' “' + esc(S.q) + '”' : ''} with these filters.</div>`;
+  for (const {f, r} of gr) {
+    if (S.nust.pagalFil) h += filamentoKortele(f, r, `data-fil="${f.id}" data-ilg="r:${f.id}"`, true);
+    else for (const x of [...r].sort((a, b) => b.lik - a.lik)) h += filamentoKortele(f, [x], `data-rite="${x.id}" data-ilg="f:${f.id}"`, true);
+  }
+  return h;
+}
+/** Ilgas paspaudimas eilutėje: f:<id> - visas filamentas; r:<id> - jo ritė šioje vietoje (kelios - „Which spool?“). */
+function ilgasEilute(s) {
+  const [k, id] = s.split(':'), f = fil(+id);
+  if (k === 'f') return atidarytiFilamenta(f.id);
+  const rr = ritesOf(f.id).filter(x => (x.l || 0) === S.vieta);
+  if (rr.length === 1) return ritesLapas(f, rr[0]);
+  const d = lapas('Which spool?', pilnasVardas(f), f.hex, rr.map(r => ritesBlokas(f, r, '')).join(''), `<span class="sp1"></span><button class="btn o">Close</button>`);
+  d.querySelector('.sfoot').onclick = () => uzdarytiLapa();
+  d.querySelector('.sbody').onclick = e => {
+    const b = e.target.closest('[data-rite]'); if (!b) return;
+    e.stopPropagation();
+    uzdarytiLapa();
+    ritesLapas(f, rr.find(x => x.id === +b.dataset.rite));
+  };
+}
+
 function vietuTekstas(r) {
   const n = new Map();
   for (const x of r) { const v = vietosVardas(x); n.set(v, (n.get(v) || 0) + 1); }
@@ -531,11 +561,11 @@ function juostos(f, r) {
 }
 
 /** Filamento eilutė sąraše (Ui.grupesEile). */
-function filamentoKortele(f, r, duom) {
+function filamentoKortele(f, r, duom, beVietos) {
   const g = r.reduce((s, x) => s + x.lik, 0), refill = r.filter(x => x.refill).length, maz = r.some(x => mazai(x, f));
   return `<div class="k fk" ${duom}><span class="dot" style="background:${f.hex || 'transparent'}"></span><div class="mid">
     <div class="t1">${logo(f.g)}<span>${esc(vardas(f))}</span></div>
-    <div class="t2">${esc(spalvaSuKodu(f))}${f.hex ? ' · ' + esc(f.hex.toUpperCase()) : ''}</div>${r.length ? `<div class="t3">${esc(vietuTekstas(r))}</div>` + juostos(f, r) : ''}</div>
+    <div class="t2">${esc(spalvaSuKodu(f))}${f.hex ? ' · ' + esc(f.hex.toUpperCase()) : ''}</div>${r.length ? (beVietos ? '' : `<div class="t3">${esc(vietuTekstas(r))}</div>`) + juostos(f, r) : ''}</div>
     <div class="right"><div class="n">×${r.length}</div>${r.length ? `<div class="kg">${svoris(g)}</div>` : ''}${refill ? `<div class="kg">${refill === r.length ? 'refill' : refill + ' refill'}</div>` : ''}${maz ? '<div class="low">low</div>' : ''}</div></div>`;
 }
 
@@ -599,7 +629,9 @@ function palete() {
 function vietos() {
   let h = `<div class="sum"><span>${kiek(S.lentynos.length, 'location', 'locations')} · long-press to rename</span><span class="sw ${S.nust.pagalFil ? 'on' : ''}" data-pagalfil="1">Group by filaments <i></i></span></div>`;
   if (!S.lentynos.length) h += `<div class="empty">No locations yet. Long-press a location to rename or delete it.</div>`;
-  for (const id of [...lentynosAZ().map(l => l.id), 0]) {
+  // AMS, tada „No location“ (iš AMS išimtos ritės laukia čia), tada lentynos (Pagrindinis.java, 0.1.340).
+  const az = lentynosAZ().map(l => l.id);
+  for (const id of [...az.filter(amsL), 0, ...az.filter(x => !amsL(x))]) {
     const r = S.rites.filter(x => (x.l || 0) === id);
     if (id === 0 && !r.length) continue;
     const g = r.reduce((s, x) => s + x.lik, 0);
@@ -669,7 +701,7 @@ function amsSarasas(id) {
   let h = `<div class="sum"><span>${kiek(new Set(r.map(x => x.f)).size, 'filament', 'filaments')} · ${kiek(r.length, 'spool', 'spools')} · ${kadaSinchronizuota()}</span></div>`;
   for (let i = 0; i < 4; i++) {
     const z = lizdas(id, i), nr = `<span class="nr">${i + 1}</span>`;
-    if (z.kas === 'rite') h += `<div class="k fk" data-lizdas="${id}:${i}">${nr}<span class="dot" style="background:${z.f.hex}"></span><div class="mid"><div class="t1">${logo(z.f.g)}<span>${esc(vardas(z.f))}</span></div><div class="t2">${esc(spalvaSuKodu(z.f))}</div>${juostos(z.f, [z.r])}</div><div class="right"><div class="kg">${svoris(z.r.lik)}</div></div></div>`;
+    if (z.kas === 'rite') h += `<div class="k fk" data-lizdas="${id}:${i}" data-ilg="f:${z.f.id}">${nr}<span class="dot" style="background:${z.f.hex}"></span><div class="mid"><div class="t1">${logo(z.f.g)}<span>${esc(vardas(z.f))}</span></div><div class="t2">${esc(spalvaSuKodu(z.f))}</div>${juostos(z.f, [z.r])}</div><div class="right"><div class="kg">${svoris(z.r.lik)}</div></div></div>`;
     else {
       const u = z.kas === 'unknown', n = u && nezinoma(id, i);
       h += `<div class="k fk" data-lizdas="${id}:${i}">${nr}<span class="dot" style="background:${u ? nezinomosSpalva(n.hex) : 'transparent'}"></span><div class="mid"><div style="font-size:16px">${u ? 'Unknown ' + esc(n.t) : 'Empty'}</div><div class="t2" style="${u ? 'color:var(--acc)' : ''}">${u ? 'Tap to pick which spool is here' : 'The printer sees no filament here'}</div></div></div>`;
@@ -1526,8 +1558,15 @@ function bambuRite() {
   if (nfcRasymas) return nfcAtsakas('This tag is protected (e.g. a Bambu Lab spool tag) and cannot be written. Use an empty NTAG213/215/216 sticker.', 'var(--red)');
   S.namai = null;
   const L = virsus();
-  if (L && L.tipas === 'patikra') { piesti(); return kortele('?', 'Not a TinySpools tag', 'This tag was not written by TinySpools.'); }
   const z = BAMBU[bambuKartas++ % BAMBU.length], kodas = 'bambu:' + z.variantas;
+  // Patikroje Bambu ritės žyma pažymi jos ritę (Patikra.java, 0.1.340); nesusieta - kortelė „Not linked to a spool“.
+  if (L && L.tipas === 'patikra') {
+    const pf = fil(S.bambu[kodas]) || dublikatas(z) || S.fil.find(x => x.kodas && x.kodas === z.kodas && bambuGamintojas(x.g));
+    const rr = pf ? ritesOf(pf.id) : [];
+    if (rr.length) return patikrintaSkenuojant(rr.find(x => !(x.tikrinta >= S.patikra.pradzia)) || rr[0]);
+    piesti();
+    return kortele('?', 'Not linked to a spool', 'This Bambu Lab spool is not linked to any of your spools yet. Touch it on the main screen to find it or add it.');
+  }
   const naujaRite = L && L.tipas === 'naujas';
   const atidarytiF = f => { atidarytiFilamenta(f.id); if (naujaRite) ritesLapas(f, null); };
   const f = fil(S.bambu[kodas]) || dublikatas(z) || S.fil.find(x => x.kodas && x.kodas === z.kodas && bambuGamintojas(x.g));
@@ -1608,15 +1647,24 @@ let ilgas = null, ilgasPaspaustas = false;
 BODY.addEventListener('pointerdown', e => {
   // Žymė „ilgas paspaudimas jau atidarė meniu“ galioja tik tam pačiam paspaudimui.
   ilgasPaspaustas = false;
-  const v = e.target.closest('.loc[data-vieta]');
-  if (!v || v.dataset.vieta === '0') return;
-  ilgas = setTimeout(() => { ilgasPaspaustas = true; vietosMeniu(+v.dataset.vieta); }, 500);
+  const v = ilgoTaikinys(e);
+  if (!v) return;
+  ilgas = setTimeout(() => { ilgasPaspaustas = true; ilgai(v); }, 500);
 });
 ['pointerup', 'pointerleave', 'pointercancel'].forEach(t => BODY.addEventListener(t, () => clearTimeout(ilgas)));
 BODY.addEventListener('contextmenu', e => {
-  const v = e.target.closest('.loc[data-vieta]');
-  if (v && v.dataset.vieta !== '0') { e.preventDefault(); clearTimeout(ilgas); ilgasPaspaustas = true; vietosMeniu(+v.dataset.vieta); }
+  const v = ilgoTaikinys(e);
+  if (v) { e.preventDefault(); clearTimeout(ilgas); ilgasPaspaustas = true; ilgai(v); }
 });
+/** Ką ilgas paspaudimas daro: vieta - meniu („No location“ jo neturi), eilutė su data-ilg - ilgasEilute. */
+function ilgoTaikinys(e) {
+  const v = e.target.closest('.loc[data-vieta],[data-ilg]');
+  return v && v.dataset.vieta !== '0' ? v : null;
+}
+function ilgai(v) {
+  if (v.dataset.ilg) ilgasEilute(v.dataset.ilg);
+  else vietosMeniu(+v.dataset.vieta);
+}
 BODY.onclick = e => {
   if (ilgasPaspaustas) { ilgasPaspaustas = false; return; }
   const t = e.target.closest('[data-tab],[data-filt],[data-pfilt],[data-pradetos],[data-likutis],[data-pagalfil],[data-vieta],[data-vietos],[data-fil],[data-ritef],[data-rite],[data-prideti],[data-naujas],[data-naujam],[data-scan],[data-pradeti],[data-baigti],[data-ras],[data-ner],[data-uas],[data-ilentyna],[data-nust],[data-mifare],[data-spalva],[data-redaguoti],[data-trintif],[data-forma],[data-kat],[data-kopija],[data-atkurti],[data-importas],[data-privatumas],[data-grizti],[data-lizdas],[data-sync],[data-autosync]');
