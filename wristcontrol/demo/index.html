@@ -12,7 +12,7 @@
 :root{
   --bg:#fff; --page:#1b2233; --muted:#5c667a; --line:#e3e8f1; --soft:#f3f7fe; --owl:#e8720c;
   --wpill:#33363c; --wblue:#2b3f9e; --whi:#e8ecf5; --wlo:#8c96b2; --wblue2:#5b9bf3;
-  --wgreen:#6fbf73; --wyellow:#f5c542; --wred:#e5615b;
+  --wgreen:#6fbf73; --wyellow:#f5c542; --wred:#e5615b; --worange:#f28c38; --wviolet:#b39ddb;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --soft:#26262b; --owl:#f08a2c}}
 :root[data-theme="dark"]{--bg:#141416; --page:#eee; --muted:#aaa; --line:#2e2e33; --soft:#26262b; --owl:#f08a2c}
@@ -25,9 +25,9 @@
 .theme button[aria-pressed="true"]{background:var(--soft);color:var(--page)}
 .theme svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ps{--f:#0e1016; --card:#1c1f2a; --vidus:#2a2e3b; --blue:#5b9bf3; --btn:#2e3c96; --hi:#e8ecf5; --lo:#8c96b2;
-  --green:#6fbf73; --yellow:#f5c542; --orange:#f28c38; --red:#e5615b; --track:#3c404e; --onbtn:#e8ecf5}
+  --green:#6fbf73; --yellow:#f5c542; --orange:#f28c38; --red:#e5615b; --track:#3c404e; --onbtn:#e8ecf5; --violet:#b39ddb}
 .ps.light{--f:#f2f4f8; --card:#ffffff; --vidus:#eef1f6; --blue:#2e5fd8; --hi:#14161c; --lo:#5a6378;
-  --green:#2e8b3e; --yellow:#a86f00; --orange:#c2611a; --red:#c8443e; --track:#d5dae4; --onbtn:#ffffff}
+  --green:#2e8b3e; --yellow:#a86f00; --orange:#c2611a; --red:#c8443e; --track:#d5dae4; --onbtn:#ffffff; --violet:#6a4fb3}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--page);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 /* Turinio plotis = telefonas (360) + tarpas + laikrodzio stulpelis: tekstas ir blokai sutampa su prototipu (V 2026-10-29). */
@@ -175,6 +175,26 @@ canvas{width:100%;display:block}
 .ps.light .mb.on .spin{border-color:rgba(255,255,255,.3);border-top-color:#fff}
 @keyframes sp{to{transform:rotate(360deg)}}
 .fan{animation:sp 2.2s linear infinite}
+/* Statistika nuo 0.1.1105: piktogramos tekste, poraste su linija, „?“ ir atnaujinimo zenkliukas, langeliai (AlertDialog). */
+.ico{width:1.2em;height:1.2em;vertical-align:-.22em;fill:currentColor;display:inline-block}
+.irow{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:13px;font-weight:700;cursor:pointer}
+.irow span{white-space:nowrap}
+.irow .ico{color:var(--lo);margin-right:3px}
+.foot{border-top:1px solid var(--track);margin-top:8px;padding-top:6px;color:var(--lo);font-size:11.5px}
+.qm{width:28px;height:28px;border-radius:50%;border:2px solid var(--blue);color:var(--blue);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-right:10px;flex:none}
+.rf{width:36px;height:36px;border-radius:50%;border:2px solid var(--blue);color:var(--blue);display:flex;align-items:center;justify-content:center;cursor:pointer;margin:16px auto 4px}
+.rf .ico{width:22px;height:22px}
+.pull.hist{flex-direction:column}
+.pull.hist div:last-child{color:#e8ecf5;font-size:14px;text-align:center;padding:16px 32px 0}
+.dlg{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:6}
+.dlg>div{background:var(--card);width:88%;max-height:82%;overflow-y:auto;border-radius:18px;padding:18px 20px 10px;font-size:14px;scrollbar-width:none}
+.dlg>div::-webkit-scrollbar{display:none}
+.dlg b.t{display:block;font-size:19px;margin-bottom:8px}
+.dlg p{margin:6px 0 0;color:var(--lo)}
+.dlg p.g{color:var(--hi);margin-top:14px}
+.dlg p.bl{padding-left:14px;text-indent:-14px}
+.dlg .ok{display:flex;justify-content:flex-end;gap:22px;margin-top:12px}
+.dlg .ok span{color:var(--blue);font-weight:700;cursor:pointer;padding:8px 4px}
 
 /* ---- Laikrodis. 1 sp tikrame 438 px ekrane = 2,55 px (2,125 x srifto mastelis 1,2); demo 300 px - 1,75 px. ---- */
 .watch{zoom:.92;width:330px;height:330px;border-radius:50%;background:#1a1b1f;padding:15px;box-shadow:0 10px 40px rgba(0,0,0,.35),inset 0 0 0 3px #2a2c31}
@@ -210,7 +230,10 @@ canvas{width:100%;display:block}
 .wm .sl{width:20px;height:20px;display:flex;align-items:center;justify-content:center}
 .wmsg{color:var(--wlo);font-size:16px;text-align:center;margin-top:6px;min-height:18px;line-height:1.2}
 .wsub{color:var(--wlo);font-size:17px;line-height:1.25;margin-top:6px}
-.wsec{color:var(--wblue2);font-size:16px;letter-spacing:.1em;margin-top:14px}
+.wsec{color:var(--wblue2);font-size:26px;font-weight:700;line-height:1.15;margin:14px -18px 0;white-space:nowrap}
+/* Lango antraste (MainActivity.langoAntraste, 0.1.1013): 11 sp, balta, retos raides - kaip kelio zyma. */
+.wtt{color:var(--whi);font-size:19px;font-weight:500;letter-spacing:.12em;text-align:center}
+.ws .ico{color:var(--wlo)}
 .wbig{font-size:36px;font-weight:700}
 .wrow2{display:flex;justify-content:space-between;align-items:center;font-size:22px;margin-top:10px;text-align:left}
 .wsw{width:46px;height:26px;border-radius:13px;background:#4a4d55;position:relative;cursor:pointer;flex:none}
@@ -310,17 +333,38 @@ var P={
  vlx:'<g transform="scale(0.1953)"><path d="M256,70 L442,256 L256,442 L70,256 Z" fill="#2B2F35" stroke="#8E949C" stroke-width="22" stroke-linejoin="round"/><path d="M61,131 C210,131 300,355 402,355" fill="none" stroke="#5B9BF3" stroke-width="34" stroke-linecap="round"/><path d="M461.5,355 L393.1,308.6 L393.1,401.4 Z" fill="#3D84C6"/><path d="M451,131 C302,131 212,355 110,355" fill="none" stroke="#C9CDD6" stroke-width="34" stroke-linecap="round"/></g>'
 };
 function ic(n,cls){return '<svg viewBox="0 0 100 100"'+(cls?' class="'+cls+'"':'')+'>'+P[n]+'</svg>';}
+/* Statistikos piktogramos (res/drawable/ic_st_*.xml, ic_atnaujinti.xml - Material Symbols 24): spalva is teksto. */
+var I={
+ nust:"M11 21v-6h2v2h8v2h-8v2zm-8-2v-2h6v2zm4-4v-2H3v-2h4V9h2v6zm4-2v-2h10v2zm4-4V3h2v2h4v2h-4v2zM3 7V5h10v2z",
+ zmon:"M1 20v-2.8q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13t3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2V20zm18 0v-3q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v3zM6.175 10.825Q5 9.65 5 8t1.175-2.825T9 4t2.825 1.175T13 8t-1.175 2.825T9 12t-2.825-1.175m11.65 0Q16.65 12 15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8t-.362-2.025T13.6 4.2q.35-.125.7-.163T15 4q1.65 0 2.825 1.175T19 8t-1.175 2.825",
+ oras:"M6 20q-1.65 0-2.825-1.175T2 16t1.175-2.825T6 12q1.2 0 2.213.65t1.462 1.775l.25.575h.6q1.05 0 1.763.725T13 17.5t-.725 1.775T10.5 20zm8.975-2.8q-.1-1.575-1.137-2.725t-2.613-1.425q-.775-1.35-2.087-2.137T6.25 10q.65-1.825 2.225-2.912T12 6q2.5 0 4.25 1.75T18 12q0 1.625-.8 3.013T14.975 17.2M11 5V1h2v4zm6.65 2.75l-1.4-1.4l2.8-2.85l1.425 1.425zM19 13v-2h4v2zm.05 7.5l-2.8-2.85l1.4-1.4l2.85 2.8zM6.35 7.75L3.525 4.925L4.95 3.5l2.8 2.85z",
+ kait:"M13.3 20.725q-.15.125-.312.2t-.363.075t-.4-.088t-.35-.237q-1.025-1.1-1.513-2.25T9.876 16q0-.925.275-1.95t.95-2.65q.575-1.425.8-2.187t.225-1.413q0-.85-.375-1.587t-1.175-1.488q-.15-.15-.237-.35t-.088-.4t.075-.362t.2-.313q.15-.15.337-.225T11.25 3t.375.075t.325.2q1.1 1.025 1.637 2.15t.538 2.375q0 .875-.263 1.838t-.912 2.512q-.625 1.5-.85 2.3t-.225 1.525q0 .875.363 1.688T13.35 19.3q.125.15.2.325t.075.375t-.075.388t-.25.337m4.875 0q-.15.125-.312.2T17.5 21t-.4-.088t-.35-.237q-1.025-1.1-1.513-2.238t-.487-2.412q0-.925.275-1.975t.95-2.65q.575-1.425.8-2.175t.225-1.4q0-.85-.375-1.612T15.45 4.725q-.15-.15-.225-.337T15.15 4t.063-.363t.187-.312q.15-.15.35-.238t.4-.087t.363.075t.312.2q1.1 1.025 1.638 2.15T19 7.8q0 .875-.262 1.838t-.913 2.537q-.625 1.5-.85 2.3t-.225 1.5q0 .875.375 1.713t1.125 1.637q.125.15.187.325t.063.35q0 .2-.075.4t-.25.325m-9.75 0q-.15.125-.313.2T7.75 21t-.4-.088t-.35-.237q-1.025-1.1-1.513-2.238T5 16.025q0-.925.275-1.975t.95-2.65q.575-1.425.8-2.175t.225-1.4q0-.85-.375-1.612T5.7 4.725q-.175-.15-.25-.337T5.375 4t.075-.375t.2-.325q.15-.15.338-.225T6.375 3t.375.075t.325.2q1.1 1.025 1.638 2.138T9.25 7.8q0 .875-.25 1.838t-.9 2.512q-.625 1.5-.85 2.3t-.225 1.525q0 .875.363 1.713T8.5 19.325q.125.15.188.325t.062.35q0 .2-.075.4t-.25.325",
+ debesis:"M6.5 20q-2.275 0-3.887-1.575T1 14.575q0-1.95 1.175-3.475T5.25 9.15q.625-2.3 2.5-3.725T12 4q2.925 0 4.963 2.038T19 11q1.725.2 2.863 1.488T23 15.5q0 1.875-1.312 3.188T18.5 20z",
+ lauke:"M8.463 20.538Q7 19.075 7 17q0-1.2.525-2.238T9 13V5q0-1.25.875-2.125T12 2t2.125.875T15 5v8q.95.725 1.475 1.763T17 17q0 2.075-1.463 3.538T12 22t-3.537-1.463M11 11h2v-1h-1V9h1V7h-1V6h1V5q0-.425-.288-.712T12 4t-.712.288T11 5z",
+ atn:"M12 20q-3.35 0-5.675-2.325T4 12t2.325-5.675T12 4q1.725 0 3.3.712T18 6.75V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2T12 6Q9.5 6 7.75 7.75T6 12t1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325T12 20"
+};
+function ik(n){return '<svg class="ico" viewBox="0 0 24 24"><path d="'+I[n]+'"/></svg>';}
 
 /* Rinkiklio mygtukai (m_*) ir profiliu vardai (prof_*) - nuo apzvalgos 11 vienodi: Custom, Auto. */
 var MODES=[["optimized","Optimized"],["boost","Boost"],["away","Away"],["home","At home"],["custom","Custom"],["auto","Auto"]];
 var NAME={optimized:"Optimized",boost:"Boost",away:"Away",home:"At home",custom:"Custom",auto:"Auto"};
-var APP_VER="Watch 0.1.1002 · Phone 0.1.1002";
+/* Versijos visur su „v“, tvarka Phone · Watch (ver_watch, V 2026-11-12). */
+var VER="v0.1.1117", APP_VER="Phone "+VER+" · Watch "+VER;
 var G, U, S, timer, ui;
 /* Kokybes ribos (VlxJuosta): {gerasNuo, gerasIki, pakenciamaNuo, pakenciamaIki}. */
 var R_CO2=[0,800,0,1200], R_T=[20,25,18,27], R_RH=[30,50,25,60];
 /* Statistika - tos pacios reiksmes visur (pultas, langai, valdiklis, laikrodis). */
-var ST={prev:{e:-37,fresh:[81,91],co2:[694,583],fan:[62,54],parts:["+9 %","-38 %","-8 %"]},
-        year:{e:-35,fresh:[70,91],co2:[760,583],fan:[66,54],total:"-28 %",weather:"-7 %",out:10}};
+var ST={prev:{e:-37,fresh:[81,91],co2:[694,583],fan:[62,54],parts:[9,-38,-8],kwh:"0.0 kWh"},
+        year:{e:-35,fresh:[70,91],co2:[760,583],fan:[66,54],total:-28,out:10}};
+/* Isvada vienu zodziu (VlxStatistika.isvada, VlxStatDatos.zodis): iki ±2 % - panasu. */
+var VT=["Better","Worse","Mixed","Similar"];
+var VTM=["energy down or fresh air up, nothing worse","energy up or fresh air down, nothing better","one better, the other worse","both changed less than 2 %"];
+function verdict(e,air){var g=e<-2||air>2, b=e>2||air<-2;return g&&b?2:g?0:b?1:3;}
+function vcol(v){return ["var(--green)","var(--yellow)","var(--orange)","var(--violet)"][v];}
+function wvcol(v){return ["var(--wgreen)","var(--wyellow)","var(--worange)","var(--wviolet)"][v];}
+/* Piktogramu paaiskinimai - „How to read“, „Icons“, laikrodzio „?“ (st_p_*). */
+var ICONS=[["nust","Settings - the mode's base fan speed"],["zmon","People - fan raised by CO2 above the limit"],["oras","Weather - the rest: humidity, cooling, manual changes"],["kait","Heater - electric heater energy, kWh"],
+  ["debesis","With weather - energy change if the weather is not taken out"],["lauke","Outdoor - average temperature on the same days last year"]];
 /* Optimize tikslai (VlxOptimize: Clean air / Balance / Quiet). */
 var GOALS={clean:{n:"Clean air",a:"CO2 ~620",rest:55,limit:500},balance:{n:"Balance",a:"CO2 ~700",rest:45,limit:600},quiet:{n:"Quiet",a:"less air",rest:35,limit:800}};
 
@@ -328,9 +372,10 @@ var GOALS={clean:{n:"Clean air",a:"CO2 ~620",rest:55,limit:500},balance:{n:"Bala
 function unit(name,co2,temp,out,filt){
   var u={name:name,mode:"optimized",prev:"optimized",left:0,co2:co2,temp:temp,rh:52,out:out,fan:52,filt:filt,
     people:2,shower:0,scen:null,scenLeft:0,peak:0,age:0,plan:{rest:45,limit:500},clock:false,hist:[],week:[],rhH:[]};
-  for(var i=0;i<144;i++){var t=i/144*24;u.hist.push({co2:co2-80+260*Math.max(0,Math.sin((t-7)/24*2*Math.PI))+40*Math.sin(t*1.7),
-    tin:temp-0.7+0.8*Math.sin((t-9)/24*2*Math.PI),tout:out-3+5*Math.sin((t-9)/24*2*Math.PI)});}
-  var d=["M","T","W","T","F","S","S"];
+  /* Para iki dabar (demo pradzia 18:00): paskutinis taskas - dabartines reiksmes, kad grafiko galas ir legenda sutaptu su pultu. */
+  var ft=function(h){return Math.sin((h-9)/24*2*Math.PI);}, fc=function(h){return 260*Math.max(0,Math.sin((h-7)/24*2*Math.PI))+40*Math.sin(h*1.7);};
+  for(var i=1;i<=144;i++){var t=18+i/144*24;u.hist.push({co2:co2+fc(t)-fc(42),tin:temp+0.8*(ft(t)-ft(42)),tout:out+5*(ft(t)-ft(42))});}
+  var d=["T","F","S","S","M","T","W"];
   for(var j=0;j<7;j++) u.week.push({d:d[j],tin:temp-0.3+Math.sin(j)*0.3,tout:out-2+Math.cos(j*1.3)*2.5,co2:co2-60+Math.sin(j*2)*70});
   return u;
 }
@@ -368,7 +413,7 @@ function story1(){
 }
 function fresh(){
   G={view:"auto",ctrl:"phone",theme:"system",from:22.5,to:23.5,alerts:{temp:true,rh:true,co2:true,filt:true},
-     refresh:"Adaptive",clock:"Fix itself",conn:"Best",cloud:true,lang:"System",waiting:false,tempOn:true,qAsked:false,
+     refresh:"Adaptive",clock:"Fix itself",conn:"Best",cloud:true,lang:"System",waiting:false,tempOn:true,qAsked:false,goal:"balance",asleep:true,
      orig:{rest:30,limit:800},canRestore:true,work:{nobody:3,nobodyH:14,cooled:0,heat:96,boost:2},
      pages:{sens:true,temps:true,unit:true,filt:true,stats:true,opt:true},min:18*60,writing:null,log:[],upd:null};
   U=[unit("Home ventilation",640,24.3,10.4,107),unit("Summer house",520,21.8,9.6,32)];
@@ -376,7 +421,8 @@ function fresh(){
   U[1].mode="away"; U[1].prev="away"; U[1].fan=45; U[1].clock=true;
   S=U[0];
   ui={phone:"pultas",layer:"app",wpage:0,wwin:null,wface:false,wnote:false,note:null,opt:"idle",prop:null,wiz:"who",wizA:{},
-      fsure:0,wfsure:0,wfsaved:0,wfbusy:0,wopt:"idle",wprop:null,wq:null,wbusy:null,co2L:0,rhL:0,boostSug:false,pulling:false};
+      fsure:0,wfsure:0,wfsaved:0,wfbusy:0,wopt:"idle",wprop:null,wq:null,wbusy:null,co2L:0,rhL:0,boostSug:false,pulling:false,
+      wizKeep:{},unitWait:false,wlegend:false};
   logAdd("App","Keeping the heat in","Optimized started");
 }
 function hhmm(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");}
@@ -385,7 +431,17 @@ function logAdd(who,what,why){G.log.unshift({t:G.min,who:who,what:what,why:why||
 /* Demo diena - 2026-10-28 (trečiadienis). */
 function dateAdd(days){var d=new Date(2026,9,28);d.setDate(d.getDate()+Math.floor(G.min/1440)+days);return d;}
 /* VlxTelefonas.diena - angliskai „28 Oct“. */
-function md(d){return d.getDate()+" "+["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()];}
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function md(d){return d.getDate()+" "+MON[d.getMonth()];}
+/* Statistikos laikotarpiai (VlxStatDatos.datos): 7 d. iki artimiausio vidurnakcio nuo skaiciavimo laiko - „21-27 Oct“,
+   per du menesius „31 Oct - 6 Nov“; „prev“ - 7 d. pries tai, „year“ - tos pacios dienos pernai su metais. */
+function stDates(k){
+  var e=Math.round((G.upd===null?8*60+39:G.upd)/1440), day=function(n){var x=new Date(2026,9,28);x.setDate(x.getDate()+n);return x;};
+  var a=day(e-7), b=day(e-1);
+  if(k==="prev"){a=day(e-14);b=day(e-8);}
+  if(k==="year"){a.setFullYear(2025);b.setFullYear(2025);}
+  return (a.getMonth()===b.getMonth()?a.getDate()+"-"+b.getDate()+" "+MON[b.getMonth()]:md(a)+" - "+md(b))+(k==="year"?" "+b.getFullYear():"");
+}
 function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 
 /* Rekuperatorius: ventiliatorius pagal rezima, CO2 seka ventiliatoriu ir svecius. */
@@ -434,7 +490,7 @@ function autopilot(){
   var p=S.plan, n={rest:Math.max(20,p.rest-5),limit:Math.min(1000,p.limit+50)};
   if(G.view==="auto"){
     ui.undo={rest:p.rest,limit:p.limit}; S.plan=n;
-    logAdd("App","Plan adjusted to the past week","Fan "+p.rest+" → "+n.rest+" %, CO2 limit "+p.limit+" → "+n.limit);
+    logAdd("App","Plan adjusted to the past week","Fan "+p.rest+" → "+n.rest+" %, CO2 limit "+p.limit+" → "+n.limit+"<br>"+(G.ctrl==="watch"?"Notified on the watch":"Notified on the phone"));
     notify("auto","Autopilot adjusted the air","Fan at rest "+p.rest+"→"+n.rest+" % · CO2 limit "+p.limit+"→"+n.limit+".");
   } else {
     ui.planProp=n;
@@ -459,7 +515,7 @@ function write(mode,from,done){
     if(to==="optimized") S.clock=false;
     S.mode=to; G.writing=null; S.age=0;
     if(was!==to) logAdd("You","Mode: "+NAME[was]+" → "+NAME[to]);
-    buzz(); if(done) done(); draw();
+    buzz(stop||mode==="optimized"||mode==="auto"); if(done) done(); draw();
   },1600);
 }
 function writingMsg(dev){
@@ -480,7 +536,8 @@ function phoneMode(mode){
   if(mode==="optimized"&&S.clock&&G.ctrl==="phone") toast("Week clock off: Optimized runs the unit.");
   write(mode,"phone");
 }
-function buzz(){["ps","ws"].forEach(function(id){var e=document.getElementById(id);e.classList.remove("buzz");void e.offsetWidth;e.classList.add("buzz");});}
+/* Vibracija (VlxVibracija, V 2026-11-08): vienas impulsas ijungus ar irasius, du - grizus i automatika (Optimized, Auto, Stop Boost). */
+function buzz(twice){["ps","ws"].forEach(function(id){var e=document.getElementById(id);e.classList.remove("buzz");void e.offsetWidth;e.classList.add("buzz");});if(twice===true) setTimeout(buzz,450);}
 var tt; function toast(t){var e=document.getElementById("toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on");},2600);}
 var nt;
 function notify(kind,title,text){
@@ -533,7 +590,8 @@ function pcs(a){var x=pctv(a);return (x>0?"+":"")+x+" %";}
 /* Laukimo eilutes po mygtuku (Langas.laukimas). */
 var HIST="Reading history from the VALLOX cloud…";
 function rasTxt(){return G.ctrl==="phone"?"Writing to the unit…":"Sent to Galaxy Watch - waiting for the unit…";}
-function ageTxt(){return S.age<1?"10 s ago":S.age+" min ago";}
+/* VlxTelefonas.amzius: iki 90 s - sekundemis. */
+function ageTxt(){return S.age<1?"10 s ago":S.age<2?"60 s ago":S.age+" min ago";}
 function boostOn(){return S.mode==="boost";}
 function ctrlName(){return G.ctrl==="phone"?"this phone":"Galaxy Watch";}
 function isLight(){
@@ -596,7 +654,18 @@ var REF_SHORT={"Adaptive":"Adaptive","20 min":"20 min","30 min":"30 min","1 h":"
 var REF_LONG={"Adaptive":"Adaptive 15-60 min","20 min":"20 min","30 min":"30 min","1 h":"1 h","Only in app":"Only in app"};
 var CONN={"Best":["Best available","Best"],"Local":["Local only","Local only"],"Cloud":["Cloud only","Cloud only"]};
 function setSub(){return G.refresh==="Only in app"?"Only in app · no alerts":"Refresh "+G.refresh+" · alerts "+(anyAlert()?"on":"off");}
-function settingsCard(){return card("SETTINGS",'<div style="font-size:18px;font-weight:600">Controlled by '+ctrlName()+'</div><div class="sub">'+setSub()+'</div>',"settings");}
+function settingsCard(){return card("SETTINGS",'<div style="font-size:16px;font-weight:700">Controlled by '+ctrlName()+'</div><div class="sub" style="font-size:11.5px">'+setSub()+'</div>',"settings");}
+/* Statistikos dalys: energijos pokytis pagal priezasti piktogramomis (VlxStatDatos.dalys, pernaiIkonos) ir poraste (Langas.poraste). */
+function sgn(x){return (x>0?"+":"")+x+" %";}
+function partsList(lo,f){var p=ST.prev.parts;return [["nust",sgn(p[0]),f(p[0])],["zmon",sgn(p[1]),f(p[1])],["oras",sgn(p[2]),f(p[2])],["kait",ST.prev.kwh,lo]];}
+function yearList(hi,f){return [["debesis",sgn(ST.year.total),f(ST.year.total)],["lauke",ST.year.out+"°",hi]];}
+function icoRow(a){return '<div class="irow" data-dlg="icons">'+a.map(function(x){return '<span style="color:'+x[2]+'">'+ik(x[0])+x[1]+'</span>';}).join("")+'</div>';}
+function cmpTxt(k,v){return 'Comparing <span style="color:'+vcol(v)+'">'+stDates("now")+'</span> vs '+stDates(k);}
+/* Pulto STATISTICS kortele (Pultas.paprastas, V 2026-11-14): pavadinimas - isvada - skaiciai - poraste su linija. */
+function statsCard(){
+  var v=verdict(ST.prev.e,pctv(ST.prev.fresh)), big='font-size:20px;font-weight:700;color:';
+  return card("STATISTICS",'<div style="font-size:16px;font-weight:700;color:'+vcol(v)+'">'+VT[v]+'</div><div class="two"><div><div class="sub">Energy</div><div style="'+big+ecol(ST.prev.e)+'">'+ST.prev.e+' %</div></div><div><div class="sub">Fresh air</div><div style="'+big+ecol(-pctv(ST.prev.fresh))+'">'+pcs(ST.prev.fresh)+'</div></div></div><div class="foot" style="margin-top:6px">'+cmpTxt("prev",v)+'</div>',"stats");
+}
 function wAlerts(){return G.refresh==="Only in app"||!alertsOn()?"none":alertsOn()+" on";}
 
 /* Automatic pulte: savaites laikrodis ijungtas (Pultas.savaitesLaikrodis); skaitantis mygtuko neturi. */
@@ -623,18 +692,16 @@ function pultas(){
     h+=airCard()+wcCard();
     var on=boostOn();
     h+='<div style="margin-top:9px">'+modeBtn("boost",on?"Stop Boost":"Boost",on,on?S.left+" min left":"1 h",true,'data-boost="1"')+'</div>';
-    h+=card("STATISTICS",'<div style="font-size:17px;font-weight:700;color:var(--green)">Better week</div><div class="two" style="margin-top:2px"><div><div class="sub">Energy</div><div class="kv" style="color:var(--green)">'+ST.prev.e+' %</div></div><div><div class="sub">Fresh air</div><div class="kv" style="color:var(--green)">'+pcs(ST.prev.fresh)+'</div></div></div><div class="sub">Previous week</div><div class="sub">Same week last year: Energy '+ST.year.e+' %</div>',"stats");
-    h+=settingsCard();
-    h+=card("SETUP",'<div style="font-size:18px;font-weight:600">'+S.name+'</div><div class="sub">Run setup again</div>',"setup");
+    /* SETUP korteles pulte nebera (V 2026-11-10): tik su kliutimi; kitaip - SETTINGS lange. */
+    h+=statsCard()+settingsCard();
     return h;
   }
   h+='<div class="k" data-open="vent"><div class="kt">VENTILATION</div><div style="display:flex;align-items:center;gap:10px;margin-top:4px">'+
      '<span style="width:26px;height:26px;display:block">'+ic(S.mode)+'</span><span class="big" style="flex:1">'+NAME[S.mode]+'</span><span style="width:24px;height:24px;display:block">'+ic("fan","fan")+'</span></div>'+
      '<div class="sub">'+fanSet()+'</div>'+(S.clock&&S.mode!=="optimized"?'<div class="sub">Week clock on</div>':'')+'</div>';
   h+='<div class="two">'+tile("SENSORS",Math.round(S.co2),"Humidity "+Math.round(S.rh)+" %","sens",col(co2Lvl()))+tile("TEMPERATURES",f1(S.temp)+"°","Outdoor "+f1(S.out)+"° · Heater off","temps")+'</div>';
-  h+='<div class="two">'+tile("OPTIMIZE","713","goal 738","opt","var(--green)")+tile("STATISTICS",ST.prev.e+" %","Energy Previous week","stats","var(--green)")+'</div>';
-  h+='<div class="two">'+tile("FILTERS",S.filt,S.filt+" d left","filt",null)+tile("SETUP","",S.name,"setup")+'</div>';
-  h+=settingsCard();
+  h+='<div class="two">'+tile("OPTIMIZE","713","goal 738","opt","var(--green)")+tile("STATISTICS",ST.prev.e+" %","Energy","stats",ecol(ST.prev.e))+'</div>';
+  h+='<div class="two">'+tile("FILTERS",S.filt,S.filt+" d left","filt",null)+tile("SETTINGS",'<span style="font-size:18px;line-height:1.25;display:block">Controlled by '+ctrlName()+'</span>',setSub(),"settings")+'</div>';
   return h;
 }
 
@@ -642,13 +709,16 @@ function pultas(){
 function gcard(id,h,l,lc,r,rc){return '<div class="k st"><div class="lgd"><span style="color:'+lc+'">'+l+'</span>'+(r?'<span style="color:'+rc+'">'+r+'</span>':'')+'</div><canvas id="'+id+'" height="'+h+'"></canvas></div>';}
 function avg(a){return a.reduce(function(s,x){return s+x;},0)/a.length;}
 function updLine(){return 'Updated '+(G.upd===null?"28 Oct 08:39":md(dateAdd(0))+" "+hhmm(G.upd));}
+/* Atnaujinimo zenkliukas ir po juo - kada skaiciuota (Langas.traukimoEilute): Update mygtuko telefone nebera, atnaujinama
+   ir traukiant zemyn, su pritemdymu (V 2026-11-10, 11-14). */
+function refreshRow(id){return '<div class="rf" id="'+id+'" title="Update">'+ik("atn")+'</div><div class="sub" style="text-align:center;font-size:12px">'+updLine()+'</div>';}
 function pokytis(l,a,b,unit,lessBetter){
   var k=Math.round((b/a-1)*100), good=lessBetter?k:-k;
   return '<div class="row"><span>'+l+'</span><span><span style="color:var(--lo);font-size:14px;margin-right:12px">'+a+' → '+b+unit+'</span><span style="color:'+(good>2?"var(--yellow)":good<-2?"var(--green)":"var(--hi)")+'">'+(k>0?"+":"")+k+' %</span></span></div>';
 }
 function ecol(e){return e>2?"var(--yellow)":e<-2?"var(--green)":"var(--hi)";}
 function logRows(){
-  var c={App:"var(--blue)",You:"var(--green)",Other:"var(--yellow)"};
+  var c={App:"var(--blue)",You:"var(--green)",Unit:"var(--lo)"};
   if(!G.log.length) return '<div class="sub" style="margin-top:8px">No changes yet. They are recorded from this version on.</div>';
   return G.log.map(function(e){return '<div class="zl"><div class="w">'+dayName(e.t)+' '+hhmm(e.t)+'<b style="color:'+c[e.who]+'">'+e.who+'</b></div><div class="x">'+e.what+(e.why?'<small>'+e.why+'</small>':'')+'</div></div>';}).join("");
 }
@@ -672,20 +742,20 @@ function langas(w){
     h+='<div class="wt">SENSORS</div><div class="age" style="margin-left:4px">'+ageTxt()+'</div><div class="k st">'+
       row("Fan",Math.round(S.fan)+" %")+qrow("Indoor",f1(S.temp)+"°",S.temp,R_T)+qrow("Humidity",Math.round(S.rh)+" %",Math.round(S.rh),R_RH)+
       qrow("CO2",Math.round(S.co2),S.co2,R_CO2)+row("Outdoor",f1(S.out)+"°")+row("Supply","22.1°")+'</div>'+kt("COMFORT ZONE")+
-      [["Temp",S.temp.toFixed(1)+"°C","t",S.temp],["Humidity",Math.round(S.rh)+"%","rh",S.rh],["CO2",Math.round(S.co2)+" ppm","co2",S.co2]].map(function(x){
+      [["Temperature",f1(S.temp)+"°","t",S.temp],["Humidity",Math.round(S.rh)+" %","rh",S.rh],["CO2",Math.round(S.co2)+" ppm","co2",S.co2]].map(function(x){
         return '<div class="k st"><div class="lgd"><span style="color:var(--lo)">'+x[0]+'</span><b>'+x[1]+'</b></div>'+sc(x[2],x[3],ZC)+'</div>';}).join("");
   } else if(w==="temps"){
-    var wk=S.week, tin=wk.map(function(p){return p.tin;}), tout=wk.map(function(p){return p.tout;}), wc=wk.map(function(p){return p.co2;});
+    var wk=S.week, tin=wk.map(function(p){return p.tin;}), tout=wk.map(function(p){return p.tout;}), wc=wk.map(function(p){return p.co2;}), now=S.hist[S.hist.length-1];
     h+='<div class="wt">TEMPERATURES</div><div class="sub" style="margin-left:4px">Heater off</div>'+kt("A DAY")+'<div class="sub" style="margin:0 4px">last 24 hours</div>'+
-      gcard("cvd1",130,"Indoor","var(--hi)","Outdoor","var(--blue)")+gcard("cvd2",100,"CO2","var(--hi)")+
-      kt("7 DAYS")+gcard("cvw1",120,"Indoor "+f1(avg(tin))+"°","var(--hi)","Outdoor "+Math.round(avg(tout))+"°","var(--blue)")+
-      gcard("cvw2",100,"CO2 "+Math.round(avg(wc)),"var(--hi)","peak "+Math.round(Math.max.apply(null,wc)),"var(--lo)")+
+      gcard("cvd1",130,"Indoor "+f1(now.tin)+"°","var(--hi)","Outdoor "+f1(now.tout)+"°","var(--blue)")+gcard("cvd2",130,"CO2","var(--hi)")+
+      kt("7 DAYS")+gcard("cvw1",130,"Indoor "+f1(avg(tin))+"°","var(--hi)","Outdoor "+Math.round(avg(tout))+"°","var(--blue)")+
+      gcard("cvw2",130,"CO2 "+Math.round(avg(wc)),"var(--hi)","peak "+Math.round(Math.max.apply(null,wc)),"var(--lo)")+
       kt("LAST YEAR")+'<div class="lgd" style="margin:6px 4px 0;color:var(--lo)"><span>Outdoor '+ST.year.out+'°</span><span>CO2 624</span></div><div class="sub" style="margin:2px 4px 0">dashed = same week last year</div>'+
-      busyBtn("tUpd","Update",ui.busy==="tUpd",HIST)+'<div class="sub" style="margin:6px 4px">'+updLine()+'</div>';
+      refreshRow("tUpd");
   } else if(w==="opt"){
     h+='<div class="wt">OPTIMIZE</div>';
     if(ui.opt==="goal"){
-      h+='<div class="sub" style="margin:2px 4px 0;font-size:15px">GOAL</div>';
+      h+=kt("GOAL");
       ["clean","balance","quiet"].forEach(function(k){var g=GOALS[k];h+='<div class="btn g" data-ogoal="'+k+'">'+g.n+'  ·  '+g.a+'</div>';});
       h+='<div class="hint">from the unit, or the cloud when away</div>';
     } else if(ui.opt==="busy"){
@@ -696,7 +766,7 @@ function langas(w){
         row("Fan",r.f[0]+"›"+r.f[1]+" %")+row("Energy",(r.e>0?"+":"")+r.e+" %",ecol(r.e))+'</div><div class="hint">'+changesTxt(r.rest,r.limit)+'</div>';
       h+=reader?'<div class="hint">'+CTRL_OTHER.phone+'</div>':busyBtn("oApply","Apply",ui.busy==="oApply",rasTxt())+'<div class="hint">original values saved</div>';
     } else {
-      h+=kt("CO2")+'<div class="k st"><div class="sub">Result</div><div class="big" style="color:var(--green);font-size:24px">713 ppm</div><div class="sub">goal 738</div>'+
+      h+=kt("CO2")+'<div class="k st"><div class="sub">Result</div><div class="big" style="color:var(--green);font-size:20px">713 ppm</div><div class="sub">goal 738</div>'+
         row("Fan at rest",S.plan.rest+" %")+row("CO2 limit",S.plan.limit)+'</div>'+busyBtn("oCheck","Check again",ui.busy==="oCheck",HIST)+kt("CHANGE");
       if(reader) h+='<div class="hint">'+CTRL_OTHER.phone+'</div>';
       else {
@@ -705,38 +775,44 @@ function langas(w){
       }
     }
   } else if(w==="stats"){
-    var pv=ST.prev, yr=ST.year;
-    h+='<div class="wt">STATISTICS</div>'+kt("PREVIOUS WEEK")+'<div class="k st"><div class="big" style="color:var(--green);font-size:24px">Better week</div>'+
+    /* Langas.statistika (V 2026-11-14): blokas - kortele: isvada, eilutes, piktogramos, poraste su laikotarpiu; „?“ - How to read. */
+    var pv=ST.prev, yr=ST.year, v1=verdict(pv.e,pctv(pv.fresh)), v2=verdict(yr.e,pctv(yr.fresh));
+    var word=function(v){return '<div class="big" style="color:'+vcol(v)+';font-size:20px;margin:0 0 2px">'+VT[v]+'</div>';};
+    h+='<div style="display:flex;align-items:center;justify-content:space-between"><div class="wt">STATISTICS</div><div class="qm" data-dlg="how" title="How to read">?</div></div>'+
+      '<div class="k st">'+word(v1)+
       pokytis("Fresh air",pv.fresh[0],pv.fresh[1]," %",false)+pokytis("CO2 avg",pv.co2[0],pv.co2[1],"",true)+pokytis("Fan avg",pv.fan[0],pv.fan[1]," %",true)+
-      row("Energy",pv.e+" %",ecol(pv.e))+'<div class="sub" style="margin-top:6px">Settings '+pv.parts[0]+' · People '+pv.parts[1]+' · Weather '+pv.parts[2]+'</div></div>'+
-      kt("SAME WEEK LAST YEAR")+'<div class="k st"><div class="big" style="color:var(--green);font-size:24px">Better than last year</div>'+
+      row("Energy",pv.e+" %",ecol(pv.e))+icoRow(partsList("var(--lo)",ecol))+'<div class="foot">'+cmpTxt("prev",v1)+'</div></div>'+
+      '<div class="k st">'+word(v2)+
       pokytis("Fresh air",yr.fresh[0],yr.fresh[1]," %",false)+pokytis("CO2 avg",yr.co2[0],yr.co2[1],"",true)+pokytis("Fan avg",yr.fan[0],yr.fan[1]," %",true)+
-      row("Energy",yr.e+" %",ecol(yr.e))+'<div class="sub" style="margin-top:6px">Weather taken out · with it '+yr.total+'</div><div class="sub">Outdoor last year '+yr.out+'°</div></div>'+
-      busyBtn("sUpd","Update",ui.busy==="sUpd",HIST)+'<div class="sub" style="margin:6px 4px">'+updLine()+'</div>'+
-      kt("APP AT WORK · 7 DAYS")+'<div class="k st">'+row("Fan lowered - nobody home",G.work.nobody+" × · "+G.work.nobodyH+" h")+row("Cooled with outdoor air",G.work.cooled+" h")+
+      row("Energy",yr.e+" %",ecol(yr.e))+icoRow(yearList("var(--hi)",ecol))+'<div class="foot">'+cmpTxt("year",v2)+'</div></div>'+
+      refreshRow("sUpd")+
+      kt("APP ACTIVITY · 7 DAYS")+'<div class="k st">'+row("Fan lowered - nobody home",G.work.nobody+" × · "+G.work.nobodyH+" h")+row("Cooled with outdoor air",G.work.cooled+" h")+
       row("Heat kept in",G.work.heat+" h")+row("Boost suggested",G.work.boost+" ×")+'</div>'+
       kt("CHANGE LOG · 7 DAYS")+'<div class="k st">'+logRows()+'</div>';
   } else if(w==="filt"){
     h+='<div class="wt">FILTERS</div><div class="k st">'+row("Next",S.filt+" d left")+row("Replaced",ymd(dateAdd(S.filt-180)))+'</div>'+
       busyBtn("fchg",ui.fsure?"Confirm: changed today":"Mark as changed",ui.busy==="fchg",rasTxt()).replace('class="btn"','class="btn'+(ui.fsure?'':' g')+'"')+'<div class="age" style="margin:8px 4px">'+ageTxt()+'</div>';
   } else if(w==="settings"){
-    h+='<div class="wt">SETTINGS</div><div class="k st"><div class="kt">VALLOX UNIT CONTROLLED BY</div><div class="seg"><div data-ctrl="phone" class="'+(G.ctrl==="phone"||G.waiting?"on":"")+'">This phone</div><div data-ctrl="watch" class="'+(G.ctrl==="watch"&&!G.waiting?"on":"")+'">The watch</div></div>'+
+    /* VaidmensBlokas (V 2026-11-12): versijos po savo mygtukais, „Phone asleep“ bloko gale - tik kai valdo telefonas ir fonas skaito. */
+    h+='<div class="wt">SETTINGS</div><div class="k st"><div class="kt">UNIT CONTROLLED BY</div><div class="seg"><div data-ctrl="phone" class="'+(G.ctrl==="phone"||G.waiting?"on":"")+'">This phone</div><div data-ctrl="watch" class="'+(G.ctrl==="watch"&&!G.waiting?"on":"")+'">The watch</div></div>'+
+      '<div style="display:flex;gap:8px;margin-top:6px;font-size:13px;color:var(--lo)"><span style="flex:1">'+VER+'</span><span style="flex:1">'+VER+'</span></div>'+
+      (!reader&&!G.waiting&&G.refresh!=="Only in app"?'<div class="row" data-dlg="asleep" style="min-height:44px;align-items:center;margin-top:6px;cursor:pointer"><span>Phone asleep</span><span style="font-weight:700;color:'+(G.asleep?"var(--green)":"var(--yellow)")+'">'+(G.asleep?"Keeps reading ›":"Paused · allow ›")+'</span></div>':'')+
       (G.waiting?'<div class="sub" style="margin-top:10px;color:var(--yellow)">Waiting for the watch to confirm…</div>':'')+
-      '<div class="sub" style="margin-top:6px">'+APP_VER+'</div></div>'+
-      '<div class="k st"><div class="kt">AUTOMATION <i>·  tap a card to switch</i></div>'+
+      '</div>'+
+      '<div class="k st"><div class="kt">AUTOMATION</div><div class="sub" style="font-size:12px">Tap a card to switch</div>'+
       '<div class="vc'+(G.view==="auto"?" on":"")+'" data-view="auto"><b>Automatic</b><div class="sub">The app runs the air for you</div><ul><li>One card: how fresh the air is, temperatures</li><li>One button: Boost for an hour</li><li>The app runs the air and adjusts it weekly - you can undo any change</li><li>Weekly summary: air and energy</li><li>Few notifications - only when something needs you</li></ul></div>'+
       (G.view==="auto"&&reader?'<div class="sub" style="margin:6px 4px 4px">The watch will read the unit every 15-60 min - uses more battery.</div>':'')+
       '<div class="vc'+(G.view==="semi"?" on":"")+'" data-view="semi"><b>Semi-automatic</b><div class="sub">All windows and settings</div><ul><li>Modes, Optimize plan, sensors, graphs, statistics</li><li>Temperature range, notifications, refresh rate</li><li>Every change - you decide</li></ul></div></div>'+
       '<div class="k st"><div class="kt">THEME</div><div class="seg">'+[["system","System"],["dark","Dark"],["light","Light"]].map(function(t){return '<div data-theme="'+t[0]+'" class="'+(G.theme===t[0]?"on":"")+'">'+t[1]+'</div>';}).join("")+'</div><div class="sub" style="margin-top:6px">System follows the phone\'s dark mode.</div></div>';
     if(reader){
-      h+='<div class="k st"><div class="kt">UNIT · Changed on Galaxy Watch</div>'+row("Temp.",rangeTxt(true))+
-        row("Alerts",[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].filter(function(a){return G.alerts[a[0]];}).map(function(a){return a[1];}).join(", ")||"none")+
+      h+='<div class="k st"><div class="kt">UNIT · Changed on Galaxy Watch</div>'+row("Temperature",rangeTxt(true))+
+        row("Alerts",[["temp","Temperature"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].filter(function(a){return G.alerts[a[0]];}).map(function(a){return a[1];}).join(", ")||"none")+
         row("Refresh",REF_LONG[G.refresh])+row("Clock",G.clock)+'</div>';
     } else {
       var pmb=function(t,g,ok){return '<span data-t="'+t+'"'+(ok?'':' style="color:var(--lo)"')+'>'+g+'</span>';};
       h+='<div class="k st"><div class="kt">UNIT · TEMPERATURE</div><div class="pm">'+pmb("from-","-",G.from>20)+'<div><small>From</small><b>'+deg(G.from,true)+'</b></div>'+pmb("from+","+",G.from<24)+'</div><div class="pm">'+pmb("to-","-",G.to>G.from+0.5)+'<div><small>To</small><b>'+deg(G.to,true)+'</b></div>'+pmb("to+","+",G.to<G.from+2)+'</div>'+
         '<div class="sub" style="margin-top:8px">Below '+deg(G.from,true)+' the heat is kept in, above '+deg(G.to,true)+' the home is cooled with outdoor air.</div></div>'+
-        '<div class="k st"><div class="kt">UNIT · ALERTS</div>'+[["temp","Temp"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="row"><span style="color:var(--hi)">'+a[1]+'</span><span class="sw'+(G.alerts[a[0]]?' on':'')+'" data-al="'+a[0]+'"></span></div>';}).join("")+'</div>';
+        '<div class="k st"><div class="kt">UNIT · ALERTS</div>'+[["temp","Temperature"],["rh","Humidity"],["co2","CO2"],["filt","Filters"]].map(function(a){return '<div class="row"><span style="color:var(--hi)">'+a[1]+'</span><span class="sw'+(G.alerts[a[0]]?' on':'')+'" data-al="'+a[0]+'"></span></div>';}).join("")+'</div>';
       if(G.view==="auto"){
         h+='<div class="k st"><div class="kt">UNIT</div>'+row("Refresh","Adaptive")+row("Clock","Fixes itself")+'</div>';
       } else {
@@ -745,19 +821,20 @@ function langas(w){
           '<div class="k st"><div class="kt">UNIT · CLOCK</div><div class="seg">'+["Ask to fix","Fix itself","Off"].map(function(k){return '<div data-clk="'+k+'" class="'+(G.clock===k?"on":"")+'">'+k+'</div>';}).join("")+'</div></div>';
       }
     }
+    /* SETUP - tarp PRO ir ABOUT (Langas.setupBlokas, V 2026-11-10): rekuperatorius ir „Run setup again ›“. */
     h+='<div class="k st"><div class="kt">PRO</div>'+row("PRO","Pro · Unlocked","var(--hi)")+'</div>'+
+      '<div class="k" data-open="setup"><div class="kt">SETUP</div>'+row(S.name,"Run setup again ›","var(--blue)")+'</div>'+
       '<div class="k st"><div class="kt">ABOUT</div><div style="display:flex;gap:12px;align-items:center;margin-top:6px"><img src="/wristcontrol/icon.png" alt="" style="width:46px;height:46px;border-radius:10px"><div><div style="font-size:18px;font-weight:600">Wrist Control</div><div class="sub">for Vallox</div></div></div>'+
       '<div class="lnk"><a href="/wristcontrol/guide/" target="_blank" rel="noopener">User guide</a><a href="/wristcontrol/privacy/" target="_blank" rel="noopener">Privacy</a><a href="#" data-toast="Contact: e-mail to hello@tinyowllabs.com">Contact</a></div>'+
       '<div class="sub" style="margin-top:8px">Independent app, not made by Vallox Oy.<br>'+APP_VER+'</div></div>';
   } else if(w==="setup"){
     h+='<div class="wt">SETUP</div><div class="k st"><div class="btn" id="wizGo" style="margin-top:0">Run setup again</div><div class="sub" style="margin-top:8px">A few short questions, about 2 minutes: who controls the unit, the week schedule, what matters most, how warm you like it and alerts. Then a new plan. Your account stays signed in.</div></div>'+
-      '<div class="k st"><div class="kt" style="color:var(--lo)">GALAXY WATCH</div><div style="font-size:16px;margin-top:4px"><span style="display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--green);color:var(--f);align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-right:6px">✓</span>Wrist Control is on your watch</div><div class="sub">Shows your air and Boost on the wrist, and complications for the watch face.</div><div class="btn" id="openWatch">Open on watch</div><div class="sub" style="text-align:center;margin-top:6px">'+APP_VER+'</div></div>'+
+      '<div class="k st"><div class="kt">GALAXY WATCH</div><div style="font-size:16px;margin-top:4px"><span style="display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--green);color:var(--f);align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-right:6px">✓</span>Wrist Control is on your watch</div><div class="sub">Shows your air and Boost on the wrist, and complications for the watch face.</div><div class="btn" id="openWatch">Open on watch</div><div style="font-size:13px;margin:10px 8px 0">'+APP_VER+'</div></div>'+
       '<div class="k st"><div style="font-size:16px;font-weight:600">Vallox account</div><div style="margin-top:6px">Signed in as demo@example.com</div>'+kt("UNIT").replace("margin:14px 4px 0","margin:10px 0 0")+
-      U.map(function(u,i){return '<div class="opt'+(u===S?' on':'')+'" data-unit="'+i+'"><b>'+u.name+'</b></div>';}).join("")+
-      '<div class="sub" style="margin-top:8px">Pro: up to 3 units · Installer: unlimited</div>'+
+      unitList()+
       '<div class="btn g" data-toast="Account change - not in the demo">Change account or password</div></div>'+
       '<div class="kt" style="margin:18px 4px 0;color:var(--lo)">GETTING STARTED</div><ul class="steps">'+
-      ["Run setup above: sign in with your MyVallox account, answer 7 short questions and get a plan.",
+      ["Run setup above: sign in with your MyVallox account, answer a few short questions and get a plan.",
        "Choose who runs the unit: this phone or the watch. Without a watch the phone does it all.",
        "Add widgets: long-press the home screen, Widgets, Wrist Control.",
        "On the watch, add complications: long-press the watch face, Customize, pick a slot, Wrist Control.",
@@ -780,7 +857,7 @@ var WIZ_ORDER=["who","sched","goal","warm","alerts","plan"], WIZ_GOAL=["clean","
 /* Vedlys.rodomas: be savaites laikrodzio grafiko klausimo nera; „Keep the schedule“ - nei tikslo, nei plano. */
 function wizShown(k){if(k==="sched") return S.clock; if(k==="goal"||k==="plan") return ui.wizA.sched!==1; return true;}
 function wizSteps(){return WIZ_ORDER.filter(wizShown);}
-function wizPlan(){var g=GOALS[WIZ_GOAL[ui.wizA.goal]];return {rest:g.rest,limit:g.limit};}
+function wizPlan(){var k=WIZ_GOAL[ui.wizA.goal], g=GOALS[k];return {rest:g.rest,limit:g.limit,goal:k};}
 function wizard(){
   if(ui.wiz==="ready") return '<div class="q">Getting ready</div><div class="sub" style="margin:0 4px">While you answer, this phone runs the unit. At the end you choose which device keeps it.</div><div class="spin" style="margin:24px auto"></div>';
   if(ui.wiz==="write") return '<div class="q">Your plan</div><div class="sub" style="margin:0 4px">Writing to the unit…</div><div class="spin" style="margin:24px auto"></div>';
@@ -790,12 +867,20 @@ function wizard(){
     var p=wizPlan();
     return h+'<div class="k st" style="font-size:15px">'+changesTxt(p.rest,p.limit)+'</div><div class="btn" id="wizNext">Apply and finish</div>';
   }
-  var sel=ui.wizA[ui.wiz]===undefined?q.d:ui.wizA[ui.wiz];
-  q.o.forEach(function(o,i){h+='<div class="opt'+(i===sel?' on':'')+'" data-wsel="'+i+'"><b>'+o[0]+'</b>'+(o[1]?'<span class="sub">'+o[1]+'</span>':'')+'</div>';});
+  var sel=ui.wizA[ui.wiz]===undefined?q.d:ui.wizA[ui.wiz], opts=q.o.slice();
+  /* „Keep as now“ (v4_keep, V 2026-11-09): ranka nustatytas rezis ar sumaisyti pranesimai - vedlys ju nekeicia. */
+  if(ui.wiz==="warm"&&ui.wizKeep.warm) opts.push(["Keep as now",ui.wizKeep.warm]);
+  if(ui.wiz==="alerts"&&ui.wizKeep.alerts) opts.push(["Keep as now"]);
+  opts.forEach(function(o,i){h+='<div class="opt'+(i===sel?' on':'')+'" data-wsel="'+i+'"><b>'+o[0]+'</b>'+(o[1]?'<span class="sub">'+o[1]+'</span>':'')+'</div>';});
   return h+'<div class="btn" id="wizNext">Next</div>';
 }
 function wizStart(){
-  ui.wiz="who"; ui.wizA={}; ui.wizBusy=false; openPhone("wiz");
+  /* Kartojant vedli pazymima, kas nustatyta dabar (Vedlys.dabartiniaiAtsakymai, V 2026-11-09): praejus su Next niekas nepasikeicia. */
+  var ri=-1, n=alertsOn(), mixed=!(n===4||(n===1&&G.alerts.filt));
+  WIZ_RANGE.forEach(function(r,i){if(r[0]===G.from&&r[1]===G.to) ri=i;});
+  ui.wizKeep={warm:ri<0?rangeTxt(true):"",alerts:mixed};
+  ui.wizA={who:G.ctrl==="watch"?0:1,sched:S.clock?1:0,goal:Math.max(0,WIZ_GOAL.indexOf(G.goal)),warm:ri<0?3:ri,alerts:mixed?2:(n===4?1:0)};
+  ui.wiz="who"; ui.wizBusy=false; openPhone("wiz");
   if(G.ctrl==="watch"){ui.wiz="ready";draw();setTimeout(function(){G.ctrl="phone";ui.wiz="who";draw();},1600);}
 }
 function wizNext(){
@@ -810,9 +895,9 @@ function wizNext(){
 }
 /* Pabaiga (Vedlys.baik): rezis, pranesimai, planas, Optimized, vaizdas Automatic, valdymas laikrodziui (jei pasirinkta). */
 function wizFinish(){
-  var a=ui.wizA, r=WIZ_RANGE[a.warm], keep=a.sched===1;
-  G.from=r[0]; G.to=r[1];
-  var all=a.alerts===1; G.alerts={temp:all,rh:all,co2:all,filt:true};
+  var a=ui.wizA, keep=a.sched===1&&S.clock;
+  if(a.warm<3){G.from=WIZ_RANGE[a.warm][0]; G.to=WIZ_RANGE[a.warm][1];}
+  if(a.alerts<2){var all=a.alerts===1; G.alerts={temp:all,rh:all,co2:all,filt:true};}
   var end=function(){G.view="auto";G.refresh="Adaptive";G.clock="Fix itself";if(a.who===0)G.ctrl="watch";ui.phone="pultas";ui.wpage=0;ui.wwin=null;draw();};
   if(keep){end();return;}
   applyPlan(wizPlan()); ui.wiz="write"; draw();
@@ -828,21 +913,35 @@ function widgets(){
     wr("CO2",Math.round(S.co2),S.co2,R_CO2)+wr("Indoor",f1(S.temp)+"°",S.temp,R_T)+wr("Humidity",Math.round(S.rh)+" %",Math.round(S.rh),R_RH)+
     '<div class="r"><span>Outdoor</span><span>'+f1(S.out)+'°</span></div><div class="r"><span>Fan</span><span>'+Math.round(S.fan)+' %</span></div>'+
     (m?'<div class="r"><span>'+NAME[S.mode]+'</span></div>':'')+'</div>';
-  var st='<div class="wg" data-wopen="stats"><div class="h"><b>STATS</b><span style="color:#8c96b2">08:39</span></div><div style="font-size:17px;font-weight:700;color:var(--wgreen);margin:2px 0">Better week</div>'+
-    '<div class="r"><span>Energy</span><span style="color:#8c96b2">Fresh air</span></div><div class="r" style="font-size:16px;font-weight:700"><span style="color:var(--wgreen)">'+ST.prev.e+' %</span><span style="color:var(--wgreen)">+12 %</span></div><div style="text-align:center;font-size:11.5px;color:#8c96b2">Previous week</div>'+
-    '<div class="r" style="font-size:16px;font-weight:700"><span style="color:var(--wgreen)">'+ST.year.e+' %</span><span style="color:var(--wgreen)">+30 %</span></div><div style="text-align:center;font-size:11.5px;color:#8c96b2">2026 vs 2025</div></div>';
-  var g=function(t,p){return '<div class="wg" data-wopen="temps"><div class="h"><b>'+t+'</b><span style="color:#e8ecf5;font-weight:400">Indoor <span style="color:#5b9bf3">Outdoor</span></span></div><canvas class="wgc" data-k="t" data-p="'+p+'" height="54"></canvas><canvas class="wgc" data-k="c" data-p="'+p+'" height="48"></canvas></div>';};
-  return {air:air,st:st,g:g("7 DAYS","w"),d:g("A DAY","d")};
+  /* STATS (Valdikliai.statistika, V 2026-11-14): isvada, Energy ir Fresh air eilutemis, energijos dalys 2 x 2, poraste su laikotarpiu. */
+  var v=verdict(ST.prev.e,pctv(ST.prev.fresh)), prt=partsList("#8c96b2",wchg);
+  var st='<div class="wg" data-wopen="stats"><div class="h"><b>STATS</b></div><div style="font-size:17px;font-weight:700;color:'+wvcol(v)+';margin:2px 0">'+VT[v]+'</div>'+
+    '<div class="r"><span>Energy</span><span style="font-weight:700;color:'+wchg(ST.prev.e)+'">'+ST.prev.e+' %</span></div><div class="r"><span>Fresh air</span><span style="font-weight:700;color:'+wchg(-pctv(ST.prev.fresh))+'">'+pcs(ST.prev.fresh)+'</span></div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;font-size:11.5px;font-weight:700;margin-top:3px">'+prt.map(function(x){return '<span style="color:'+x[2]+';white-space:nowrap"><span style="color:#8c96b2">'+ik(x[0])+'</span> '+x[1]+'</span>';}).join("")+'</div>'+
+    '<div style="border-top:1px solid rgba(140,150,178,.33);margin-top:5px;padding-top:3px;font-size:10.5px;color:#8c96b2">Comparing <span style="color:'+wvcol(v)+'">'+stDates("now")+'</span> vs '+stDates("prev")+'</div></div>';
+  /* Grafiku valdikliai - keturi atskiri (V 2026-11-02): para ir 7 d., temperatura ir CO2; antrasteje - dabartine (para) arba vidutine (7 d.) reiksme. */
+  var g=function(t,p,k){
+    var day=p==="d", src=day?S.hist:S.week, last=src[src.length-1], a=function(f){return day?f(last):avg(src.map(f));};
+    var leg=k==="t"?'Indoor '+f1(a(function(x){return x.tin;}))+'° <span style="color:#5b9bf3;margin-left:6px">Outdoor '+f1(a(function(x){return x.tout;}))+'°</span>':'CO2 '+Math.round(a(function(x){return x.co2;}));
+    return '<div class="wg" data-wopen="temps"><div class="h"><b>'+t+'</b><span style="color:#e8ecf5;font-weight:400">'+leg+'</span></div><canvas class="wgc" data-k="'+k+'" data-p="'+p+'" height="96"></canvas></div>';};
+  return {air:air,st:st,wt:g("7 DAYS","w","t"),wc:g("7 DAYS","w","c"),dt:g("A DAY","d","t"),dc:g("A DAY","d","c")};
+}
+/* Rekuperatoriu sarasas (Rekuperatoriai.sarasas): skaitantis telefonas persijungia tik laikrodziui patvirtinus (0.1.1037). */
+function unitList(){
+  return U.map(function(u,i){return '<div class="opt'+(u===S?' on':'')+'" data-unit="'+i+'"><b>'+u.name+'</b></div>';}).join("")+
+    (ui.unitWait?'<div class="sub" style="margin-top:8px">Waiting for the watch to confirm…</div>':'')+
+    '<div class="sub" style="margin-top:8px">Pro: up to 3 units · Installer: unlimited</div>';
 }
 function homeScreen(){
   var w=widgets();
-  return '<div class="home"><div class="two">'+w.air+w.st+'</div><div style="margin-top:10px">'+w.g+'</div><div style="margin-top:10px">'+w.d+'</div>'+
+  return '<div class="home"><div class="two">'+w.air+w.st+'</div><div style="margin-top:10px">'+w.wc+'</div><div style="margin-top:10px">'+w.wt+'</div>'+
     '<div class="icons"><div data-wopen="pultas" title="Wrist Control"><img src="/wristcontrol/icon.png" alt="Wrist Control"></div><div>Phone</div><div>Mail</div><div>Apps</div></div></div>';
 }
 
 /* ---- Laikrodis ---- */
-/* Numatytoji tvarka (VlxTvarka.NUMATYTA); VENTILATION ir SETTINGS visada, kitus isjungia SETTINGS → PAGES. */
-var WORDER=["settings","temps","sens","unit","filt","vent","opt","stats"];
+/* Numatytoji tvarka (VlxTvarka.NUMATYTA); po pirmo prisijungimo SETTINGS nukeliamas i gala (VlxTvarka.poPirmoPrisijungimo).
+   VENTILATION ir SETTINGS visada, kitus isjungia SETTINGS → PAGES. */
+var WORDER=["temps","sens","unit","filt","vent","opt","stats","settings"];
 var PNAME={sens:"Sensors",temps:"Temp.",unit:"Unit",filt:"Filters",opt:"Optimize",stats:"Stats"};
 function wpages(){return G.view==="auto"?["auto","stats","settings"]:WORDER.filter(function(k){return G.pages[k]!==false;});}
 /* Kelio zyma (MainActivity.zymekKelia): valdo telefonas - PHONE; valdo laikrodis - LOCAL arba CLOUD su Wi-Fi zenklu. */
@@ -850,11 +949,18 @@ function wlabel(){var t=G.ctrl==="phone";return '<div class="wlab"><svg viewBox=
 function wrow(pairs,lft){return '<div class="wr'+(lft?' lft':'')+'">'+pairs.map(function(p){return '<span>'+p[0]+'</span><span'+(p[2]?' style="color:'+p[2]+'"':'')+'>'+p[1]+'</span>';}).join("")+'</div>';}
 function wq(v,r){return wcol(lvl(v,r));}
 var PWIN={auto:"air",vent:"pick",sens:"comfort",temps:"temps",filt:"filt",opt:"opt",stats:"stats",settings:"settings"};
+/* Busenos zodis viena eilute: didziausias sriftas tarp 20 ir 10 sp, telpantis i 146 dp (MainActivity.rodykPaprZodi, 0.1.1110). */
+var fitC=null;
+function fitPx(t,max,min,w){
+  if(!fitC) fitC=document.createElement("canvas").getContext("2d");
+  for(var s=max;s>min;s-=0.5){fitC.font='700 '+s+'px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif';if(fitC.measureText(t).width<=w) return s;}
+  return min;
+}
 function wpage(k){
   var h=wlabel(), c=wcol(co2Lvl()), m;
   if(k==="auto"){
     var on=boostOn(), showMode=!on&&S.mode!=="optimized"&&S.mode!=="auto";
-    h+='<div class="wzod" style="color:'+c+'">'+airWord()+'</div>'+wrow([["CO2",Math.round(S.co2)+" "+(co2Lvl()?arrow(S.co2,R_CO2):"· ok"),c],["Indoor",S.temp.toFixed(1)+"°C "+(lvl(S.temp,R_T)?arrow(S.temp,R_T):"· ok"),wq(S.temp,R_T)],["Humidity",Math.round(S.rh)+" % "+(lvl(Math.round(S.rh),R_RH)?arrow(Math.round(S.rh),R_RH):"· ok"),wq(Math.round(S.rh),R_RH)]],true);
+    h+='<div class="wzod" style="color:'+c+';white-space:nowrap;height:38px;line-height:38px;font-size:'+fitPx(airWord(),35,17.5,212)+'px">'+airWord()+'</div>'+wrow([["CO2",Math.round(S.co2)+" "+(co2Lvl()?arrow(S.co2,R_CO2):"· ok"),c],["Indoor",S.temp.toFixed(1)+"°C "+(lvl(S.temp,R_T)?arrow(S.temp,R_T):"· ok"),wq(S.temp,R_T)],["Humidity",Math.round(S.rh)+" % "+(lvl(Math.round(S.rh),R_RH)?arrow(Math.round(S.rh),R_RH):"· ok"),wq(Math.round(S.rh),R_RH)]],true);
     if(showMode) h+='<div class="wsub" style="margin-top:2px">'+NAME[S.mode]+(S.left>0?" · "+minTxt(S.left):"")+'</div>';
     h+='<div class="wpill" id="wboost">'+ic("boost")+'<div class="tx">'+(on?"Stop Boost":"Boost")+'<small>'+(on?S.left+" min left":"1 h")+'</small></div><div class="sl">'+(G.writing?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</div></div>';
     m=writingMsg("watch");
@@ -874,7 +980,9 @@ function wpage(k){
     var t2=tempMode();
     h+='<div class="wttl">OPTIMIZE</div><div style="display:flex;gap:26px;margin-top:6px;text-align:center"><div><div style="color:var(--wlo);font-size:20px">CO2</div><div class="wbig" style="color:var(--wgreen)">713</div><div style="color:var(--wlo);font-size:15px">goal 738</div></div><div><div style="color:var(--wlo);font-size:20px">Indoor</div><div class="wbig">'+S.temp.toFixed(1)+'°</div><div style="color:'+(t2==="cool"?"#5b9bf3":t2==="keep"?"#f28c38":"var(--wlo)")+';font-size:15px">'+(t2==="keep"?"Recovers":t2==="cool"?"Cooling":S.mode==="optimized"&&G.tempOn?rezis():"Vallox decides")+'</div></div></div><div class="wopen">Open</div>';
   } else if(k==="stats"){
-    h+='<div class="wttl">STATISTICS</div><div style="display:flex;gap:22px;margin-top:6px;text-align:center;font-size:20px"><div><div style="color:var(--wlo)">Energy</div><div class="wbig" style="color:var(--wgreen)">'+ST.prev.e+' %</div></div><div><div style="color:var(--wlo)">Fresh air</div><div class="wbig" style="color:var(--wgreen)">'+pcs(ST.prev.fresh)+'</div></div></div><div style="color:var(--wlo);font-size:17px">Previous week</div><div class="wopen">Open</div>';
+    /* MainActivity.pieskStatPuslapi (V 2026-11-14): isvada po pavadinimo, du stulpeliai, linija ir poraste „21-27 Oct vs 14-20 Oct“. */
+    var sv=verdict(ST.prev.e,pctv(ST.prev.fresh));
+    h+='<div class="wttl">STATISTICS</div><div style="font-size:28px;font-weight:700;line-height:1.15;color:'+wvcol(sv)+'">'+VT[sv]+'</div><div style="display:flex;gap:22px;text-align:center;font-size:20px"><div><div style="color:var(--wlo)">Energy</div><div class="wbig" style="line-height:1.1;color:'+wchg(ST.prev.e)+'">'+ST.prev.e+' %</div></div><div><div style="color:var(--wlo)">Fresh air</div><div class="wbig" style="line-height:1.1;color:'+wchg(-pctv(ST.prev.fresh))+'">'+pcs(ST.prev.fresh)+'</div></div></div><div style="width:152px;border-top:1px solid #323644;margin-top:4px"></div><div style="color:var(--wlo);font-size:17.5px;white-space:nowrap"><span style="color:'+wvcol(sv)+'">'+stDates("now")+'</span> vs '+stDates("prev")+'</div><div class="wopen" style="margin-top:2px">Open</div>';
   } else if(k==="unit"){
     var cell=tempMode()==="cool"?"cooling":S.out<S.temp-1?"recovering":"bypassed";
     h+='<div class="wttl">UNIT</div><div class="wsub" style="margin-top:0">'+S.name+'</div>'+wrow([["Supply",Math.round((900+S.fan*15)/10)*10+" rpm"],["Extract",Math.round((820+S.fan*14)/10)*10+" rpm"],["Exchanger",cell]])+
@@ -886,8 +994,9 @@ function wpage(k){
   }
   return {h:h,dots:true};
 }
-function wsec(t){return '<div class="wsec" style="font-size:22px;font-weight:700">'+t+'</div>';}
-function wsec2(t){return '<div class="wsec">'+t+'</div>';}
+/* Bloko pavadinimas (MainActivity.blokoAntraste, V 2026-11-13): visur 15 sp melynas pusjuodis; ilgesnis mazinamas, kad tilptu viena eilute. */
+function wsec(t){return '<div class="wsec"'+(t.length>14?' style="font-size:21px"':'')+'>'+t+'</div>';}
+function wsec2(t){return wsec(t);}
 function wsw(on,attr){return '<span class="wsw'+(on?' on':'')+'" '+attr+'></span>';}
 function wscale(l,t,k,v,col){return '<div class="wsl"><span style="color:var(--whi)">'+l+'</span><b'+(col?' style="color:'+col+'"':'')+'>'+t+'</b></div>'+sc(k,v,WZC);}
 /* Oro lango reiksme (oroReiksme): „· ok“ arba rodykle, spalva pagal kokybe. */
@@ -896,7 +1005,21 @@ function wchg(v){return v>2?"var(--wyellow)":v<-2?"var(--wgreen)":"var(--whi)";}
 /* Pokytis ir po juo „buvo → dabar“ (lentelesPokytis, apzvalga 36). */
 function wpok(l,a,u,col){return [[l,pcs(a),col],["",'<small style="color:var(--wlo);font-size:14px;font-weight:400">'+a[0]+" → "+a[1]+u+"</small>"]];}
 function wbtn(attr,t,on){return '<div class="wm'+(on?' on':'')+'" style="justify-content:center" '+attr+'>'+t+'</div>';}
-function wupd(){return (ui.wbusy==="upd"?'<div class="spin" style="margin:12px auto"></div><div class="wmsg">'+HIST+'</div>':wbtn('data-wupd="1"',"Update",true))+'<div class="wsub">'+updLine()+'</div>';}
+function wupd(){return wbtn('data-wupd="1"',"Update",true)+'<div class="wsub">'+updLine()+'</div>';}
+/* Kol skaiciuojama - lange tik antraste, suktukas ir „Analysing…“ (pieskStatistika, pieskSavaite, pieskOpt). */
+function wbusyWin(t){return '<div class="wtt">'+t+'</div><div class="spin" style="margin:40px auto 0;width:36px;height:36px"></div><div class="wsub" style="margin-top:12px">Analysing…</div>';}
+/* Piktogramos su skaiciais po dvi eileje (MainActivity.ikonuEilutes). */
+function wico(a){return '<div style="display:grid;grid-template-columns:1fr 1fr;column-gap:10px;row-gap:2px;font-size:19px;font-weight:700;margin:8px -14px 0">'+a.map(function(x,i){return '<span style="text-align:'+(i%2?"left":"right")+';white-space:nowrap;color:'+x[2]+'">'+ik(x[0])+' '+x[1]+'</span>';}).join("")+'</div>';}
+/* Poraste po linijos (statPorasteEilute): laikotarpis ir su kuo lyginta, einamosios datos - isvados spalva. */
+function wfoot(k,v){return '<div style="border-top:1px solid #323644;margin-top:8px"></div><div class="wsub" style="margin:5px -20px 0;white-space:nowrap"><span style="color:'+wvcol(v)+'">'+stDates("now")+'</span> vs '+stDates(k)+'</div>';}
+/* „?“ isskleidzia paaiskinimus (statLegenda, V 2026-11-14 - vietoje LEGEND). */
+function wlegend(){
+  var h='<div data-wlegend="1" style="width:34px;height:34px;border-radius:50%;border:2px solid var(--wblue2);color:var(--wblue2);font-weight:700;font-size:20px;display:flex;align-items:center;justify-content:center;margin:12px auto 0;cursor:pointer">?</div>';
+  if(!ui.wlegend) return h;
+  return h+'<div style="text-align:left;margin:0 -14px"><div class="wsub">• Numbers: then → now.</div>'+
+    VT.map(function(t,i){return '<div class="wsub" style="margin-top:'+(i?3:10)+'px">• <b style="color:'+wvcol(i)+'">'+t+'</b>&nbsp; '+VTM[i]+'</div>';}).join("")+
+    ICONS.map(function(x,i){return (i===0?'<div class="wsub" style="color:var(--whi);margin-top:14px">Energy change, by cause:</div>':i===4?'<div class="wsub" style="color:var(--whi);margin-top:14px">Same period last year:</div>':'')+'<div class="wsub" style="margin-top:3px">'+ik(x[0])+' '+x[1]+'</div>';}).join("")+'</div>';
+}
 /* Optimize langas: temperaturos skyrius (temperaturosSkyrius). */
 function wTempSec(tel){
   var t=tempMode(), now=!G.tempOn?["Off","var(--wlo)"]:S.mode!=="optimized"?["Paused","var(--wlo)"]:t==="keep"?["Recovers","#f28c38"]:t==="cool"?["Cooling","#5b9bf3"]:["Waiting","var(--whi)"];
@@ -917,41 +1040,47 @@ var GUIDE=[["Modes","Optimized is the Vallox Auto mode with your tuned settings:
 function wwin(k){
   var h='', m=writingMsg("watch"), tel=G.ctrl==="phone";
   if(k==="pick"){
-    h+='<div class="wttl" data-wclose="1">MODE</div>';
+    h+='<div class="wtt" data-wclose="1">MODE</div>';
     MODES.forEach(function(md){var on=S.mode===md[0], w=G.writing&&G.writing.mode===md[0];
-      h+='<div class="wm'+(on?' on':'')+'" data-wmode="'+md[0]+'">'+ic(md[0])+'<span class="n">'+md[1]+'</span><span class="sl">'+(w?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</span></div>';});
-    h+='<div class="wmsg">'+(m||"Switch modes here - the unit\'s panel skips app settings")+'</div>'+wsec2("WEEK CLOCK")+
+      /* Ka laukiam - po paspaustu mygtuku, ne lango apacioje (MainActivity.lauktiAtsakymo). */
+      h+='<div class="wm'+(on?' on':'')+'" data-wmode="'+md[0]+'">'+ic(md[0])+'<span class="n">'+md[1]+'</span><span class="sl">'+(w?'<div class="spin"></div>':(on?ic("fan","fan"):''))+'</span></div>'+(w&&m?'<div class="wmsg">'+m+'</div>':'');});
+    h+='<div class="wmsg">Switch modes here - the unit\'s panel skips app settings</div>'+wsec("WEEK CLOCK")+
       (S.clock?'<div class="wsub">Week clock on: the unit follows the schedule.</div><div class="wsub">Events are read at home, over Wi-Fi.</div>'+(tel?'':wbtn('data-wmode="optimized"',"Optimized on")+'<div class="wsub">Week clock off</div>')
       :'<div class="wsub">Week clock off'+(S.mode==="optimized"?': Optimized runs the unit.':'.')+'</div><div class="wsub">No events: set them on the unit\'s panel.</div>')+
       '<div class="wsub">Wrist Control has no week clock of its own: Optimized follows what actually happens at home - CO2, humidity, temperature - so the fans do not need a clock.</div><div class="wsub">Auto = Vallox factory settings</div>';
   } else if(k==="air"||k==="comfort"){
     if(k==="comfort"){
-      h+='<div class="wttl">COMFORT ZONE</div>'+wscale("Temp",S.temp.toFixed(1)+"°C","t",S.temp)+wscale("Humidity",Math.round(S.rh)+"%","rh",S.rh)+wscale("CO2",Math.round(S.co2)+" ppm","co2",S.co2)+'<div class="wsub" data-wclose="1" style="cursor:pointer">close</div>';
+      h+='<div class="wtt">COMFORT ZONE</div>'+wscale("Temp",S.temp.toFixed(1)+"°C","t",S.temp)+wscale("Humidity",Math.round(S.rh)+"%","rh",S.rh)+wscale("CO2",Math.round(S.co2)+" ppm","co2",S.co2)+'<div class="wsub" data-wclose="1" style="cursor:pointer">close</div>';
     } else {
-      h+='<div class="wsub" style="margin-top:0;color:var(--wblue2);font-size:14px">'+S.name.toUpperCase()+'</div><div class="wzod" style="color:'+wcol(co2Lvl())+';font-size:24px">'+airWord()+'</div>'+
+      h+='<div class="wtt">'+S.name.toUpperCase()+'</div><div class="wzod" style="color:'+wcol(co2Lvl())+';font-size:24px">'+airWord()+'</div>'+
         woro("CO2",Math.round(S.co2)+" ppm","co2",S.co2,R_CO2)+woro("Indoor",S.temp.toFixed(1)+"°C","t",S.temp,R_T)+woro("Humidity",Math.round(S.rh)+" %","rh",Math.round(S.rh),R_RH)+
         '<div style="margin-top:10px">'+wrow([["Outdoor",S.out.toFixed(1)+"°C"],["Fan",Math.round(S.fan)+" %"],["Heater","OFF","var(--wlo)"]])+'</div>'+
         (S.mode!=="optimized"?'<div class="wsub">'+NAME[S.mode]+(S.left>0?'&nbsp;&nbsp;'+(S.left>=60?Math.floor(S.left/60)+":"+String(S.left%60).padStart(2,"0"):S.left+" min"):'')+'</div>':'')+
         '<div class="wage">'+ageTxt()+'</div>';
     }
   } else if(k==="temps"){
-    var wk=S.week, ti=avg(wk.map(function(p){return p.tin;})), to=avg(wk.map(function(p){return p.tout;})), cs=wk.map(function(p){return p.co2;});
-    h+='<div class="wttl">A DAY</div><div class="wsub" style="margin-top:0">last 24 hours</div><div class="wsub">Indoor · <span style="color:#5b9bf3">Outdoor</span></div><canvas id="wcv1" height="70" style="margin-top:6px"></canvas><div class="wsub">CO2</div><canvas id="wcv2" height="60"></canvas>'+
-      wsec("7 DAYS")+'<div class="wsub">Indoor '+f1(ti)+'° · <span style="color:#5b9bf3">Outdoor '+Math.round(to)+'°</span></div><canvas id="wcv3" height="70" style="margin-top:6px"></canvas><div class="wsub">CO2 '+Math.round(avg(cs))+' · peak '+Math.round(Math.max.apply(null,cs))+'</div><canvas id="wcv4" height="60"></canvas>'+
+    /* pieskSavaite (0.1.1013, 0.1.1043): lango antraste, bloku antrastes, dabartines reiksmes legendoje, dvi skales viename grafike. */
+    if(ui.wbusy==="upd") h+=wbusyWin("TEMPERATURES");
+    else {
+    var wk=S.week, ti=avg(wk.map(function(p){return p.tin;})), to=avg(wk.map(function(p){return p.tout;})), cs=wk.map(function(p){return p.co2;}), now=S.hist[S.hist.length-1];
+    var cv=function(id,ht){return '<canvas id="'+id+'" height="'+ht+'" style="margin:6px -16px 0;width:calc(100% + 32px)"></canvas>';};
+    h+='<div class="wtt">TEMPERATURES</div><div class="wsec" style="margin-top:8px">A DAY</div><div class="wsub" style="margin-top:0">last 24 hours</div><div class="wsub">Indoor '+f1(now.tin)+'° · <span style="color:#5b9bf3">Outdoor '+Math.round(now.tout)+'°</span></div>'+cv("wcv1",84)+'<div class="wsub">CO2</div>'+cv("wcv2",70)+
+      wsec("7 DAYS")+'<div class="wsub">Indoor '+f1(ti)+'° · <span style="color:#5b9bf3">Outdoor '+Math.round(to)+'°</span></div>'+cv("wcv3",84)+'<div class="wsub">CO2 '+Math.round(avg(cs))+' · peak '+Math.round(Math.max.apply(null,cs))+'</div>'+cv("wcv4",70)+
       wsec("LAST YEAR")+'<div class="wsub">Outdoor '+ST.year.out+'° · CO2 624</div><div class="wsub">dashed = same week last year</div>'+wupd();
+    }
   } else if(k==="opt"){
     if(ui.wopt==="busy"||ui.wopt==="check"){
-      h+=wsec("OPTIMIZE")+'<div class="spin" style="margin:18px auto"></div><div class="wsub">Analysing…</div>';
+      h+=wbusyWin("OPTIMIZE");
     } else if(ui.wopt==="start"){
-      h+=wsec("OPTIMIZE")+'<div class="wsub" style="color:var(--whi)">Picks the fan speed and CO2 limit for your home from the unit\'s 14-day history</div>'+wbtn('data-wo="analyse"',"Analyse",true)+'<div class="wsub">from the unit, or the cloud when away</div>'+wTempSec(tel);
+      h+='<div class="wtt">OPTIMIZE</div><div class="wsub" style="color:var(--whi)">Picks the fan speed and CO2 limit for your home from the unit\'s 14-day history</div>'+wbtn('data-wo="analyse"',"Analyse",true)+'<div class="wsub">from the unit, or the cloud when away</div>'+wTempSec(tel);
     } else if(ui.wopt==="goal"){
-      h+=wsec("GOAL")+["clean","balance","quiet"].map(function(g){return wbtn('data-wo="g'+g+'"',GOALS[g].n+'<br><small>'+GOALS[g].a+'</small>',g==="balance");}).join("");
+      h+='<div class="wtt">GOAL</div>'+["clean","balance","quiet"].map(function(g){return wbtn('data-wo="g'+g+'"','<span style="text-align:center;line-height:1.15">'+GOALS[g].n+'<br><small style="font-size:16px">'+GOALS[g].a+'</small></span>',g===G.goal);}).join("");
     } else if(ui.wopt==="result"){
       var r=ui.wprop;
-      h+=wsec("FORECAST")+wrow([["Morning",r.m[0]+"›"+r.m[1],wcol(co2Lvl(r.m[1]))],["Day",r.d[0]+"›"+r.d[1],wcol(co2Lvl(r.d[1]))],["Fan",r.f[0]+"›"+r.f[1]+" %"],["Energy",(r.e>0?"+":"")+r.e+" %",wchg(r.e)]])+
+      h+='<div class="wtt">FORECAST</div>'+wrow([["Morning",r.m[0]+"›"+r.m[1],wcol(co2Lvl(r.m[1]))],["Day",r.d[0]+"›"+r.d[1],wcol(co2Lvl(r.d[1]))],["Fan",r.f[0]+"›"+r.f[1]+" %"],["Energy",(r.e>0?"+":"")+r.e+" %",wchg(r.e)]])+
         '<div class="wsub">'+changesTxt(r.rest,r.limit)+'</div>'+(tel?'<div class="wsub">'+CTRL_OTHER.watch+'</div>':(m?'<div class="spin" style="margin:12px auto"></div><div class="wmsg">'+m+'</div>':wbtn('data-wo="apply"',"Apply",true)+'<div class="wsub">original values saved</div>'));
     } else {
-      h+='<div class="wttl">OPTIMIZED</div><div class="wsub" style="margin-top:0">Settings tuned to your home, and the result</div>'+wsec("CO2")+'<div class="wsub">Result</div><div class="wbig" style="color:var(--wgreen);font-size:30px">713 ppm</div><div class="wsub" style="margin-top:0">goal 738</div>'+
+      h+='<div class="wtt">OPTIMIZED</div><div class="wsub" style="margin-top:2px">Settings tuned to your home, and the result</div>'+wsec("CO2")+'<div class="wsub">Result</div><div class="wbig" style="color:var(--wgreen);font-size:30px">713 ppm</div><div class="wsub" style="margin-top:0">goal 738</div>'+
         '<div style="display:flex;justify-content:center;gap:18px;margin-top:6px;font-size:18px"><div><div style="color:var(--wlo)">Fan at rest</div><b>'+S.plan.rest+' %</b><div style="color:var(--wlo);font-size:14px">was '+G.orig.rest+' %</div></div><div><div style="color:var(--wlo)">CO2 limit</div><b>'+S.plan.limit+'</b><div style="color:var(--wlo);font-size:14px">was '+G.orig.limit+'</div></div></div>'+
         wbtn('data-wo="check"',"Check again",true)+wsec("CHANGE");
       if(tel) h+='<div class="wsub">'+CTRL_OTHER.watch+'</div>';
@@ -959,25 +1088,31 @@ function wwin(k){
       h+=wTempSec(tel);
     }
   } else if(k==="stats"){
-    var pv=ST.prev, yr=ST.year;
-    h+='<div class="wttl">STATISTICS</div>'+wsec("PREVIOUS WEEK")+wrow([].concat(wpok("Fresh air",pv.fresh," %",wchg(-pctv(pv.fresh))),wpok("CO2 avg",pv.co2,"",wchg(pctv(pv.co2))),wpok("Fan avg",pv.fan," %",wchg(pctv(pv.fan))),[["Energy",pv.e+" %",wchg(pv.e)]]))+
-      '<div class="wsub">Energy: settings '+pv.parts[0]+', people '+pv.parts[1]+', weather '+pv.parts[2]+'</div>'+
-      wsec("SAME WEEK LAST YEAR")+wrow([].concat(wpok("Fresh air",yr.fresh," %",wchg(-pctv(yr.fresh))),wpok("CO2 avg",yr.co2,"",wchg(pctv(yr.co2))),wpok("Fan avg",yr.fan," %",wchg(pctv(yr.fan))),[["Energy",yr.e+" %",wchg(yr.e)]]))+
-      '<div class="wsub">Energy without the weather. Total '+yr.total+', weather '+yr.weather+'</div>'+wupd()+
-      wsec("APP AT WORK")+'<div class="wsub" style="margin-top:0">7 days</div>'+wrow([["Nobody home",G.work.nobody+" × · "+G.work.nobodyH+" h"],["Cooled",G.work.cooled+" h"],["Heat kept",G.work.heat+" h"],["Boost suggested",G.work.boost+" ×"]])+
-      wsec("CHANGE LOG")+'<div class="wsub" style="margin-top:0">7 days</div>'+
-      (G.log.length?G.log.map(function(e){return '<div class="wsub" style="margin-top:10px;font-size:15px">'+dayName(e.t)+' '+hhmm(e.t)+' · <b style="color:'+({App:"var(--wblue2)",You:"var(--wgreen)",Other:"var(--wyellow)"})[e.who]+'">'+e.who+'</b></div><div style="font-size:18px">'+e.what+'</div>'+(e.why?'<div class="wsub" style="margin-top:0;font-size:15px">'+e.why+'</div>':'');}).join(""):'<div class="wsub">No changes yet. They are recorded from this version on.</div>');
+    /* pieskStatistika (V 2026-11-14): blokas - isvada, eilutes, piktogramos, linija ir poraste; „?“ - paaiskinimai; APP ACTIVITY. */
+    if(ui.wbusy==="upd") h+=wbusyWin("STATISTICS");
+    else {
+    var pv=ST.prev, yr=ST.year, v1=verdict(pv.e,pctv(pv.fresh)), v2=verdict(yr.e,pctv(yr.fresh));
+    var word=function(v,top){return '<div style="font-size:31px;font-weight:700;line-height:1.15;margin-top:'+top+'px;color:'+wvcol(v)+'">'+VT[v]+'</div>';};
+    h+='<div class="wtt">STATISTICS</div>'+word(v1,8)+
+      wrow([].concat(wpok("Fresh air",pv.fresh," %",wchg(-pctv(pv.fresh))),wpok("CO2 avg",pv.co2,"",wchg(pctv(pv.co2))),wpok("Fan avg",pv.fan," %",wchg(pctv(pv.fan))),[["Energy",pv.e+" %",wchg(pv.e)]]))+
+      wico(partsList("var(--wlo)",wchg))+wfoot("prev",v1)+word(v2,22)+
+      wrow([].concat(wpok("Fresh air",yr.fresh," %",wchg(-pctv(yr.fresh))),wpok("CO2 avg",yr.co2,"",wchg(pctv(yr.co2))),wpok("Fan avg",yr.fan," %",wchg(pctv(yr.fan))),[["Energy",yr.e+" %",wchg(yr.e)]]))+
+      wico(yearList("var(--whi)",wchg))+wfoot("year",v2)+wlegend()+wupd()+
+      wsec("APP ACTIVITY")+'<div class="wsub" style="margin-top:0">7 days</div>'+wrow([["Nobody home",G.work.nobody+" × · "+G.work.nobodyH+" h"],["Cooled",G.work.cooled+" h"],["Heat kept",G.work.heat+" h"],["Boost suggested",G.work.boost+" ×"]])+
+      wsec("CHANGE LOG · 7 DAYS")+
+      (G.log.length?G.log.map(function(e){return '<div class="wsub" style="margin-top:10px;font-size:15px">'+dayName(e.t)+' '+hhmm(e.t)+' · <b style="color:'+({App:"var(--wblue2)",You:"var(--wgreen)",Unit:"var(--wlo)"})[e.who]+'">'+e.who+'</b></div><div style="font-size:18px">'+e.what+'</div>'+(e.why?'<div class="wsub" style="margin-top:0;font-size:15px">'+e.why+'</div>':'');}).join(""):'<div class="wsub">No changes yet. They are recorded from this version on.</div>');
+    }
   } else if(k==="filt"){
-    h+='<div class="wttl">FILTERS</div>'+wrow([["Replaced",md(dateAdd(S.filt-180))],["Next",md(dateAdd(S.filt))]])+
+    h+='<div class="wtt">FILTERS</div>'+wrow([["Replaced",md(dateAdd(S.filt-180))],["Next",md(dateAdd(S.filt))]])+
       '<div class="wsub" style="margin-top:2px;color:'+(S.filt<=0?"var(--wyellow)":"var(--wlo)")+'">'+S.filt+' d left</div>'+
       '<div class="wm'+(ui.wfsure?' on':'')+'" id="wfchg" style="justify-content:center">'+(ui.wfsure?"Confirm today":"Mark changed")+'</div>'+(ui.wfbusy?'<div class="wmsg">'+(tel?"Sent to the phone - waiting for the unit…":"Writing to the unit…")+'</div>':ui.wfsaved?'<div class="wmsg">Saved</div>':'');
   } else if(k==="pro"){
     h+=wsec("PRO")+["Smart modes: each mode sets its own fan speed and CO2 limit","Optimize: settings tuned to your home","Statistics: your week, electricity and why","Up to 3 units"].map(function(t){return '<div class="wsub" style="color:var(--whi)">'+t+'</div>';}).join("")+
       '<div class="wsub" style="color:var(--wgreen);font-weight:700">Unlocked</div>'+wsec("INSTALLER")+'<div class="wsub" style="color:var(--whi)">Unlimited units, for installers and service</div>'+wbtn('data-wtoast="Opening Google Play…"',"Unlock",true)+'<div class="wsub">One-time purchase</div>';
   } else if(k==="guide"){
-    h+=wsec("HOW IT WORKS")+GUIDE.map(function(g){return '<div class="wsub" style="color:var(--whi);font-weight:700;margin-top:12px">'+g[0]+'</div><div class="wsub" style="margin-top:2px">'+g[1]+'</div>';}).join("");
+    h+='<div class="wtt">HOW IT WORKS</div>'+GUIDE.map(function(g){return '<div class="wsub" style="color:var(--whi);font-weight:700;margin-top:12px">'+g[0]+'</div><div class="wsub" style="margin-top:2px">'+g[1]+'</div>';}).join("");
   } else if(k==="settings"){
-    h+='<div class="wttl">SETTINGS</div><div class="wsub">Vallox unit controlled by</div><div style="font-size:22px;font-weight:700">'+(tel?"The phone":"The watch")+'</div>';
+    h+='<div class="wtt">SETTINGS</div><div class="wsub">Unit controlled by</div><div style="font-size:22px;font-weight:700">'+(tel?"The phone":"The watch")+'</div>';
     h+=wsec("UNIT");
     if(tel){
       h+='<div class="wsub" style="margin-top:0">Changed on the phone</div>'+wrow([["Temp.",rangeTxt(false)],["Alerts",wAlerts()],["Refresh",REF_SHORT[G.refresh]],["Clock",G.clock]]);
@@ -999,7 +1134,7 @@ function wwin(k){
     if(G.view!=="auto") h+=wsec("PAGES")+WORDER.filter(function(p){return PNAME[p];}).map(function(pg){return '<div class="wrow2"><span>'+PNAME[pg]+'</span>'+wsw(G.pages[pg],'data-wpg="'+pg+'"')+'</div>';}).join("");
     h+=wsec("HOW IT WORKS")+wbtn('data-wwinopen="guide"',"Open")+
       wsec("LANGUAGE")+'<div class="wm" style="justify-content:center" data-wtoast="English, Suomi, Lietuvių, Polski - System follows the watch">'+G.lang+'</div>'+
-      '<div class="wm" style="justify-content:center;margin-top:14px" data-wtoast="5 test alerts sent">Send test alerts</div>';
+      '<div class="wm" style="justify-content:center;margin-top:14px" data-wtoast="5 test alerts sent">Send test alerts</div><div class="wsub">'+VER+'</div>';
   }
   return h;
 }
@@ -1021,14 +1156,15 @@ function draw(){
   var scr=document.getElementById("scr"), y=scr.scrollTop;
   scr.innerHTML=ui.phone==="pultas"?pultas():langas(ui.phone);
   scr.scrollTop=y;
-  document.getElementById("homeLayer").innerHTML=(ui.layer==="home"?homeScreen():"")+(ui.pulling?'<div class="pull"><div class="spin"></div></div>':'');
+  document.getElementById("homeLayer").innerHTML=(ui.layer==="home"?homeScreen():"")+(ui.pulling?'<div class="pull"><div class="spin"></div></div>':'')+
+    (ui.layer==="app"&&(ui.busy==="tUpd"||ui.busy==="sUpd")?'<div class="pull hist"><div class="spin"></div><div>'+HIST+'</div></div>':'');
   if(ui.phone==="temps") graphs();
   var pages=wpages(); if(ui.wpage>=pages.length) ui.wpage=0;
   var pk=pages[ui.wpage], r=wpage(pk);
   var dots=""; if(pages.length>1) for(var i=0;i<pages.length;i++) dots+=i===ui.wpage?"●":"·";
   var over="", n=ui.note, ow=document.querySelector("#ws .wwin"), wy=ow&&ui.wwShown===ui.wwin?ow.scrollTop:0;
   ui.wwShown=ui.wwin;
-  if(ui.wq) over='<div class="wwin"><div class="wsec">DATA REFRESH</div><div class="wsub" style="color:var(--whi)">Optimized reacts faster with Adaptive refresh: every 15-60 min, more often when the air changes.</div><div class="wsub">Drains battery faster</div>'+wbtn('data-wq="auto"',"Switch to Adaptive",true)+wbtn('data-wq="keep"',keepLabel())+'</div>';
+  if(ui.wq) over='<div class="wwin"><div class="wtt">DATA REFRESH</div><div class="wsub" style="color:var(--whi)">Optimized reacts faster with Adaptive refresh: every 15-60 min, more often when the air changes.</div><div class="wsub">Drains battery faster</div>'+wbtn('data-wq="auto"',"Switch to Adaptive",true)+wbtn('data-wq="keep"',keepLabel())+'</div>';
   else if(ui.wface) over='<div style="position:absolute;inset:0" data-wfaceopen="1">'+faceHtml()+'</div>';
   else if(ui.wnote&&n) over='<div class="wnote"><div class="act" id="wnAct"><b>'+n.title+'</b><div>'+n.text+'</div></div>'+(n.kind==="auto"?'<div class="wm on" id="wnUndo" style="justify-content:center">Undo</div>':'')+'<div class="wsub" id="wnClose" style="cursor:pointer;margin-top:10px">Dismiss</div></div>';
   else if(ui.wwin) over='<div class="wwin">'+wwin(ui.wwin)+'</div>';
@@ -1036,54 +1172,82 @@ function draw(){
   document.getElementById("ws").innerHTML='<div class="wp"'+act+'>'+r.h+'</div><div class="wdots">'+(r.dots?dots:"")+'</div>'+over;
   var nw=document.querySelector("#ws .wwin"); if(nw) nw.scrollTop=wy;
   if(ui.wwin==="temps"&&!ui.wface&&!ui.wnote&&!ui.wq) wgraphsWatch();
-  var w=widgets(); document.getElementById("wgs").innerHTML=w.air+w.g;
+  var w=widgets(); document.getElementById("wgs").innerHTML=w.air+w.wt;
   wgraphs();
 }
 
+/* Grafikas kaip VlxGrafikas nuo 0.1.1042: tinklelis su reiksmemis asyje, paskutine reiksme linijos gale; kambarys ir lauke - viename
+   grafike, kiekvienas savo skaleje (kaire / desine), linijos nesusiliecia. CO2 skale cia tiesine (programeleje - netiesine). */
+function ticks(mn,mx,n){
+  var st=(mx-mn)/n, p=Math.pow(10,Math.floor(Math.log(st)/Math.LN10)), f=st/p, a=[]; st=(f<1.5?1:f<3.5?2:f<7.5?5:10)*p;
+  for(var v=Math.ceil(mn/st)*st;v<=mx+1e-9;v+=st) a.push(Math.round(v*1000)/1000);
+  return a;
+}
 function plot(c,series,ref,opts){
   if(!c) return; opts=opts||{};
   var W=c.clientWidth||200, H=+c.getAttribute("height"); c.width=W*2; c.height=H*2; var x=c.getContext("2d"); x.scale(2,2);
-  var vals=[]; series.forEach(function(s){vals=vals.concat(s.v);}); if(ref) vals.push(ref);
-  var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals), pad=(mx-mn)*0.15||1; mn-=pad; mx+=pad;
-  var bottom=opts.labels?14:4;
-  function Y(v){return 4+(H-4-bottom)*(1-(v-mn)/(mx-mn));}
-  x.font="10px system-ui";
-  if(opts.labels){x.fillStyle="#8c96b2";opts.labels.forEach(function(t,i){x.fillText(t,2+(W-40)*i/(opts.labels.length-1),H-2);});}
-  if(ref){x.strokeStyle=opts.refCol||"#8c96b2";x.setLineDash([4,4]);x.lineWidth=1;x.beginPath();x.moveTo(0,Y(ref));x.lineTo(W,Y(ref));x.stroke();x.setLineDash([]);
-    if(opts.refLab){x.fillStyle=opts.refCol;x.fillText(opts.refLab,2,Y(ref)-3);}}
-  series.forEach(function(s){x.strokeStyle=s.c;x.lineWidth=s.dash?1.5:2;x.setLineDash(s.dash?[4,4]:[]);x.beginPath();
-    s.v.forEach(function(v,i){var px=2+(W-40)*i/(s.v.length-1);i?x.lineTo(px,Y(v)):x.moveTo(px,Y(v));});x.stroke();x.setLineDash([]);
-    if(!s.dash){var last=s.v[s.v.length-1]; x.fillStyle=s.c; x.fillText(s.fmt(last),W-34,Y(last)+3);}});
+  var lv=[], rv=[]; series.forEach(function(s){if(s.right) rv=rv.concat(s.v); else lv=lv.concat(s.v);}); if(ref) lv.push(ref);
+  var dual=rv.length>0, top=6, bottom=opts.labels?14:4, L=opts.axis?32:2, R=dual?26:36, n=H<100?3:dual?5:4;
+  function rng(vals,up,down){var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals), dd=(mx-mn)||1;return [mn-dd*down,mx+dd*up];}
+  var r1=dual?rng(lv,0.15,1.9):rng(lv,0.15,0.15), r2=dual?rng(rv,1.9,0.15):null;
+  function Y(v,r){return top+(H-top-bottom)*(1-(v-r[0])/(r[1]-r[0]));}
+  function X(i,k){return L+(W-L-R)*i/(k-1);}
+  x.font="10px system-ui"; x.lineWidth=1;
+  if(opts.axis){
+    ticks(r1[0],r1[1],n).forEach(function(v){
+      if(ref&&Math.abs(v-ref)<(r1[1]-r1[0])*0.06) return;
+      x.strokeStyle="rgba(140,150,178,.22)"; x.beginPath(); x.moveTo(L,Y(v,r1)); x.lineTo(W-R,Y(v,r1)); x.stroke();
+      x.fillStyle="#8c96b2"; x.textAlign="right"; x.fillText((opts.fmt||ppm)(v),L-4,Y(v,r1)+3);});
+    if(dual){x.fillStyle=series.filter(function(s){return s.right&&!s.dash;})[0].c; x.textAlign="left";
+      ticks(r2[0],r2[1],n).forEach(function(v){x.fillText(deg0(v),W-R+5,Y(v,r2)+3);});}
+  }
+  if(opts.labels){x.fillStyle="#8c96b2"; x.textAlign="center"; opts.labels.forEach(function(t,i){x.fillText(t,X(i,opts.labels.length),H-2);});}
+  x.textAlign="left";
+  if(ref){x.strokeStyle=opts.refCol||"#8c96b2";x.setLineDash([4,4]);x.beginPath();x.moveTo(L,Y(ref,r1));x.lineTo(W-R,Y(ref,r1));x.stroke();x.setLineDash([]);
+    if(opts.refLab){x.fillStyle=opts.refCol; if(opts.axis){x.textAlign="right";x.fillText(opts.refLab,L-4,Y(ref,r1)+3);x.textAlign="left";} else x.fillText(opts.refLab,2,Y(ref,r1)-3);}}
+  series.forEach(function(s){var r=s.right?r2:r1; x.strokeStyle=s.c;x.lineWidth=s.dash?1.5:2;x.setLineDash(s.dash?[4,4]:[]);x.beginPath();
+    s.v.forEach(function(v,i){var px=X(i,s.v.length);i?x.lineTo(px,Y(v,r)):x.moveTo(px,Y(v,r));});x.stroke();x.setLineDash([]);
+    if(!s.dash&&!dual&&s.fmt){var last=s.v[s.v.length-1], ly=Y(last,r); x.fillStyle=s.c; x.beginPath();x.arc(W-R,ly,2.5,0,6.3);x.fill(); x.fillText(s.fmt(last),W-R+6,ly+3);}});
 }
 function hiCol(){return isLight()?"#14161c":"#e8ecf5";}
 function degf(v){return v.toFixed(1)+"°";}
 function ppm(v){return String(Math.round(v));}
 function flat(n,v){var a=[];for(var i=0;i<n;i++)a.push(v);return a;}
+function deg0(v){return Math.round(v)+"°";}
+function gin(p){return p.tin;}
+function gout(p){return p.tout;}
+function gco2(p){return p.co2;}
+/* Temperaturos: kambarys kaireje skaleje, lauke - desineje (pernai punktyras - lauko skaleje); CO2 - su 800 riba. */
+function tplot(c,src,lab,hi,blue,year){
+  var s=[{v:src.map(gin),c:hi},{v:src.map(gout),c:blue,right:1}]; if(year) s.push({v:flat(src.length,ST.year.out),c:"#8c96b2",dash:true,right:1});
+  plot(c,s,null,{labels:lab,axis:1,fmt:degf});
+}
+function cplot(c,src,lab,hi,yellow,year){
+  var s=[{v:src.map(gco2),c:hi,fmt:ppm}]; if(year) s.push({v:flat(src.length,624),c:"#8c96b2",dash:true});
+  plot(c,s,800,{labels:lab,axis:1,refCol:yellow,refLab:"800"});
+}
+/* Paros asis - tikros valandos iki dabar (VlxSavaiteKesas.valandos). */
+function hours(){var h0=Math.floor(G.min/60)%24;return [0,6,12,18,24].map(function(k){return String((h0+k)%24);});}
+function days(){return S.week.map(function(x){return x.d;});}
 function graphs(){
-  var h=S.hist, wk=S.week, L=["0","6","12","18","24"], D=wk.map(function(d){return d.d;}), Y="#f5c542", B="#5b9bf3", Gy="#8c96b2";
-  plot(document.getElementById("cvd1"),[{v:h.map(function(p){return p.tin;}),c:hiCol(),fmt:degf},{v:h.map(function(p){return p.tout;}),c:B,fmt:degf}],null,{labels:L});
-  plot(document.getElementById("cvd2"),[{v:h.map(function(p){return p.co2;}),c:hiCol(),fmt:ppm}],800,{labels:L,refCol:Y,refLab:"800"});
-  plot(document.getElementById("cvw1"),[{v:wk.map(function(p){return p.tin;}),c:hiCol(),fmt:degf},{v:wk.map(function(p){return p.tout;}),c:B,fmt:degf},{v:flat(7,ST.year.out),c:Gy,dash:true}],null,{labels:D});
-  plot(document.getElementById("cvw2"),[{v:wk.map(function(p){return p.co2;}),c:hiCol(),fmt:ppm},{v:flat(7,624),c:Gy,dash:true}],800,{labels:D,refCol:Y,refLab:"800"});
+  var B=isLight()?"#2e5fd8":"#5b9bf3", Y=isLight()?"#a86f00":"#f5c542", g=function(id){return document.getElementById(id);};
+  tplot(g("cvd1"),S.hist,hours(),hiCol(),B,false); cplot(g("cvd2"),S.hist,hours(),hiCol(),Y,false);
+  tplot(g("cvw1"),S.week,days(),hiCol(),B,true); cplot(g("cvw2"),S.week,days(),hiCol(),Y,true);
 }
 function wgraphs(){
   document.querySelectorAll(".wgc").forEach(function(c){
-    var day=c.dataset.p==="d", src=day?S.hist:S.week, lab=day?["0","6","12","18","24"]:S.week.map(function(d){return d.d;});
-    if(c.dataset.k==="t") plot(c,[{v:src.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:degf},{v:src.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:degf}]);
-    else plot(c,[{v:src.map(function(p){return p.co2;}),c:"#6fbf73",fmt:ppm}],800,{labels:lab});
+    var day=c.dataset.p==="d", src=day?S.hist:S.week, lab=day?hours():days();
+    if(c.dataset.k==="t") tplot(c,src,lab,"#e8ecf5","#5b9bf3",false); else cplot(c,src,lab,"#e8ecf5","#f5c542",false);
   });
 }
 function wgraphsWatch(){
-  var h=S.hist;
-  plot(document.getElementById("wcv1"),[{v:h.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:degf},{v:h.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:degf}]);
-  plot(document.getElementById("wcv2"),[{v:h.map(function(p){return p.co2;}),c:"#e8ecf5",fmt:ppm}],800,{refCol:"#f5c542"});
-  var wk=S.week, D=wk.map(function(d){return d.d;});
-  plot(document.getElementById("wcv3"),[{v:wk.map(function(p){return p.tin;}),c:"#e8ecf5",fmt:degf},{v:wk.map(function(p){return p.tout;}),c:"#5b9bf3",fmt:degf},{v:flat(7,ST.year.out),c:"#8c96b2",dash:true}],null,{labels:D});
-  plot(document.getElementById("wcv4"),[{v:wk.map(function(p){return p.co2;}),c:"#e8ecf5",fmt:ppm},{v:flat(7,624),c:"#8c96b2",dash:true}],800,{labels:D,refCol:"#f5c542"});
+  var g=function(id){return document.getElementById(id);};
+  tplot(g("wcv1"),S.hist,hours(),"#e8ecf5","#5b9bf3",false); cplot(g("wcv2"),S.hist,hours(),"#e8ecf5","#f5c542",false);
+  tplot(g("wcv3"),S.week,days(),"#e8ecf5","#5b9bf3",true); cplot(g("wcv4"),S.week,days(),"#e8ecf5","#f5c542",true);
 }
 
 /* ---- Valdymas: telefonas ---- */
-function openPhone(w){ui.phone=w;ui.layer="app";document.getElementById("scr").scrollTop=0;if(w==="opt"){ui.opt="idle";ui.prop=null;}draw();}
+function openPhone(w,back){ui.backTo=back||null;ui.phone=w;ui.layer="app";document.getElementById("scr").scrollTop=0;if(w==="opt"){ui.opt="idle";ui.prop=null;}draw();}
 function openOpt(p){openPhone("opt");ui.prop=prog(p.rest,p.limit);ui.opt="result";draw();}
 function busy(id,ms,done){ui.busy=id;draw();setTimeout(function(){ui.busy=null;if(done)done();draw();},ms);}
 function setView(v){G.view=v;ui.wpage=0;ui.wwin=null;if(v==="auto"){G.refresh="Adaptive";G.clock="Fix itself";}draw();}
@@ -1091,7 +1255,7 @@ function setView(v){G.view=v;ui.wpage=0;ui.wwin=null;if(v==="auto"){G.refresh="A
 function applyPlan(r){
   var p0=S.plan; if(!G.canRestore){G.orig={rest:p0.rest,limit:p0.limit};G.canRestore=true;}
   logAdd("You","Optimize plan applied","Fan "+p0.rest+" → "+r.rest+" %, CO2 limit "+p0.limit+" → "+r.limit);
-  S.plan={rest:r.rest,limit:r.limit};
+  S.plan={rest:r.rest,limit:r.limit}; if(r.goal) G.goal=r.goal;
 }
 function restorePlan(){
   var p=S.plan;S.plan={rest:G.orig.rest,limit:G.orig.limit};G.canRestore=false;
@@ -1106,13 +1270,16 @@ function stepRange(k,s){
 }
 document.getElementById("ps").addEventListener("click",function(e){
   if(ui.pulled){ui.pulled=false;return;}
-  var t=e.target.closest("[data-open],[data-mode],[data-boost],[data-ctrl],[data-view],[data-toast],[data-theme],[data-t],[data-al],[data-ref],[data-clk],[data-ogoal],[data-wsel],[data-units],[data-unit],[data-wopen],[data-qk],#fchg,#oNew,#oRestore,#oApply,#oCheck,#tUpd,#sUpd,#wizGo,#wizNext,#openWatch,#nUndo,#wcApp,#wcOpt,#banner,.list");
+  var t=e.target.closest("[data-open],[data-mode],[data-boost],[data-ctrl],[data-view],[data-toast],[data-theme],[data-t],[data-al],[data-ref],[data-clk],[data-ogoal],[data-wsel],[data-units],[data-unit],[data-wopen],[data-qk],#fchg,#oNew,#oRestore,#oApply,#oCheck,#tUpd,#sUpd,#wizGo,#wizNext,#openWatch,#nUndo,#wcApp,#wcOpt,#banner,.list,[data-dlg],[data-dlgx],.dlg");
   if(!t) return;
   var d=t.dataset;
   if(t.id==="nUndo"){undoAuto();return;}
   if(t.id==="banner"){notePhone();return;}
+  if(d.dlgx){document.getElementById("sheet").innerHTML="";if(d.dlgx==="info"){G.asleep=!G.asleep;toast("Demo: the battery setting in App info was changed");draw();}return;}
+  if(d.dlg){dialog(d.dlg);return;}
+  if(t.classList.contains("dlg")){if(e.target===t)document.getElementById("sheet").innerHTML="";return;}
   if(d.wopen){openPhone(d.wopen);return;}
-  if(d.open){openPhone(d.open);return;}
+  if(d.open){openPhone(d.open,d.open==="setup"&&ui.phone==="settings"?"settings":null);return;}
   if(d.qk){var go=ui.qGo;G.qAsked=true;if(d.qk==="auto")G.refresh="Adaptive";document.getElementById("sheet").innerHTML="";draw();go();return;}
   if(d.boost){ if(!G.writing) write(boostOn()?"boost_stop":"boost","phone"); return;}
   if(d.mode){ if(d.mode!==S.mode) phoneMode(d.mode); return;}
@@ -1127,17 +1294,23 @@ document.getElementById("ps").addEventListener("click",function(e){
   if(d.al){G.alerts[d.al]=!G.alerts[d.al];draw();return;}
   if(d.ref){G.refresh=d.ref;draw();return;}
   if(d.clk){G.clock=d.clk;draw();return;}
-  if(d.ogoal){var g=GOALS[d.ogoal];ui.opt="busy";draw();setTimeout(function(){ui.prop=prog(g.rest,g.limit);ui.opt="result";draw();},1800);return;}
+  if(d.ogoal){var g=GOALS[d.ogoal];ui.opt="busy";draw();setTimeout(function(){ui.prop=prog(g.rest,g.limit);ui.prop.goal=d.ogoal;ui.opt="result";draw();},1800);return;}
   if(d.wsel){ui.wizA[ui.wiz]=+d.wsel;draw();return;}
   if(d.units){sheet();return;}
-  if(d.unit!==undefined){var fromSheet=!!document.getElementById("sheet").innerHTML;S=U[+d.unit];document.getElementById("sheet").innerHTML="";if(fromSheet)readNow();else{S.age=0;draw();}return;}
+  if(d.unit!==undefined){
+    var fromSheet=!!document.getElementById("sheet").innerHTML, nu=U[+d.unit];
+    var pick=function(){ui.unitWait=false;S=nu;document.getElementById("sheet").innerHTML="";if(fromSheet)readNow();else{S.age=0;draw();}};
+    /* Valdo laikrodis: telefonas persijungia tik jam patvirtinus (Rekuperatoriai.pasirinkSuValdanciuoju). */
+    if(nu!==S&&G.ctrl==="watch"){if(ui.unitWait)return;ui.unitWait=true;if(fromSheet)sheet();else draw();setTimeout(pick,1500);}
+    else if(!ui.unitWait) pick();
+    return;}
   if(d.toast){e.preventDefault();toast(d.toast);return;}
   if(t.classList.contains("list")){if(e.target===t)document.getElementById("sheet").innerHTML="";return;}
   switch(t.id){
     case "fchg": if(!ui.fsure){ui.fsure=1;draw();clearTimeout(ui.fT);ui.fT=setTimeout(function(){ui.fsure=0;draw();},4000);} else {clearTimeout(ui.fT);ui.fsure=0;busy("fchg",1200,function(){S.filt=180;toast("Saved");});} return;
     case "oNew": ui.opt="goal";draw();return;
     case "oCheck": busy("oCheck",1500);return;
-    case "tUpd": case "sUpd": busy(t.id,1500,function(){G.upd=G.min;});return;
+    case "tUpd": case "sUpd": if(!ui.busy) busy(t.id,1500,function(){G.upd=G.min;});return;
     case "oRestore": busy("oRestore",1600,restorePlan);return;
     case "oApply": if(ui.busy||G.writing) return; var r=ui.prop, fin=function(){applyPlan(r);ui.busy=null;ui.opt="idle";ui.prop=null;};
       if(S.mode==="optimized") busy("oApply",1600,function(){fin();buzz();});
@@ -1150,10 +1323,20 @@ document.getElementById("ps").addEventListener("click",function(e){
     case "openWatch": ui.wface=false;ui.wwin=null;ui.wnote=false;ui.wpage=0;buzz();toast("Look at your watch");draw();return;
   }
 });
+/* „How to read“ ir „Icons“ (Langas.kaipSkaityti, ikonos; tekstai st_*), „Phone asleep“ langelis (VaidmensBlokas.klausk, asleep_*). */
+function dialog(k){
+  var ok=function(a,b){return '<div class="ok"><span data-dlgx="1">'+a+'</span>'+(b?'<span data-dlgx="info">'+b+'</span>':'')+'</div>';};
+  var icons=ICONS.map(function(x,i){return (i===0?'<p class="g">Energy change, by cause:</p>':i===4?'<p class="g">Same period last year:</p>':'')+'<p>'+ik(x[0])+' '+x[1]+'</p>';}).join(""), h;
+  if(k==="how") h='<b class="t">How to read</b><p class="bl" style="color:var(--hi)">• Numbers: then → now.</p>'+
+    VT.map(function(t,i){return '<p class="bl">• <b style="color:'+vcol(i)+'">'+t+'</b>&nbsp; '+VTM[i]+'</p>';}).join("")+icons+ok("OK");
+  else if(k==="icons") h='<b class="t">Icons</b>'+icons+ok("OK");
+  else h=G.asleep?'<b class="t">Reading while the phone sleeps</b><p>On: Wrist Control may run without battery limits.</p><p>To stop: App info → Battery → Optimized.</p>'+ok("Close","Open App info")
+    :'<b class="t">Keep reading while the phone sleeps?</b><p>When the phone lies still, Android pauses background reading for up to a few hours, so Optimized and alerts react late.</p><p>To keep reading: App info → Battery → Unrestricted. Uses a little more battery.</p>'+ok("Cancel","Open App info");
+  document.getElementById("sheet").innerHTML='<div class="dlg"><div>'+h+'</div></div>';
+}
 function sheet(){
   var h='<div class="list"><div><div class="kt">UNIT</div>';
-  U.forEach(function(u,i){h+='<div class="opt'+(u===S?' on':'')+'" data-unit="'+i+'"><b>'+u.name+'</b></div>';});
-  h+='<div class="sub" style="margin-top:8px">Pro: up to 3 units · Installer: unlimited</div></div></div>';
+  h+=unitList()+'</div></div>';
   document.getElementById("sheet").innerHTML=h;
 }
 document.getElementById("back").addEventListener("click",function(){
@@ -1161,24 +1344,26 @@ document.getElementById("back").addEventListener("click",function(){
   if(ui.layer==="home"){ui.layer="app";draw();return;}
   if(ui.phone==="wiz"&&WIZ[ui.wiz]){var wst=wizSteps(), wi=wst.indexOf(ui.wiz); if(wi>0){ui.wiz=wst[wi-1];ui.wizBusy=false;draw();return;}}
   if(ui.phone==="opt"&&ui.opt!=="idle"){ui.opt="idle";ui.prop=null;draw();return;}
-  if(ui.phone!=="pultas"){ui.phone="pultas";draw();}
+  if(ui.phone!=="pultas"){ui.phone=ui.backTo||"pultas";ui.backTo=null;document.getElementById("scr").scrollTop=0;draw();}
 });
 document.getElementById("homeBtn").addEventListener("click",function(){ui.layer="home";draw();});
 document.getElementById("appBtn").addEventListener("click",function(){ui.layer="app";draw();});
 document.getElementById("wgs").addEventListener("click",function(e){var t=e.target.closest("[data-wopen]");if(t)openPhone(t.dataset.wopen);});
 /* Braukimas zemyn pulto virsuje - perskaityti dabar (Pultas.dispatchTouchEvent). */
 var py=null, scrEl=document.getElementById("scr");
-scrEl.addEventListener("pointerdown",function(e){py=(ui.phone==="pultas"&&ui.layer==="app"&&scrEl.scrollTop===0)?e.clientY:null;});
+scrEl.addEventListener("pointerdown",function(e){py=(["pultas","temps","stats"].indexOf(ui.phone)>=0&&ui.layer==="app"&&scrEl.scrollTop===0)?e.clientY:null;});
 scrEl.addEventListener("pointerup",function(e){
   if(py===null) return; var d=e.clientY-py; py=null;
-  if(d>70&&!ui.pulling){ui.pulled=true;setTimeout(function(){ui.pulled=false;},50);readNow();}
+  /* STATISTICS ir TEMPERATURES languose patraukus zemyn - perskaiciuojama (Langas.dispatchTouchEvent, V 2026-11-10). */
+  if(d>70&&!ui.pulling&&!ui.busy){ui.pulled=true;setTimeout(function(){ui.pulled=false;},50);
+    if(ui.phone==="pultas") readNow(); else busy(ui.phone==="temps"?"tUpd":"sUpd",1500,function(){G.upd=G.min;});}
 });
 
 /* ---- Valdymas: laikrodis ---- */
 var ws=document.getElementById("ws");
 ws.addEventListener("click",function(e){
   if(ui.swiped){ui.swiped=false;return;}
-  var t=e.target.closest("#wboost,#wnAct,#wnUndo,#wnClose,#wfchg,[data-wq],[data-wo],[data-wupd],[data-wwinopen],[data-wmode],[data-wclose],[data-wal],[data-wpg],[data-wcloud],[data-wtoast],[data-wt],[data-wref],[data-wclk],[data-wconn],[data-wfaceopen],[data-wwin],[data-wread]");
+  var t=e.target.closest("#wboost,#wnAct,#wnUndo,#wnClose,#wfchg,[data-wq],[data-wo],[data-wupd],[data-wwinopen],[data-wmode],[data-wclose],[data-wal],[data-wpg],[data-wcloud],[data-wtoast],[data-wt],[data-wref],[data-wclk],[data-wconn],[data-wfaceopen],[data-wwin],[data-wread],[data-wlegend]");
   if(!t) return;
   var d=t.dataset;
   if(d.wfaceopen){ui.wface=false;draw();return;}
@@ -1191,7 +1376,8 @@ ws.addEventListener("click",function(e){
   if(d.wupd){ui.wbusy="upd";draw();setTimeout(function(){ui.wbusy=null;G.upd=G.min;draw();},1500);return;}
   if(d.wo){watchOpt(d.wo);return;}
   if(d.wread){S.age=0;draw();return;}
-  if(d.wwin){ui.wwin=d.wwin;ui.wfsaved=0;ui.wopt="idle";draw();return;}
+  if(d.wlegend){ui.wlegend=!ui.wlegend;draw();return;}
+  if(d.wwin){ui.wwin=d.wwin;ui.wfsaved=0;ui.wopt="idle";ui.wlegend=false;draw();return;}
   if(d.wclose){ui.wwin=null;draw();return;}
   if(d.wmode){ if(!G.writing&&d.wmode!==S.mode) watchMode(d.wmode); return;}
   if(d.wal){G.alerts[d.wal]=!G.alerts[d.wal];draw();return;}
@@ -1225,7 +1411,7 @@ function watchOpt(k){
     var r=ui.wprop;
     watchMode("optimized",function(){applyPlan(r);ui.wopt="idle";ui.wprop=null;});
     return;}
-  var g=GOALS[k.slice(1)]; ui.wprop=prog(g.rest,g.limit); ui.wopt="result"; draw();
+  var g=GOALS[k.slice(1)]; ui.wprop=prog(g.rest,g.limit); ui.wprop.goal=k.slice(1); ui.wopt="result"; draw();
 }
 var sx=null;
 ws.addEventListener("pointerdown",function(e){sx=e.clientX;});
@@ -1251,7 +1437,7 @@ var TOUR=[
  ["#ps","Automatic view","One card with the air and one button. The app runs the ventilation for you. Tap a card to open its window. The watch has three pages: air, STATISTICS and SETTINGS.",vaizdas("auto")],
  ["#ps","The phone buttons work","The buttons at the bottom work like on a real Android phone: ○ opens the home screen - here it is, with the app's widgets. ◁ goes back one step, ▢ returns to the app.",function(){vaizdas("auto")();ui.layer="home";draw();}],
  ["[data-open=settings]","Two ways to use it","In SETTINGS you pick Automatic or Semi-automatic. Next, let's switch to Semi-automatic and see what changes.",vaizdas("auto")],
- ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS. The watch followed by itself: 8 pages instead of 3 (pick which ones in its SETTINGS → PAGES).",vaizdas("semi","pultas","vent"),false,".watch"],
+ ["#ps,.watch","Semi-automatic view","Now the phone shows every card: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS, SETTINGS. The watch followed by itself: 8 pages instead of 3 (pick which ones in its SETTINGS → PAGES).",vaizdas("semi","pultas","vent"),false,".watch"],
  ["#ps,.watch","VENTILATION: all modes","Optimized is the Vallox Auto mode with settings tuned to your home. Boost runs an hour, Custom runs on the unit's own timer, Away and At home are fixed speeds, Auto puts back the Vallox factory settings. The same list opens on the watch. Tap one: a spinner, then both devices switch and buzz.",vaizdas("semi","vent","vent","pick"),false,".watch"],
  ["#ps,.watch","TEMPERATURES","Indoor and outdoor, and CO2 against 800 ppm - for a day, for 7 days, and the same week last year. The watch has the same graphs.",vaizdas("semi","temps","temps","temps"),false,".watch"],
  ["#ps,.watch","OPTIMIZE","New plan asks for a goal - clean air, balance or quiet - then reads two weeks of your unit's history. You see the forecast before you Apply; Restore puts back the settings from before Optimize.",vaizdas("semi","opt","opt","opt"),false,".watch"],
