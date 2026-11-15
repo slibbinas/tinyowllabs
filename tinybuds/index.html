@@ -16,10 +16,11 @@
 .galerija figure { margin: 0; text-align: center; }
 .galerija img { width: 100%; height: auto; display: block; border-radius: 14px; }
 .galerija figcaption { font-size: 14px; margin-top: 6px; opacity: .75; }
-.valdikliai { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); align-items: end; }
-.mazi { display: flex; justify-content: center; align-items: flex-end; gap: 24px; margin-top: 16px; }
-.mazi figure { width: 120px; }
-.ekranai-visi { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+.valdikliai { margin: 0 auto; max-width: 560px; text-align: center; }
+.valdikliai img { width: 100%; height: auto; display: block; }
+.valdikliai figcaption { font-size: 14px; margin-top: 8px; opacity: .75; }
+.ekranai-visi { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (max-width: 560px) { .ekranai-visi { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -50,16 +51,7 @@
 <p class="lead" style="margin-top:28px">Free with one widget. Pro is a one-time 2.99 EUR: more widgets, bars, your own colors, labels, time left and history. Every new install gets Pro free for 14 days. No ads, no tracking. Coming to Google Play.</p>
 
 <h2 class="galerija-antraste">Widgets</h2>
-<div class="galerija valdikliai">
-<figure><img src="guide/img/widget-rings.png" alt="Left bud, right bud and case as rings" loading="lazy"><figcaption>Left, right and case</figcaption></figure>
-<figure><img src="guide/img/widget-lr.png" alt="Left and right in one ring, plus the case" loading="lazy"><figcaption>Left | right in one, and case</figcaption></figure>
-<figure><img src="guide/img/widget-earbuds-case.png" alt="Earbuds and case as rings" loading="lazy"><figcaption>Earbuds and case</figcaption></figure>
-<figure><img src="guide/img/widget-bars.png" alt="Earbuds and case as bars, with a label" loading="lazy"><figcaption>Bars with a label (Pro)</figcaption></figure>
-</div>
-<div class="galerija mazi">
-<figure><img src="guide/img/widget-1x1.png" alt="Small 1 by 1 widget, earbuds connected" loading="lazy"><figcaption>1&times;1, connected</figcaption></figure>
-<figure><img src="guide/img/widget-1x1-off.png" alt="Small 1 by 1 widget, earbuds in the case, grey with the time since last seen" loading="lazy"><figcaption>1&times;1, in the case</figcaption></figure>
-</div>
+<figure class="valdikliai"><img src="guide/img/widgets.png" alt="TinyBuds widgets on a home screen: left, right and case; left and right in one with the case; earbuds and case; bars with a label; two small 1 by 1 widgets, connected and not connected" loading="lazy"><figcaption>Rings or bars, 3&times;1, 2&times;1 and 1&times;1. Grey means the earbuds are not connected.</figcaption></figure>
 
 <h2 class="galerija-antraste">Screens</h2>
 <div class="galerija ekranai-visi">
