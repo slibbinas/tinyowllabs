@@ -1,0 +1,183 @@
+<!doctype html>
+<!--
+Nuotraukos (img/) - tikros, iš telefono, 0.1.72 (2026-11-15): valdikliai iškirpti iš pradžios ekrano, ekranai be būsenos juostos.
+Perimti, kai keičiasi vaizdas. PDF: chrome --headless --print-to-pdf (kaip TinySpools vadovas).
+-->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>User guide - TinyBuds</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; font-family: Inter, "Segoe UI", Arial, sans-serif; color: #1B2233; font-size: 10.2pt; line-height: 1.45; }
+.page { width: 210mm; height: 297mm; padding: 16mm 17mm 14mm; position: relative; overflow: hidden; page-break-after: always; background: #fff; }
+.run { display: flex; justify-content: space-between; font-size: 7.5pt; color: #8A93A6; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 9mm; }
+.run .rl { display: flex; align-items: center; gap: 2mm; }
+.run img { width: 4.5mm; height: 4.5mm; border-radius: 1.2mm; }
+.kicker { color: #E8720C; font-weight: 700; font-size: 8.5pt; letter-spacing: .14em; text-transform: uppercase; }
+h1, h2, h3, h4 { margin: 0; letter-spacing: -.01em; }
+h2 { font-size: 22pt; line-height: 1.12; font-weight: 800; margin: 2mm 0 5mm; max-width: 165mm; }
+h3 { font-size: 11.5pt; font-weight: 700; margin: 6mm 0 3mm; }
+h4 { font-size: 10.5pt; font-weight: 700; margin-bottom: 1mm; }
+p { margin: 0 0 2mm; }
+.intro { font-size: 11pt; color: #3A4458; max-width: 165mm; margin-bottom: 6mm; }
+.fine { font-size: 8pt; color: #7A8397; margin-top: 5mm; }
+/* Telefono ekranai - stati nuotrauka su apvaliais kampais (laikrodžio vadove - apvalūs). */
+img.w { display: block; border-radius: 3mm; }
+.cover { background: radial-gradient(120% 80% at 80% 10%, #24304A 0%, #12161E 55%, #0B0E14 100%); color: #EAF0FA; padding: 22mm 20mm; }
+.brand { display: flex; align-items: center; gap: 4mm; font-weight: 800; letter-spacing: .18em; font-size: 10pt; color: #E8720C; }
+.brand img { width: 13mm; height: 13mm; border-radius: 3mm; }
+.brand span { color: #9FB2D3; font-weight: 500; letter-spacing: .05em; text-transform: none; }
+.cover h1 { font-size: 38pt; line-height: 1.04; font-weight: 800; margin: 14mm 0 6mm; }
+.cover .lead { font-size: 12.5pt; color: #B9C6DD; max-width: 150mm; }
+.hero { display: flex; justify-content: center; align-items: center; gap: 7mm; height: 112mm; margin: 10mm 0 10mm; }
+.hero img { filter: drop-shadow(0 12px 22px rgba(0,0,0,.55)); }
+.hero .h1, .hero .h3 { width: 44mm; }
+.hero .h2 { width: 50mm; }
+.benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+.benefits div { border-top: 2px solid #E8720C; padding-top: 3mm; }
+.benefits b { font-size: 11.5pt; color: #fff; }
+.benefits p { color: #AEBBD2; font-size: 9.5pt; margin-top: 1.5mm; }
+.cover .foot { position: absolute; bottom: 12mm; left: 20mm; font-size: 7.5pt; color: #6F7E99; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm 8mm; }
+.card { display: grid; grid-template-columns: 30mm 1fr; gap: 4mm; align-items: center; }
+.card .w.sm { width: 30mm; }
+.card.tik { grid-template-columns: 1fr; align-self: start; border-left: 2px solid #E8720C; padding-left: 4mm; }
+.card p { font-size: 9pt; color: #3A4458; margin: 0; }
+.kontaktai { position: absolute; left: 17mm; right: 17mm; bottom: 14mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; border-top: 1px solid #E3E8F1; padding-top: 4mm; }
+.kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
+.kontaktai span { font-size: 9.5pt; color: #1B2233; }
+
+/* Aplinka aplink A4 lapus visada šviesi; pagal svetainės temą keičiasi tik viršutinė juosta (V 2026-10-29). */
+:root { --juosta: rgba(255,255,255,.95); --juostos-tekstas: #5C667A; --owl: #e8720c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; --owl: #f08a2c; } }
+:root[data-theme="dark"] { --juosta: rgba(20,20,22,.95); --juostos-tekstas: #AAAAAA; --owl: #f08a2c; }
+@media screen {
+  body { background: #F3F5F9; }
+  .page { width: auto; height: auto; max-width: 800px; margin: 16px auto; padding: 26px 22px 30px; border-radius: 10px; scroll-margin-top: 48px; }
+  .webbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; padding: 10px max(16px, calc((100% - 800px) / 2)); background: var(--juosta); font-size: 10px; color: var(--juostos-tekstas); }
+  .webbar a { color: var(--owl); text-decoration: none; }
+  .webbar .pdf { background: #E8720C; color: #fff; padding: 7px 14px; border-radius: 18px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .hero { height: auto; gap: 3%; margin: 20px 0; }
+  .hero .h1, .hero .h3 { width: 28%; }
+  .hero .h2 { width: 32%; }
+  .kontaktai { position: static; margin-top: 18px; }
+  .cover .foot { position: static; margin-top: 18px; }
+  .grid { grid-template-columns: 1fr; }
+  .card { grid-template-columns: 30mm 1fr; }
+  .card.tik { grid-template-columns: 1fr; }
+}
+@media print { .webbar { display: none; } }
+@media screen and (max-width: 760px) {
+  .benefits, .kontaktai { grid-template-columns: 1fr; }
+}
+/* Free / Pro lentelė (TinyBuds). */
+table.fp { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 2mm 0 3mm; }
+table.fp th, table.fp td { text-align: left; padding: 1.6mm 2.5mm; border-bottom: 1px solid #E3E8F1; }
+table.fp th { font-size: 8.5pt; color: #5C667A; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+table.fp td:first-child { color: #3A4458; }
+table.fp td:last-child, table.fp th:last-child { color: #E8720C; font-weight: 600; }
+</style></head><body><div class="webbar"><span><a href="/">TinyOwl</a> &rsaquo; <a href="/tinybuds/">TinyBuds</a> &rsaquo; Guide</span><a class="pdf" href="tinybuds-guide.pdf" download>Download PDF</a></div>
+<section class="page cover">
+  <div class="brand"><img src="ikona.png" alt=""><div>TINYBUDS <span>by TinyOwl</span></div></div>
+  <h1>Your earbuds battery,<br>at a glance.</h1>
+  <p class="lead">A small widget on the home screen shows how much is left in your Bluetooth earbuds.
+  A tap shows the rest: each bud, the case, time left and how long you listened this week.</p>
+  <div class="hero"><img class="w h1" src="img/widget-rings.png" alt="Widget with rings"><img class="w h2" src="img/earbuds-page.png" alt="Earbuds page"><img class="w h3" src="img/widget-lr.png" alt="Left and right in one ring, plus the case"></div>
+  <div class="benefits">
+    <div><b>On the home screen</b><p>A 3&times;1 or 1&times;1 widget with rings or bars, always up to date.</p></div>
+    <div><b>Left, right, case</b><p>Each bud and the case on SoundPeats earbuds, the overall level on the rest.</p></div>
+    <div><b>Time left</b><p>About how long the buds will last at today's pace, and a week of listening.</p></div>
+  </div>
+  <div class="foot">Independent app. Not made, endorsed or supported by any earbuds manufacturer.</div>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinyBuds</span><span>2</span></header>
+  <div class="kicker">Getting started</div>
+  <h2>A widget for your earbuds.</h2>
+  <p class="intro">TinyBuds shows the battery of your Bluetooth earbuds on the home screen. Pair the earbuds with the
+  phone as usual, then add a widget. On first use the app asks for <b>Nearby devices</b>: it needs it to see your paired
+  earbuds and their battery.</p>
+  <div class="grid">
+    <div class="card">
+      <img class="w sm" src="img/widget-rings.png" alt="Widget on the home screen">
+      <div><h4>Add the widget</h4><p>Open TinyBuds and tap <b>Add widget</b>, or long-press the home screen, open
+      <b>Widgets</b> and find TinyBuds. There are two sizes: <b>3&times;1</b> and <b>1&times;1</b>. When the earbuds are
+      not connected, the widget keeps the last level and shows how long ago it was seen, for example <b>2 h ago</b>.</p></div>
+    </div>
+    <div class="card">
+      <img class="w sm" src="img/setup.png" alt="Widget setup screen">
+      <div><h4>Setup</h4><p>When you add a widget, the setup screen opens. <b>Choose earbuds</b> from your paired devices,
+      then pick what to show, the style, a label and a color. <b>Save</b> puts the widget on the home screen. To change it
+      later, tap the widget and then <b>Setup</b>.</p></div>
+    </div>
+  </div>
+  <h3>What to show</h3>
+  <p><b>Earbuds</b> - one level for the pair. <b>Earbuds + case</b> - the pair and the case. <b>Case</b> - the case
+  alone. <b>L, R + case</b> - the left bud, the right bud and the case, each on its own. <b>L | R in one + case</b> -
+  left and right in one block, next to the case. Only the options your earbuds support are offered: earbuds that report
+  one overall level show <b>Earbuds</b> only.</p>
+  <h3>Style, label and color</h3>
+  <p><b>Rings</b> draw each level as a ring around an icon; <b>Bars</b> draw it as a bar. <b>Label</b> adds a short
+  name on the widget, handy with several pairs. The <b>earbuds color</b> paints the icons: the brand color, or your own.</p>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinyBuds</span><span>3</span></header>
+  <div class="kicker">The earbuds page</div>
+  <h2>Tap the widget for the whole story.</h2>
+  <div class="grid">
+    <div class="card">
+      <img class="w sm" src="img/earbuds-page.png" alt="Earbuds page">
+      <div><h4>Earbuds page</h4><p>At the top, the earbuds name and whether they are connected, then a ring for each
+      level: <b>Left</b>, <b>Right</b> and <b>Case</b>, or one ring for the pair. <b>Time left</b> tells about how long the
+      buds will last at the pace of today's listening. <b>Battery, last 24 h</b> draws the left and right levels over the
+      day. <b>Listening</b> shows today and each of the last 7 days. <b>History</b> tells when the earbuds were last
+      connected, last disconnected and last charged in the case. <b>Setup</b> at the bottom opens the widget settings.</p></div>
+    </div>
+    <div class="card tik">
+      <div><h4>Supported earbuds</h4><p><b>Any earbuds that report their battery</b> to the phone show the overall level:
+      Samsung, KZ, Sony and many others. If your phone shows the earbuds battery in the Bluetooth settings, TinyBuds can
+      show it too.</p>
+      <p style="margin-top:2mm"><b>SoundPeats earbuds</b> such as the H3 also show the <b>left</b> bud, the <b>right</b>
+      bud and the <b>case</b>, each on its own. TinyBuds asks the earbuds for these levels over Bluetooth while they are
+      connected. If a level does not show up, tap <b>Check again</b>.</p></div>
+    </div>
+  </div>
+</section>
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinyBuds</span><span>4</span></header>
+  <div class="kicker">Free and Pro</div>
+  <h2>Free for one widget. Pro for the rest.</h2>
+  <p class="intro">Every new install gets <b>Pro free for 14 days</b>. After the trial the widget keeps working with the
+  free look. Pro is a one-time <b>2.99 EUR</b> purchase on Google Play, with no ads and no subscription.</p>
+  <table class="fp">
+    <tr><th></th><th>Free</th><th>Pro</th></tr>
+    <tr><td>Widgets</td><td>One</td><td>More than one</td></tr>
+    <tr><td>Style</td><td>Rings</td><td>Rings or bars</td></tr>
+    <tr><td>Color</td><td>Brand color</td><td>Your own colors</td></tr>
+    <tr><td>Label on the widget</td><td>-</td><td>Yes</td></tr>
+    <tr><td>Overall level, all earbuds</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Left, right and case (SoundPeats)</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>L | R in one block</td><td>-</td><td>Yes</td></tr>
+    <tr><td>Earbuds page with rings and history</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Time left</td><td>-</td><td>Yes</td></tr>
+    <tr><td>Battery graph, last 24 h</td><td>-</td><td>Yes</td></tr>
+    <tr><td>Listening time, 7 days</td><td>-</td><td>Yes</td></tr>
+    <tr><td>Ads</td><td>None</td><td>None</td></tr>
+  </table>
+  <p class="fine">The purchase stays with your Google account and comes back when you reinstall the app.</p>
+  <h3>Privacy</h3>
+  <p>No TinyBuds account, no ads, no analytics, no tracking, and no server of ours; nothing is sent to us. Everything the
+  app reads and stores stays on the phone. The only online service it uses is Google Play, for the optional Pro
+  purchase. The full policy: <b>tinyowllabs.com/tinybuds/privacy</b></p>
+  <div class="kontaktai">
+    <div><b>Questions, ideas, earbuds that do not show</b>
+      <span>hello@tinyowllabs.com</span></div>
+    <div><b>App and privacy policy</b>
+      <span>tinyowllabs.com/tinybuds</span></div>
+    <div><b>Independent developer</b>
+      <span>TinyOwl</span></div>
+  </div>
+</section><script src="/tema.js?v=2"></script></body></html>
