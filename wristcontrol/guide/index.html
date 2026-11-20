@@ -176,6 +176,70 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
 .closing { margin-top: 6mm; padding-top: 4mm; border-top: 1px solid #E3E8F1; }
 .closing h4 { font-size: 9pt; }
 .closing p { font-size: 8.3pt; }
+/* abu irenginiai (V 2026-11-16): zymes prie temos, telefono langas ir laikrodzio ekranai greta */
+.virsus { display: flex; justify-content: space-between; align-items: center; gap: 4mm; }
+.zymes { display: flex; gap: 1.5mm; flex-wrap: wrap; justify-content: flex-end; }
+.zym { font-size: 6.8pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #2F6FE4;
+  border: 1px solid #2F6FE4; border-radius: 2mm; padding: .3mm 2mm; white-space: nowrap; }
+.zym.v { color: #5C667A; border-color: #C9D2E3; background: #F4F6FA; }
+.ziur { font-size: 7.2pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #2F6FE4; margin-bottom: 1.5mm; }
+img.ph { display: block; border-radius: 3mm; box-shadow: 0 3px 10px rgba(0,0,0,.18); }
+.du { display: grid; grid-template-columns: 44mm minmax(0, 1fr); gap: 6mm; align-items: start; margin: 1mm 0 3mm; }
+.du .tel img.ph { width: 44mm; }
+.du.siaura { grid-template-columns: 36mm minmax(0, 1fr); }
+.du.siaura .tel img.ph { width: 36mm; }
+.du b { font-size: 9.3pt; display: block; margin-top: 1.5mm; }
+.du p { font-size: 8.5pt; color: #3A4458; margin: .8mm 0 0; }
+.du h3 { margin: 4mm 0 1.5mm; }
+.du h3 ~ p { font-size: 10.2pt; margin: 0 0 2mm; }
+.du .lk { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4mm; }
+.du .lk img.w { width: 32mm; margin: 0 auto 1mm; }
+.du .lk.dvi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.du .du-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3mm 6mm; }
+.du .du-4 img.w { width: 34mm; }
+.du .steps { gap: 3mm; }
+.du .steps .w.st { width: 29mm; }
+.du .steps b { font-size: 9pt; }
+.du .steps p { font-size: 8pt; }
+table.lyg { font-size: 8.4pt; margin-bottom: 3mm; }
+.lyg td, .lyg th { padding: 1.3mm 2mm; }
+.du2 { display: grid; grid-template-columns: 34mm 34mm minmax(0, 1fr); gap: 5mm; align-items: start; margin: 1mm 0 4mm; }
+.du2 img.tl { width: 34mm; }
+.du2 .piliule { margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2mm; }
+.du2 .piliule img { width: 100%; }
+.pri2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.pri-eile { display: grid; grid-template-columns: 38mm 32mm; gap: 4mm; align-items: start; margin-bottom: 2mm; }
+.pri-eile img.ph { width: 38mm; }
+.pri-eile img.w { width: 32mm; margin-bottom: 3mm; }
+.pri-filtrai { display: grid; grid-template-columns: 38mm 30mm 30mm minmax(0, 1fr); gap: 4mm; align-items: center; }
+.pri-filtrai img.ph { width: 38mm; }
+.pri-filtrai img.w { width: 30mm; }
+.valdikliai { display: grid; grid-template-columns: 44mm 1fr; gap: 5mm; align-items: center; margin: 1mm 0 2mm; }
+.valdikliai img.vd { width: 44mm; }
+.hero .hph { width: 58mm; border-radius: 4mm; box-shadow: 0 12px 22px rgba(0,0,0,.55); }
+.tel-eile .ziur { margin-bottom: 1.5mm; }
+.tankus .tel-eile .w.lk { width: 36mm; margin: 1mm auto 2mm; }
+/* Auto Boost (2026-11-19): laikrodzio ir telefono nustatymu iskarpos greta */
+.ab-eile { display: grid; grid-template-columns: 27mm 27mm minmax(0, 1fr) minmax(0, 1fr); gap: 5mm; align-items: start; margin: 0 0 2mm; }
+.ab-eile img.ab { width: 100%; display: block; margin-bottom: 1.2mm; }
+.ab-eile b { font-size: 8.5pt; display: block; line-height: 1.25; }
+.abp .how { margin-top: 3mm; padding: 3.5mm 5mm; }
+.abp .how li { font-size: 8.6pt; line-height: 1.38; margin-bottom: 1mm; }
+.tankus .tel-eile img.ph { max-height: 45mm; }
+.zurn .ziur { margin-bottom: .5mm; }
+.tankus .pranesimai .w.mz { width: 30mm; }
+.tankus .pr-h { margin-top: 4mm; }
+.tankus .valdikliai img.vd { width: 38mm; }
+.tankus .how { margin-top: 3mm; padding: 3.5mm 6mm; }
+.tankus .reasons { margin-top: 3mm; }
+.tankus .du { margin-bottom: 1mm; }
+.tankus .zurn { margin-top: 3mm; }
+.lyg.psl td:last-child { white-space: nowrap; }
+.reasons.r4 { grid-template-columns: 40mm repeat(3, minmax(0, 1fr)); gap: 4mm; }
+.reasons.r4 .pn { background: none; padding: 0; }
+.reasons.r4 .pn img.ph { width: 40mm; }
+.reasons.r4 .pn p { font-size: 8.4pt; }
+.nust-pastabos.n5 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3mm 4mm; }
 
 /* Kelio juosta - pagal TinyOwl tema (/tema.js), kaip kitu puslapiu kelio eilute; vadovo aplinka visada
    sviesi, tamsioje temoje ji neperdazoma (V 2026-10-29). */
@@ -206,9 +270,13 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   .cover h1 { font-size: 36px; margin: 28px 0 14px; }
   .hero { height: auto; gap: 8px; margin: 20px 0; }
   .hero .h1, .hero .h3 { width: 28%; margin-top: 10%; }
+  .hero .hph { width: 30%; }
   .hero .h2 { width: 36%; }
   .benefits, .two, .grid, .facts, .closing, .takeaways, .steps, .steps.three, .reasons,
-  .split, .zemelapis, .nust-pastabos, .kontaktai, .zurn, .tel-eile { grid-template-columns: 1fr; }
+  .split, .zemelapis, .nust-pastabos, .nust-pastabos.n5, .kontaktai, .zurn, .tel-eile, .du, .du.siaura, .du2,
+  .pri2, .pri-filtrai, .valdikliai, .reasons.r4 { grid-template-columns: 1fr; }
+  .du .lk, .du .steps { grid-template-columns: 1fr 1fr; }
+  .virsus { flex-wrap: wrap; }
   .pranesimai { grid-template-columns: 1fr 1fr; }
   .gestai { grid-template-columns: repeat(3, 1fr); }
   .steps .w.st, .steps.three .w.st { width: 55%; }
@@ -225,12 +293,12 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
 </style></head><body><div class="webbar"><span><a href="/">TinyOwl</a> &rsaquo; <a href="../">Wrist Control for Vallox</a> &rsaquo; Guide</span><a class="pdf" href="wrist-control-guide.pdf" download>Download PDF</a></div>
 
 <section class="page cover">
-  <div class="brand"><img src="img/ikona.png?v=20261115" alt=""><div>WRIST CONTROL <span>for Vallox</span></div></div>
+  <div class="brand"><img src="img/ikona.png?v=20261119" alt=""><div>WRIST CONTROL <span>for Vallox</span></div></div>
   <h1>Fresh air at home,<br>right on your wrist.</h1>
   <p class="lead">A Wear OS app for Vallox heat recovery ventilation, with a phone app. See how fresh the air is,
   switch modes in two taps, and let the app tune the unit to the way your home breathes.</p>
   <div class="hero">
-    <img class="w h1" src="img/sensors.png?v=20261115" alt="sensors"><img class="w h2" src="img/optimize_page.png?v=20261115" alt="optimize_page"><img class="w h3" src="img/stats_page.png?v=20261115" alt="stats_page">
+    <img class="w h1" src="img/sensors.png?v=20261119" alt="sensors"><img class="hph" src="img/tel_pultas.png?v=20261119" alt=""><img class="w h3" src="img/stats_page.png?v=20261119" alt="stats_page">
   </div>
   <div class="benefits">
     <div><b>See your air</b><p>CO2, humidity and temperatures at a glance, coloured green, yellow or red.</p></div>
@@ -240,7 +308,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   <div class="foot">Independent app. Not made or endorsed by Vallox Oy.</div>
 </section>
 <section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>2</span></header>
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>2</span></header>
   
   <div class="kicker">Why it pays off</div>
   <h2>The same fresh air, with less fan.</h2>
@@ -312,74 +380,17 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   less air also means less heat to recover in winter. "Busy hours" are the stuffiest 10&nbsp;% of the time.</p>
 
 </section>
-<section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>3</span></header>
-  
-  <div class="kicker">The app</div>
-  <h2>Everything about your air, one swipe apart.</h2>
-  <p class="intro">Swipe left and right between pages. Tap a page to act on it.</p>
-  <div class="grid">
-    
-    <div class="card">
-      <img class="w sm" src="img/sensors.png?v=20261115" alt="sensors">
-      <div><h4>Sensors</h4><p>How the air in your home is right now: fan speed, temperature, humidity and CO2, coloured by comfort. Tap to see the comfort scales.</p></div>
-    </div>
-    
-    <div class="card">
-      <img class="w sm" src="img/temperatures.png?v=20261115" alt="temperatures">
-      <div><h4>Temperatures</h4><p>The four air streams: extract air from the rooms, supply air to them, outdoor air coming in and exhaust air going out. Tap for charts: the last 24 hours, the last 7 days and last year.</p></div>
-    </div>
-    
-    <div class="card">
-      <img class="w sm" src="img/unit.png?v=20261115" alt="unit">
-      <div><h4>Unit</h4><p>Your unit's name, the speed of both fans, whether the heat exchanger is recovering heat or bypassed to cool, and the unit's own clock.</p></div>
-    </div>
-    
-    <div class="card">
-      <img class="w sm" src="img/filters_window.png?v=20261115" alt="filters_window">
-      <div><h4>Filters</h4><p>When the filters were changed and when the next change is due. After fitting new ones, tap Mark changed, then Confirm today: the date is saved in the unit.</p></div>
-    </div>
-    
-    <div class="card">
-      <img class="w sm" src="img/ventilation.png?v=20261115" alt="ventilation">
-      <div><h4>Ventilation</h4><p>The mode the unit runs now, with the time left in Boost or Custom (1:00 with an hour or more left, 59 min when less), and the fan speed of Home, Away and Boost. Tap Open to switch modes.</p></div>
-    </div>
-    
-    <div class="card">
-      <img class="w sm" src="img/setmode.png?v=20261115" alt="setmode">
-      <div><h4>Mode</h4><p>Pick a mode here, not on the unit's panel: the app also sets the values that belong to it. The running mode spins.</p></div>
-    </div>
-    
-    <div class="card">
-      <img class="w sm" src="img/settings.png?v=20261115" alt="settings">
-      <div><h4>Settings</h4><p>Where the numbers come from, how often they refresh, which alerts are on, the temperature range and which pages are shown.</p></div>
-    </div>
-    
-    <div class="card">
-      <img class="w sm" src="img/ciferblatas.png?v=20261115" alt="ciferblatas">
-      <div><h4>On your watch face</h4><p>Indoor, outdoor or supply air temperature, CO2, humidity, fan speed or days to the filter change on your watch face, updated without opening the app.</p></div>
-    </div>
-  </div>
-  <div class="facts">
-    <div><h4>Home and away</h4><p>At home the app talks to the unit over Wi-Fi. Away, it uses the Vallox cloud and your MyVallox account.</p></div>
-    <div><h4>Alerts that don't nag</h4><p>One notice when indoor air leaves the comfort range, with the same scale as in the app. One when filters are due. A new one only when it gets worse.</p></div>
-    <div><h4>Your pages</h4><p>In Semi-automatic, hold a page to reorder pages; hide them in Settings. Keep only what you look at. Ventilation and Settings always stay.</p></div>
-    <div><h4>Sign in from the phone</h4><p>No typing on the watch: the phone app sends your MyVallox login to the watch. Without a phone, tap Sign in on the watch. English, Suomi, Lietuvių, Polski.</p></div>
-  </div>
-
-</section>
 <section class="page tankus">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>4</span></header>
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>3</span></header>
   
-  <div class="kicker">The phone app</div>
+  <div class="virsus"><div class="kicker">The phone app</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
   <h2>The same app on your phone, with one device in charge.</h2>
-  <p class="intro">The phone app shows the same windows as the watch, on a panel of tiles: ventilation,
-  sensors, temperatures, Optimize, statistics, filters and settings. It opens on the panel; tap a tile
-  to open its window. Setup is in Settings. On the home screen: widgets for the air, statistics and charts (a day or 7 days, temperature or CO2).</p>
+  <p class="intro">The phone app and the watch show the same windows: on the phone as tiles on a panel, on the
+  watch as pages. Which ones depends on the view (next page). Setup is in Settings.</p>
   <div class="tel-eile">
-    <div><img class="ph" src="img/tel_pultas.png?v=20261115" alt=""><b>Panel · Semi-automatic</b><p>Every tile is a window. The amber line on top says how fresh the numbers are.</p></div>
-    <div><img class="ph" src="img/tel_ventilation.png?v=20261115" alt=""><b>Ventilation</b><p>The same modes as on the watch. The running mode spins.</p></div>
-    <div><img class="ph" src="img/tel_nustatymai.png?v=20261115" alt=""><b>Who controls the unit</b><p>In Settings: This phone or The watch, each with its version below.</p></div>
+    <div><div class="ziur">Phone</div><img class="ph" src="img/tel_kas_valdo.png?v=20261119" alt=""><b>Who controls the unit</b><p>In Settings: This phone or The watch, each with its version below.</p></div>
+    <div><div class="ziur">Watch</div><img class="w lk" src="img/settings_top.png?v=20261119" alt="settings_top"><b>On the watch</b><p>The SETTINGS window starts with who controls the unit.</p></div>
+    <div><div class="ziur">Phone</div><img class="ph" src="img/tel_setup.png?v=20261119" alt=""><b>Settings → Setup</b><p>Run setup again, both versions, Open on watch or Update on watch.</p></div>
   </div>
   <div class="split">
     <div>
@@ -410,19 +421,23 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
 
 </section>
 <section class="page tankus">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>5</span></header>
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>4</span></header>
   
-  <div class="kicker">Two ways to use it</div>
+  <div class="virsus"><div class="kicker">Two ways to use it</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
   <h2>Let the app run the air, or run it yourself.</h2>
   <p class="intro">On first start the phone app asks How do you want to use it? You can switch any time in
-  Settings → Automation: tap a card.</p>
-  <div class="tel-eile">
-    <div><img class="ph" src="img/tel_pultas_auto.png?v=20261115" alt=""><b>Automatic · phone</b><p>One card with how fresh the air is, then Boost, Statistics and Settings. A mode other than Optimized or Boost is named on the card.</p></div>
-    <div><img class="w lk" src="img/automatic.png?v=20261115" alt="automatic"><b>Automatic · watch</b><p>The air and a Boost button. The amber line says how fresh the numbers are and, if they stop updating, why. Swipe for Statistics and Settings.</p></div>
-    <div><img class="ph" src="img/tel_nustatymai.png?v=20261115" alt=""><b>Settings → Automation</b><p>Tap a card to switch. In Settings → Setup, Run setup again asks the questions anew, starting from your current choices.</p></div>
-  </div>
-  <div class="split">
+  Settings → Automation: tap a card. The view is chosen on the phone, and the watch follows at once.</p>
+  <div class="du">
+    <div class="tel"><div class="ziur">Phone</div><img class="ph" src="img/tel_automatika.png?v=20261119" alt=""><b>Settings → Automation</b><p>Tap a card to switch. In Settings → Setup, Run setup again asks the questions anew, starting from your current choices.</p></div>
     <div>
+      <table class="modes lyg">
+        <tr><th></th><th>Automatic</th><th>Semi-automatic</th></tr>
+        <tr><td><b>Phone</b></td><td>Panel: AIR, Boost, STATISTICS, SETTINGS</td><td>A panel of tiles: VENTILATION, SENSORS, TEMPERATURES, OPTIMIZE, STATISTICS, FILTERS, SETTINGS</td></tr>
+        <tr><td><b>Watch</b></td><td>3 pages: the air with Boost, Statistics, Settings</td><td>All 8 pages, in your order; hide the ones you do not need</td></tr>
+        <tr><td><b>Fan</b></td><td>With Pro: Optimized, your plan and Auto Boost. Without Pro: Auto mode. Boost in one tap</td><td>Every mode, Optimize, the week clock; Auto Boost when you turn it on</td></tr>
+        <tr><td><b>Data refresh</b></td><td>Always Adaptive</td><td>Your choice, 1 h by default</td></tr>
+        <tr><td><b>Unit clock</b></td><td>Fix itself</td><td>Ask to fix, Fix itself or Off</td></tr>
+      </table>
       <h3>Automatic: Set it up for me</h3>
       <p>A few short questions, about 2 minutes: your VALLOX account (a free MyVallox account, created at
       cloud.vallox.com), which device controls the unit, the week schedule if the unit follows one, what matters
@@ -434,24 +449,130 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
       <p>All windows and settings: modes, the Optimize plan, sensors, charts, statistics, the temperature range,
       notifications and the refresh rate. Every change is yours to make.</p>
     </div>
-    <div>
-      <h3>Boost</h3>
-      <p>One tap: an hour of Boost. While it runs, the button says Stop Boost and shows the minutes left, with a
-      spinning fan. Tap it to stop: the unit goes back to the mode it ran before, with the same settings. A spinner
-      turns until the unit confirms. On the watch, if a change does not go through, the reason stays in amber
-      where you tapped: under the Boost button or under the mode in the list.</p>
-      <h3>Pull down to refresh</h3>
-      <p>On any page of the watch and on the phone panel. A large spinner turns until new numbers arrive; a watch
-      that does not control the unit asks the phone. On the phone, Statistics and Temperatures are recalculated
-      the same way, or by tapping the round refresh badge under the numbers. The watch windows have an Update button.</p>
-    </div>
   </div>
 
 </section>
 <section class="page tankus">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>6</span></header>
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>5</span></header>
   
-  <div class="kicker">Smart modes · the heart of the app</div>
+  <div class="virsus"><div class="kicker">Automatic</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
+  <h2>The air at a glance, and one button.</h2>
+  <p class="intro">In Automatic the app runs the air for you: with Pro in Optimized and your plan, without Pro the
+  unit's own Auto mode. The controlling device reads every 15-60 min and keeps the unit clock right.</p>
+  <div class="du">
+    <div class="tel"><div class="ziur">Phone</div><img class="ph" src="img/tel_auto_pultas.png?v=20261119" alt=""><b>Panel</b><p>AIR: how fresh the air is, CO2, temperature and humidity on the same scales as SENSORS, then outdoor, fan and heater. Below: Boost, STATISTICS and SETTINGS. A mode other than Optimized or Boost is named on the card.</p></div>
+    <div>
+      <div class="ziur">Watch</div>
+      <div class="lk dvi">
+        <div><img class="w" src="img/automatic.png?v=20261119" alt="automatic"><b>Automatic · watch</b><p>The air and a Boost button. The amber line says how fresh the numbers are and, if they stop updating, why. Swipe for Statistics and Settings.</p></div>
+        <div><img class="w" src="img/stats_page.png?v=20261119" alt="stats_page"><b>Statistics</b><p>The same page as in Semi-automatic. Open shows the window. The third page is Settings, without the Pages line.</p></div>
+      </div>
+      <h3>Boost</h3>
+      <p>One tap: an hour of Boost. While it runs, the button says Stop Boost and shows the minutes left, with a
+      spinning fan. Tap it to stop: the unit goes back to the mode it ran before, with the same settings. A spinner
+      turns until the unit confirms. On the watch, if a change does not go through, the reason stays in amber
+      where you tapped: under the Boost button or under the mode in the list. With Auto Boost, on in Automatic, Boost
+      also starts by itself for a shower or cooking (page 11).</p>
+      <h3>Pull down to refresh</h3>
+      <p>On both devices, wherever live numbers show: every watch page and the watch windows Mode, the Sensors
+      scales, the Automatic air screen, Optimize and Filters; the phone panel and the windows VENTILATION, SENSORS,
+      OPTIMIZE and FILTERS. A large spinner turns until new numbers arrive; the device that does not control the
+      unit asks the other one. SENSORS and VENTILATION on the phone also have a round refresh badge at the bottom,
+      like STATISTICS. Statistics and Temperatures recalculate their history: on the phone the same way or with the
+      badge, on the watch with the Update button. Each fresh reading of the controlling device runs the Optimized
+      automation at once: after a shower, pull down and Auto Boost can start.</p>
+    </div>
+  </div>
+  <h3>Week clock</h3>
+  <p>If the unit's week clock is on, the phone panel shows a WEEK CLOCK card. On the phone that
+  controls the unit, Let the app run the air turns the clock off and Optimized on; without Pro, Week clock off leaves
+  the unit's own Auto mode. The schedule stays saved on the unit.</p>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>6</span></header>
+  
+  <div class="virsus"><div class="kicker">Semi-automatic</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
+  <h2>Every window, on both devices.</h2>
+  <p class="intro">Semi-automatic shows all windows and settings. The phone opens on a panel of tiles: tap a tile to
+  open its window. On the watch the same windows are pages: swipe sideways, tap a page to open it.</p>
+  <div class="du">
+    <div class="tel"><div class="ziur">Phone</div><img class="ph" src="img/tel_pultas.png?v=20261119" alt=""><b>Panel · Semi-automatic</b><p>Every tile is a window. The amber line on top says how fresh the numbers are.</p></div>
+    <div>
+      <table class="modes lyg psl">
+        <tr><th>Phone tile</th><th>Watch page</th><th>What is there</th><th>Page</th></tr>
+        <tr><td><b>VENTILATION</b></td><td>Ventilation · Mode</td><td>The running mode, switching modes, the week clock</td><td>8-9</td></tr><tr><td><b>SENSORS</b></td><td>Sensors</td><td>Fan, temperature, humidity and CO2 on comfort scales</td><td>16</td></tr><tr><td><b>TEMPERATURES</b></td><td>Temperatures</td><td>The air streams and charts: a day, 7 days, last year</td><td>16</td></tr><tr><td><b>OPTIMIZE</b></td><td>Optimize</td><td>A plan for Auto mode from 14 days of history</td><td>13</td></tr><tr><td><b>STATISTICS</b></td><td>Statistics</td><td>Your week: fresh air, energy and why</td><td>14-15</td></tr><tr><td><b>FILTERS</b></td><td>Filters</td><td>The next change; Mark as changed</td><td>16</td></tr><tr><td><b>SETTINGS</b></td><td>Settings</td><td>Who controls the unit, the unit's settings, Pro</td><td>18</td></tr><tr><td><b>-</b></td><td>Unit</td><td>Fan speeds, heat exchanger, the unit's clock</td><td>7</td></tr>
+      </table>
+      <p class="pr-pastaba">The phone tiles stay in this order; the watch pages are yours to arrange (Your pages, below).</p>
+    </div>
+  </div>
+  <div class="facts">
+    <div><h4>Home and away</h4><p>At home the app talks to the unit over Wi-Fi. Away, it uses the Vallox cloud and your MyVallox account.</p></div>
+    <div><h4>Alerts that don't nag</h4><p>One notice when indoor air leaves the comfort range, with the same scale as in the app. One when filters are due. A new one only when it gets worse.</p></div>
+    <div><h4>Your pages</h4><p>In Semi-automatic, hold a page to reorder pages; hide them in Settings. Keep only what you look at. Ventilation and Settings always stay.</p></div>
+    <div><h4>Sign in from the phone</h4><p>No typing on the watch: the phone app sends your MyVallox login to the watch. Without a phone, tap Sign in on the watch. English, Suomi, Lietuvių, Polski.</p></div>
+  </div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>7</span></header>
+  
+  <div class="virsus"><div class="kicker">Semi-automatic · watch pages</div><div class="zymes"><span class="zym">Watch</span></div></div>
+  <h2>Everything about your air, one swipe apart.</h2>
+  <p class="intro">Swipe left and right between pages. Tap a page to act on it.</p>
+  <div class="grid">
+    
+    <div class="card">
+      <img class="w sm" src="img/sensors.png?v=20261119" alt="sensors">
+      <div><h4>Sensors</h4><p>How the air in your home is right now: fan speed, temperature, humidity and CO2, coloured by comfort. Tap to see the comfort scales.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/temperatures.png?v=20261119" alt="temperatures">
+      <div><h4>Temperatures</h4><p>The four air streams: extract air from the rooms, supply air to them, outdoor air coming in and exhaust air going out. Tap for charts: the last 24 hours, the last 7 days and last year.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/unit.png?v=20261119" alt="unit">
+      <div><h4>Unit</h4><p>Your unit's name, the speed of both fans, whether the heat exchanger is recovering heat or bypassed to cool, and the unit's own clock.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/filters_window.png?v=20261119" alt="filters_window">
+      <div><h4>Filters</h4><p>When the filters were changed and when the next change is due. After fitting new ones, tap Mark changed, then Confirm today: the date is saved in the unit.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/ventilation.png?v=20261119" alt="ventilation">
+      <div><h4>Ventilation</h4><p>The mode the unit runs now, with the time left in Boost or Custom (1:00 with an hour or more left, 59 min when less), and the fan speed of Home, Away and Boost. Tap Open to switch modes.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/setmode.png?v=20261119" alt="setmode">
+      <div><h4>Mode</h4><p>Pick a mode here, not on the unit's panel: the app also sets the values that belong to it. The running mode spins.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/settings.png?v=20261119" alt="settings">
+      <div><h4>Settings</h4><p>Where the numbers come from, how often they refresh, which alerts are on, the temperature range and which pages are shown.</p></div>
+    </div>
+    
+    <div class="card">
+      <img class="w sm" src="img/ciferblatas.png?v=20261119" alt="ciferblatas">
+      <div><h4>On your watch face</h4><p>Indoor, outdoor or supply air temperature, CO2, humidity, fan speed or days to the filter change on your watch face, updated without opening the app.</p></div>
+    </div>
+  </div>
+  <div class="laikyk">
+    <img class="w mz" src="img/reorder.png?v=20261119" alt="reorder">
+    <div><b>Hold any page</b><p>In Semi-automatic, pages turn into round cards. Drag to change the order, tap to finish.
+    Hide pages in Settings.</p></div>
+  </div>
+
+</section>
+<section class="page tankus">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>8</span></header>
+  
+  <div class="virsus"><div class="kicker">Smart modes · the heart of the app</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span><span class="zym v">Semi-automatic</span></div></div>
   <h2>Switch modes in the app, and every mode runs the way it should.</h2>
   <p class="intro">Your Vallox keeps <b>one fan speed for both Away and Auto</b>, and one CO2 limit
   (the point where it starts adding air) for every mode. The unit's panel switches only the mode, so the unit
@@ -469,7 +590,7 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     <tr><th>Mode</th><th>Use it when</th><th>The app also sets</th><th>Lasts</th></tr>
     <tr><td><b>At home</b></td><td>People are home and you want a steady fan</td><td>CO2 limit 800&nbsp;ppm</td><td>Until you switch</td></tr>
     <tr><td><b>Away</b></td><td>The house is empty</td><td>Fan 30&nbsp;%, CO2 limit 800&nbsp;ppm</td><td>Until you switch</td></tr>
-    <tr class="hl"><td><b>Optimized</b><br><span>first in the list</span></td><td>You want the fan to follow the air</td><td>Your Optimize settings<br><span>(fan at rest 45&nbsp;%, limit 600&nbsp;ppm before you optimize). Slows to 30&nbsp;% when nobody is home, to 35&nbsp;% when winter air is dry; offers a Boost when humidity jumps</span></td><td>Until you switch</td></tr>
+    <tr class="hl"><td><b>Optimized</b><br><span>first in the list</span></td><td>You want the fan to follow the air</td><td>Your Optimize settings<br><span>(fan at rest 45&nbsp;%, limit 600&nbsp;ppm before you optimize). Slows to 30&nbsp;% with nobody home, to 35&nbsp;% in dry winter air; humidity jumps: Boost offer or Auto Boost</span></td><td>Until you switch</td></tr>
     <tr><td><b>Boost</b></td><td>Cooking, sauna, guests</td><td>Nothing</td><td>60 min, then back to the previous mode</td></tr>
     <tr><td><b>Custom</b></td><td>Fireplace or special use</td><td>Nothing</td><td>Its timer, then back</td></tr>
     <tr><td><b>Auto</b><br><span>last in the list</span></td><td>You want the Vallox factory behaviour</td><td>Factory values: fan 30&nbsp;%, CO2 limit 800&nbsp;ppm</td><td>Until you switch</td></tr>
@@ -497,14 +618,37 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
 
 </section>
 <section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>7</span></header>
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>9</span></header>
   
-  <div class="kicker">Optimized · automation</div>
+  <div class="virsus"><div class="kicker">Smart modes · switching</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span><span class="zym v">Semi-automatic</span></div></div>
+  <h2>Switch on the phone or on the watch.</h2>
+  <p class="intro">Both show the same list, Optimized first and Auto last. Tap a mode: the device that controls the
+  unit writes it together with the mode's own values. The running mode spins.</p>
+  <div class="du">
+    <div class="tel"><div class="ziur">Phone</div><img class="ph" src="img/tel_ventilation.png?v=20261119" alt=""><b>VENTILATION window</b><p>The running mode and its values, the list, then WEEK CLOCK. Under the list: Switch modes here - the unit's panel skips app settings.</p></div>
+    <div>
+      <div class="ziur">Watch</div>
+      <div class="lk du-4">
+        <div><img class="w" src="img/ventilation.png?v=20261119" alt="ventilation"><b>Ventilation page</b><p>The running mode, the time left in Boost or Custom and the Home, Away and Boost speeds. Open shows the list.</p></div>
+        <div><img class="w" src="img/setmode.png?v=20261119" alt="setmode"><b>MODE</b><p>Tap a mode. The running one spins.</p></div>
+        <div><img class="w" src="img/mode_laukia.png?v=20261119" alt="mode_laukia"><b>Waiting</b><p>On a watch that does not control the unit: Sent to the phone - waiting for the unit…</p></div>
+        <div><img class="w" src="img/mode_klaida.png?v=20261119" alt="mode_klaida"><b>Not through</b><p>The reason stays in amber under the mode, here Phone has not answered - check in a minute.</p></div>
+      </div>
+    </div>
+  </div>
+  <h3>Week clock</h3>
+  <p>The unit's week clock switches the mode at set hours, so it and Optimized cannot both run. Under the modes, Week clock on starts the clock and ends Optimized; Optimized on does the opposite. The window lists the clock's events, read at home over Wi-Fi. Wrist Control has no week clock of its own: Optimized follows what actually happens at home. In Automatic, while the clock is on, the phone panel has a card to switch it off.</p>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>10</span></header>
+  
+  <div class="virsus"><div class="kicker">Optimized · automation</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
   <h2>Optimized adjusts itself while you live.</h2>
   <p class="intro">While <b>Optimized</b> is on, the app checks four rules after every reading. It never drives
   the fans directly: two rules only change the <b>fan at rest</b> (the Away speed Auto starts from), and the
-  unit's own CO2 control keeps working between readings. The third rule only offers a Boost, the fourth opens or
-  closes the bypass. The numbers were checked against a year of real history (2025-09-15 - 2026-09-14, 47,789
+  unit's own CO2 control keeps working between readings. The third rule offers a Boost or, with Auto Boost, runs
+  one (next page); the fourth opens or closes the bypass. The numbers were checked against a year of real history (2025-09-15 - 2026-09-14, 47,789
   records every 10 min).</p>
   <table class="modes">
     <tr><th>Rule</th><th>When</th><th>What happens</th><th>Ends when</th><th>In a year of history</th></tr>
@@ -514,8 +658,8 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     <tr><td><b>Dry air</b></td><td>Below +5 °C outdoors, indoor humidity under 38&nbsp;% in two readings in a row, CO2 at least 100&nbsp;ppm under the limit</td>
       <td>Fan at rest → <b>35&nbsp;%</b></td><td>Humidity rises above 43&nbsp;%</td>
       <td>6 times in a winter, about 67 h in total</td></tr>
-    <tr><td><b>Boost offer</b></td><td>Humidity up 8&nbsp;% within about 30 min</td>
-      <td>Notification "Cooking or shower?" - tap to Boost</td><td>At most once an hour</td>
+    <tr><td><b>Boost offer</b></td><td>Humidity up at least 8&nbsp;% within 20-60 min</td>
+      <td>Notification "Cooking or shower?" - tap to Boost. With Auto Boost on, Boost starts by itself</td><td>At most once an hour</td>
       <td>About 220 a year, 4 a week</td></tr>
     <tr><td><b>Temperature</b></td><td>Indoors outside the range in Settings</td>
       <td><b>Closes</b> the bypass below it, <b>opens</b> it above, except in the heating season</td>
@@ -530,17 +674,52 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     </div>
     <div>
       <h3>Boost and Custom</h3>
-      <p>While a temporary mode runs, the automation changes nothing and waits until the unit is back in Optimized.</p>
-      <h3>Week clock</h3>
-      <p>The unit's week clock switches the mode at set hours, so it and Optimized cannot both run. Under the modes, Week clock on starts the clock and ends Optimized; Optimized on does the opposite. The window lists the clock's events, read at home over Wi-Fi. Wrist Control has no week clock of its own: Optimized follows what actually happens at home. In Automatic, while the clock is on, the phone panel has a card to switch it off.</p>
+      <p>While a temporary mode runs, the automation changes nothing and waits until the unit is back in Optimized.
+      The one exception is its own Auto Boost: it ends that Boost when humidity is back.</p>
+      <h3>Who runs it</h3>
+      <p>The device that controls the unit, phone or watch. The other one shows the result.</p>
     </div>
   </div>
 
 </section>
-<section class="page tankus">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>8</span></header>
+<section class="page tankus abp">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>11</span></header>
   
-  <div class="kicker">Optimized · how often, and what never changes</div>
+  <div class="virsus"><div class="kicker">Optimized · Auto Boost</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span><span class="zym v">Automatic</span><span class="zym v">Semi-automatic</span></div></div>
+  <h2>A shower or cooking? Boost starts by itself.</h2>
+  <p class="intro">When humidity rises at least 8&nbsp;% within 20-60 min, Auto Boost turns Boost on, and off when humidity
+  is back where it was before the rise, at the latest after 1 h. In Optimized, with Pro, day and night. CO2 does not
+  start it: in Optimized the unit itself adds air for CO2. The fan runs at the Boost speed set on the unit's panel.</p>
+  <div class="ab-eile">
+    <div><div class="ziur">Watch</div><img class="ab" src="img/ab_semi.png?v=20261119" alt=""><b>Semi-automatic</b></div>
+    <div><div class="ziur">Watch</div><img class="ab" src="img/ab_auto.png?v=20261119" alt=""><b>Automatic</b></div>
+    <div><div class="ziur">Phone</div><img class="ab" src="img/tel_ab_semi.png?v=20261119" alt=""><b>Semi-automatic</b></div>
+    <div><div class="ziur">Phone</div><img class="ab" src="img/tel_ab_auto.png?v=20261119" alt=""><b>Automatic</b></div>
+  </div>
+  <table class="modes lyg">
+    <tr><th></th><th>Automatic</th><th>Semi-automatic</th></tr>
+    <tr><td><b>Where</b></td><td colspan="2">Watch: Settings → AUTO BOOST. Phone: Settings → UNIT · AUTO BOOST. One switch for all your units; once you change it, switching the view leaves it as you set it</td></tr>
+    <tr><td><b>Switch</b></td><td>On from the start</td><td>Off from the start: you get the "Cooking or shower?" offer with Tap to Boost instead</td></tr>
+    <tr><td><b>Limits</b></td><td>Fixed: Max 4 a day. After your Stop, waits 3 h.</td><td>Max per day 2×, 3× or 4×; Rest after your Stop 2, 3 or 4 h (4× and 3 h at first)</td></tr>
+  </table>
+  <div class="how">
+    <h4>How it works</h4>
+    <ul>
+      <li><b>Limits.</b> At least 1 h after the previous Auto Boost ends, and no more than the set number in the last 24 h. When a limit holds, nothing happens and there is no offer.</li>
+      <li><b>Notifications</b> come from the device that controls the unit: "Auto Boost started · Humidity +9&nbsp;%" with Stop Boost. At the end it changes quietly, without vibration, to "Auto Boost stopped · Humidity back to 52&nbsp;%", or "Auto Boost ended · After 1 h · Humidity 61&nbsp;%" if humidity did not come back. A tap opens the mode list, in Automatic the air screen or panel with Boost.</li>
+      <li><b>Your Stop</b> (notice, app, unit's panel or Vallox cloud) ends Boost and the notice. Auto Boost then waits until humidity is back, at most the rest time (3 h by default).</li>
+      <li><b>Manual Boost takes over.</b> Tap Boost while Auto Boost runs: it becomes an ordinary Boost, the full 60 min, not stopped by humidity. The notice says "Manual Boost took over · Runs 60 min" and keeps Stop Boost. This is not a stop: no rest time.</li>
+      <li><b>Switched off while it runs.</b> The running Boost ends by itself, no new ones start. The amber line says This Boost runs to its end. To end it now, tap Stop Boost.</li>
+      <li><b>Amber lines</b> under the switch: Only in Optimized when it is on and the unit runs another mode; Needs Adaptive, 20 or 30 min refresh with a fixed 1 h (the app does not change it).</li>
+      <li><b>Where it shows.</b> The change log: App · Auto Boost started. Statistics, App activity: times and hours.</li>
+    </ul>
+  </div>
+
+</section>
+<section class="page tankus">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>12</span></header>
+  
+  <div class="virsus"><div class="kicker">Optimized · how often, and what never changes</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
   <h2>The app looks when something happens.</h2>
   <table class="modes">
     <tr><th>Data refresh: Adaptive</th><th>Reading</th></tr>
@@ -585,19 +764,25 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   </div>
 
 </section>
-<section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>9</span></header>
+<section class="page tankus">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>13</span></header>
   
-  <div class="kicker">Optimize</div>
+  <div class="virsus"><div class="kicker">Optimize</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span><span class="zym v">Semi-automatic</span></div></div>
   <h2>Settings made for your home, not for an average one.</h2>
   <p class="intro">Every home produces CO2 differently: how many people, how big the rooms, when you sleep and
   cook. Optimize reads your unit's last 14 days, learns how much fresh air your home needs at each time of day,
   and picks the Away speed and CO2 limit for Auto mode.</p>
-  <div class="steps">
-    <div><img class="w st" src="img/opt_start.png?v=20261115" alt="opt_start"><b>1 · Analyse</b><p>Tap Analyse. The app reads the unit's 14-day history: from the unit at home, from the Vallox cloud when away.</p></div>
-    <div><img class="w st" src="img/opt_goal.png?v=20261115" alt="opt_goal"><b>2 · Choose a goal</b><p>Clean air (about 620&nbsp;ppm), Balance (about 700) or Quiet: less air, less fan.</p></div>
-    <div><img class="w st" src="img/opt_forecast.png?v=20261115" alt="opt_forecast"><b>3 · See the forecast</b><p>Morning and daytime CO2 and fan speed, now › after. Nothing changes until you tap Apply. If the plan changes nothing, it says no change.</p></div>
-    <div><img class="w st" src="img/opt_check.png?v=20261115" alt="opt_check"><b>4 · Check after a day</b><p>The app compares the forecast with the real morning. Restore brings back your old values.</p></div>
+  <div class="du siaura">
+    <div class="tel"><div class="ziur">Phone</div><img class="ph" src="img/tel_optimize.png?v=20261119" alt=""><b>OPTIMIZE window</b><p>After Apply: the result, checked the next day, Fan at rest and CO2 limit, then Check, New plan and Restore.</p></div>
+    <div>
+      <div class="ziur">Watch</div>
+      <div class="steps">
+        <div><img class="w st" src="img/opt_start.png?v=20261119" alt="opt_start"><b>1 · Analyse</b><p>Tap Analyse. The app reads the unit's 14-day history: from the unit at home, from the Vallox cloud when away.</p></div>
+        <div><img class="w st" src="img/opt_goal.png?v=20261119" alt="opt_goal"><b>2 · Choose a goal</b><p>Clean air (about 620&nbsp;ppm), Balance (about 700) or Quiet: less air, less fan.</p></div>
+        <div><img class="w st" src="img/opt_forecast.png?v=20261119" alt="opt_forecast"><b>3 · See the forecast</b><p>Morning and daytime CO2 and fan speed, now › after. Nothing changes until you tap Apply. If the plan changes nothing, it says no change.</p></div>
+        <div><img class="w st" src="img/opt_check.png?v=20261119" alt="opt_check"><b>4 · Check after a day</b><p>The app compares the forecast with the real morning. Restore brings back your old values.</p></div>
+      </div>
+    </div>
   </div>
   <div class="how">
     <h4>How it works</h4>
@@ -616,16 +801,22 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
 
 </section>
 <section class="page tankus">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>10</span></header>
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>14</span></header>
   
-  <div class="kicker">Statistics</div>
+  <div class="virsus"><div class="kicker">Statistics</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
   <h2>Your week: was the air good, and what did it cost?</h2>
   <p class="intro">Statistics reads the unit's history and answers four questions: how fresh the air was,
   how much the fans used compared with the 7 days before and with the same dates last year, why that changed, and what the app did.</p>
-  <div class="steps three">
-    <div><img class="w st" src="img/stats_page.png?v=20261115" alt="stats_page"><b>At a glance</b><p>A one-word verdict, then Energy and Fresh air against the 7 days before or, until there are any, the same dates last year. Tap Open for the window.</p></div>
-    <div><img class="w st" src="img/stats_top.png?v=20261115" alt="stats_top"><b>The 7 days before</b><p>The verdict, Fresh air (CO2 up to 800&nbsp;ppm), CO2 avg and Fan avg, then → now, and Energy. Green is better, amber worse. Below: the same dates last year.</p></div>
-    <div><img class="w st" src="img/stats_energy.png?v=20261115" alt="stats_energy"><b>Electricity and why</b><p>Icons split the change in electricity into three reasons: settings, people and weather. The fourth: heater kWh, counted by the app.</p></div>
+  <div class="du">
+    <div class="tel"><div class="ziur">Phone</div><img class="ph" src="img/tel_statistics.png?v=20261119" alt=""><b>STATISTICS window</b><p>The verdict, the rows then → now, icons that split the change. ? opens How to read.</p></div>
+    <div>
+      <div class="ziur">Watch</div>
+      <div class="lk">
+        <div><img class="w" src="img/stats_page.png?v=20261119" alt="stats_page"><b>At a glance</b><p>A one-word verdict, Energy and Fresh air, the dates compared. Open shows the window.</p></div>
+        <div><img class="w" src="img/stats_top.png?v=20261119" alt="stats_top"><b>The 7 days before</b><p>The same rows as on the phone. Green is better, amber worse.</p></div>
+        <div><img class="w" src="img/stats_energy.png?v=20261119" alt="stats_energy"><b>Electricity and why</b><p>Settings, people and weather, then heater kWh counted by the app.</p></div>
+      </div>
+    </div>
   </div>
   <div class="reasons">
     <div><b>Settings</b><p>You changed a mode's speed or ran a different mode.</p></div>
@@ -643,19 +834,20 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     </ul>
   </div>
   <div class="zurn">
-    <img class="w mz" src="img/stats_work.png?v=20261115" alt="stats_work"><div><b>App activity · 7 days</b><p>What the automation did this week: hours with the fan lowered because nobody was home, hours of cooling with outdoor air and of keeping heat, Boost offers.</p></div>
-    <img class="tz" src="img/tel_zurnalas.png?v=20261115" alt=""><div><b>Change log · 7 days</b><p>Every change to the unit, newest first: by the App, by You in the app, or Unit - its panel or the Vallox cloud, noticed at the next reading.</p></div>
+    <img class="w mz" src="img/stats_work.png?v=20261119" alt="stats_work"><div><div class="ziur">Watch</div><b>App activity · 7 days</b><p>What the automation did this week: hours with the fan lowered because nobody was home, hours of cooling with outdoor air and of keeping heat, Boost offers, Auto Boost times and hours.</p></div>
+    <img class="tz" src="img/tel_zurnalas.png?v=20261119" alt=""><div><div class="ziur">Phone</div><b>Change log · 7 days</b><p>Every change to the unit, newest first: by the App, by You in the app, or Unit - its panel or the Vallox cloud, noticed at the next reading.</p></div>
   </div>
 
 </section>
-<section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>11</span></header>
+<section class="page tankus">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>15</span></header>
   
-  <div class="kicker">Statistics · last year</div>
+  <div class="virsus"><div class="kicker">Statistics · last year</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
   <h2>Better or worse than a year ago, with the weather taken out.</h2>
   <p class="intro">The Vallox cloud keeps a year of your unit's history. The controlling device downloads it, keeps a
   short summary of every week and compares your last 7 days with the same dates last year. The other device receives the result.</p>
-  <div class="reasons">
+  <div class="reasons r4">
+    <div class="pn"><div class="ziur">Phone</div><img class="ph" src="img/tel_pernai.png?v=20261119" alt=""><p>The second block of the STATISTICS window. Comparing names both periods.</p></div>
     <div><b>On the Statistics page</b><p>The page and the STATISTICS card of the phone panel compare with the 7 days before.
     Last year shows there only until those 7 days exist; the bottom line always names both periods.</p></div>
     <div><b>In the window</b><p>The second block: its own verdict, Fresh air, CO2 avg and Fan avg against last year, and Energy
@@ -680,20 +872,41 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     <div><h4>Price</h4><p>Free to download. Pro (smart modes, Optimize, Statistics) is a one-time purchase with 14 days free to try. Settings shows the days left and Unlock Pro. When the trial ends one notice says so: Analyse turns into Unlock, Optimized opens the Pro window, and Statistics keep the last numbers with their date.</p></div>
     <div><h4>Independent</h4><p>Wrist Control for Vallox is not made, endorsed or supported by Vallox Oy. Vallox and MyVallox are trademarks of Vallox Oy.</p></div>
   </div>
-  <div class="kontaktai">
-    <div><b>Questions, feedback, a photo of something wrong</b>
-      <span>hello@tinyowllabs.com</span></div>
-    <div><b>App and privacy policy</b>
-      <span>tinyowllabs.com/wristcontrol</span></div>
-    <div><b>Independent developer</b>
-      <span>TinyOwl</span></div>
+
+</section>
+<section class="page ">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>16</span></header>
+  
+  <div class="virsus"><div class="kicker">Appendix</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span><span class="zym v">Semi-automatic</span></div></div>
+  <h2>Sensors, temperatures and filters</h2>
+  <div class="pri2">
+    <div>
+      <h3 class="pr-h">Sensors</h3>
+      <div class="pri-eile"><img class="ph" src="img/tel_sensors.png?v=20261119" alt=""><div><img class="w" src="img/sensors.png?v=20261119" alt="sensors"><img class="w" src="img/comfort_top.png?v=20261119" alt="comfort_top"></div></div>
+      <p class="pr-pastaba">The phone window lists the values, then COMFORT ZONE: temperature, humidity and CO2 on
+      coloured scales. On the watch: the Sensors page; tap it for the comfort scales.</p>
+    </div>
+    <div>
+      <h3 class="pr-h">Temperatures</h3>
+      <div class="pri-eile"><img class="ph" src="img/tel_temperatures.png?v=20261119" alt=""><div><img class="w" src="img/temperatures.png?v=20261119" alt="temperatures"><img class="w" src="img/charts.png?v=20261119" alt="charts"></div></div>
+      <p class="pr-pastaba">The phone window: whether the heater is on, then A DAY and 7 DAYS charts of indoor and
+      outdoor temperature and of CO2, and LAST YEAR when the history is there. On the watch: the four air streams;
+      tap the page for the charts.</p>
+    </div>
+  </div>
+  <h3 class="pr-h">Filters</h3>
+  <div class="pri-filtrai">
+    <img class="ph" src="img/tel_filters.png?v=20261119" alt=""><img class="w" src="img/filters.png?v=20261119" alt="filters"><img class="w" src="img/filters_window.png?v=20261119" alt="filters_window">
+    <p class="pr-pastaba">When the next change is due and when the filters were replaced. After fitting new ones:
+    on the phone Mark as changed, then Confirm: changed today; on the watch Mark changed, then Confirm today.
+    The date is saved in the unit. A second tap is needed, so a stray tap changes nothing.</p>
   </div>
 
 </section>
 <section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>12</span></header>
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>17</span></header>
   
-  <div class="kicker">Appendix</div>
+  <div class="virsus"><div class="kicker">Appendix</div><div class="zymes"><span class="zym">Watch</span></div></div>
   <h2>Getting around</h2>
   <div class="gestai">
     <div><b>‹ ›</b><span>Swipe sideways<br>next page</span></div>
@@ -707,23 +920,23 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     
         <div class="pora">
           <div class="nr">1</div>
-          <img class="w mz" src="img/sensors.png?v=20261115" alt="sensors">
+          <img class="w mz" src="img/sensors.png?v=20261119" alt="sensors">
           <div class="rod"><span>tap</span>→</div>
-          <img class="w mz" src="img/comfort_top.png?v=20261115" alt="comfort_top">
+          <img class="w mz" src="img/comfort_top.png?v=20261119" alt="comfort_top">
           <div class="pv">Comfort scales</div>
         </div>
     
         <div class="pora">
           <div class="nr">2</div>
-          <img class="w mz" src="img/temperatures.png?v=20261115" alt="temperatures">
+          <img class="w mz" src="img/temperatures.png?v=20261119" alt="temperatures">
           <div class="rod"><span>tap</span>→</div>
-          <img class="w mz" src="img/charts.png?v=20261115" alt="charts">
+          <img class="w mz" src="img/charts.png?v=20261119" alt="charts">
           <div class="pv">Charts</div>
         </div>
     
         <div class="pora">
           <div class="nr">3</div>
-          <img class="w mz" src="img/unit.png?v=20261115" alt="unit">
+          <img class="w mz" src="img/unit.png?v=20261119" alt="unit">
           <div class="rod"><span>tap</span>→</div>
           <div class="w mz tuscias">↻</div>
           <div class="pv">Refresh</div>
@@ -731,69 +944,73 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
     
         <div class="pora">
           <div class="nr">4</div>
-          <img class="w mz" src="img/filters.png?v=20261115" alt="filters">
+          <img class="w mz" src="img/filters.png?v=20261119" alt="filters">
           <div class="rod"><span>tap</span>→</div>
-          <img class="w mz" src="img/filters_window.png?v=20261115" alt="filters_window">
+          <img class="w mz" src="img/filters_window.png?v=20261119" alt="filters_window">
           <div class="pv">Mark changed</div>
         </div>
     
         <div class="pora">
           <div class="nr">5</div>
-          <img class="w mz" src="img/settings.png?v=20261115" alt="settings">
+          <img class="w mz" src="img/settings.png?v=20261119" alt="settings">
           <div class="rod"><span>tap</span>→</div>
-          <img class="w mz" src="img/settings_top.png?v=20261115" alt="settings_top">
+          <img class="w mz" src="img/settings_top.png?v=20261119" alt="settings_top">
           <div class="pv">Settings</div>
         </div>
     
         <div class="pora">
           <div class="nr">6</div>
-          <img class="w mz" src="img/ventilation.png?v=20261115" alt="ventilation">
+          <img class="w mz" src="img/ventilation.png?v=20261119" alt="ventilation">
           <div class="rod"><span>tap</span>→</div>
-          <img class="w mz" src="img/setmode.png?v=20261115" alt="setmode">
+          <img class="w mz" src="img/setmode.png?v=20261119" alt="setmode">
           <div class="pv">Mode</div>
         </div>
     
         <div class="pora">
           <div class="nr">7</div>
-          <img class="w mz" src="img/optimize_page.png?v=20261115" alt="optimize_page">
+          <img class="w mz" src="img/optimize_page.png?v=20261119" alt="optimize_page">
           <div class="rod"><span>tap</span>→</div>
-          <img class="w mz" src="img/opt_goal.png?v=20261115" alt="opt_goal">
+          <img class="w mz" src="img/opt_goal.png?v=20261119" alt="opt_goal">
           <div class="pv">Optimize</div>
         </div>
     
         <div class="pora">
           <div class="nr">8</div>
-          <img class="w mz" src="img/stats_page.png?v=20261115" alt="stats_page">
+          <img class="w mz" src="img/stats_page.png?v=20261119" alt="stats_page">
           <div class="rod"><span>tap</span>→</div>
-          <img class="w mz" src="img/stats_top.png?v=20261115" alt="stats_top">
+          <img class="w mz" src="img/stats_top.png?v=20261119" alt="stats_top">
           <div class="pv">Statistics</div>
         </div>
   </div>
-  <div class="laikyk">
-    <img class="w mz" src="img/reorder.png?v=20261115" alt="reorder">
-    <div><b>Hold any page</b><p>In Semi-automatic, pages turn into round cards. Drag to change the order, tap to finish.
-    Hide pages in Settings.</p></div>
-  </div>
 
 </section>
-<section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>13</span></header>
+<section class="page tankus">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>18</span></header>
   
-  <div class="kicker">Appendix</div>
+  <div class="virsus"><div class="kicker">Appendix</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
   <h2>Settings</h2>
-  <p class="intro">Tap the SETTINGS page. The window scrolls; turn the bezel or swipe up. On top: which device controls the unit. UNIT holds the unit's settings: on the device that does not control, its values show without buttons. THIS WATCH holds the watch's own. In Automatic: the third page, without Pages.</p>
-  <div class="piliule">
-    <img src="img/nust_0.png?v=20261115" alt=""><img src="img/nust_1.png?v=20261115" alt=""><img src="img/nust_2.png?v=20261115" alt=""><img src="img/nust_3.png?v=20261115" alt="">
+  <p class="intro">On the phone: the SETTINGS tile or card. On the watch: the SETTINGS page; the window scrolls, turn the
+  bezel or swipe up. On top: which device controls the unit. UNIT holds the unit's settings: on the device that does
+  not control, its values show without buttons. THIS WATCH holds the watch's own. In Automatic the phone shows Refresh
+  Adaptive and Clock Fixes itself without buttons, and the watch has no Pages.</p>
+  <div class="du2">
+    <div><div class="ziur">Phone</div><img class="tl" src="img/tel_nust_1.png?v=20261119" alt=""></div>
+    <div><div class="ziur">&nbsp;</div><img class="tl" src="img/tel_nust_2.png?v=20261119" alt=""></div>
+    <div><div class="ziur">Watch</div><div class="piliule">
+      <img src="img/nust_0.png?v=20261119" alt=""><img src="img/nust_1.png?v=20261119" alt=""><img src="img/nust_2.png?v=20261119" alt=""><img src="img/nust_3.png?v=20261119" alt="">
+    </div></div>
   </div>
-  <div class="nust-pastabos">
+  <div class="nust-pastabos n5">
     <div><b>Cloud · My account</b><p>Sign in here or from the phone app. Under the button: the account, and a warning if Vallox rejects it</p></div>
     <div><b>Unit · Connection</b><p>Which unit, and the path: Best available, Local only or Cloud only. Without the cloud, Find units searches your network</p></div>
     <div><b>Data refresh</b><p>1 h (default), 20 or 30 min, Only in app, or Adaptive: every 15-60 min, every 15 after a change</p></div>
     <div><b>Unit clock</b><p>The unit keeps its own time. Ask to fix, Fix itself or Off. After a fix the line below says Unit clock set, or why not</p></div>
-    <div><b>Alerts</b><p>Notifications for temperature, humidity, CO2 and filters. If the system blocks them: Turn on</p></div>
+    <div><b>Alerts · Auto Boost</b><p>Notifications for temperature, humidity, CO2 and filters. If the system blocks them: Turn on. Auto Boost: page 11</p></div>
     <div><b>Pages</b><p>Semi-automatic: show or hide each page. Ventilation and Settings always stay</p></div>
     <div><b>Pro</b><p>Trial days left or Trial ended, with Unlock Pro</p></div>
     <div><b>How it works · Language · Send test alerts</b><p>Short help on every feature. English, Suomi, Lietuvių, Polski. Send test alerts: five samples</p></div>
+    <div><b>Theme</b><p>Phone only: System, Dark or Light. System follows the phone's dark mode</p></div>
+    <div><b>Setup · About</b><p>Phone: Run setup again, the watch, the Vallox account; the guide, privacy and both versions</p></div>
   </div>
   <div class="kontaktai">
     <div><b>Questions, feedback, a photo of something wrong</b>
@@ -805,28 +1022,33 @@ table.modes { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
   </div>
 
 </section>
-<section class="page ">
-  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261115" alt="">Wrist Control for Vallox</span><span>14</span></header>
+<section class="page tankus">
+  <header class="run"><span class="rl"><img src="img/ikona.png?v=20261119" alt="">Wrist Control for Vallox</span><span>19</span></header>
   
-  <div class="kicker">Appendix</div>
-  <h2>On your wrist without opening the app</h2>
-  <h3 class="pr-h">Complications</h3>
+  <div class="virsus"><div class="kicker">Appendix</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span></div></div>
+  <h2>Without opening the app</h2>
+  <h3 class="pr-h">Complications · watch</h3>
   <p class="intro">Touch and hold the watch face, tap Customize, pick a slot and choose Wrist Control. Tap a complication to open the app.</p>
-  <img class="kompl" src="img/komplikacijos.png?v=20261115" alt="">
+  <img class="kompl" src="img/komplikacijos.png?v=20261119" alt="">
   <p class="pr-pastaba">The diamond is the unit's heat exchanger, drawn like on the unit itself. The white dot shows where the temperature is measured.
   Filter change shows days left, with a minus when overdue. After 3 h without new data a complication shows --.</p>
-  <h3 class="pr-h">Notifications</h3>
+  <h3 class="pr-h">Home screen widgets · phone</h3>
+  <div class="valdikliai"><img class="vd" src="img/tel_valdikliai.png?v=20261119" alt="">
+    <p class="pr-pastaba">Touch and hold the home screen, tap Widgets and choose Wrist Control. Air shows how fresh the air is: CO2,
+    indoor temperature and humidity. Statistics: fan electricity and fresh air for the last 7 days, against the period before and last
+    year. Four chart widgets: a day or 7 days, temperature or CO2. Tap a widget to open the app.</p></div>
+  <h3 class="pr-h">Notifications · phone and watch</h3>
   <div class="pranesimai">
-    <div><img class="w mz" src="img/pranesimas_karstis.png?v=20261115" alt="pranesimas_karstis"><b>Temperature</b><span>below 18 or above 27 °C</span></div>
-    <div><img class="w mz" src="img/pranesimas_dregme.png?v=20261115" alt="pranesimas_dregme"><b>Humidity</b><span>below 25 or above 60&nbsp;%</span></div>
-    <div><img class="w mz" src="img/pranesimas_co2.png?v=20261115" alt="pranesimas_co2"><b>CO2</b><span>above 800&nbsp;ppm, again above 1200</span></div>
-    <div><img class="w mz" src="img/pranesimas_laikrodis.png?v=20261115" alt="pranesimas_laikrodis"><b>Unit clock</b><span>more than 5 min off; tap to fix</span></div>
+    <div><img class="w mz" src="img/pranesimas_karstis.png?v=20261119" alt="pranesimas_karstis"><b>Temperature</b><span>below 18 or above 27 °C</span></div>
+    <div><img class="w mz" src="img/pranesimas_dregme.png?v=20261119" alt="pranesimas_dregme"><b>Humidity</b><span>below 25 or above 60&nbsp;%</span></div>
+    <div><img class="w mz" src="img/pranesimas_co2.png?v=20261119" alt="pranesimas_co2"><b>CO2</b><span>above 800&nbsp;ppm, again above 1200</span></div>
+    <div><img class="w mz" src="img/pranesimas_laikrodis.png?v=20261119" alt="pranesimas_laikrodis"><b>Unit clock</b><span>more than 5 min off; tap to fix</span></div>
   </div>
   <p class="pr-pastaba">One notice per level, a new one only when it gets worse; it disappears as soon as the value improves.
   The scale is the same as in the app, so you see how far out you are. Filters get a notice when a change is due.
   Temperature, humidity, CO2 and filter notices can be turned off in Settings → Alerts. The clock notice cannot:
   a wrong unit clock spoils the history that Optimize and Statistics rely on. Choose Off under Unit clock to silence it.
-  A high CO2 or humidity notice opens the mode list, in Automatic the air screen with the Boost button. "Cooking or shower?" with Tap to Boost starts Boost on the watch; on the phone it opens the mode list, in Automatic the panel with the Boost button. The filter notice opens Filters. Of the connection notices, Password not accepted and No contact with the unit after 3 h without readings, while air alerts are paused, have no switch and come once. They disappear when the connection is back. On a phone with Android 13 or newer the app asks for permission to show notifications when the panel or Setup opens; if it was refused, Settings → Alerts offers Turn on.</p>
+  A high CO2 or humidity notice opens the mode list, in Automatic the air screen with the Boost button. "Cooking or shower?" with Tap to Boost starts Boost on the watch; on the phone it opens the mode list, in Automatic the panel with the Boost button. The filter notice opens Filters. Of the connection notices, Password not accepted and No contact with the unit after 3 h without readings, while air alerts are paused, have no switch and come once. They disappear when the connection is back. On a phone with Android 13 or newer the app asks for permission to show notifications when the panel or Setup opens; if it was refused, Settings → Alerts offers Turn on. Auto Boost notices: page 11.</p>
 
 </section>
 <script src="/tema.js?v=3"></script></body></html>
