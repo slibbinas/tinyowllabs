@@ -675,7 +675,7 @@ table.lyg { font-size: 8.4pt; margin-bottom: 3mm; }
     <div>
       <h3>Boost and Custom</h3>
       <p>While a temporary mode runs, the automation changes nothing and waits until the unit is back in Optimized.
-      The one exception is its own Auto Boost: it ends that Boost when humidity is back.</p>
+      The one exception is its own Auto Boost: it ends that Boost when the humidity or CO2 peak is gone.</p>
       <h3>Who runs it</h3>
       <p>The device that controls the unit, phone or watch. The other one shows the result.</p>
     </div>
@@ -687,9 +687,10 @@ table.lyg { font-size: 8.4pt; margin-bottom: 3mm; }
   
   <div class="virsus"><div class="kicker">Optimized · Auto Boost</div><div class="zymes"><span class="zym">Phone</span><span class="zym">Watch</span><span class="zym v">Automatic</span><span class="zym v">Semi-automatic</span></div></div>
   <h2>A shower or cooking? Boost starts by itself.</h2>
-  <p class="intro">When humidity rises at least 8&nbsp;% within 20-60 min, Auto Boost turns Boost on, and off when humidity
-  is back where it was before the rise, at the latest after 1 h. In Optimized, with Pro, day and night. CO2 does not
-  start it: in Optimized the unit itself adds air for CO2. The fan runs at the Boost speed set on the unit's panel.</p>
+  <p class="intro">When humidity rises at least 8&nbsp;% within 20-60 min, or CO2 goes above 1200&nbsp;ppm (red), Auto Boost
+  turns Boost on. It turns it off when the peak is gone: humidity below 60&nbsp;% or back where it was before the rise, CO2
+  at 1200&nbsp;ppm or lower; at the latest after 1 h. In Optimized, with Pro, day and night. The fan runs at the Boost speed
+  set on the unit's panel.</p>
   <div class="ab-eile">
     <div><div class="ziur">Watch</div><img class="ab" src="img/ab_semi.png?v=20261119" alt=""><b>Semi-automatic</b></div>
     <div><div class="ziur">Watch</div><img class="ab" src="img/ab_auto.png?v=20261119" alt=""><b>Automatic</b></div>
@@ -699,16 +700,16 @@ table.lyg { font-size: 8.4pt; margin-bottom: 3mm; }
   <table class="modes lyg">
     <tr><th></th><th>Automatic</th><th>Semi-automatic</th></tr>
     <tr><td><b>Where</b></td><td colspan="2">Watch: Settings → AUTO BOOST. Phone: Settings → UNIT · AUTO BOOST. One switch for all your units; once you change it, switching the view leaves it as you set it</td></tr>
-    <tr><td><b>Switch</b></td><td>On from the start</td><td>Off from the start: you get the "Cooking or shower?" offer with Tap to Boost instead</td></tr>
-    <tr><td><b>Limits</b></td><td>Fixed: Max 4 a day. After your Stop, waits 3 h.</td><td>Max per day 2×, 3× or 4×; Rest after your Stop 2, 3 or 4 h (4× and 3 h at first)</td></tr>
+    <tr><td><b>Switch</b></td><td>On from the start</td><td>Off from the start: you get the "Cooking or shower?" offer with Tap to Boost instead (humidity only)</td></tr>
+    <tr><td><b>Limits</b></td><td>Fixed: Max 4 a day. Stops below 60&nbsp;% humidity or 1200&nbsp;ppm CO2. After your Stop, waits 3 h.</td><td>Max per day 2×, 3× or 4×; Rest after your Stop 2, 3 or 4 h; Stop when humidity is below 60&nbsp;% or back to start (4×, 3 h and below 60&nbsp;% at first)</td></tr>
   </table>
   <div class="how">
     <h4>How it works</h4>
     <ul>
       <li><b>Limits.</b> At least 1 h after the previous Auto Boost ends, and no more than the set number in the last 24 h. When a limit holds, nothing happens and there is no offer.</li>
-      <li><b>Notifications</b> come from the device that controls the unit: "Auto Boost started · Humidity +9&nbsp;%" with Stop Boost. At the end it changes quietly, without vibration, to "Auto Boost stopped · Humidity down to 52&nbsp;%", or "Auto Boost ended · After 1 h · Humidity 61&nbsp;%" if humidity did not come back. A tap opens the mode list, in Automatic the air screen or panel with Boost.</li>
-      <li><b>Your Stop</b> (notice, app, unit's panel or Vallox cloud) ends Boost and the notice. Auto Boost then waits until humidity is back, at most the rest time (3 h by default).</li>
-      <li><b>Manual Boost takes over.</b> Tap Boost while Auto Boost runs: it becomes an ordinary Boost, the full 60 min, not stopped by humidity. The notice says "Manual Boost took over · Runs 60 min" and keeps Stop Boost. This is not a stop: no rest time.</li>
+      <li><b>Notifications</b> come from the device that controls the unit: "Auto Boost started · Humidity +9&nbsp;%" with Stop Boost. At the end it changes quietly, without vibration, to "Auto Boost stopped · Humidity down to 52&nbsp;%", or "Auto Boost ended · After 1 h · Humidity 61&nbsp;%" if humidity did not come back. For CO2: "CO2 1250&nbsp;ppm", then "CO2 down to 1150&nbsp;ppm" or "After 1 h · CO2 1300&nbsp;ppm". A tap opens the mode list, in Automatic the air screen or panel with Boost.</li>
+      <li><b>Your Stop</b> (notice, app, unit's panel or Vallox cloud) ends Boost and the notice. Auto Boost then waits until the air is back, at most the rest time (3 h by default).</li>
+      <li><b>Manual Boost takes over.</b> Tap Boost while Auto Boost runs: it becomes an ordinary Boost, the full 60 min, not stopped by humidity or CO2. The notice says "Manual Boost took over · Runs 60 min" and keeps Stop Boost. This is not a stop: no rest time.</li>
       <li><b>Switched off while it runs.</b> The running Boost ends by itself, no new ones start. The amber line says This Boost runs to its end. To end it now, tap Stop Boost.</li>
       <li><b>Amber lines</b> under the switch: Only in Optimized when it is on and the unit runs another mode; Needs Adaptive, 20 or 30 min refresh with a fixed 1 h (the app does not change it).</li>
       <li><b>Where it shows.</b> The change log: App · Auto Boost started. Statistics, App activity: times and hours.</li>
