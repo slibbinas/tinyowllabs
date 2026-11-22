@@ -21,7 +21,7 @@
 </div>
 <header class="top"><div class="brand"><img src="/tinyspools.png?v=2" alt=""><div><b>TinySpools</b><span class="motto">by TinyOwl</span></div></div></header>
 <h1>Privacy Policy</h1>
-<p class="muted">Last updated: 5 November 2026</p>
+<p class="muted">Last updated: 22 November 2026</p>
 
 <p>TinySpools ("the app") is an Android app for keeping track of your 3D printer filament: which
 brands, materials and colors you have, how much is left on each spool and on which shelf it is.
@@ -46,6 +46,7 @@ account - to read your printers' AMS from Bambu Lab's cloud.</p>
 <tr><td>Bambu Lab account e-mail and password (optional)</td><td>To sign in to your Bambu Lab account, so the app can read your printers' AMS</td><td>The password is not stored. The e-mail address is kept on the phone to fill in the sign-in form. Bambu Lab's sign-in (an access token, valid about a year) is kept on the phone, encrypted with a key in the Android Keystore</td><td>Only to Bambu Lab (api.bambulab.com, over HTTPS), when you sign in in Settings → Bambu Lab account. If Bambu Lab asks for a code from its e-mail, that code is sent to Bambu Lab too</td></tr>
 <tr><td>Your printers and their AMS contents (optional, with a Bambu Lab account)</td><td>To show what is in each AMS slot and how much is left, and to move your spools to their AMS location</td><td>Printer names, models and serial numbers, each spool's AMS slot and Bambu Lab tag ID, and the remaining amount taken from the printer are kept on the phone and included in your backup files</td><td>The app only reads them from Bambu Lab's cloud (api.bambulab.com and us.mqtt.bambulab.com, encrypted), signed in with your access token. This happens when you sync - pull the Locations list down, tap ↻ or Sync - and, if “Sync when I open Locations” is on (it is by default), when you open Locations or an AMS location and the last sync is older than 15 minutes. Only while the app is open, never in the background</td></tr>
 <tr><td>Bambu Lab spool tags</td><td>To fill in a spool from its tag and to know which spool is in which AMS slot</td><td>The tag is only read, never written. Its ID is kept with your spool and included in your backup files</td><td>Not sent anywhere</td></tr>
+<tr><td>Label printer (optional)</td><td>To print a spool's QR label on a NIIMBOT B1 when you tap Print</td><td>The printer's Bluetooth address is kept on the phone so the next print connects right away; not included in your backup files</td><td>Only the label image goes to your printer, directly over Bluetooth. Nothing goes online</td></tr>
 <tr><td>Barcode database update (optional)</td><td>To recognize filament boxes by their barcode</td><td>The public Open Filament Database file is downloaded from api.openfilamentdatabase.org and stored on the phone; included in your backup files</td><td>Nothing is sent except the download request itself. It happens only when you tap “Update barcode database” in Settings or confirm the update after scanning an unknown barcode</td></tr>
 </table>
 </div>
@@ -61,7 +62,7 @@ leaves the phone.</p>
 <ul>
 <li>It does not collect personal data for the developer, and it does not share your data with anyone. The only third party it talks to with your data is Bambu Lab, and only if you sign in to your Bambu Lab account.</li>
 <li>It does not use analytics, crash reporting, advertising or tracking SDKs.</li>
-<li>It does not go online in the background, and it does not request location, contacts or microphone.</li>
+<li>It does not go online in the background, and it does not request contacts or microphone. It never reads your location (see Location below).</li>
 <li>It does not sell data. There is no data to sell.</li>
 </ul>
 
@@ -69,6 +70,8 @@ leaves the phone.</p>
 <ul>
 <li><b>Camera</b> (asked when you first scan): only to read barcodes and QR codes. Images are processed on the phone and never saved or sent.</li>
 <li><b>NFC</b>: to write a spool link to your own NFC sticker and to open that spool when you touch it.</li>
+<li><b>Nearby devices</b> (Bluetooth, asked when you first tap Print): only to find your NIIMBOT label printer and send it the label. On Android 12 and newer the app declares that it does not use Bluetooth to work out your location.</li>
+<li><b>Location</b> (only on Android 10 and 11, asked when you first tap Print): those Android versions require it for any Bluetooth search. The app does not read your location and sends nothing anywhere.</li>
 <li><b>Internet</b>: to download the Open Filament Database barcode file from api.openfilamentdatabase.org when you ask for it,
 and, if you sign in to a Bambu Lab account, to sign in to Bambu Lab and read your printers' AMS from its cloud as described above.
 These servers, like any web server, see the request (your IP address) under their own policies; the app sends no other data.</li>
