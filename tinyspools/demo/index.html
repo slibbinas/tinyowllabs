@@ -261,7 +261,7 @@ input[type=range].gs{width:100%;accent-color:var(--acc);margin:12px 0 8px}
   </div>
 </div>
 <header class="top"><img src="/tinyspools.png" alt=""><div><b>TinySpools</b><span>Live demo · a real filament shelf, nothing leaves this page</span></div></header>
-<p class="lead">This is the author's own filament: 50 filaments, 73 spools, six locations (names translated to English). Browse the Spools list, the Palette and Locations with two Bambu Lab AMS units whose grams left follow a pretend printer, open a spool and change how much is left or where it is, add filaments from the catalog, scan a barcode, make a QR label, write an NFC sticker, run a Check spools round, change the settings or download a backup. Changes stay in this page until you reload it. <a href="/tinyspools/">About the app</a> · <a href="/tinyspools/guide/">User guide</a></p>
+<p class="lead">This is the author's own filament: 50 filaments, 73 spools, six locations (names translated to English). Browse the Spools list, the Palette and Locations with two Bambu Lab AMS units whose grams left follow a pretend printer, open a spool and change how much is left or where it is, add filaments from the catalog, scan a barcode, make a QR label and print it on a NIIMBOT B1 label printer, write an NFC sticker, run a Check spools round, change the settings or download a backup. Changes stay in this page until you reload it. <a href="/tinyspools/">About the app</a> · <a href="/tinyspools/guide/">User guide</a></p>
 
 <h2 class="try">Try it yourself <button id="tourBtn">Take a tour</button></h2>
 <div class="stage">
@@ -286,6 +286,8 @@ input[type=range].gs{width:100%;accent-color:var(--acc);margin:12px 0 8px}
     <p>The app reads the AMS from Bambu Lab's cloud. Here a pretend printer prints:</p>
     <button id="spausdinti">🖨️ print with the AMS</button>
     <p>Then open Locations or tap ↻ under an AMS: the grams left follow the printer, with Undo.</p>
+    <h3>Label printer</h3>
+    <p>In a spool, Label → <b>QR label</b> → <b>Print</b>: the app prints the label on a NIIMBOT B1 over Bluetooth, on 50×30 mm labels. <b>Share</b> sends the image to any other printer app. Here the printer is pretend. <a href="/tinyspools/guide/#label-printer">How it works</a></p>
   </div>
 </div>
 <div class="tools"><button id="reset">Start over</button></div>
@@ -1770,6 +1772,7 @@ const TURAS = [
   ['.pills', 'Find a spool', 'Search, or narrow down by brand, material, type or color.', skirtukas('spools')],
   ['#ps', 'A filament', 'Tap a card: its spools with how much is left and where, the filament details with Edit, and Delete.', () => { skirtukas('spools')(); atidarytiFilamenta(pirmasF().id); }],
   ['#ps', 'A spool', 'Tap a spool: set the grams left, Spool or Refill, where it is - or make a QR label or write an NFC sticker for it.', () => { const f = pirmasF(); skirtukas('spools')(); atidarytiFilamenta(f.id); ritesLapas(f, ritesOf(f.id)[0]); }],
+  ['#ps', 'QR label and label printer', 'QR label makes a label for the spool. Print sends it straight to a NIIMBOT B1 label printer over Bluetooth, on 50×30 mm labels - no other app needed. Share sends the image to any other printer app. Scanning the label opens the spool.', () => { const f = pirmasF(); skirtukas('spools')(); atidarytiFilamenta(f.id); qrEtikete(f, ritesOf(f.id)[0]); }],
   ['#ps', 'The palette', 'One ring per color, the number is how many spools. Total remaining shows how much is left; Opened shows only started spools. Tap a color to see its spools.', () => { skirtukas('palette')(); S.nust.likutis = true; piesti(); }],
   ['#ps', 'Locations', 'A dot for each filament on the shelf. Tap a shelf to see its spools, long-press to rename it.', () => { skirtukas('locations')(); document.getElementById('scr').scrollTop = 9999; }],
   ['.slots', 'Bambu Lab AMS', 'A location set as an AMS shows its four slots: color, material and how much is left. The grams left come from the printer, so AMS spools need no weighing. A spool without a Bambu Lab tag shows as Unknown - tap it and pick the spool.', skirtukas('locations')],
@@ -1780,7 +1783,7 @@ const TURAS = [
   ['#ps', 'Settings', 'Dark or light, rings or squares, list order, backups to a file and import from 3D Filament Profiles.', langas('nustatymai')],
   ['#ps', 'The phone buttons work', 'Like on a real Android phone: ○ opens the home screen - here it is. ◁ goes back one step, ▢ shows the recent apps. Tap TinySpools to come back.', () => { skirtukas('spools')(); S.namai = 'home'; piesti(); }],
   ['#side', 'Touch the phone', 'These pretend to be NFC: a Bambu Lab spool, your own sticker, or an empty sticker to write. They work on any screen - try one on the home screen.', null],
-  ['.stage', 'Now explore on your own', 'Ideas: print with the AMS and sync. Tap the Unknown slot in AMS A. Touch a Bambu Lab spool twice - the second one is new and asks “Is it one of these?”. Run a Check spools round. Make a QR label. Add a filament from the catalog. Download a backup in Settings. Start over any time.', null, true]];
+  ['.stage', 'Now explore on your own', 'Ideas: print with the AMS and sync. Tap the Unknown slot in AMS A. Touch a Bambu Lab spool twice - the second one is new and asks “Is it one of these?”. Run a Check spools round. Make a QR label and tap Print. Add a filament from the catalog. Download a backup in Settings. Start over any time.', null, true]];
 let turoI = -1, turoEl = null;
 function turas(i) {
   if (i < 0 || i >= TURAS.length) return baigtiTura();

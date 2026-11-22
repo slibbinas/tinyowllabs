@@ -41,6 +41,9 @@ img.w { display: block; border-radius: 3mm; }
 .card .w.sm { width: 30mm; }
 .card.tik { grid-template-columns: 1fr; align-self: start; border-left: 2px solid #E8720C; padding-left: 4mm; }
 .card p { font-size: 9pt; color: #3A4458; margin: 0; }
+.list { margin: 0 0 2mm; padding-left: 5mm; }
+.list li { margin-bottom: 1.5mm; }
+img.etik { display: block; width: 62mm; margin: 0 0 2mm; }
 .kontaktai { position: absolute; left: 17mm; right: 17mm; bottom: 14mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; border-top: 1px solid #E3E8F1; padding-top: 4mm; }
 .kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
 .kontaktai span { font-size: 9.5pt; color: #1B2233; }
@@ -175,14 +178,46 @@ img.w { display: block; border-radius: 3mm; }
   <p class="fine">TinySpools only reads from Bambu Lab's cloud; it sends nothing to the printer. TinySpools is not
   affiliated with Bambu Lab.</p>
 </section>
-<section class="page">
+<section class="page" id="label-printer">
   <header class="run"><span class="rl"><img src="ikona.png" alt="">TinySpools</span><span>5</span></header>
+  <div class="kicker">Label printer</div>
+  <h2>Print a spool label straight from the app.</h2>
+  <p class="intro">TinySpools prints QR labels on a NIIMBOT B1 thermal label printer over Bluetooth, with no other
+  app in between. Stick the label on the spool: scanning it with <b>Scan</b> opens that spool.</p>
+  <img class="etik" src="img/b1-etikete.png" alt="A 50 x 30 mm label printed by TinySpools: QR code, brand, material, color and spool number">
+  <h3>What you need</h3>
+  <ul class="list">
+    <li><b>Printer: NIIMBOT B1.</b> It is the only label printer TinySpools prints to directly. Other NIIMBOT models are not supported yet.</li>
+    <li><b>Labels: 50&times;30&nbsp;mm</b> thermal labels for the B1 (with gaps between labels), loaded in the printer. One spool takes one label.</li>
+    <li><b>Bluetooth</b> on the phone. The printer does not need Wi-Fi, an account or the NIIMBOT app.</li>
+  </ul>
+  <h3>Printing a label</h3>
+  <ol class="list">
+    <li>Turn the printer on and keep it near the phone.</li>
+    <li>Open a spool and tap <b>QR label</b>. The label opens with two buttons, <b>Share</b> and <b>Print</b>.</li>
+    <li>Tap <b>Print</b>. The first time, Android asks to allow <b>Nearby devices</b> (on Android 10 and 11: <b>Location</b>, which those versions need for any Bluetooth search). Allow it and tap <b>Print</b> again.</li>
+    <li>The app shows <i>Looking for the printer…</i>, <i>Connecting…</i>, <i>Printing…</i>. When the label is out, it shows <b>Printed</b> and takes you back to the spool. It takes a few seconds.</li>
+  </ol>
+  <p>The printer found the first time is remembered, so the next labels print faster.</p>
+  <h3>If it does not print</h3>
+  <ul class="list">
+    <li><b>No NIIMBOT B1 found:</b> check that the printer is on and close. If the NIIMBOT app is open, close it: the printer talks to one app at a time.</li>
+    <li><b>Turn on Bluetooth and try again:</b> Bluetooth is off on the phone.</li>  </ul>
+  <h3>Any other printer</h3>
+  <p><b>Share</b> sends the same label as an image (it is also saved to Pictures/TinySpools). Open it in your label
+  printer's own app, or print it from the gallery.</p>
+  <p class="fine">Printing goes only from the phone to the printer over Bluetooth; nothing goes online. NIIMBOT is a
+  trademark of its owner; TinySpools is not affiliated with or endorsed by NIIMBOT.</p>
+</section>
+
+<section class="page">
+  <header class="run"><span class="rl"><img src="ikona.png" alt="">TinySpools</span><span>6</span></header>
   <div class="kicker">Labels, checks and backups</div>
   <h2>A label on the spool, a check on the shelf.</h2>
   <div class="grid">
     <div class="card">
       <img class="w sm" src="img/qr.png" alt="QR label">
-      <div><h4>QR label</h4><p>In a spool, <b>QR label</b> makes a label with the code, brand, material and color. It is saved to Pictures/TinySpools. <b>Print</b> prints it straight to a NIIMBOT B1 label printer over Bluetooth (50&times;30&nbsp;mm labels); the first time, Android asks to allow <b>Nearby devices</b>. If the printer is not found, close the NIIMBOT app: the printer talks to one app at a time. <b>Share</b> sends the label image to any other printer's app. Scanning it with <b>Scan</b> opens that spool.</p></div>
+      <div><h4>QR label</h4><p>In a spool, <b>QR label</b> makes a label with the code, brand, material and color. <b>Print</b> prints it on a NIIMBOT B1 (page 5); <b>Share</b> sends the image to any other printer's app. Scanning it with <b>Scan</b> opens that spool.</p></div>
     </div>
     <div class="card">
       <img class="w sm" src="img/nfc.png?v=2" alt="NFC tag">
