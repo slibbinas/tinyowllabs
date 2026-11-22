@@ -44,6 +44,9 @@ img.w { display: block; border-radius: 3mm; }
 .list { margin: 0 0 2mm; padding-left: 5mm; }
 .list li { margin-bottom: 1.5mm; }
 img.etik { display: block; width: 62mm; margin: 0 0 2mm; }
+.b1 { display: flex; align-items: center; gap: 8mm; margin: 0 0 2mm; }
+.b1 .w { width: 30mm; }
+.b1 .etik { margin: 0; }
 .kontaktai { position: absolute; left: 17mm; right: 17mm; bottom: 14mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; border-top: 1px solid #E3E8F1; padding-top: 4mm; }
 .kontaktai b { display: block; font-size: 8pt; color: #5C667A; font-weight: 600; }
 .kontaktai span { font-size: 9.5pt; color: #1B2233; }
@@ -184,7 +187,7 @@ img.etik { display: block; width: 62mm; margin: 0 0 2mm; }
   <h2>Print a spool label straight from the app.</h2>
   <p class="intro">TinySpools prints QR labels on a NIIMBOT B1 thermal label printer over Bluetooth, with no other
   app in between. Stick the label on the spool: scanning it with <b>Scan</b> opens that spool.</p>
-  <img class="etik" src="img/b1-etikete.png" alt="A 50 x 30 mm label printed by TinySpools: QR code, brand, material, color and spool number">
+  <div class="b1"><img class="w" src="img/qr.png?v=2" alt="QR label with Share and Print"><img class="etik" src="img/b1-etikete.png" alt="A 50 x 30 mm label printed by TinySpools: QR code, brand, material, color and spool number"></div>
   <h3>What you need</h3>
   <ul class="list">
     <li><b>Printer: NIIMBOT B1.</b> It is the only label printer TinySpools prints to directly. Other NIIMBOT models are not supported yet.</li>
@@ -216,7 +219,7 @@ img.etik { display: block; width: 62mm; margin: 0 0 2mm; }
   <h2>A label on the spool, a check on the shelf.</h2>
   <div class="grid">
     <div class="card">
-      <img class="w sm" src="img/qr.png" alt="QR label">
+      <img class="w sm" src="img/qr.png?v=2" alt="QR label">
       <div><h4>QR label</h4><p>In a spool, <b>QR label</b> makes a label with the code, brand, material and color. <b>Print</b> prints it on a NIIMBOT B1 (page 5); <b>Share</b> sends the image to any other printer's app. Scanning it with <b>Scan</b> opens that spool.</p></div>
     </div>
     <div class="card">
